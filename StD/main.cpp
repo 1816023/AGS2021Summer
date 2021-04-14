@@ -1,6 +1,6 @@
 #include <DxLib.h>
 
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+int WINAPI WinMain(HINSTANCE h, HINSTANCE hi, LPSTR lp, int cmd)
 {
 
 	ChangeWindowMode(true);
