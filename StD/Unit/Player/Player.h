@@ -17,7 +17,5 @@ public:
 	void Init();
 	void Update(float deltaTime)override;
 	void Draw()override;
-	bool Spawner(PlayerUnit id);
-private:
 };
 
