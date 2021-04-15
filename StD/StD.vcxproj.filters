@@ -35,5 +35,7 @@
     <ClInclude Include="tinyxml2\tinyxml2.h" />
     <ClInclude Include="Map\Load.h" />
     <ClInclude Include="Map\Map.h" />
+    <ClInclude Include="VECTOR2.h" />
+    <ClInclude Include="details\VECTOR2.h" />
   </ItemGroup>
 </Project>
