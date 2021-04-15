@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="details\VECTOR2.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="KeyController.h" />
     <ClInclude Include="Map\Load.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Unit\Enemy\Enemy.h" />
     <ClInclude Include="Unit\Player\Player.h" />
     <ClInclude Include="Unit\Unit.h" />
+    <ClInclude Include="VECTOR2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
