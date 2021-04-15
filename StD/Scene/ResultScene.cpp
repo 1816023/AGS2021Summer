@@ -10,7 +10,7 @@ ResultScene::~ResultScene()
 {
 }
 
-unique_Base ResultScene::UpData(unique_Base own)
+unique_Base ResultScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);

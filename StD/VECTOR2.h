@@ -59,7 +59,7 @@ public:
 //ÍÞ¸ÄÙ‚Ì‰‰ŽZ//////////////////////////////////
 //VECTOR2 + int-------------------------------- 
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, int v);
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, T v);
 
 //VECTOR2 - int--------------------------------
 template<class T>

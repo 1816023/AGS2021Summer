@@ -1,16 +1,18 @@
 #include "TitleScene.h"
 #include <DxLib.h>
 #include "MainScene.h"
+#include "../Unit/Enemy/ECircle.h"
 
 TitleScene::TitleScene()
 {
+	eCircle_ = new ECircle(Vec2Float(100.0f, 100.0f));
 }
 
 TitleScene::~TitleScene()
 {
 }
 
-unique_Base TitleScene::UpData(unique_Base own)
+unique_Base TitleScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
@@ -25,5 +27,6 @@ unique_Base TitleScene::UpData(unique_Base own)
 
 void TitleScene::Draw()
 {
-	DrawString(100, 100, L"TitleScene", 0xffffff);
+	eCircle_->Draw();
+	DrawString(0, 0, L"TitleScene", 0xffffff);
 }

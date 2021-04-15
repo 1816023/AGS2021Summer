@@ -10,7 +10,7 @@ GameScene::~GameScene()
 {
 }
 
-unique_Base GameScene::UpData(unique_Base own)
+unique_Base GameScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);

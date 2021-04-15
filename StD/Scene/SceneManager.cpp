@@ -19,7 +19,7 @@ bool SceneManager::Run()
 	sceneController = std::make_unique<TitleScene>();
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
-		sceneController = (*sceneController).UpData(std::move(sceneController));
+		sceneController = (*sceneController).Update(std::move(sceneController));
 	}
 
 	return true;
