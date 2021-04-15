@@ -11,11 +11,13 @@ public:
 		return app;
 	}
 	~Application()= default;
-	void Init();	// 初期化
-	void Update();	// 更新
-	void Draw();	// 描画
+	bool Init();		// 初期化
+	void Update();		// 更新
+	void Terminate();	// 後処理
 
 private:
+
 	Application() = default;
+	void Draw();		// 描画
 };
 

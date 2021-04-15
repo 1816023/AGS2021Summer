@@ -8,7 +8,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Update()
+void Enemy::Update(float deltaTime)
 {
 }
 
