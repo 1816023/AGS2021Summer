@@ -2,6 +2,7 @@
 
 #include "Scene/TitleScene.h"
 #include "KeyController.h"
+#include "MouseController.h"
 
 bool Application::Init()
 {
@@ -21,9 +22,10 @@ void Application::Run()
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
 		ClsDrawScreen();
-		sceneController_ = (*sceneController_).UpData(std::move(sceneController_));
+		sceneController_ = (*sceneController_).Update(std::move(sceneController_));
 		Draw();
-		lpKeyController.UpData();
+		lpKeyController.Update();
+		lpMouseController.Update();
 		ScreenFlip();
 	}
 }

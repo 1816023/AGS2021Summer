@@ -12,7 +12,7 @@ const KEY_ARRAY& KeyController::GetCtl(KEY_TYPE type) const
 	return data;
 }
 
-bool KeyController::UpData(void)
+bool KeyController::Update()
 {
 	dataOld = data;
 	GetHitKeyStateAll(&data[0]);

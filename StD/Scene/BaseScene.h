@@ -19,7 +19,7 @@ class BaseScene
 public:
 	BaseScene() {}
 	virtual ~BaseScene() {}
-	virtual unique_Base UpData(unique_Base own) = 0;
+	virtual unique_Base Update(unique_Base own) = 0;
 	virtual void Draw();
 	virtual SCENE_ID GetScnID(void) = 0;
 

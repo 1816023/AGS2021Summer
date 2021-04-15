@@ -22,7 +22,7 @@ public:
 	}
 
 	const KEY_ARRAY& GetCtl(KEY_TYPE type) const;	// キータイプの取得
-	bool UpData(void);		// アップデート関数
+	bool Update();		// アップデート関数
 private:
 	struct KeyDelete
 	{

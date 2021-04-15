@@ -10,7 +10,7 @@ MainScene::~MainScene()
 {
 }
 
-unique_Base MainScene::UpData(unique_Base own)
+unique_Base MainScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);

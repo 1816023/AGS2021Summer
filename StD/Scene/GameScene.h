@@ -7,7 +7,7 @@ public:
 	GameScene();
 	~GameScene();
 
-	unique_Base UpData(unique_Base own) override;
+	unique_Base Update(unique_Base own) override;
 	SCENE_ID GetScnID(void) override { return SCENE_ID::GAME; }
 private:
 	void Draw()override;

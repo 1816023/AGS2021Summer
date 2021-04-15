@@ -10,7 +10,7 @@ TitleScene::~TitleScene()
 {
 }
 
-unique_Base TitleScene::UpData(unique_Base own)
+unique_Base TitleScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
