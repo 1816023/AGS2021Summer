@@ -16,7 +16,7 @@ class Unit
 public:
 	Unit() = default;
 	virtual ~Unit() = default;
-	virtual void Update() = 0;
+	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
 protected:
 	UnitStat state_;

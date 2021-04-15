@@ -3,5 +3,12 @@
 
 class Enemy : public Unit
 {
+public:
+	Enemy();
+	~Enemy();
+	void Update(float deltaTime)override;
+	void Draw()override;
+private:
+
 };
 
