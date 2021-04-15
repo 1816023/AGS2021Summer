@@ -146,18 +146,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Unit\Enemy\Enemy.cpp" />
+    <ClCompile Include="Map\Load.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="Unit\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
+	<ClInclude Include="Application.h" />
     <ClInclude Include="Unit\Enemy\Enemy.h" />
-    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Geometry.h" />    <ClInclude Include="Map\Load.h" />
+    <ClInclude Include="Map\Map.h" />
     <ClInclude Include="tinyxml2\tinyxml2.h" />
-    <ClInclude Include="Unit\Unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
