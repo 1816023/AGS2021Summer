@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Unit\Enemy\ECircle.cpp" />
     <ClCompile Include="KeyController.cpp" />
     <ClCompile Include="Map\Load.cpp" />
     <ClCompile Include="Map\Map.cpp" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Unit\Enemy\ECircle.h" />
     <ClInclude Include="details\VECTOR2.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="KeyController.h" />

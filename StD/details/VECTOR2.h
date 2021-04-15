@@ -169,7 +169,7 @@ VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, T v)
 
 //int * VECTOR2
 template<class T>
-VECTOR2_TEMPLE<T> operator+(int u, const VECTOR2_TEMPLE<T>& v)
+VECTOR2_TEMPLE<T> operator+(T u, const VECTOR2_TEMPLE<T>& v)
 {
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u + v.x;

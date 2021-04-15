@@ -4,10 +4,10 @@
 class Enemy : public Unit
 {
 public:
-	Enemy();
+	Enemy(Vec2Float pos);
 	~Enemy();
-	void Update(float deltaTime)override;
-	void Draw()override;
+	virtual void Update(float deltaTime)override;
+	virtual void Draw()override;
 private:
 
 };

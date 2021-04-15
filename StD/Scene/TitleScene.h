@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseScene.h"
+class ECircle;
 class TitleScene :
 	public BaseScene
 {
@@ -11,5 +12,6 @@ public:
 	SCENE_ID GetScnID(void) override { return SCENE_ID::TITLE; }
 private:
 	void Draw()override;
+	ECircle* eCircle_;
 };
 

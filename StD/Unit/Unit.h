@@ -1,13 +1,16 @@
 #pragma once
 #include <DxLib.h>
+#include "../VECTOR2.h"
 
 // Unitのステータス(共通部分)
 struct UnitStat
 {
-	unsigned int power;		// 攻撃力
-	unsigned int life;		// 体力
+	Vec2Float pos;			// 座標
 	float atkSpeed;			// 攻撃速度
 	float atkDist;			// 射程
+	unsigned int power;		// 攻撃力
+	unsigned int life;		// 体力
+	bool isDead;			// 死んでいるかどうか
 };
 
 // Unit基底クラス
