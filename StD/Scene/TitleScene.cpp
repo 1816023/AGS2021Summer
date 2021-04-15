@@ -13,3 +13,8 @@ unique_Base TitleScene::UpData(unique_Base own)
 {
 	return std::move(own);
 }
+
+void TitleScene::Draw()
+{
+	DrawString(100, 100, L"TitleScene", 0xffffff);
+}

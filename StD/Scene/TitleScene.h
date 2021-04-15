@@ -10,5 +10,6 @@ public:
 	unique_Base UpData(unique_Base own) override;
 	SCENE_ID GetScnID(void) override { return SCENE_ID::TITLE; }
 private:
+	void Draw()override;
 };
 
