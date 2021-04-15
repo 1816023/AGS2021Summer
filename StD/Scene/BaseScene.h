@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "../KeyController.h"
 
 enum class SCENE_ID
 {
@@ -21,5 +22,9 @@ public:
 	virtual unique_Base UpData(unique_Base own) = 0;
 	virtual void Draw();
 	virtual SCENE_ID GetScnID(void) = 0;
+
+protected:
+	KEY_ARRAY now;
+	KEY_ARRAY old;
 };
 

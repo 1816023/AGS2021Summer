@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include "Scene/TitleScene.h"
+#include "KeyController.h"
 
 bool Application::Init()
 {
@@ -22,6 +23,7 @@ void Application::Run()
 		ClsDrawScreen();
 		sceneController_ = (*sceneController_).UpData(std::move(sceneController_));
 		Draw();
+		lpKeyController.UpData();
 		ScreenFlip();
 	}
 }
