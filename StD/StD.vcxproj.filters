@@ -17,6 +17,7 @@
     <ClCompile Include="tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="Map\Load.cpp" />
     <ClCompile Include="Map\Map.cpp" />
+    <ClCompile Include="TrapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -37,5 +38,6 @@
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="VECTOR2.h" />
     <ClInclude Include="details\VECTOR2.h" />
+    <ClInclude Include="TrapManager.h" />
   </ItemGroup>
 </Project>
