@@ -6,7 +6,8 @@
 
 enum class MapChipName:char
 {
-	MAINSTAY,		// 防衛拠点
+
+	MAINSTAY=1,		// 防衛拠点
 	SPAWNER,		// 敵出現位置
 	ROOT,			// 敵侵攻ルート
 	FIELD,			// 自機配置可能箇所
