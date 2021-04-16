@@ -2,7 +2,7 @@
 
 TrapManager::TrapManager()
 {
-	slipDamage = LoadGraph("data/image/slip_damege.png");
+	slipDamage = LoadGraph(L"data/image/slip_damege.png");
 }
 
 TrapManager::~TrapManager()

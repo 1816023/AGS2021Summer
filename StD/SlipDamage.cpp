@@ -1,8 +1,9 @@
 #include "SlipDamage.h"
 #include "MouseController.h"
 
-SlipDamage::SlipDamage()
+SlipDamage::SlipDamage(VECTOR2 pos)
 {
+	this->pos = pos;
 }
 
 SlipDamage::~SlipDamage()
@@ -11,10 +12,9 @@ SlipDamage::~SlipDamage()
 
 void SlipDamage::Update()
 {
-	Draw();
 }
 
 void SlipDamage::Draw()
 {
-	DrawGraph(lpMouseController.GetPos().x, lpMouseController.GetPos().y, slipDamage, false);
+	DrawRotaGraph(pos.x, pos.y, 1, 0, slipDamage, false);
 }

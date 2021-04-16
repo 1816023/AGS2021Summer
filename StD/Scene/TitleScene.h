@@ -1,6 +1,9 @@
 #pragma once
 #include "BaseScene.h"
+
 class ECircle;
+class SlipDamage;
+
 class TitleScene :
 	public BaseScene
 {
@@ -13,5 +16,8 @@ public:
 private:
 	void Draw()override;
 	ECircle* eCircle_;
+	SlipDamage* slipDamage;
+	bool trapFlag;
+	int cnt;
 };
 

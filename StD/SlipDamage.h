@@ -1,14 +1,16 @@
 #pragma once
 #include "TrapManager.h"
+#include "VECTOR2.h"
 class SlipDamage :
 	public TrapManager
 {
 public:
-	SlipDamage();
+	SlipDamage(VECTOR2 pos);
 	~SlipDamage();
 
 	void Update() override;
-private:
 	void Draw() override;
+private:
+	VECTOR2 pos;
 };
 

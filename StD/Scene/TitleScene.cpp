@@ -3,15 +3,20 @@
 #include "MainScene.h"
 #include "../Unit/Enemy/ECircle.h"
 #include "../MouseController.h"
+#include "../SlipDamage.h"
 
 TitleScene::TitleScene()
 {
 	eCircle_ = new ECircle(Vec2Float(100.0f, 100.0f));
-	
+	slipDamage = new SlipDamage(lpMouseController.GetPos());
+
+	trapFlag = false;
+	cnt = 0;
 }
 
 TitleScene::~TitleScene()
 {
+	delete slipDamage;
 }
 
 unique_Base TitleScene::Update(unique_Base own)
@@ -24,12 +29,32 @@ unique_Base TitleScene::Update(unique_Base own)
 		return std::make_unique<MainScene>();
 	}
 
+	slipDamage->Update();
+
 	return std::move(own);
 }
 
 void TitleScene::Draw()
 {
 	eCircle_->Draw();
+	if (!trapFlag)
+	{
+		if (lpMouseController.GetClickTrg())
+		{
+			slipDamage = new SlipDamage(lpMouseController.GetPos());
+			trapFlag = true;
+		}
+	}
+	if (trapFlag)
+	{
+		cnt++;
+		slipDamage->Draw();
+		if (cnt > 300)
+		{
+			cnt = 0;
+			trapFlag = false;
+		}
+	}
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
 	DrawString(0, 0, L"TitleScene", 0xffffff);
 }
