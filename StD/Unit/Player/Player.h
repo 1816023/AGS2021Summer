@@ -1,13 +1,5 @@
 #pragma once
 #include "../Unit.h"
-enum class PlayerUnit
-{
-	YELLOW,
-	GREEN,
-	BLUE,
-	PINK,
-	MAX
-};
 
 class Player: public Unit
 {

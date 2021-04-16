@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "PlayerType.h"
 #include <vector>
 #include <memory>
 class PlayerMng :
