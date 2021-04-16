@@ -7,12 +7,11 @@
 
 TitleScene::TitleScene()
 {
-	eCircle_ = new ECircle(Vec2Float(100.0f, 100.0f));
-	slipDamage = new SlipDamage(lpMouseController.GetPos());
+
+slipDamage = new SlipDamage(lpMouseController.GetPos());
 
 	trapFlag = false;
-	cnt = 0;
-}
+	cnt = 0;}
 
 TitleScene::~TitleScene()
 {
@@ -36,7 +35,6 @@ unique_Base TitleScene::Update(unique_Base own)
 
 void TitleScene::Draw()
 {
-	eCircle_->Draw();
 	if (!trapFlag)
 	{
 		if (lpMouseController.GetClickTrg())

@@ -15,6 +15,7 @@ public:
 	}
 	~Application()= default;
 	bool Init();		// 初期化
+	
 	void Run();		// 更新
 	void Terminate();	// 後処理
 
@@ -23,6 +24,7 @@ private:
 	Application(const Application&) = delete;
 	Application operator=(const Application&) = delete;
 
+	void ExtendWindowInit();	// ウインドウサイズ拡縮初期化
 	void Draw();	// 描画
 
 	std::unique_ptr<BaseScene>sceneController_;	// シーンコントローラー
