@@ -13,17 +13,18 @@
     <ClCompile Include="KeyController.cpp" />
     <ClCompile Include="Unit\Unit.cpp" />
     <ClCompile Include="Unit\Enemy\Enemy.cpp" />
-    <ClCompile Include="Unit\Player\Player.cpp" />
     <ClCompile Include="tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="Map\Load.cpp" />
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Unit\Enemy\ECircle.cpp" />
     <ClCompile Include="TrapManager.cpp" />
+    <ClCompile Include="Unit\Enemy\EnemyManager.cpp" />
     <ClCompile Include="SlipDamage.cpp" />
     <ClCompile Include="Object\Shot\Shot.cpp" />
     <ClCompile Include="Object\Shot\ShotMng.cpp" />
     <ClCompile Include="Unit\Player\PlayerMng.cpp" />
     <ClCompile Include="Unit\Player\Yellow.cpp" />
+    <ClCompile Include="Map\Custom.cpp" />
+    <ClCompile Include="Scene\CustomMapScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -37,19 +38,20 @@
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="Unit\Enemy\Enemy.h" />
-    <ClInclude Include="Unit\Player\Player.h" />
     <ClInclude Include="Unit\Unit.h" />
     <ClInclude Include="tinyxml2\tinyxml2.h" />
-    <ClInclude Include="Map\Load.h" />
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="VECTOR2.h" />
     <ClInclude Include="details\VECTOR2.h" />
     <ClInclude Include="Unit\Enemy\ECircle.h" />
     <ClInclude Include="TrapManager.h" />
+    <ClInclude Include="Unit\Enemy\EnemyManager.h" />
     <ClInclude Include="SlipDamage.h" />
     <ClInclude Include="Object\Shot\Shot.h" />
     <ClInclude Include="Object\Shot\ShotMng.h" />
     <ClInclude Include="Unit\Player\PlayerMng.h" />
     <ClInclude Include="Unit\Player\Yellow.h" />
+    <ClInclude Include="Map\Custom.h" />
+    <ClInclude Include="Scene\CustomMapScene.h" />
   </ItemGroup>
 </Project>

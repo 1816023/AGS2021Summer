@@ -4,6 +4,7 @@
 #include <vector>
 #include "../tinyxml2/tinyxml2.h"
 
+// チップ情報の名前
 enum class MapChipName:char
 {
 
@@ -16,6 +17,7 @@ enum class MapChipName:char
 
 };
 using dataVec = std::vector<std::vector<MapChipName>> ;
+// マップ情報の表示取得用クラス
 class Map
 {
 public:
