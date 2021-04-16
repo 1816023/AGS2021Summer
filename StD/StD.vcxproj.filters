@@ -24,6 +24,7 @@
     <ClCompile Include="Object\Shot\ShotMng.cpp" />
     <ClCompile Include="Unit\Player\PlayerMng.cpp" />
     <ClCompile Include="Unit\Player\Yellow.cpp" />
+    <ClCompile Include="Unit\Enemy\EnemySpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -51,5 +52,7 @@
     <ClInclude Include="Object\Shot\ShotMng.h" />
     <ClInclude Include="Unit\Player\PlayerMng.h" />
     <ClInclude Include="Unit\Player\Yellow.h" />
+    <ClInclude Include="Unit\Enemy\EnemySpawner.h" />
+    <ClInclude Include="Unit\Enemy\EnemyType.h" />
   </ItemGroup>
 </Project>
