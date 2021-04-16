@@ -7,12 +7,8 @@ bool Application::Init()
 {
 	ChangeWindowMode(true);
 	SetMainWindowText(L"DC&IC");
-	int DesktopW, DesktopH;
-	GetDefaultState(&DesktopW, &DesktopH, nullptr);
-	SetGraphMode(DesktopW, DesktopH, 16);
-	//SetWindowSize(854, 480);
-	SetGraphMode(854, 480, 16);
-	SetWindowSizeChangeEnableFlag(true, true);
+	// 
+	ExtendWindowInit();
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	if (DxLib_Init() == -1)
@@ -21,6 +17,16 @@ bool Application::Init()
 	}
 	sceneController_ = std::make_unique<TitleScene>();
 	return true;
+}
+
+void Application::ExtendWindowInit()
+{
+	int DesktopW, DesktopH;
+	GetDefaultState(&DesktopW, &DesktopH, nullptr);
+	SetGraphMode(DesktopW, DesktopH, 16);
+	//SetWindowSize(854, 480);
+	SetGraphMode(854, 480, 16);
+	SetWindowSizeChangeEnableFlag(true, true);
 }
 
 void Application::Run()
