@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseScene.h"
+#include "../Map/Map.h"
 class GameScene :
 	public BaseScene
 {
@@ -11,5 +12,8 @@ public:
 	SCENE_ID GetScnID(void) override { return SCENE_ID::GAME; }
 private:
 	void Draw()override;
+	//デバッグ
+	std::unique_ptr<Map> map;
+	
 };
 

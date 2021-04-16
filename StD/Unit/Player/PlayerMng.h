@@ -12,10 +12,11 @@ public:
 		return s_Instance;
 	}
 	~PlayerMng() = default;
+	void Updata(float deltaTime);
 	bool Spawner(PlayerUnit id);
 private:
 	PlayerMng();
 	void Init();
-	std::vector<std::unique_ptr<Player>> unitList_;
+	std::vector<std::shared_ptr<Player>> unitList_;
 };
 
