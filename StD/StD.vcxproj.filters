@@ -19,6 +19,11 @@
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Unit\Enemy\ECircle.cpp" />
     <ClCompile Include="TrapManager.cpp" />
+    <ClCompile Include="SlipDamage.cpp" />
+    <ClCompile Include="Object\Shot\Shot.cpp" />
+    <ClCompile Include="Object\Shot\ShotMng.cpp" />
+    <ClCompile Include="Unit\Player\PlayerMng.cpp" />
+    <ClCompile Include="Unit\Player\Yellow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -41,5 +46,10 @@
     <ClInclude Include="details\VECTOR2.h" />
     <ClInclude Include="Unit\Enemy\ECircle.h" />
     <ClInclude Include="TrapManager.h" />
+    <ClInclude Include="SlipDamage.h" />
+    <ClInclude Include="Object\Shot\Shot.h" />
+    <ClInclude Include="Object\Shot\ShotMng.h" />
+    <ClInclude Include="Unit\Player\PlayerMng.h" />
+    <ClInclude Include="Unit\Player\Yellow.h" />
   </ItemGroup>
 </Project>
