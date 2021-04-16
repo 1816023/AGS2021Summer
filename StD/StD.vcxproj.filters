@@ -19,6 +19,7 @@
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Unit\Enemy\ECircle.cpp" />
     <ClCompile Include="TrapManager.cpp" />
+    <ClCompile Include="SlipDamage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -41,5 +42,6 @@
     <ClInclude Include="details\VECTOR2.h" />
     <ClInclude Include="Unit\Enemy\ECircle.h" />
     <ClInclude Include="TrapManager.h" />
+    <ClInclude Include="SlipDamage.h" />
   </ItemGroup>
 </Project>
