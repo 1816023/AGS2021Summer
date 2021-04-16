@@ -1,13 +1,22 @@
 #include "PlayerMng.h"
+#include "../../Object/Shot/ShotMng.h"
 #include "Yellow.h"
+
+void PlayerMng::Updata(float deltaTime)
+{
+    for (auto& unit:unitList_)
+    {
+        lpShotMng.AddBullet(unit);
+    }
+}
 
 bool PlayerMng::Spawner(PlayerUnit id)
 {
-    std::unique_ptr<Player> ptr;
+    std::shared_ptr<Player> ptr;
     switch (id)
     {
     case PlayerUnit::YELLOW:
-        ptr = std::make_unique<Yellow>();
+        ptr = std::make_shared<Yellow>();
         break;
     case PlayerUnit::GREEN:
         break;
