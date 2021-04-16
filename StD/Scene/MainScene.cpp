@@ -1,6 +1,7 @@
 #include "MainScene.h"
 #include <DxLib.h>
 #include "GameScene.h"
+#include "CustomMapScene.h"
 
 MainScene::MainScene()
 {
@@ -19,7 +20,10 @@ unique_Base MainScene::Update(unique_Base own)
 	{
 		return std::make_unique<GameScene>();
 	}
-
+	if ((now[KEY_INPUT_RETURN]) & (~old[KEY_INPUT_RETURN]))
+	{
+		return std::make_unique<CustomMapScene>();
+	}
 	return std::move(own);
 }
 
