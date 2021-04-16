@@ -26,6 +26,7 @@
     <ClCompile Include="Map\Custom.cpp" />
     <ClCompile Include="Scene\CustomMapScene.cpp" />
     <ClCompile Include="Unit\Enemy\EnemySpawner.cpp" />
+    <ClCompile Include="Unit\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -56,5 +57,6 @@
     <ClInclude Include="Unit\Enemy\EnemySpawner.h" />
     <ClInclude Include="Scene\CustomMapScene.h" />
     <ClInclude Include="Unit\Enemy\EnemyType.h" />
+    <ClInclude Include="Unit\Player\Player.h" />
   </ItemGroup>
 </Project>
