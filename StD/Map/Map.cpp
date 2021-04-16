@@ -96,6 +96,16 @@ MapChipName Map::GetMapChip(VECTOR2 pos)
 	return mapData_[vec.y][vec.x];
 }
 
+VECTOR2 Map::GetMapSize()
+{
+	return mapSize_;
+}
+
+VECTOR2 Map::GetChipSize()
+{
+	return chipSize_;
+}
+
 bool Map::LoadMap(std::string mapName)
 {
 	auto path = "./data/mapData/" + mapName+".xml";
