@@ -12,3 +12,13 @@
 3,3,3,4,4,4,3,3,3,3,
 2,3,3,4,3,3,3,3,3,4
 </map>
+<spwan>
+	<spawner id="1">
+		<root>
+			0,1,2,3
+		</root>
+	</spawner>
+	<spawner id="0">
+	
+	</spawner>
+</spwan>

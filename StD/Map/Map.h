@@ -25,17 +25,27 @@ public:
 	virtual ~Map();
 	virtual int Update();
 	virtual void Draw();
-	virtual bool SetUp(std::string mapName);		// マップ情報の初期化、マップデータの名前(拡張子なし)を指定
-	MapChipName GetMapChip(Vec2Float pos);			// チップ情報の取得、ほしい場所のポジションを指定(float)	
-	MapChipName GetMapChip(VECTOR2 pos);			// チップ情報の取得、ほしい場所のポジションを指定(int)
-	VECTOR2 GetMapSize();							// マップサイズ取得
-	VECTOR2 GetChipSize();							// チップサイズ取得	
+	// マップ情報の初期化、マップデータの名前(拡張子なし)を指定
+	virtual bool SetUp(std::string mapName);		
+	// チップ情報の取得、ほしい場所のポジションを指定(float)	
+	MapChipName GetMapChip(Vec2Float pos);			
+	// チップ情報の取得、ほしい場所のポジションを指定(int)
+	MapChipName GetMapChip(VECTOR2 pos);			
+	// マップサイズ取得
+	VECTOR2 GetMapSize();							
+	// チップサイズ取得	
+	VECTOR2 GetChipSize();							
 protected:
-	bool LoadMap(std::string mapName);				// マップをロードする、マップデータの名前(拡張子なし)を指定
-	VECTOR2 mapSize_;								// マップのchip数
-	VECTOR2 chipSize_;								// 1chipのサイズ
-	dataVec mapData_;								// マップデータの格納2次元配列
-	tinyxml2::XMLDocument document;					// マップデータのXMLファイルをロードしたデータ
+	// マップをロードする、マップデータの名前(拡張子なし)を指定
+	bool LoadMap(std::string mapName);				
+	// マップのchip数
+	VECTOR2 mapSize_;								
+	// 1chipのサイズ
+	VECTOR2 chipSize_;								
+	// マップデータの格納2次元配列
+	dataVec mapData_;								
+	// マップデータのXMLファイルをロードしたデータ
+	tinyxml2::XMLDocument document;					
 };
 
 

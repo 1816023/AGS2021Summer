@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <list>
 #include "TitleScene.h"
 #include "CustomMapScene.h"
 
@@ -39,7 +40,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 
 void CustomMapScene::Draw()
 {
-	DrawString(100, 100, L"CustomMapScene", 0xffffff);
+	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
 	drawFunc_[nowState_]();
 }
 
@@ -57,6 +58,19 @@ void CustomMapScene::Map_CuntomUpdate()
 	{
 		nowState_ = CustomState::END_CUSTOM;
 	}
+	VECTOR2 mPos;
+	GetMousePoint(&mPos.x, &mPos.y);
+	if (GetMouseInput() & MOUSE_INPUT_LEFT == 1)
+	{
+		if (mPos.x > MAX_MAP_DRAW.x)
+		{
+
+		}
+		else
+		{
+			map_->SetChip(mPos, MapChipName::ROOT);
+		}
+	}
 }
 
 void CustomMapScene::EndCustomUpdate()
@@ -70,36 +84,99 @@ void CustomMapScene::EndCustomUpdate()
 void CustomMapScene::SetStateDraw()
 {
 	DrawString(0, 0, L"Set", 0xffffff);
-	DrawString(0, 20, L"マップの横幅：", 0xffffff);
-	DrawString(0, 50, L"マップの高さ：", 0xffffff);
-	DrawString(0, 80, L"ファイル名：", 0xffffff);
-	mapSizeX = KeyInputNumber(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, 20, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
+	DrawString(0, STRING_HIGHT, L"マップの横幅：", 0xffffff);
+	DrawString(0, STRING_HIGHT+LINE_SPACING, L"マップの高さ：", 0xffffff);
+	DrawString(0, STRING_HIGHT + LINE_SPACING*2, L"ファイル名：", 0xffffff);
+	DrawString(0, STRING_HIGHT*2 + LINE_SPACING*2, L"※次の文字とスペースは使用できません\n「￥　／　：　＊　？　”　＜　＞　｜　.　& ( ) [ ] { } ^ = ; ! ' + , ` ~」", 0xff9999);
+	int tmpFlag = 0;
+	mapSizeX = KeyInputNumber(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
 	if (mapSizeX<MIN_MAP_SIZE || mapSizeX>MAX_MAP_SIZE)
 	{
 		return;
 	}
-	DrawFormatString(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, 20, 0xffffff, L"%d", mapSizeX);
-	mapSizeY = KeyInputNumber(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, 50, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
+	else
+	{
+		tmpFlag++;
+	}
+	DrawFormatString(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, 0xffffff, L"%d", mapSizeX);
+	mapSizeY = KeyInputNumber(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT+LINE_SPACING, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
 	if (mapSizeY<MIN_MAP_SIZE || mapSizeY>MAX_MAP_SIZE)
 	{
 		return;
 	}
-	DrawFormatString(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, 50, 0xffffff, L"%d", mapSizeY);
-	if (KeyInputString(GetDrawStringWidth(L"ファイル名：", GetStringLength(L"ファイル名：")) + 1, 80, 20, fileName, true) != 1)
+	else
+	{
+		tmpFlag++;
+	}
+	DrawFormatString(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT + LINE_SPACING, 0xffffff, L"%d", mapSizeY);
+	if (KeyInputString(GetDrawStringWidth(L"ファイル名：", GetStringLength(L"ファイル名：")) + 1, STRING_HIGHT+LINE_SPACING*2, MAX_NAME_SIZE, fileName, true) != 1)
 	{
 		return;
 	}
-
+	else {
+		if (FileNameErrorCheck(fileName))
+		{
+			return;
+		}
+		tmpFlag++;
+	}
+	if (tmpFlag >= 3)
+	{
+		nowState_= CustomState::MAP_CUSTOM;
+		dynamic_cast<Custom*>(map_.get())->SetUp(fileName, VECTOR2(mapSizeX, mapSizeY));
+	}
 }
 
 void CustomMapScene::MapCuntomDraw()
 {
 	DrawString(0, 0, L"Custom", 0xffffff);
-
+	map_->Draw();
+	DrawLine(MAX_MAP_DRAW.x, 0, MAX_MAP_DRAW.x, MAX_MAP_DRAW.y, 0xffffff);
 }
 
 void CustomMapScene::EndCustomDraw()
 {
 	DrawString(0, 0, L"End", 0xffffff);
 
+}
+
+bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)
+{
+	//￥　／　：　＊　？　”　＜　＞　｜
+	auto check = [](TCHAR code) {
+		std::list<TCHAR> wErrorCode = { L'\\',L'/',L':',L'*',L'?',L'<',L'>',L'|',L' ',L'.' };	// Windowsのファイルに使用できないもの
+		std::list<TCHAR> cErrorCode = { L'&', L'(',L')', L'[',L']' ,L'{',L'}', L'^', L'=', L';', L'!',L'\'', L'+', L',', L'`', L'~' };	// ついでに念のため省いておく
+		for (auto error : wErrorCode)
+		{
+			if (code == error)
+			{
+				return true;
+			}
+		}
+		for (auto error : cErrorCode)
+		{
+			if (code == error)
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+
+	for (int f = 0; f < MAX_NAME_SIZE; f++)
+	{
+		// Windowsのエラーコードだった場合
+		if (check(fileName.c_str()[f]))
+		{
+			return true;
+		}
+		// 中身が空だった場合
+		if (fileName.c_str()[0] == TCHAR())
+		{
+			return true;
+		}
+	}
+
+
+	return false;
 }
