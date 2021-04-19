@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "../Unit/Player/PlayerMng.h"
 #include <DxLib.h>
 #include "ResultScene.h"
 
@@ -6,6 +7,7 @@ GameScene::GameScene()
 {
 	map = std::make_unique<Map>();
 	map->SetUp("defalt_map");
+	lpPlayerMng.Spawner(PlayerUnit::YELLOW);
 }
 
 GameScene::~GameScene()
