@@ -3,6 +3,9 @@
 #include "PlayerType.h"
 #include <vector>
 #include <memory>
+
+#define lpPlayerMng PlayerMng::GetInstance()
+
 class PlayerMng :
 	public Player
 {

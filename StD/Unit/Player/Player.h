@@ -9,5 +9,8 @@ public:
 	void Init();
 	void Update(float deltaTime)override;
 	void Draw()override;
+	virtual void Skill(void)=0;
+protected:
+	bool isSkill_;	//skill‚ª”­“®‰Â”\‚©
 };
 
