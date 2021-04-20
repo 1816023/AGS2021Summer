@@ -18,6 +18,7 @@ public:
 	~PlayerMng() = default;
 	void Updata(float deltaTime);
 	bool Spawner(PlayerUnit id);
+	void Skill(void) {};
 private:
 	PlayerMng();
 	void Init();

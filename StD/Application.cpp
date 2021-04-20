@@ -47,37 +47,65 @@ void Application::Run()
 	int cnt = 0;
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
-		ClsDrawScreen();
 		sceneController_ = (*sceneController_).Update(std::move(sceneController_));
 		
 		lpKeyController.Update();
 		lpMouseController.Update();
 		auto now = system_clock::now();
 		delta = static_cast<float>(duration_cast<microseconds>(now - old).count())* 0.00001f;
-		DrawFormatString(0, 20, 0xffffff, L"%f", delta);
+		
 		old = now;
-		// ÉQÅ[ÉÄï`âÊ
-		SetDrawScreen(gameScreen_);
-		ClsDrawScreen();
+		
 		Draw();
-		SetDrawScreen(DX_SCREEN_BACK);
-		static double i = 1.0;
-		i += delta;
-		DrawRotaGraph(0, 0, i, 0, gameScreen_, false);
-		// uiï`âÊ
-		SetDrawScreen(gameScreen_);
-		ClsDrawScreen();
-		Draw();
-		SetDrawScreen(DX_SCREEN_BACK);
-		DrawGraph(0, i, gameScreen_, false);
-		ScreenFlip();	
-	
 	}
 }
 
 void Application::Draw()
 {
+	ClsDrawScreen();
+	// ÉQÅ[ÉÄï`âÊ
+	SetDrawScreen(gameScreen_);
+	ClsDrawScreen();
 	sceneController_->Draw();
+
+	// ÉXÉNÉäÅ[ÉìÇó†Ç…ï`âÊ
+	SetDrawScreen(DX_SCREEN_BACK);
+	static double ud,lr, i = 1.0;
+	if (CheckHitKey(KEY_INPUT_UP))
+	{
+		ud++;
+	}
+	if (CheckHitKey(KEY_INPUT_DOWN))
+	{
+		ud--;
+	}
+	if (CheckHitKey(KEY_INPUT_LEFT))
+	{
+		lr++;
+	}
+	if (CheckHitKey(KEY_INPUT_RIGHT))
+	{
+		lr--;
+	}
+	if (CheckHitKey(KEY_INPUT_W))
+	{
+		i+= 0.01;
+	}
+	if (CheckHitKey(KEY_INPUT_S))
+	{
+		i-= 0.01;
+	}
+	/*int x, y, col;
+	GetScreenState(&x, &y, &col);*/
+	DrawRotaGraph2(427-lr, 280-ud,lr,ud, i ,0, gameScreen_, false);
+	//// uiï`âÊ
+	//SetDrawScreen(gameScreen_);
+	//ClsDrawScreen();
+	//Draw();
+	//SetDrawScreen(DX_SCREEN_BACK);
+	//DrawGraph(0, i, gameScreen_, false);
+	DrawFormatString(0, 20, 0xffffff, L"%f", delta);
+	ScreenFlip();
 }
 
 float Application::getDelta()
