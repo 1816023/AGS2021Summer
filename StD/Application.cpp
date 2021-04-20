@@ -70,7 +70,8 @@ void Application::Draw()
 
 	// ƒXƒNƒŠ[ƒ“‚ð— ‚É•`‰æ
 	SetDrawScreen(DX_SCREEN_BACK);
-	static double ud,lr, i = 1.0;
+	static double ud,lr= 0.0;
+	static float i= 1.0;
 	if (CheckHitKey(KEY_INPUT_UP))
 	{
 		ud++;
@@ -89,22 +90,17 @@ void Application::Draw()
 	}
 	if (CheckHitKey(KEY_INPUT_W))
 	{
-		i+= 0.01;
+		i+= 0.001;
 	}
 	if (CheckHitKey(KEY_INPUT_S))
 	{
-		i-= 0.01;
+		i-= 0.001;
 	}
-	/*int x, y, col;
-	GetScreenState(&x, &y, &col);*/
-	DrawRotaGraph2(427-lr, 280-ud,lr,ud, i ,0, gameScreen_, false);
-	//// ui•`‰æ
-	//SetDrawScreen(gameScreen_);
-	//ClsDrawScreen();
-	//Draw();
-	//SetDrawScreen(DX_SCREEN_BACK);
-	//DrawGraph(0, i, gameScreen_, false);
-	DrawFormatString(0, 20, 0xffffff, L"%f", delta);
+	DrawRotaGraph2(-lr+ 427, -ud+240, lr+ 427, ud+240, i ,0, gameScreen_, false);
+	// ui•`‰æ
+	sceneController_->DrawUI();
+	DrawFormatString(0, 32, 0xffffff, L"%f", delta);
+	DrawFormatString(0, 0, 0xffffff, L"pos %f, %f, %f", -lr, ud, i);
 	ScreenFlip();
 }
 

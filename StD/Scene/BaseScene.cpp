@@ -3,3 +3,7 @@
 void BaseScene::Draw()
 {
 }
+
+void BaseScene::DrawUI()
+{
+}

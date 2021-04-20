@@ -14,6 +14,7 @@ public:
 	SCENE_ID GetScnID(void) override { return SCENE_ID::GAME; }
 private:
 	void Draw()override;
+	void DrawUI()override;
 	//デバッグ
 	std::unique_ptr<Map> map;
 

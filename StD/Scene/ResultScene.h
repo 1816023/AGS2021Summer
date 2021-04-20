@@ -11,5 +11,6 @@ public:
 	SCENE_ID GetScnID(void) override { return SCENE_ID::RESULT; }
 private:
 	void Draw()override;
+	void DrawUI()override;
 };
 

@@ -15,7 +15,7 @@ public:
 	SCENE_ID GetScnID(void) override { return SCENE_ID::TITLE; }
 private:
 	void Draw()override;
-	ECircle* eCircle_;
+	void DrawUI()override;
 	SlipDamage* slipDamage;
 	bool trapFlag;
 	int cnt;

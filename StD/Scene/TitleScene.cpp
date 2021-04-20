@@ -54,5 +54,10 @@ void TitleScene::Draw()
 		}
 	}
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
+	
+}
+
+void TitleScene::DrawUI()
+{
 	DrawString(0, 0, L"TitleScene", 0xffffff);
 }

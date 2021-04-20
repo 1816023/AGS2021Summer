@@ -25,5 +25,10 @@ unique_Base ResultScene::Update(unique_Base own)
 
 void ResultScene::Draw()
 {
+	
+}
+
+void ResultScene::DrawUI()
+{
 	DrawString(100, 100, L"ResultScene", 0xffffff);
 }

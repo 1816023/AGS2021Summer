@@ -29,5 +29,10 @@ unique_Base MainScene::Update(unique_Base own)
 
 void MainScene::Draw()
 {
+	
+}
+
+void MainScene::DrawUI()
+{
 	DrawString(100, 100, L"MainScene", 0xffffff);
 }

@@ -21,6 +21,7 @@ public:
 	virtual ~BaseScene() {}
 	virtual unique_Base Update(unique_Base own) = 0;
 	virtual void Draw();
+	virtual void DrawUI();
 	virtual SCENE_ID GetScnID(void) = 0;
 
 protected:
