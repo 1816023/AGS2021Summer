@@ -9,12 +9,15 @@ class EnemySpawner
 {
 friend class EnemyManager;
 public:
-	EnemySpawner(Vec2Float pos, const std::vector<EnemyType>& spawnList, EnemyManager& enemyMng);
+	EnemySpawner(Vec2Float pos, const std::vector<EnemyType>& spawnList);
 	~EnemySpawner();
 	void Spawn(EnemyType type);	// 敵をスポーン
+	void Update(float deltaTime);
 private:
 	Vec2Float pos_;	// 座標
 	std::vector<EnemyType>spawnList_;
 	EnemyManager* enemyMng_;
+
+	float cnt_;
 };
 

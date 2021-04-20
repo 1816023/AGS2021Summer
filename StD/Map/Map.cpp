@@ -43,7 +43,7 @@ bool Map::SetUp(std::string mapName)
 	const tinyxml2::XMLElement* mapElm = document.FirstChildElement("map");
 	mapSize_ = { mapElm->IntAttribute("hight"),mapElm->IntAttribute("width") };
 	const tinyxml2::XMLElement* chipElm = document.FirstChildElement("chip");
-	chipSize_ = { chipElm->IntAttribute("hight"),chipElm->IntAttribute("width") };
+	chipSize_ = {128, 128};// { chipElm->IntAttribute("hight"), chipElm->IntAttribute("width") };
 	mapData_.resize(mapSize_.y);
 	//for (int y = 0; y < mapSize_.y; y++)
 	//{
