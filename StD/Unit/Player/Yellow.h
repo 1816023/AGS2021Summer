@@ -9,7 +9,7 @@ public:
 	void Init();
 	void Update();
 	void Draw();
-	void Skill(void)override;	//Skillä«óù
+	//void Skill(void)override;	//Skillä«óù
 private:
 	UnitStat stat_;
 };

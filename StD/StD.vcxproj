@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Mng\ImageMng.cpp" />
     <ClCompile Include="Unit\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Scene\CustomMapScene.cpp" />
     <ClCompile Include="Map\Custom.cpp" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Mng\ImageMng.h" />
     <ClInclude Include="Unit\Enemy\EnemyManager.h" />
     <ClInclude Include="Scene\CustomMapScene.h" />
     <ClInclude Include="Map\Custom.h" />
