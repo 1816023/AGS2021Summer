@@ -18,6 +18,7 @@ CustomMapScene::CustomMapScene()
 	mapSizeX = 0;
 	mapSizeY = 0;
 	fileName[0] = TCHAR();
+
 }
 
 CustomMapScene::~CustomMapScene()

@@ -28,7 +28,7 @@ void Yellow::Draw()
 {
 }
 
-void Yellow::Skill(void)
-{
-	stat_.life += 10;
-}
+//void Yellow::Skill(void)
+//{
+//	stat_.life += 10;
+//}
