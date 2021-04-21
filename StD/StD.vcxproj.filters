@@ -62,5 +62,6 @@
     <ClInclude Include="Unit\Player\Player.h" />
     <ClInclude Include="Mng\ImageMng.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Unit\Player\PlayerType.h" />
   </ItemGroup>
 </Project>
