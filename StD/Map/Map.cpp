@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include <sstream>
+#include <array>
 #include "Map.h"
 
 Map::Map()
@@ -17,6 +18,21 @@ int Map::Update()
 
 void Map::Draw()
 {
+	std::array<int, 5> color = {
+		0x888888,
+		0x880000,
+		0x008800,
+		0x000088,
+		0x000000
+	};
+	for (int y = 0; y < state.mapSize_.y; y++)
+	{
+		for (int x = 0; x < state.mapSize_.x; x++)
+		{
+			DrawBox(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, x * state.chipSize_.x / 2 + state.chipSize_.x / 2, y * state.chipSize_.y / 2 + state.chipSize_.y / 2, color[static_cast<int>(mapData_[y][x]) - 1], true);
+			DrawFormatString(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, 0xffffff, (L"%d"), (static_cast<int>(mapData_[y][x])));
+		}
+	}
 	for (int x = 0; x <= state.mapSize_.x; x++)
 	{
 		DrawLine(x * state.chipSize_.x/2, 0, x * state.chipSize_.x/2, state.chipSize_.x/2 * state.mapSize_.y, 0xffffff);
@@ -25,13 +41,7 @@ void Map::Draw()
 	{
 		DrawLine(0, y * state.chipSize_.y/2, state.chipSize_.x/2 * state.mapSize_.x, y * state.chipSize_.y/2, 0xffffff);
 	}
-	for (int y = 0; y < state.mapSize_.y; y++)
-	{
-		for (int x = 0; x < state.mapSize_.x; x++)
-		{
-			DrawFormatString(x * state.chipSize_.x/2, y * state.chipSize_.y/2, 0xffffff, (L"%d"),(static_cast<int>(mapData_[y][x])));
-		}
-	}
+	
 }
 
 bool Map::SetUp(std::string mapName)
