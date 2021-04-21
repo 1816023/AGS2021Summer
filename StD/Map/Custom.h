@@ -7,12 +7,16 @@ class Custom :
 	public Map
 {
 public:
-	Custom();
+	Custom(VECTOR2 offset);
 	~Custom()override;
 	void SetUp(std::wstring fileName, VECTOR2 fileSize);
 	// 
 	bool SetChip(VECTOR2 pos, MapChipName chip);
+	bool CreateMapFile(VECTOR2 mapSize,std::wstring name);
 private:
-	
+	// 描画のオフセット
+	VECTOR2 offset_;
+	// wstringをstringに変換する
+	std::string WStringToString(std::wstring oWString);
 };
 

@@ -2,12 +2,13 @@
 #include "BaseScene.h"
 #include "../Map/Custom.h"
 #include <functional>
+#include <memory>
 #include <map>
 
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
 #define LINE_SPACING 30		// 行間
-#define MAX_MAP_DRAW VECTOR2(854/1.5,480)
+#define MAX_MAP_DRAW VECTOR2(DEF_SCREEN_SIZE_X/1.5,DEF_SCREEN_SIZE_Y)
 enum class CustomState {
 	SET_STATE,			// マップの幅や高さを設定する状態
 	MAP_CUSTOM,			// マップを作成している状態
@@ -24,14 +25,22 @@ public:
 	unique_Base Update(unique_Base own) override;
 	SCENE_ID GetScnID(void) override { return SCENE_ID::MAIN; }
 private:
+	// 基本的なメイン物の描画
 	void Draw()override;
-
+	// UI系の描画
+	void DrawUI()override;
+	// customクラスのポインター
 	std::unique_ptr<Custom>map_;
+	// 各ステータスごとのアップデート関数格納用function
 	std::map<CustomState, std::function<void(void)>>updateFunc_;
+	// 各ステータスごとの描画用関数格納用function,基本的にはUI系
 	std::map<CustomState, std::function<void(void)>>drawFunc_;
+	// 現在のステータス
 	CustomState nowState_;
+	// マップサイズ入力の保存用
 	int mapSizeX;
 	int mapSizeY;
+	// マップファイル名の保存用
 	TCHAR fileName[20];
 
 	// SET_STATEに対応するUpdate関数

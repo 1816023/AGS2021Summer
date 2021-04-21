@@ -17,19 +17,19 @@ int Map::Update()
 
 void Map::Draw()
 {
-	for (int x = 0; x <= mapSize_.x; x++)
+	for (int x = 0; x <= state.mapSize_.x; x++)
 	{
-		DrawLine(x * chipSize_.x/2, 0, x * chipSize_.x/2, chipSize_.x/2 * mapSize_.y, 0xffffff);
+		DrawLine(x * state.chipSize_.x/2, 0, x * state.chipSize_.x/2, state.chipSize_.x/2 * state.mapSize_.y, 0xffffff);
 	}
-	for (int y = 0; y <= mapSize_.y; y++)
+	for (int y = 0; y <= state.mapSize_.y; y++)
 	{
-		DrawLine(0, y * chipSize_.y/2, chipSize_.x/2 * mapSize_.x, y * chipSize_.y/2, 0xffffff);
+		DrawLine(0, y * state.chipSize_.y/2, state.chipSize_.x/2 * state.mapSize_.x, y * state.chipSize_.y/2, 0xffffff);
 	}
-	for (int y = 0; y < mapSize_.y; y++)
+	for (int y = 0; y < state.mapSize_.y; y++)
 	{
-		for (int x = 0; x < mapSize_.x; x++)
+		for (int x = 0; x < state.mapSize_.x; x++)
 		{
-			DrawFormatString(x * chipSize_.x/2, y * chipSize_.y/2, 0xffffff, (L"%d"),(static_cast<int>(mapData_[y][x])));
+			DrawFormatString(x * state.chipSize_.x/2, y * state.chipSize_.y/2, 0xffffff, (L"%d"),(static_cast<int>(mapData_[y][x])));
 		}
 	}
 }
@@ -41,10 +41,10 @@ bool Map::SetUp(std::string mapName)
 		return false;
 	}
 	const tinyxml2::XMLElement* mapElm = document.FirstChildElement("map");
-	mapSize_ = { mapElm->IntAttribute("hight"),mapElm->IntAttribute("width") };
+	state.mapSize_ = { mapElm->IntAttribute("hight"),mapElm->IntAttribute("width") };
 	const tinyxml2::XMLElement* chipElm = document.FirstChildElement("chip");
-	chipSize_ = {128, 128};// { chipElm->IntAttribute("hight"), chipElm->IntAttribute("width") };
-	mapData_.resize(mapSize_.y);
+	state.chipSize_ = {128, 128};// { chipElm->IntAttribute("hight"), chipElm->IntAttribute("width") };
+	mapData_.resize(state.mapSize_.y);
 	//for (int y = 0; y < mapSize_.y; y++)
 	//{
 	//	mapData_[y].resize(mapSize_.y);
@@ -57,7 +57,7 @@ bool Map::SetUp(std::string mapName)
 	{
 		
 		mapData_[y].push_back(static_cast<MapChipName>(std::atoi(buf.c_str())));
-		if (mapData_[y].size()>=mapSize_.x)
+		if (mapData_[y].size()>=state.mapSize_.x)
 		{
 			y++;
 		}
@@ -68,12 +68,12 @@ bool Map::SetUp(std::string mapName)
 
 MapChipName Map::GetMapChip(Vec2Float pos)
 {
-	VECTOR2 vec = { static_cast<int>(pos.x) / chipSize_.x,static_cast<int>(pos.y) / (chipSize_.y/2) };
+	VECTOR2 vec = { static_cast<int>(pos.x) / state.chipSize_.x,static_cast<int>(pos.y) / (state.chipSize_.y/2) };
 	if (vec.x < 0 || vec.y < 0)
 	{
 		return MapChipName::MAX;
 	}
-	if (vec.x >= mapSize_.x || vec.y >= mapSize_.y)
+	if (vec.x >= state.mapSize_.x || vec.y >= state.mapSize_.y)
 	{
 		return MapChipName::MAX;
 	}
@@ -83,12 +83,12 @@ MapChipName Map::GetMapChip(Vec2Float pos)
 
 MapChipName Map::GetMapChip(VECTOR2 pos)
 {
-	VECTOR2 vec = pos / (chipSize_/2);
+	VECTOR2 vec = pos / (state.chipSize_/2);
 	if (vec.x < 0 || vec.y < 0)
 	{
 		return MapChipName::MAX;
 	}
-	if (vec.x >= mapSize_.x|| vec.y >= mapSize_.y)
+	if (vec.x >= state.mapSize_.x|| vec.y >= state.mapSize_.y)
 	{
 		return MapChipName::MAX;
 	}
@@ -98,12 +98,12 @@ MapChipName Map::GetMapChip(VECTOR2 pos)
 
 VECTOR2 Map::GetMapSize()
 {
-	return mapSize_;
+	return state.mapSize_;
 }
 
 VECTOR2 Map::GetChipSize()
 {
-	return chipSize_;
+	return state.chipSize_;
 }
 
 bool Map::LoadMap(std::string mapName)

@@ -16,6 +16,14 @@ enum class MapChipName:char
 	MAX
 
 };
+
+// 
+struct MapState {
+	VECTOR2 mapSize_;
+	VECTOR2 chipSize_;
+	std::wstring name_;
+
+};
 using dataVec = std::vector<std::vector<MapChipName>> ;
 // マップ情報の表示取得用クラス
 class Map
@@ -37,15 +45,17 @@ public:
 	VECTOR2 GetChipSize();							
 protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定
-	bool LoadMap(std::string mapName);				
-	// マップのchip数
-	VECTOR2 mapSize_;								
-	// 1chipのサイズ
-	VECTOR2 chipSize_;								
+	bool LoadMap(std::string mapName);	
+	// マップのステータス
+	MapState state;
+	//// マップのchip数
+	//VECTOR2 mapSize_;								
+	//// 1chipのサイズ
+	//VECTOR2 chipSize_;								
 	// マップデータの格納2次元配列
 	dataVec mapData_;								
 	// マップデータのXMLファイルをロードしたデータ
-	tinyxml2::XMLDocument document;					
+	tinyxml2::XMLDocument document;	
 };
 
 
