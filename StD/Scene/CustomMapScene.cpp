@@ -1,11 +1,12 @@
 #include <DxLib.h>
 #include <list>
 #include "TitleScene.h"
+#include "../Application.h"
 #include "CustomMapScene.h"
 
 CustomMapScene::CustomMapScene()
 {
-	map_ = std::make_unique<Custom>();
+	map_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SET_STATE;
 	updateFunc_.try_emplace(CustomState::SET_STATE,std::bind(&CustomMapScene::SetStateUpdate,this));
 	updateFunc_.try_emplace(CustomState::MAP_CUSTOM,std::bind(&CustomMapScene::Map_CuntomUpdate,this));
@@ -34,6 +35,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 	{
 		return std::make_unique<TitleScene>();
 	}
+	
 
 	updateFunc_[nowState_]();
 	return std::move(own);
@@ -42,7 +44,17 @@ unique_Base CustomMapScene::Update(unique_Base own)
 void CustomMapScene::Draw()
 {
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
+	if (nowState_ == CustomState::MAP_CUSTOM)
+	{
+		map_->Draw();
+	}
+
+}
+
+void CustomMapScene::DrawUI()
+{
 	drawFunc_[nowState_]();
+
 }
 
 void CustomMapScene::SetStateUpdate()
@@ -131,7 +143,7 @@ void CustomMapScene::SetStateDraw()
 void CustomMapScene::MapCuntomDraw()
 {
 	DrawString(0, 0, L"Custom", 0xffffff);
-	map_->Draw();
+	DrawBox(MAX_MAP_DRAW.x, 0, DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y, 0x555555, true);
 	DrawLine(MAX_MAP_DRAW.x, 0, MAX_MAP_DRAW.x, MAX_MAP_DRAW.y, 0xffffff);
 }
 

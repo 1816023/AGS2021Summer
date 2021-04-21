@@ -36,7 +36,7 @@ unique_Base GameScene::Update(unique_Base own)
 	{
 		return std::make_unique<ResultScene>();
 	}
-	auto delta = Application::Instance().getDelta();
+	auto delta = Application::Instance().GetDelta();
 	for (auto& spawners : enemySpawner_)
 	{
 		spawners->Update(delta);
