@@ -23,4 +23,3 @@ private:
 protected:
 	int slipDamage;	// 継続ダメージ用描画変数
 };
-

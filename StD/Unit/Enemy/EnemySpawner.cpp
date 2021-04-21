@@ -23,8 +23,8 @@ void EnemySpawner::Spawn(EnemyType type)
 
 void EnemySpawner::Update(float deltaTime)
 {
-	cnt_ += deltaTime;
-	if (cnt_ > 5.0f && spawnList_.size() > 0)
+	cnt_++;
+	if (cnt_ > 60.0f && spawnList_.size() > 0)
 	{
 		cnt_ = 0.0f;
 		Spawn(spawnList_.back());

@@ -204,6 +204,7 @@
     <ClInclude Include="Unit\Enemy\EnemyType.h" />
     <ClInclude Include="Unit\Player\Player.h" />
     <ClInclude Include="Unit\Player\PlayerMng.h" />
+    <ClInclude Include="Unit\Player\PlayerType.h" />
     <ClInclude Include="Unit\Player\Yellow.h" />
     <ClInclude Include="Unit\Unit.h" />
     <ClInclude Include="VECTOR2.h" />
