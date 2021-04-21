@@ -25,7 +25,6 @@ bool Application::Init()
 	int x, y, col;
 	GetScreenState(&x, &y, &col);
 	gameScreen_ = MakeScreen(chipSize * mapSize, chipSize * mapSize);
-	uiScreen_ = MakeScreen(x, y);
 	sceneController_ = std::make_unique<TitleScene>();
 	old = system_clock::now();
 	return true;

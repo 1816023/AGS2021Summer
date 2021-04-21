@@ -4,6 +4,9 @@
 #include "Scene/BaseScene.h"
 #include <chrono>
 
+#define DEF_SCREEN_SIZE_X 854
+#define DEF_SCREEN_SIZE_Y 480
+
 // アプリケーションまとめクラス
 class Application
 {
@@ -28,9 +31,7 @@ private:
 	void ExtendWindowInit();	// ウインドウサイズ拡縮初期化
 	void Draw();	// 描画
 
-
 	int gameScreen_;
-	int uiScreen_;
 	std::unique_ptr<BaseScene>sceneController_;	// シーンコントローラー
 
 	std::chrono::system_clock::time_point old;
