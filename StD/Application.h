@@ -8,6 +8,8 @@
 #define DEF_SCREEN_SIZE_X 854
 #define DEF_SCREEN_SIZE_Y 480
 
+#define lpApplication Application::Instance()
+
 class Camera;
 // アプリケーションまとめクラス
 class Application

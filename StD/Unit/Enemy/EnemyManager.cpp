@@ -1,15 +1,15 @@
 #include "EnemyManager.h"
 #include "ECircle.h"
+#include "../../Map/Map.h"
 
-EnemyManager::EnemyManager()
+EnemyManager::EnemyManager(Map& map)
 {
-	prototype_.emplace(EnemyType::Circle, new ECircle());
+	prototype_.emplace(EnemyType::Circle, new ECircle(map));
 }
 
 EnemyManager::~EnemyManager()
 {
 }
-
 Enemy& EnemyManager::CreateEnemy(EnemyType type)
 {
 	auto enemy = prototype_[type]->CreateClone();

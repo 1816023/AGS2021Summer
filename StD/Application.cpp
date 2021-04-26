@@ -60,7 +60,6 @@ void Application::Run()
 			delta_ = static_cast<float>(duration_cast<microseconds>(now - old_).count()) * 0.00001f;
 		}
 		old_ = now;
-		
 		Draw();
 	}
 }
@@ -78,7 +77,7 @@ void Application::Draw()
 	auto pos = camera_->GetPos();
 	auto scale = camera_->GetScale();
 	auto halfScreen = Vec2Int(DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2);
-	DrawRotaGraph2(halfScreen.x -pos.x , halfScreen.y -pos.y, 
+	DrawRotaGraph2(halfScreen.x - pos.x , halfScreen.y - pos.y, 
 				   halfScreen.x + pos.x, halfScreen.y + pos.y, scale, 0,
 				   gameScreen_, false);
 	// ui•`‰æ

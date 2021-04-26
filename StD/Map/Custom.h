@@ -16,6 +16,5 @@ public:
 private:
 	// 描画のオフセット
 	VECTOR2 offset_;
-	// wstringをstringに変換する
 };
 

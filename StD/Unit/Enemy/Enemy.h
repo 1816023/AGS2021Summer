@@ -2,6 +2,7 @@
 #include "../Unit.h"
 #include "../../VECTOR2.h"
 #include "EnemyType.h"
+#include <vector>
 
 // ÉpÉâÉÅÅ[É^íËêî
 // HP
@@ -20,17 +21,23 @@
 #define LowSpeed 10
 #define MidDist 20
 #define HighDist 30
+
+class Map;
 class Enemy : public Unit
 {
 public:
 	Enemy();
+	Enemy(Map& map);
 	virtual ~Enemy();
-	virtual void Update(float deltaTime)override;
-	virtual void Draw()override;
-	virtual void SetPosition(Vec2Float pos);
+	virtual void Update(float deltaTime);
+	virtual void Draw();
 	virtual Enemy* CreateClone() = 0;
+	virtual void SetPosition(Vec2Float pos);
+	virtual void SetRoot(std::vector<RootDir>& root);
 protected:
 	virtual bool IsDeath();
+	std::vector<RootDir> root_;
+	Map* map_;
 	bool isDeath_;
 };
 

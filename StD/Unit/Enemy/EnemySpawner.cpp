@@ -1,13 +1,38 @@
 #include "EnemySpawner.h"
 #include "EnemyManager.h"
 #include "ECircle.h"
+#include "../../Map/Map.h"
 
-
-EnemySpawner::EnemySpawner(Vec2Float pos, const std::vector<EnemyType>& spawnList)
+EnemySpawner::EnemySpawner(Vec2Float pos,
+	EnemyManager& enemyMng)
 {
+	for (int i = 0; i < 50; i++)
+	{
+		spawnList_.emplace_back(EnemyType::Circle);
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		root_.emplace_back(RootDir::DOWN);
+	}
+	for (int i = 0; i < 9; i++)
+	{
+		root_.emplace_back(RootDir::RIGHT);
+	}
+	for (int i = 0; i < 9; i++)
+	{
+		root_.emplace_back(RootDir::UP);
+	}
+	for (int i = 0; i < 9; i++)
+	{
+		root_.emplace_back(RootDir::LEFT);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		root_.emplace_back(RootDir::DOWN);
+	}
 	pos_ = pos;
-	spawnList_ = spawnList;
-	enemyMng_ = &EnemyManager::Instance();
+	enemyMng_ = &enemyMng;
 	cnt_ = 0.0f;
 }
 
@@ -19,6 +44,7 @@ void EnemySpawner::Spawn(EnemyType type)
 {
 	auto& enemy = enemyMng_->CreateEnemy(type);
 	enemy.SetPosition(pos_);
+	enemy.SetRoot(root_);
 }
 
 void EnemySpawner::Update(float deltaTime)

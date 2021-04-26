@@ -7,8 +7,8 @@ public:
 	Player() = default;
 	~Player() = default;
 	void Init();
-	void Update(float deltaTime)override;
-	void Draw()override;
+	void Update(float deltaTime);
+	void Draw();
 	//virtual void Skill(void)=0;
 protected:
 	bool isSkill_;	//skill‚ª”­“®‰Â”\‚©

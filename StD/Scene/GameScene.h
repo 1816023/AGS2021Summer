@@ -17,6 +17,7 @@ private:
 	void DrawUI()override;
 	//デバッグ
 	std::unique_ptr<Map> map;
+	std::unique_ptr<EnemyManager> enemyMng_;
 
 	// 現在はここにMapに移す予定
 	std::vector<std::shared_ptr<EnemySpawner>>enemySpawner_;	// 敵生成クラス
