@@ -1,6 +1,7 @@
 #include "Custom.h"
 #include <fstream>
 #include <Windows.h>
+#include "../StringUtil.h"
 Custom::Custom(VECTOR2 offset):offset_(offset)
 {
 }
@@ -54,7 +55,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	{
 		return false;
 	}
-	std::string filePath = "data/mapData/" + WStringToString(name) + ".xml";
+	std::string filePath = "data/mapData/" + StringUtil::WStringToString(name) + ".xml";
 	std::ofstream file;
 	file.open(filePath.c_str());
 	if (!file)
@@ -91,18 +92,5 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 
 	}
 	return true;
-}
-
-std::string Custom::WStringToString(std::wstring oWString)
-{
-	// wstring → SJIS
-	int iBufferSize = WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str(), -1, (char*)NULL, 0, NULL, NULL);
-	CHAR* cpMultiByte = new CHAR[iBufferSize];
-	// wstring → SJIS
-	WideCharToMultiByte(CP_OEMCP, 0, oWString.c_str(), -1, cpMultiByte, iBufferSize, NULL, NULL);
-	std::string oRet(cpMultiByte, cpMultiByte + iBufferSize - 1);
-	// バッファの破棄
-	delete[] cpMultiByte;
-	return oRet;
 }
 

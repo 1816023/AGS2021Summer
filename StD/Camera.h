@@ -8,7 +8,7 @@ public:
 	Camera();
 	~Camera();
 
-	void Control();		// カメラ移動
+	void Control();				// カメラ移動
 	void SetScale(float scale);	// 拡大率変更
 	const Vec2Float GetPos();	// 座標取得
 	const float GetScale();		// 拡大率取得
