@@ -26,7 +26,10 @@ Enemy* ECircle::CreateClone()
 
 void ECircle::RunUpdate(float deltaTime)
 {
-	state_.pos.y += 5 * deltaTime;
+}
+
+void ECircle::SearchUpdate(float deltaTime)
+{
 }
 
 void ECircle::deathUpdate(float deltaTime)
