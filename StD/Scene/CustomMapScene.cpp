@@ -143,7 +143,9 @@ void CustomMapScene::SetStateDraw()
 void CustomMapScene::MapCuntomDraw()
 {
 	DrawString(0, 0, L"Custom", 0xffffff);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 	DrawBox(MAX_MAP_DRAW.x, 0, DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y, 0x555555, true);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 	DrawLine(MAX_MAP_DRAW.x, 0, MAX_MAP_DRAW.x, MAX_MAP_DRAW.y, 0xffffff);
 }
 

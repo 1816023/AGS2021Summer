@@ -19,18 +19,24 @@ int Map::Update()
 void Map::Draw()
 {
 	std::array<int, 5> color = {
-		0x888888,
-		0x880000,
-		0x008800,
-		0x000088,
-		0x000000
+		0x007fff,			// 防衛拠点				青
+		0xff0f0f,			// 敵出現位置			赤
+		0xafff00,			// 敵侵攻ルート			緑
+		0xe3e3e3,			// 自機配置可能箇所		白
+		0x000000			// 自機配置不可能箇所	黒（背景色）
 	};
 	for (int y = 0; y < state.mapSize_.y; y++)
 	{
 		for (int x = 0; x < state.mapSize_.x; x++)
 		{
-			DrawBox(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, x * state.chipSize_.x / 2 + state.chipSize_.x / 2, y * state.chipSize_.y / 2 + state.chipSize_.y / 2, color[static_cast<int>(mapData_[y][x]) - 1], true);
+			if (mapData_[y][x]!=MapChipName::WALL)
+			{
+				DrawBox(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, x * state.chipSize_.x / 2 + state.chipSize_.x / 2, y * state.chipSize_.y / 2 + state.chipSize_.y / 2, color[static_cast<int>(mapData_[y][x]) - 1], true);
+			}
+#ifdef _DEBUG
 			DrawFormatString(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, 0xffffff, (L"%d"), (static_cast<int>(mapData_[y][x])));
+#endif // _DEBUG
+
 		}
 	}
 	for (int x = 0; x <= state.mapSize_.x; x++)

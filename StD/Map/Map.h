@@ -8,11 +8,11 @@
 enum class MapChipName:char
 {
 
-	MAINSTAY=1,		// 防衛拠点
-	SPAWNER,		// 敵出現位置
-	ROOT,			// 敵侵攻ルート
-	FIELD,			// 自機配置可能箇所
-	WALL,			// 自機配置不可能箇所
+	MAINSTAY=1,		// 防衛拠点				青
+	SPAWNER,		// 敵出現位置			黄
+	ROOT,			// 敵侵攻ルート			赤
+	FIELD,			// 自機配置可能箇所		灰/白
+	WALL,			// 自機配置不可能箇所	黒（背景色）
 	MAX
 
 };

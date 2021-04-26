@@ -88,7 +88,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	error=document.SaveFile(filePath.c_str());
 	if (error)
 	{
-
+		return false;
 	}
 	return true;
 }
