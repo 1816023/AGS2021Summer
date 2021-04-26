@@ -18,7 +18,7 @@ public:
 	void Update(void);		// マウスの状態更新
 	const VECTOR2& GetPos() { return pos; }	// マウスの位置の取得
 	const int& GetWheel() { return wheel; }	// ホイールの取得
-
+	const bool IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd);
 private:
 	struct MouseDelete
 	{

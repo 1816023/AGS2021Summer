@@ -225,3 +225,89 @@ VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>&
 	return vec;
 }
 
+//VECTOR2 + Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x + v.x;
+	vec.y = u.y + v.y;
+	return vec;
+
+}
+//VECTOR2 - Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x - v.x;
+	vec.y = u.y - v.y;
+	return vec;
+
+}
+
+//VECTOR2 * Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x * v.x;
+	vec.y = u.y * v.y;
+	return vec;
+
+}
+
+//VECTOR2 / Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x / v.x;
+	vec.y = u.y / v.y;
+	return vec;
+
+}
+
+//Vec2Float + VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x + v.x;
+	vec.y = u.y + v.y;
+	return vec;
+
+}
+
+//Vec2Float - VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x - v.x;
+	vec.y = u.y - v.y;
+	return vec;
+
+}
+
+//Vec2Float * VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v) 
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x * v.x;
+	vec.y = u.y * v.y;
+	return vec;
+}
+
+//Vec2Float / VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x / v.x;
+	vec.y = u.y / v.y;
+	return vec;
+
+}
+

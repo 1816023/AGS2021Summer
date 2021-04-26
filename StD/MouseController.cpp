@@ -29,6 +29,17 @@ void MouseController::Update()
 	wheel += GetMouseWheelRotVol();
 }
 
+const bool MouseController::IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd)
+{
+	if (!((pos.x < lu.x || pos.y < lu.y) || (pos.x<lu.x || pos.y>rd.y) || (pos.x > rd.x || pos.y < lu.y) || (pos.x > rd.x || pos.y > rd.y)))
+	{
+		return true;
+	}
+
+
+	return false;
+}
+
 MouseController::MouseController()
 {
 	data = 0;

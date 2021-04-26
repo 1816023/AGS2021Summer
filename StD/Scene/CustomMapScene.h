@@ -8,7 +8,9 @@
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
 #define LINE_SPACING 30		// 行間
-#define MAX_MAP_DRAW VECTOR2(DEF_SCREEN_SIZE_X/1.5,DEF_SCREEN_SIZE_Y)
+#define SELECT_UI_DRAW std::pair<VECTOR2,VECTOR2>(VECTOR2(DEF_SCREEN_SIZE_X/1.5,0),VECTOR2(DEF_SCREEN_SIZE_X,DEF_SCREEN_SIZE_Y))
+#define TEXT_UI_DRAW std::pair<VECTOR2,VECTOR2>(VECTOR2(0,DEF_SCREEN_SIZE_Y/1.5),VECTOR2(SELECT_UI_DRAW.first.x-10,DEF_SCREEN_SIZE_Y))
+
 enum class CustomState {
 	SET_STATE,			// マップの幅や高さを設定する状態
 	MAP_CUSTOM,			// マップを作成している状態
@@ -52,7 +54,7 @@ private:
 	// SET_STATEに対応するDraw関数
 	void SetStateDraw();				
 	// MAP_CUNSTOMに対応するDraw関数
-	void MapCuntomDraw();				
+	void MapCustomDraw();				
 	// END_CUSTOMに対応するDraw関数
 	void EndCustomDraw();				
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
