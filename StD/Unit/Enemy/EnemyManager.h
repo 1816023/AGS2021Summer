@@ -6,32 +6,27 @@
 #include "EnemyType.h"
 
 class Enemy;
+using EnemyList = std::vector<std::shared_ptr<Enemy>>;
 
+class Map;
 // “GŠÇ—ƒNƒ‰ƒX
 class EnemyManager
 {
-
 friend class EnemySpawner;
 public:
-	static EnemyManager& Instance()
-	{
-		static EnemyManager app;
-		return app;
-	}
+	EnemyManager(Map& map);
 	~EnemyManager();
-	
-	void Update(float deltaTime);
-	void Draw();
+	// XV
+	void Update(float deltaTime);	
+	// •`‰æ
+	void Draw();	
+	EnemyList& GetEnemies();
 private:
-	EnemyManager();
-	EnemyManager(const EnemyManager&) = delete;
-	EnemyManager operator=(const EnemyManager&) = delete;
-	using Prototype = std::unordered_map<EnemyType, Enemy*>;
 	// “G‚ğì¬‚·‚é
 	Enemy& CreateEnemy(EnemyType type);
 
-	std::vector<std::shared_ptr<Enemy>>enemies_;
-	Prototype prototype_;
-
+	EnemyList enemies_;	// “G‚½‚¿
+	using Prototype = std::unordered_map<EnemyType, Enemy*>;
+	Prototype prototype_;	// “G‚Ìƒvƒƒgƒ^ƒCƒv
 };
 

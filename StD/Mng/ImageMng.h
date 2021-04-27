@@ -28,7 +28,7 @@ public:
 		return s_Instance;
 	}
 
-	const VEC_INT& GetID(std::wstring f_name);			//рсь┌л▌Ф⌠╬
+	const int& GetID(std::wstring f_name);			//рсь┌л▌Ф⌠╬
 	const VEC_INT& GetID(std::wstring f_name, VECTOR2 divSize, VECTOR2 divCnt);			//┴Ф▒°┌л∙╙┼└⌠г┌щ█·┌щ
 
 private:

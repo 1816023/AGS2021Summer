@@ -18,7 +18,6 @@ public:
 private:
 	SceneManager();
 	~SceneManager();
-
 	bool SysInit(void);
 
 	unique_Base sceneController;

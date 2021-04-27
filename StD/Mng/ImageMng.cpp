@@ -1,7 +1,7 @@
 ﻿#include "DxLib.h"
 #include "ImageMng.h"
 
-const VEC_INT& ImageMng::GetID(std::wstring f_name)
+const int& ImageMng::GetID(std::wstring f_name)
 {
 	if (imgMap.find(f_name) == imgMap.end())
 	{
@@ -14,7 +14,7 @@ const VEC_INT& ImageMng::GetID(std::wstring f_name)
 		}
 		
 	}
-	return imgMap[f_name];
+	return imgMap[f_name][0];
 }
 
 const VEC_INT& ImageMng::GetID(std::wstring f_name, VECTOR2 divSize, VECTOR2 divCnt)

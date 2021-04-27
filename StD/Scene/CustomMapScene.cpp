@@ -1,24 +1,27 @@
 #include <DxLib.h>
 #include <list>
 #include "TitleScene.h"
+#include "../Application.h"
 #include "CustomMapScene.h"
+#include "../Mng/ImageMng.h"
+#include "../MouseController.h"
 
 CustomMapScene::CustomMapScene()
 {
-	map_ = std::make_unique<Custom>();
+	map_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SET_STATE;
 	updateFunc_.try_emplace(CustomState::SET_STATE,std::bind(&CustomMapScene::SetStateUpdate,this));
 	updateFunc_.try_emplace(CustomState::MAP_CUSTOM,std::bind(&CustomMapScene::Map_CuntomUpdate,this));
 	updateFunc_.try_emplace(CustomState::END_CUSTOM,std::bind(&CustomMapScene::EndCustomUpdate,this));
 
 	drawFunc_.try_emplace(CustomState::SET_STATE, std::bind(&CustomMapScene::SetStateDraw, this));
-	drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCuntomDraw, this));
+	drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCustomDraw, this));
 	drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomDraw, this));
 
 	mapSizeX = 0;
 	mapSizeY = 0;
 	fileName[0] = TCHAR();
-
+	blendAlpha = 256;
 }
 
 CustomMapScene::~CustomMapScene()
@@ -29,11 +32,12 @@ unique_Base CustomMapScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
-
+	
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
 		return std::make_unique<TitleScene>();
 	}
+	//blendAlpha+=2;
 
 	updateFunc_[nowState_]();
 	return std::move(own);
@@ -41,8 +45,38 @@ unique_Base CustomMapScene::Update(unique_Base own)
 
 void CustomMapScene::Draw()
 {
+	Vec2Float cPos= Application::Instance().GetCamera().GetPos();
+	cPos *= 2.0f;
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
+	VECTOR2 mPos = lpMouseController.GetPos();
+#ifdef _DEBUG
+	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(map_->GetMapChip(mPos + cPos)));
+#endif // DEBUG
+
+	if (nowState_ == CustomState::MAP_CUSTOM)
+	{
+		map_->Draw();
+		
+		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_DRAW.first, SELECT_UI_DRAW.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_DRAW.first, TEXT_UI_DRAW.second))
+		{
+			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0)-cPos, map_->GetMapSize() * map_->GetChipSize() -cPos))
+			{
+				mPos = (mPos+cPos) / (map_->GetChipSize()) * (map_->GetChipSize());
+				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha%256));
+				DrawBox(mPos.x, mPos.y, (mPos.x) + map_->GetChipSize().x, (mPos.y) + map_->GetChipSize().y, 0xcccc00, true);
+				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+
+			}
+		}
+	}
+
+
+}
+
+void CustomMapScene::DrawUI()
+{
 	drawFunc_[nowState_]();
+	
 }
 
 void CustomMapScene::SetStateUpdate()
@@ -63,7 +97,7 @@ void CustomMapScene::Map_CuntomUpdate()
 	GetMousePoint(&mPos.x, &mPos.y);
 	if (GetMouseInput() & MOUSE_INPUT_LEFT == 1)
 	{
-		if (mPos.x > MAX_MAP_DRAW.x)
+		if (mPos.x > SELECT_UI_DRAW.first.x)
 		{
 
 		}
@@ -128,11 +162,43 @@ void CustomMapScene::SetStateDraw()
 	}
 }
 
-void CustomMapScene::MapCuntomDraw()
+void CustomMapScene::MapCustomDraw()
 {
 	DrawString(0, 0, L"Custom", 0xffffff);
-	map_->Draw();
-	DrawLine(MAX_MAP_DRAW.x, 0, MAX_MAP_DRAW.x, MAX_MAP_DRAW.y, 0xffffff);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawRoundRect(SELECT_UI_DRAW.first.x, SELECT_UI_DRAW.first.y, SELECT_UI_DRAW.second.x, SELECT_UI_DRAW.second.y,20,20, 0x555555, true);
+	DrawRoundRect(SELECT_UI_DRAW.first.x, SELECT_UI_DRAW.first.y, SELECT_UI_DRAW.second.x, SELECT_UI_DRAW.second.y, 20, 20, 0xffffff, false);
+	DrawRoundRect(TEXT_UI_DRAW.first.x, TEXT_UI_DRAW.first.y, TEXT_UI_DRAW.second.x, TEXT_UI_DRAW.second.y, 20, 20, 0x555555, true);
+	DrawRoundRect(TEXT_UI_DRAW.first.x, TEXT_UI_DRAW.first.y, TEXT_UI_DRAW.second.x, TEXT_UI_DRAW.second.y, 20, 20, 0xffffff, false);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+
+	VECTOR2 mPos = lpMouseController.GetPos();
+	if (lpMouseController.GetClicking())
+	{
+		if (lpMouseController.IsHitBoxToMouse(SELECT_UI_DRAW.first,SELECT_UI_DRAW.second))
+		{
+			DrawRoundRect(SELECT_UI_DRAW.first.x + 10+1, 10+1, SELECT_UI_DRAW.first.x + 64 + 10+1, 64 + 10+1, 10, 10, 0xffffff, true);
+		}
+		else
+		{
+			DrawRoundRect(SELECT_UI_DRAW.first.x + 10 + 3, 10 + 3, SELECT_UI_DRAW.first.x + 64 + 10 + 3, 64 + 10 + 3, 10, 10, 0x000000, true);
+			DrawRoundRect(SELECT_UI_DRAW.first.x + 10, 10, SELECT_UI_DRAW.first.x + 64 + 10, 64 + 10, 10, 10, 0xffffff, true);
+		}
+	}
+	else {
+		DrawRoundRect(SELECT_UI_DRAW.first.x + 10 + 3, 10 + 3, SELECT_UI_DRAW.first.x + 64 + 10 + 3, 64 + 10 + 3, 10, 10, 0x000000, true);
+		DrawRoundRect(SELECT_UI_DRAW.first.x + 10, 10, SELECT_UI_DRAW.first.x + 64 + 10, 64 + 10, 10, 10, 0xffffff, true);
+	}
+	
+#ifdef _DEBUG
+
+	DrawFormatString(mPos.x, mPos.y+10, 0x00ff00, L"%d:%d", mPos.x, mPos.y);
+	DrawFormatString(mPos.x, mPos.y + 30, 0x0000ff, L"%d:%d", mPos.x + static_cast<int>(lpApplication.GetCamera().GetPos().x), mPos.y + static_cast<int>(lpApplication.GetCamera().GetPos().y));
+#endif // _DEBUG
+
+
+
+
 }
 
 void CustomMapScene::EndCustomDraw()

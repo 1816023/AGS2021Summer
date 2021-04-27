@@ -149,6 +149,10 @@ VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<T>& u, T v)
 template<class T>
 VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, T v)
 {
+	if (v == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x / v;
 	vec.y = u.y / v;
@@ -160,6 +164,10 @@ VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, T v)
 template<class T>
 VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, T v)
 {
+	if (v.x == 0 || v.y == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x % v;
 	vec.y = u.y % v;
@@ -210,6 +218,10 @@ VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>&
 template<class T>
 VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v)
 {
+	if (v.x == 0 || v.y == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x / v.x;
 	vec.y = u.y / v.y;
@@ -219,9 +231,111 @@ VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>&
 template<class T>
 VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v)
 {
+	if (v.x == 0 || v.y == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x % v.x;
 	vec.y = u.y % v.y;
 	return vec;
+}
+
+//VECTOR2 + Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x + v.x;
+	vec.y = u.y + v.y;
+	return vec;
+
+}
+//VECTOR2 - Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x - v.x;
+	vec.y = u.y - v.y;
+	return vec;
+
+}
+
+//VECTOR2 * Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x * v.x;
+	vec.y = u.y * v.y;
+	return vec;
+
+}
+
+//VECTOR2 / Vec2Float----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+{
+	if (v.x == 0 || v.y == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x / v.x;
+	vec.y = u.y / v.y;
+	return vec;
+
+}
+
+//Vec2Float + VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+{
+	if (v.x == 0 || v.y == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x + v.x;
+	vec.y = u.y + v.y;
+	return vec;
+
+}
+
+//Vec2Float - VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x - v.x;
+	vec.y = u.y - v.y;
+	return vec;
+
+}
+
+//Vec2Float * VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v) 
+{
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x * v.x;
+	vec.y = u.y * v.y;
+	return vec;
+}
+
+//Vec2Float / VECTOR2----------------------------
+template<class T>
+VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+{
+	if (v.x == 0 || v.y == 0)
+	{
+		return VECTOR2_TEMPLE<T>();
+	}
+	VECTOR2_TEMPLE<T> vec;
+	vec.x = u.x / v.x;
+	vec.y = u.y / v.y;
+	return vec;
+
 }
 

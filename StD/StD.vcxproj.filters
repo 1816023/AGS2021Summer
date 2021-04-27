@@ -28,6 +28,8 @@
     <ClCompile Include="Unit\Enemy\EnemySpawner.cpp" />
     <ClCompile Include="Unit\Player\Player.cpp" />
     <ClCompile Include="Mng\ImageMng.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="StringUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -60,5 +62,8 @@
     <ClInclude Include="Unit\Enemy\EnemyType.h" />
     <ClInclude Include="Unit\Player\Player.h" />
     <ClInclude Include="Mng\ImageMng.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Unit\Player\PlayerType.h" />
+    <ClInclude Include="StringUtil.h" />
   </ItemGroup>
 </Project>

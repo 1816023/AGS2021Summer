@@ -2,6 +2,8 @@
 #include "Scene/TitleScene.h"
 #include "KeyController.h"
 #include "MouseController.h"
+#include "Camera.h"
+#include <cassert>
 
 using namespace std::chrono;
 
@@ -21,13 +23,14 @@ bool Application::Init()
 	{
 		return false;
 	}
+	
 	SetDrawScreen(DX_SCREEN_BACK);
 	int x, y, col;
 	GetScreenState(&x, &y, &col);
 	gameScreen_ = MakeScreen(chipSize * mapSize, chipSize * mapSize);
-	uiScreen_ = MakeScreen(x, y);
 	sceneController_ = std::make_unique<TitleScene>();
-	old = system_clock::now();
+	old_ = system_clock::now();
+	camera_ = std::make_unique<Camera>();
 	return true;
 }
 
@@ -48,14 +51,15 @@ void Application::Run()
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
 		sceneController_ = (*sceneController_).Update(std::move(sceneController_));
-		
+		camera_->Control();
 		lpKeyController.Update();
 		lpMouseController.Update();
 		auto now = system_clock::now();
-		delta = static_cast<float>(duration_cast<microseconds>(now - old).count())* 0.00001f;
-		
-		old = now;
-		
+		if (GetNoActiveState(true)== 0)
+		{
+			delta_ = static_cast<float>(duration_cast<microseconds>(now - old_).count()) * 0.00001f;
+		}
+		old_ = now;
 		Draw();
 	}
 }
@@ -70,43 +74,27 @@ void Application::Draw()
 
 	// ƒXƒNƒŠ[ƒ“‚ð— ‚É•`‰æ
 	SetDrawScreen(DX_SCREEN_BACK);
-	static double ud,lr= 0.0;
-	static float i= 1.0;
-	if (CheckHitKey(KEY_INPUT_UP))
-	{
-		ud++;
-	}
-	if (CheckHitKey(KEY_INPUT_DOWN))
-	{
-		ud--;
-	}
-	if (CheckHitKey(KEY_INPUT_LEFT))
-	{
-		lr++;
-	}
-	if (CheckHitKey(KEY_INPUT_RIGHT))
-	{
-		lr--;
-	}
-	if (CheckHitKey(KEY_INPUT_W))
-	{
-		i+= 0.001;
-	}
-	if (CheckHitKey(KEY_INPUT_S))
-	{
-		i-= 0.001;
-	}
-	DrawRotaGraph2(-lr+ 427, -ud+240, lr+ 427, ud+240, i ,0, gameScreen_, false);
+	auto pos = camera_->GetPos();
+	auto scale = camera_->GetScale();
+	auto halfScreen = Vec2Int(DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2);
+	DrawRotaGraph2(halfScreen.x - pos.x , halfScreen.y - pos.y, 
+				   halfScreen.x + pos.x, halfScreen.y + pos.y, scale, 0,
+				   gameScreen_, false);
 	// ui•`‰æ
 	sceneController_->DrawUI();
-	DrawFormatString(0, 32, 0xffffff, L"%f", delta);
-	DrawFormatString(0, 0, 0xffffff, L"pos %f, %f, %f", -lr, ud, i);
+	DrawFormatString(0, 32, 0xffffff, L"%f", delta_);
+	DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", pos.x, pos.y, scale);
 	ScreenFlip();
 }
 
-float Application::getDelta()
+float Application::GetDelta()
 {
-	return delta;
+	return delta_;
+}
+
+Camera& Application::GetCamera()
+{
+	return *camera_;
 }
 
 void Application::Terminate()
