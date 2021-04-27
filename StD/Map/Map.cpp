@@ -31,21 +31,21 @@ void Map::Draw()
 		{
 			if (mapData_[y][x]!=MapChipName::WALL)
 			{
-				DrawBox(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, x * state.chipSize_.x / 2 + state.chipSize_.x / 2, y * state.chipSize_.y / 2 + state.chipSize_.y / 2, color[static_cast<int>(mapData_[y][x]) - 1], true);
+				DrawBox(x * state.chipSize_.x , y * state.chipSize_.y , x * state.chipSize_.x  + state.chipSize_.x , y * state.chipSize_.y + state.chipSize_.y , color[static_cast<int>(mapData_[y][x]) - 1], true);
 			}
 #ifdef _DEBUG
-			DrawFormatString(x * state.chipSize_.x / 2, y * state.chipSize_.y / 2, 0xffffff, (L"%d"), (static_cast<int>(mapData_[y][x])));
+			DrawFormatString(x * state.chipSize_.x , y * state.chipSize_.y , 0xffffff, (L"%d"), (static_cast<int>(mapData_[y][x])));
 #endif // _DEBUG
 
 		}
 	}
 	for (int x = 0; x <= state.mapSize_.x; x++)
 	{
-		DrawLine(x * state.chipSize_.x/2, 0, x * state.chipSize_.x/2, state.chipSize_.x/2 * state.mapSize_.y, 0xffffff);
+		DrawLine(x * state.chipSize_.x, 0, x * state.chipSize_.x, state.chipSize_.x * state.mapSize_.y, 0xffffff);
 	}
 	for (int y = 0; y <= state.mapSize_.y; y++)
 	{
-		DrawLine(0, y * state.chipSize_.y/2, state.chipSize_.x/2 * state.mapSize_.x, y * state.chipSize_.y/2, 0xffffff);
+		DrawLine(0, y * state.chipSize_.y, state.chipSize_.x * state.mapSize_.x, y * state.chipSize_.y, 0xffffff);
 	}
 	
 }
@@ -84,7 +84,7 @@ bool Map::SetUp(std::string mapName)
 
 MapChipName Map::GetMapChip(Vec2Float pos)
 {
-	VECTOR2 vec = { static_cast<int>(pos.x) / state.chipSize_.x,static_cast<int>(pos.y) / (state.chipSize_.y/2) };
+	VECTOR2 vec = { static_cast<int>(pos.x) / state.chipSize_.x,static_cast<int>(pos.y) / (state.chipSize_.y) };
 	if (vec.x < 0 || vec.y < 0)
 	{
 		return MapChipName::MAX;
