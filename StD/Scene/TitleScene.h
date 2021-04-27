@@ -19,5 +19,6 @@ private:
 	SlipDamage* slipDamage;
 	bool trapFlag;
 	int cnt;
+	int HP;
 };
 

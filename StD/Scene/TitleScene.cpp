@@ -11,7 +11,9 @@ TitleScene::TitleScene()
 slipDamage = new SlipDamage(lpMouseController.GetPos());
 
 	trapFlag = false;
-	cnt = 0;}
+	cnt = 0;
+	HP = 50;
+}
 
 TitleScene::~TitleScene()
 {
@@ -53,7 +55,11 @@ void TitleScene::Draw()
 			trapFlag = false;
 		}
 	}
+
+	HP = slipDamage->Damage(HP, trapFlag);
+
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
+	DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
 	
 }
 
