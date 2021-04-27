@@ -1,4 +1,5 @@
 #include "ShotMng.h"
+#include "../../Unit/Player/Yellow.h"
 
 ShotMng::~ShotMng()
 {
@@ -14,22 +15,33 @@ void ShotMng::Update(float deltaTime)
 
 void ShotMng::Draw(void)
 {
+	for (auto& data : shotList_)
+	{
+		for (auto& bulletdata : shotList_[data.first])
+		{
+			DrawCircle(bulletdata.x, bulletdata.y, 5, 0xffffff, true);
+		}
+	}
 }
 
-void ShotMng::AddBullet(std::shared_ptr<Player> unit)
+void ShotMng::AddBullet(Player* ptr,Vec2Float pos)
 {
-	Vec2Float pos = Vec2Float(0.0f, 0.0f);
-	shotList_.emplace_back(BulletStatus{unit,pos});
+	shotSpan_[ptr]--;
+	if (shotSpan_[ptr] <= 0)
+	{
+		shotSpan_[ptr] = BASE_SPAN;
+		shotList_[ptr].push_back(pos);
+	}
 }
 
-void ShotMng::BulletMove(void)
+void ShotMng::BulletMove(Player* ptr)
 {
 	//‚±‚Á‚±‚ÉŠp“x‚ð‹‚ß‚éŒvŽZ‚Ì‹Lq
-
-
-	for (auto& bulletdata : shotList_)
+	//UŒ‚”ÍˆÍ“à‚Ì“G‚ð’Tõ‚·‚éH
+	//
+	for (auto& bulletdata : shotList_[ptr])
 	{
-		bulletdata.pos += Vec2Float(0.0f, 0.0f);
+		bulletdata += Vec2Float(0.0f, 1.0f);
 	}
 }
 
