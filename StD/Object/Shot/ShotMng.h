@@ -7,7 +7,8 @@
 #include <list>
 #include <map>
 
-constexpr auto BASE_SPAN = 30;	//Šî‘b’e‘¬
+constexpr auto BASE_SPAN = 15;	//Šî‘b’eŠÔŠu
+constexpr auto BASE_DIST = 150;	//Šî‘bË’ö
 
 #define lpShotMng ShotMng::GetInstance()
 
@@ -27,6 +28,7 @@ public:
 	void Draw(void);				//’e‚Ì•`‰æ
 	void AddBullet(Player* ptr, Vec2Float pos);			//Unit‚©‚ç”­Ë‚³‚ê‚é’e‚Ìì¬
 	void BulletMove(Player* ptr);	//’e‚ÌˆÚ“®
+	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
 private:
 	ShotMng();
 	std::map<Player*, std::list<Vec2Float>> shotList_;	//’eŠÇ——p

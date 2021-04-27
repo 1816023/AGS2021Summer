@@ -19,7 +19,6 @@
     <ClCompile Include="TrapManager.cpp" />
     <ClCompile Include="Unit\Enemy\EnemyManager.cpp" />
     <ClCompile Include="SlipDamage.cpp" />
-    <ClCompile Include="Object\Shot\Shot.cpp" />
     <ClCompile Include="Object\Shot\ShotMng.cpp" />
     <ClCompile Include="Unit\Player\PlayerMng.cpp" />
     <ClCompile Include="Unit\Player\Yellow.cpp" />
@@ -52,7 +51,6 @@
     <ClInclude Include="TrapManager.h" />
     <ClInclude Include="Unit\Enemy\EnemyManager.h" />
     <ClInclude Include="SlipDamage.h" />
-    <ClInclude Include="Object\Shot\Shot.h" />
     <ClInclude Include="Object\Shot\ShotMng.h" />
     <ClInclude Include="Unit\Player\PlayerMng.h" />
     <ClInclude Include="Unit\Player\Yellow.h" />

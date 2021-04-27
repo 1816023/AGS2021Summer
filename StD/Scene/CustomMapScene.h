@@ -4,6 +4,7 @@
 #include <functional>
 #include <memory>
 #include <map>
+#include <list>
 
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
@@ -40,12 +41,14 @@ private:
 	// 現在のステータス
 	CustomState nowState_;
 	// マップサイズ入力の保存用
-	int mapSizeX;
-	int mapSizeY;
+	int mapSizeX_;
+	int mapSizeY_;
 	// マップファイル名の保存用
-	TCHAR fileName[20];
+	TCHAR fileName_[20];
 	// 変動するアルファ値
-	int blendAlpha;
+	int blendAlpha_;
+	// ファイルからロードした説明文
+	std::list<std::pair<std::wstring,std::string>> textData_;
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					
@@ -61,5 +64,8 @@ private:
 	void EndCustomDraw();				
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
 	bool FileNameErrorCheck(std::wstring fileName);
+	// 説明文をファイルからロードする
+	bool LoadText();
+
 };
 
