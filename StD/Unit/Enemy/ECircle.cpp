@@ -7,14 +7,15 @@ ECircle::ECircle() : Enemy()
 	
 }
 
-ECircle::ECircle(Map& map):Enemy(map)
+ECircle::ECircle(MapInfo& mapInfo):Enemy(mapInfo)
 {
 	updater_ = &ECircle::SearchUpdate;
-	move_ = { 0,0 };
+	state_.life = MID_HP;
+	dirVec = { 0,0 };
 	nowMove_ = { 0,0 };
 	rootIdx_ = 0;
-	mapChipSize = map.GetChipSize();
-	mapSize = map.GetMapSize();
+	mapChipSize = mapInfo.chipSize;
+	mapSize = mapInfo.mapSize;
 }
 
 ECircle::~ECircle()
@@ -35,7 +36,7 @@ Enemy* ECircle::CreateClone()
 {
 	ECircle* enemy = new ECircle();
 	enemy->updater_ = updater_;
-	enemy->move_ = move_;
+	enemy->dirVec = dirVec;
 	enemy->nowMove_ = nowMove_;
 	enemy->rootIdx_ = rootIdx_;
 	enemy->mapChipSize = mapChipSize;
@@ -45,20 +46,31 @@ Enemy* ECircle::CreateClone()
 
 void ECircle::RunUpdate(float deltaTime)
 {
-	if (std::abs(nowMove_.x) >= mapChipSize.x || std::abs(nowMove_.y) >= mapChipSize.y)
+	Move(deltaTime);
+}
+
+void ECircle::Move(float deltaTime)
+{
+	// 移動値計算
+	auto move = dirVec * 4.0f * deltaTime;
+	// 移動補正(１チップ以上)
+	if (std::abs(nowMove_.x) >= mapChipSize.x
+		|| std::abs(nowMove_.y) >= mapChipSize.y)
 	{
 		updater_ = &ECircle::SearchUpdate;
-		map_->GetMapChip(state_.pos);
+
+		// 移動値初期化
 		nowMove_ = { 0,0 };
+		move = { 0,0 };
 	}
-	auto move = move_ * 4.0f * deltaTime;
+	// 移動値加算
 	state_.pos += move;
 	nowMove_ += move;
 }
 
 void ECircle::SearchUpdate(float deltaTime)
 {
-	move_ = { 0,0 };
+	dirVec = { 0,0 };
 	if (root_.size() <= rootIdx_)
 	{
 		rootIdx_ = 0;
@@ -66,16 +78,16 @@ void ECircle::SearchUpdate(float deltaTime)
 	switch (root_[rootIdx_])
 	{
 	case RootDir::UP:
-		move_ = { 0,-1 };
+		dirVec = { 0,-1 };
 		break;
 	case RootDir::DOWN:
-		move_ = { 0,1 };
+		dirVec = { 0,1 };
 		break;
 	case RootDir::LEFT:
-		move_ = { -1,0 };
+		dirVec = { -1,0 };
 		break;
 	case RootDir::RIGHT:
-		move_ = { 1,0 };
+		dirVec = { 1,0 };
 		break;
 	default:
 		break;

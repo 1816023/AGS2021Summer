@@ -4,7 +4,10 @@
 
 EnemyManager::EnemyManager(Map& map)
 {
-	prototype_.emplace(EnemyType::Circle, new ECircle(map));
+	MapInfo mapInfo;
+	mapInfo.chipSize = map.GetChipSize();
+	mapInfo.mapSize = map.GetMapSize();
+	prototype_.emplace(EnemyType::Circle, new ECircle(mapInfo));
 }
 
 EnemyManager::~EnemyManager()
