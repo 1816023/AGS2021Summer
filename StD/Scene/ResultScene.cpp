@@ -1,5 +1,9 @@
 #include "ResultScene.h"
 #include <DxLib.h>
+#include "../Application.h"
+#include "../MouseController.h"
+#include "../Unit/Player/PlayerMng.h"
+#include "../VECTOR2.h"
 #include "MainScene.h"
 
 ResultScene::ResultScene()
@@ -20,12 +24,18 @@ unique_Base ResultScene::Update(unique_Base own)
 		return std::make_unique<MainScene>();
 	}
 
+	if (lpMouseController.GetClickTrg())
+	{
+		lpPlayerMng.Spawner(PlayerUnit::YELLOW,Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
+	}
+	auto delta = Application::Instance().GetDelta();
+	lpPlayerMng.Update(delta);
 	return std::move(own);
 }
 
 void ResultScene::Draw()
 {
-	
+	lpPlayerMng.Draw();
 }
 
 void ResultScene::DrawUI()

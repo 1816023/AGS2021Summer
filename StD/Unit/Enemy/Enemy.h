@@ -6,9 +6,9 @@
 
 // ƒpƒ‰ƒ[ƒ^’è”
 // HP
-#define LOW_HP 5		
-#define MID_HP 10
-#define HIGH_HP 15
+#define LOW_HP 60		
+#define MID_HP 120
+#define HIGH_HP 180
 // UŒ‚—Í
 #define LOW_ATK 1
 #define MID_ATK 2
@@ -43,11 +43,12 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 	virtual Enemy* CreateClone() = 0;
+	virtual unsigned int GetHP();
 	virtual void SetPosition(Vec2Float pos);
 	virtual void SetRoot(std::vector<RootDir>& root);
+	bool IsDeath();
 protected:
-	virtual bool IsDeath();
 	std::vector<RootDir> root_;
-	bool isDeath_;
+	float scale_;
 };
 

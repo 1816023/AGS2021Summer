@@ -16,9 +16,12 @@ public:
 		return s_Instance;
 	}
 	~PlayerMng() = default;
-	void Updata(float deltaTime);
-	bool Spawner(PlayerUnit id);
+	void Update(float deltaTime);
+	void Draw(void);
+	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};
+
+	Vec2Float GetPos(void)override;
 private:
 	PlayerMng();
 	void Init();

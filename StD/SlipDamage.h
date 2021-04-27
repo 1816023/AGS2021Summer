@@ -10,7 +10,9 @@ public:
 
 	void Update() override;
 	void Draw() override;
+	int Damage(int hp, bool flag);
 private:
 	VECTOR2 pos;
+	int cnt;
 };
 

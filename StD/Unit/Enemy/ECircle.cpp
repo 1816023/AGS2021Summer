@@ -29,7 +29,7 @@ void ECircle::Update(float deltaTime)
 
 void ECircle::Draw()
 {
-	DrawRotaGraph(state_.pos.x, state_.pos.y, 1.0f, 0.0f, IMAGE_ID(L"data/image/circle.png"), true);
+	DrawRotaGraph(state_.pos.x, state_.pos.y, scale_, 0.0f, IMAGE_ID(L"data/image/circle.png"), true);
 }
 
 Enemy* ECircle::CreateClone()
@@ -41,12 +41,18 @@ Enemy* ECircle::CreateClone()
 	enemy->rootIdx_ = rootIdx_;
 	enemy->mapChipSize = mapChipSize;
 	enemy->mapSize = mapSize;
+	enemy->scale_ = scale_;
+	enemy->state_ = state_;
 	return enemy;
 }
 
 void ECircle::RunUpdate(float deltaTime)
 {
 	Move(deltaTime);
+	if (state_.life <= 0)
+	{
+		state_.isDead = true;
+	}
 }
 
 void ECircle::Move(float deltaTime)

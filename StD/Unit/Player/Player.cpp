@@ -5,10 +5,11 @@ void Player::Init()
 {
 }
 
-void Player::Update(float deltaTime)
+void Player::Draw()
 {
 }
 
-void Player::Draw()
+Vec2Float Player::GetPos(void)
 {
+	return Vec2Float();
 }
