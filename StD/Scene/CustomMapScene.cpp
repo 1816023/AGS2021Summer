@@ -21,7 +21,7 @@ CustomMapScene::CustomMapScene()
 	mapSizeX = 0;
 	mapSizeY = 0;
 	fileName[0] = TCHAR();
-
+	blendAlpha = 0;
 }
 
 CustomMapScene::~CustomMapScene()
@@ -37,7 +37,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 	{
 		return std::make_unique<TitleScene>();
 	}
-	
+	blendAlpha+=2;
 
 	updateFunc_[nowState_]();
 	return std::move(own);
@@ -56,7 +56,7 @@ void CustomMapScene::Draw()
 			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0), map_->GetMapSize() * map_->GetChipSize() / 2))
 			{
 				mPos = mPos / (map_->GetChipSize() / 2) * (map_->GetChipSize() / 2);
-				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 256);
+				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha%256));
 				DrawBox(mPos.x, mPos.y, mPos.x + map_->GetChipSize().x / 2, mPos.y + map_->GetChipSize().y / 2, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
