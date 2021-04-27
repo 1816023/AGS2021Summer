@@ -17,7 +17,6 @@ GameScene::GameScene()
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
 	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(32, 224), *enemyMng_));
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
-	lpPlayerMng.Spawner(PlayerUnit::YELLOW);
 }
 
 GameScene::~GameScene()

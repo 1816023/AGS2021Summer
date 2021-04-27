@@ -153,7 +153,6 @@
     <ClCompile Include="Unit\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Scene\CustomMapScene.cpp" />
     <ClCompile Include="Map\Custom.cpp" />
-    <ClCompile Include="Object\Shot\Shot.cpp" />
     <ClCompile Include="Object\Shot\ShotMng.cpp" />
     <ClCompile Include="SlipDamage.cpp" />
     <ClCompile Include="Unit\Enemy\ECircle.cpp" />
@@ -184,7 +183,6 @@
     <ClInclude Include="Unit\Enemy\EnemyManager.h" />
     <ClInclude Include="Scene\CustomMapScene.h" />
     <ClInclude Include="Map\Custom.h" />
-    <ClInclude Include="Object\Shot\Shot.h" />
     <ClInclude Include="Object\Shot\ShotMng.h" />
     <ClInclude Include="SlipDamage.h" />
     <ClInclude Include="Unit\Enemy\ECircle.h" />

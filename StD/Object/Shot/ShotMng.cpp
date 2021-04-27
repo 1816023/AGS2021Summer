@@ -1,4 +1,5 @@
 #include "ShotMng.h"
+#include <cmath>
 #include "../../Unit/Player/Yellow.h"
 
 ShotMng::~ShotMng()
@@ -41,8 +42,22 @@ void ShotMng::BulletMove(Player* ptr)
 	//
 	for (auto& bulletdata : shotList_[ptr])
 	{
-		bulletdata += Vec2Float(0.0f, 1.0f);
+		//if (isRange())
+		//{
+			bulletdata += Vec2Float(0.0f, 5.0f);
+		//}
 	}
+}
+
+bool ShotMng::isRange(Vec2Float unitPos, Vec2Float bulletPos,float unitSize,float bulletSize)
+{
+	auto ab = Vec2Float(std::abs(unitPos.x - bulletPos.x), std::abs(unitPos.y - bulletPos.y));
+	auto dist = std::sqrt((ab.x * ab.x) + (ab.y * ab.y));
+	if (dist<=(unitSize + bulletSize))
+	{
+		return true;
+	}
+	return false;
 }
 
 ShotMng::ShotMng()
