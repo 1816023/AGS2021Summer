@@ -4,9 +4,8 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(Map& map)
+Enemy::Enemy(MapInfo& mapInfo)
 {
-	map_ = &map;
 }
 
 Enemy::~Enemy()

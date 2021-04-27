@@ -44,6 +44,8 @@ private:
 	int mapSizeY;
 	// マップファイル名の保存用
 	TCHAR fileName[20];
+	// 変動するアルファ値
+	int blendAlpha;
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					

@@ -21,7 +21,7 @@ CustomMapScene::CustomMapScene()
 	mapSizeX = 0;
 	mapSizeY = 0;
 	fileName[0] = TCHAR();
-
+	blendAlpha = 256;
 }
 
 CustomMapScene::~CustomMapScene()
@@ -37,7 +37,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 	{
 		return std::make_unique<TitleScene>();
 	}
-	
+	//blendAlpha+=2;
 
 	updateFunc_[nowState_]();
 	return std::move(own);
@@ -46,30 +46,37 @@ unique_Base CustomMapScene::Update(unique_Base own)
 void CustomMapScene::Draw()
 {
 	Vec2Float cPos= Application::Instance().GetCamera().GetPos();
+	cPos *= 2.0f;
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
+	VECTOR2 mPos = lpMouseController.GetPos();
+#ifdef _DEBUG
+	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(map_->GetMapChip(mPos + cPos)));
+#endif // DEBUG
+
 	if (nowState_ == CustomState::MAP_CUSTOM)
 	{
 		map_->Draw();
-		VECTOR2 mPos = lpMouseController.GetPos();
+		
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_DRAW.first, SELECT_UI_DRAW.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_DRAW.first, TEXT_UI_DRAW.second))
 		{
-			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0), map_->GetMapSize() * map_->GetChipSize() / 2))
+			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0)-cPos, map_->GetMapSize() * map_->GetChipSize() -cPos))
 			{
-				mPos = mPos / (map_->GetChipSize() / 2) * (map_->GetChipSize() / 2);
-				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 256);
-				DrawBox(mPos.x, mPos.y, mPos.x + map_->GetChipSize().x / 2, mPos.y + map_->GetChipSize().y / 2, 0xcccc00, true);
+				mPos = (mPos+cPos) / (map_->GetChipSize()) * (map_->GetChipSize());
+				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha%256));
+				DrawBox(mPos.x, mPos.y, (mPos.x) + map_->GetChipSize().x, (mPos.y) + map_->GetChipSize().y, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
 			}
 		}
 	}
 
+
 }
 
 void CustomMapScene::DrawUI()
 {
 	drawFunc_[nowState_]();
-
+	
 }
 
 void CustomMapScene::SetStateUpdate()
@@ -183,7 +190,11 @@ void CustomMapScene::MapCustomDraw()
 		DrawRoundRect(SELECT_UI_DRAW.first.x + 10, 10, SELECT_UI_DRAW.first.x + 64 + 10, 64 + 10, 10, 10, 0xffffff, true);
 	}
 	
+#ifdef _DEBUG
 
+	DrawFormatString(mPos.x, mPos.y+10, 0x00ff00, L"%d:%d", mPos.x, mPos.y);
+	DrawFormatString(mPos.x, mPos.y + 30, 0x0000ff, L"%d:%d", mPos.x + static_cast<int>(lpApplication.GetCamera().GetPos().x), mPos.y + static_cast<int>(lpApplication.GetCamera().GetPos().y));
+#endif // _DEBUG
 
 
 
