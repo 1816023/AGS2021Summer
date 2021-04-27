@@ -4,15 +4,15 @@
 #include "../Unit/Enemy/ECircle.h"
 #include "../MouseController.h"
 #include "../SlipDamage.h"
+#include "../Unit/Enemy/EnemyManager.h"
 
 TitleScene::TitleScene()
 {
 
-slipDamage = new SlipDamage(lpMouseController.GetPos());
+	slipDamage = new SlipDamage(lpMouseController.GetPos());
 
 	trapFlag = false;
 	cnt = 0;
-	HP = 50;
 }
 
 TitleScene::~TitleScene()
@@ -56,10 +56,9 @@ void TitleScene::Draw()
 		}
 	}
 
-	HP = slipDamage->Damage(HP, trapFlag);
 
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
-	DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
+	//DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
 	
 }
 
