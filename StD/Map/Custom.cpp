@@ -12,13 +12,13 @@ Custom::~Custom()
 
 void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 {
-	state.mapSize_ = mapSize;
-	state.chipSize_ = { 64,64 };
+	state_.mapSize_ = mapSize;
+	state_.chipSize_ = { 64,64 };
 	mapData_.resize(mapSize.y);
-	state.name_ = fileName;
+	state_.name_ = fileName;
 	for (auto& map : mapData_)
 	{
-		while( map.size() < state.mapSize_.x )
+		while( map.size() < state_.mapSize_.x )
 		{
 			map.push_back(MapChipName::WALL);
 		}
@@ -29,16 +29,16 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 
 bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 {
-	if (0 > pos.x || pos.x > state.mapSize_.x * state.chipSize_.x)
+	if (0 > pos.x || pos.x > state_.mapSize_.x * state_.chipSize_.x)
 	{
 		return false;
 	}
-	if (0 > pos.y || pos.y > state.mapSize_.y * state.chipSize_.y)
+	if (0 > pos.y || pos.y > state_.mapSize_.y * state_.chipSize_.y)
 	{
 		return false;
 	}
-	VECTOR2 mapPos = pos / state.chipSize_;
-	if (mapData_.size() < mapPos.y && mapData_[mapPos.y].size() < mapPos.x)
+	VECTOR2 mapPos = pos / state_.chipSize_;
+	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
 	{
 		mapData_[mapPos.y][mapPos.x] = chip;
 		return true;
@@ -65,12 +65,12 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	file << sample.rdbuf() << std::flush;
 	sample.close();
 	file.close();
-	auto error = document.LoadFile(filePath.c_str());
+	auto error = document_.LoadFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{
 		return false;
 	}
-	tinyxml2::XMLElement* mapElm= document.FirstChildElement("map");
+	tinyxml2::XMLElement* mapElm= document_.FirstChildElement("map");
 	mapElm->SetAttribute("hight", mapSize.x);
 	mapElm->SetAttribute("width", mapSize.y);
 	std::string mapData="\n";
@@ -86,7 +86,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	}
 	mapElm->SetText(mapData.c_str());
 
-	error=document.SaveFile(filePath.c_str());
+	error=document_.SaveFile(filePath.c_str());
 	if (error)
 	{
 		return false;

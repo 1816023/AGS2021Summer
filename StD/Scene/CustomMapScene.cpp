@@ -6,6 +6,7 @@
 #include "../Mng/ImageMng.h"
 #include "../MouseController.h"
 
+#define CUSTOM dynamic_cast<Custom*>(map_)
 CustomMapScene::CustomMapScene()
 {
 	map_ = std::make_unique<Custom>(VECTOR2());
@@ -18,10 +19,11 @@ CustomMapScene::CustomMapScene()
 	drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCustomDraw, this));
 	drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomDraw, this));
 
-	mapSizeX = 0;
-	mapSizeY = 0;
-	fileName[0] = TCHAR();
-	blendAlpha = 256;
+	mapSizeX_ = 0;
+	mapSizeY_ = 0;
+	fileName_[0] = TCHAR();
+	blendAlpha_ = 256;
+	LoadText();
 }
 
 CustomMapScene::~CustomMapScene()
@@ -50,7 +52,7 @@ void CustomMapScene::Draw()
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
 #ifdef _DEBUG
-	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(map_->GetMapChip(mPos + cPos)));
+	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(map_->GetMapChip((mPos + cPos))));
 #endif // DEBUG
 
 	if (nowState_ == CustomState::MAP_CUSTOM)
@@ -62,7 +64,7 @@ void CustomMapScene::Draw()
 			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0)-cPos, map_->GetMapSize() * map_->GetChipSize() -cPos))
 			{
 				mPos = (mPos+cPos) / (map_->GetChipSize()) * (map_->GetChipSize());
-				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha%256));
+				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha_%256));
 				DrawBox(mPos.x, mPos.y, (mPos.x) + map_->GetChipSize().x, (mPos.y) + map_->GetChipSize().y, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
@@ -95,6 +97,7 @@ void CustomMapScene::Map_CuntomUpdate()
 	}
 	VECTOR2 mPos;
 	GetMousePoint(&mPos.x, &mPos.y);
+	auto cPos = lpApplication.GetCamera().GetPos()*2.0f;
 	if (GetMouseInput() & MOUSE_INPUT_LEFT == 1)
 	{
 		if (mPos.x > SELECT_UI_DRAW.first.x)
@@ -103,7 +106,7 @@ void CustomMapScene::Map_CuntomUpdate()
 		}
 		else
 		{
-			map_->SetChip(mPos, MapChipName::ROOT);
+			map_->SetChip(mPos+cPos, MapChipName::ROOT);
 		}
 	}
 }
@@ -124,8 +127,8 @@ void CustomMapScene::SetStateDraw()
 	DrawString(0, STRING_HIGHT + LINE_SPACING*2, L"ファイル名：", 0xffffff);
 	DrawString(0, STRING_HIGHT*2 + LINE_SPACING*2, L"※次の文字とスペースは使用できません\n「￥　／　：　＊　？　”　＜　＞　｜　.　& ( ) [ ] { } ^ = ; ! ' + , ` ~」", 0xff9999);
 	int tmpFlag = 0;
-	mapSizeX = KeyInputNumber(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
-	if (mapSizeX<MIN_MAP_SIZE || mapSizeX>MAX_MAP_SIZE)
+	mapSizeX_ = KeyInputNumber(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
+	if (mapSizeX_<MIN_MAP_SIZE || mapSizeX_>MAX_MAP_SIZE)
 	{
 		return;
 	}
@@ -133,9 +136,9 @@ void CustomMapScene::SetStateDraw()
 	{
 		tmpFlag++;
 	}
-	DrawFormatString(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, 0xffffff, L"%d", mapSizeX);
-	mapSizeY = KeyInputNumber(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT+LINE_SPACING, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
-	if (mapSizeY<MIN_MAP_SIZE || mapSizeY>MAX_MAP_SIZE)
+	DrawFormatString(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, 0xffffff, L"%d", mapSizeX_);
+	mapSizeY_ = KeyInputNumber(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT+LINE_SPACING, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
+	if (mapSizeY_<MIN_MAP_SIZE || mapSizeY_>MAX_MAP_SIZE)
 	{
 		return;
 	}
@@ -143,13 +146,13 @@ void CustomMapScene::SetStateDraw()
 	{
 		tmpFlag++;
 	}
-	DrawFormatString(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT + LINE_SPACING, 0xffffff, L"%d", mapSizeY);
-	if (KeyInputString(GetDrawStringWidth(L"ファイル名：", GetStringLength(L"ファイル名：")) + 1, STRING_HIGHT+LINE_SPACING*2, MAX_NAME_SIZE, fileName, true) != 1)
+	DrawFormatString(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT + LINE_SPACING, 0xffffff, L"%d", mapSizeY_);
+	if (KeyInputString(GetDrawStringWidth(L"ファイル名：", GetStringLength(L"ファイル名：")) + 1, STRING_HIGHT+LINE_SPACING*2, MAX_NAME_SIZE, fileName_, true) != 1)
 	{
 		return;
 	}
 	else {
-		if (FileNameErrorCheck(fileName))
+		if (FileNameErrorCheck(fileName_))
 		{
 			return;
 		}
@@ -158,7 +161,7 @@ void CustomMapScene::SetStateDraw()
 	if (tmpFlag >= 3)
 	{
 		nowState_= CustomState::MAP_CUSTOM;
-		dynamic_cast<Custom*>(map_.get())->SetUp(fileName, VECTOR2(mapSizeX, mapSizeY));
+		dynamic_cast<Custom*>(map_.get())->SetUp(fileName_, VECTOR2(mapSizeX_, mapSizeY_));
 	}
 }
 
@@ -246,4 +249,21 @@ bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)
 
 
 	return false;
+}
+
+bool CustomMapScene::LoadText()
+{
+	tinyxml2::XMLDocument doc;
+	auto error=doc.LoadFile("data/textData.xml");
+	if (error != tinyxml2::XML_SUCCESS)
+	{
+		return false;
+	}
+	textData_.push_back({L"mainstay" ,doc.FirstChildElement("mainstay")->GetText() });
+	textData_.push_back({L"spawner" ,doc.FirstChildElement("spawner")->GetText() });
+	textData_.push_back({L"root" ,doc.FirstChildElement("root")->GetText() });
+	textData_.push_back({L"field" ,doc.FirstChildElement("field")->GetText() });
+	textData_.push_back({L"wall" ,doc.FirstChildElement("wall")->GetText() });
+
+	return true;
 }
