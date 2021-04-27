@@ -6,6 +6,7 @@
 #include "../Unit/Enemy/EnemyManager.h"
 #include "../Unit/Enemy/EnemySpawner.h"
 #include "../Mng/ImageMng.h"
+#include "../Unit/Enemy/Enemy.h"
 
 GameScene::GameScene()
 {

@@ -1,6 +1,9 @@
 #include "EnemyManager.h"
 #include "ECircle.h"
 #include "../../Map/Map.h"
+#include <algorithm>
+
+using namespace std;
 
 EnemyManager::EnemyManager(Map& map)
 {
@@ -26,6 +29,11 @@ void EnemyManager::Update(float deltaTime)
 	{
 		enemy->Update(deltaTime);
 	}
+	enemies_.erase(remove_if(enemies_.begin(), enemies_.end(),
+		[](shared_ptr<Enemy>& enemy)
+		{
+			return enemy->IsDeath();
+		}), enemies_.end());
 }
 
 void EnemyManager::Draw()
@@ -34,4 +42,9 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
+}
+
+EnemyList& EnemyManager::GetEnemies()
+{
+	return enemies_;
 }
