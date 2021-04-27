@@ -47,7 +47,7 @@ protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定
 	bool LoadMap(std::string mapName);	
 	// マップのステータス
-	MapState state;
+	MapState state_;
 	//// マップのchip数
 	//VECTOR2 mapSize_;								
 	//// 1chipのサイズ
@@ -55,7 +55,7 @@ protected:
 	// マップデータの格納2次元配列
 	dataVec mapData_;								
 	// マップデータのXMLファイルをロードしたデータ
-	tinyxml2::XMLDocument document;	
+	tinyxml2::XMLDocument document_;	
 };
 
 
