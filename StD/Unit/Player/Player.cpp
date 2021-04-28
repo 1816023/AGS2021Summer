@@ -13,3 +13,13 @@ Vec2Float Player::GetPos(void)
 {
 	return Vec2Float();
 }
+
+float Player::GetBulletSpeed(void)
+{
+	return 0.0f;
+}
+
+float Player::GetAtkRange(void)
+{
+	return 0.0f;
+}

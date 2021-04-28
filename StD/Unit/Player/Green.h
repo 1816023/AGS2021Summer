@@ -1,12 +1,12 @@
 #pragma once
 #include "Player.h"
-class Yellow :
+class Green :
 	public Player
 {
 public:
-	Yellow();
-	Yellow(Vec2Float pos);
-	~Yellow();
+	Green();
+	Green(Vec2Float pos);
+	~Green();
 	void Init();
 	void Update(float deltaTime);
 	void Draw();

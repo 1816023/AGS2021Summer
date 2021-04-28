@@ -27,12 +27,12 @@ public:
 	void Init(void);				//初期化
 	void Update(float deltaTime);	//更新
 	void Draw(void);				//弾の描画
-	void AddBullet(Player* ptr, Vec2Float pos);			//Unitから発射される弾の作成
-	void BulletMove(Player* ptr);	//弾の移動
+	void AddBullet(std::shared_ptr<Player> ptr, Vec2Float pos);			//Unitから発射される弾の作成
+	void BulletMove(std::shared_ptr<Player> ptr);	//弾の移動
 	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
 private:
 	ShotMng();
-	std::map<Player*, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//弾管理用 (リストのfirstには射出点secondには弾の現在座標が入る)
-	std::map<Player*, int> shotSpan_;	//発射間隔管理用
+	std::map<std::shared_ptr<Player>, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//弾管理用 (リストのfirstには射出点secondには弾の現在座標が入る)
+	std::map<std::shared_ptr<Player>, int> shotSpan_;	//発射間隔管理用
 };
 
