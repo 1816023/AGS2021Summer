@@ -43,8 +43,16 @@ bool CustomMapScene::Init()
 		drawFunc_.try_emplace(CustomState::SET_STATE, std::bind(&CustomMapScene::SetStateDraw, this));
 		drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCustomDraw, this));
 		drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomDraw, this));
+		const int bSize = 64;
+		const int bSpace = 20;
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace) });
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace),bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace), bSize + bSpace) });
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace)*2,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace)*2, bSize + bSpace) });
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace+ (bSize + bSpace)) });
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace+ (bSize + bSpace),bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace+ (bSize + bSpace), bSize + bSpace+ (bSize + bSpace)) });
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace+ (bSize + bSpace)*2,bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace+ (bSize + bSpace)*2, bSize + bSpace+ (bSize + bSpace)) });
 
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + 10,10),VECTOR2(SELECT_UI_POS.first.x + 64 + 10, 64 + 10) });
+
 
 		mapSizeX_ = 0;
 		mapSizeY_ = 0;
@@ -61,12 +69,13 @@ void CustomMapScene::Draw()
 	cPos *= 2.0f;
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
+
+	if (nowState_ == CustomState::MAP_CUSTOM)
+	{
 #ifdef _DEBUG
 	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(map_->GetMapChip((mPos + cPos))));
 #endif // DEBUG
 
-	if (nowState_ == CustomState::MAP_CUSTOM)
-	{
 		map_->Draw();
 		
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
@@ -197,21 +206,25 @@ void CustomMapScene::MapCustomDraw()
 	// ‚Æ‚è‚ ‚¦‚¸ƒ{ƒ^ƒ“‚Ì•\Ž¦
 	int shadowOffset = 3;
 	int pushuOffset = 1;
+	for (auto list : bPosList_)
+	{
 	if (lpMouseController.GetClicking())
 	{
 		if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first,SELECT_UI_POS.second))
 		{
-			DrawRoundRect(bPosList_.front().first.x+ pushuOffset, bPosList_.front().first.y+ pushuOffset, bPosList_.front().second.x+ pushuOffset, bPosList_.front().second.y+ pushuOffset, 10, 10, 0xffffff, true);
+			DrawRoundRect(list.first.x+ pushuOffset, list.first.y+ pushuOffset, list.second.x+ pushuOffset, list.second.y+ pushuOffset, 10, 10, 0xffffff, true);
 		}
 		else
 		{
-			DrawRoundRect(bPosList_.front().first.x+ shadowOffset, bPosList_.front().first.y+ shadowOffset, bPosList_.front().second.x+ shadowOffset, bPosList_.front().second.y+ shadowOffset, 10, 10, 0x000000, true);
-			DrawRoundRect(bPosList_.front().first.x, bPosList_.front().first.y, bPosList_.front().second.x, bPosList_.front().second.y, 10, 10, 0xffffff, true);
+			DrawRoundRect(list.first.x+ shadowOffset, list.first.y+ shadowOffset, list.second.x+ shadowOffset, list.second.y+ shadowOffset, 10, 10, 0x000000, true);
+			DrawRoundRect(list.first.x, list.first.y, list.second.x, list.second.y, 10, 10, 0xffffff, true);
 		}
 	}
 	else {
-		DrawRoundRect(bPosList_.front().first.x + shadowOffset, bPosList_.front().first.y + shadowOffset, bPosList_.front().second.x + shadowOffset, bPosList_.front().second.y + shadowOffset, 10, 10, 0x000000, true);
-		DrawRoundRect(bPosList_.front().first.x, bPosList_.front().first.y, bPosList_.front().second.x, bPosList_.front().second.y, 10, 10, 0xffffff, true);
+		DrawRoundRect(list.first.x + shadowOffset, list.first.y + shadowOffset, list.second.x + shadowOffset, list.second.y + shadowOffset, 10, 10, 0x000000, true);
+		DrawRoundRect(list.first.x, list.first.y, list.second.x, list.second.y, 10, 10, 0xffffff, true);
+	}
+
 	}
 #ifdef _DEBUG
 

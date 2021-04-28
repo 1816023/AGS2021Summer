@@ -5,7 +5,7 @@
 #include "../tinyxml2/tinyxml2.h"
 
 // チップ情報の名前
-enum class MapChipName:char
+enum class MapChipName:unsigned int
 {
 
 	MAINSTAY=1,		// 防衛拠点				青
