@@ -106,7 +106,7 @@ void CustomMapScene::Map_CuntomUpdate()
 		}
 		else
 		{
-			map_->SetChip(mPos+cPos, MapChipName::ROOT);
+			map_->SetChip(cPos + mPos , MapChipName::ROOT);
 		}
 	}
 }
