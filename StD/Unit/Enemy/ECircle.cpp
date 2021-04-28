@@ -9,7 +9,7 @@ ECircle::ECircle() : Enemy()
 
 ECircle::ECircle(MapInfo& mapInfo):Enemy(mapInfo)
 {
-	updater_ = &ECircle::SearchUpdate;
+	updater_ = &ECircle::StartUpdate;
 	state_.life = MID_HP;
 	dirVec = { 0,0 };
 	nowMove_ = { 0,0 };
@@ -46,6 +46,12 @@ Enemy* ECircle::CreateClone()
 	return enemy;
 }
 
+void ECircle::StartUpdate(float deltaTime)
+{
+	SearchRoot(deltaTime);
+	updater_ = &ECircle::RunUpdate;
+}
+
 void ECircle::RunUpdate(float deltaTime)
 {
 	Move(deltaTime);
@@ -58,23 +64,27 @@ void ECircle::RunUpdate(float deltaTime)
 void ECircle::Move(float deltaTime)
 {
 	// 移動値計算
-	auto move = dirVec * 4.0f * deltaTime;
-	// 移動補正(１チップ以上)
-	if (std::abs(nowMove_.x) >= mapChipSize.x
-		|| std::abs(nowMove_.y) >= mapChipSize.y)
+	auto move = dirVec * 10.0f * deltaTime;
+	// 移動終了かどうか(１チップ)
+	if (std::abs(nowMove_.x + move.x) >= mapChipSize.x
+		|| std::abs(nowMove_.y + move.y) >= mapChipSize.y)
 	{
-		updater_ = &ECircle::SearchUpdate;
-
+		// 移動補正
+		state_.pos -= nowMove_;
+		state_.pos = state_.pos.Round();
+		state_.pos = state_.pos + (Vec2Float( mapChipSize.x, mapChipSize.y) * dirVec).Round();
 		// 移動値初期化
 		nowMove_ = { 0,0 };
 		move = { 0,0 };
+		// 方向設定
+		SearchRoot(deltaTime);
 	}
 	// 移動値加算
 	state_.pos += move;
 	nowMove_ += move;
 }
 
-void ECircle::SearchUpdate(float deltaTime)
+void ECircle::SearchRoot(float deltaTime)
 {
 	dirVec = { 0,0 };
 	if (root_.size() <= rootIdx_)
@@ -99,7 +109,6 @@ void ECircle::SearchUpdate(float deltaTime)
 		break;
 	}
 	rootIdx_++;
-	updater_ = &ECircle::RunUpdate;
 }
 
 void ECircle::deathUpdate(float deltaTime)
