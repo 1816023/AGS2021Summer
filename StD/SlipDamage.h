@@ -8,7 +8,6 @@ public:
 	SlipDamage(VECTOR2 pos);
 	~SlipDamage();
 
-	void Update() override;
 	void Draw() override;
 	int Damage(int hp, bool flag);
 private:

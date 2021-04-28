@@ -11,13 +11,9 @@ SlipDamage::~SlipDamage()
 {
 }
 
-void SlipDamage::Update()
-{
-}
-
 void SlipDamage::Draw()
 {
-	DrawRotaGraph(pos.x, pos.y, 1, 0, slipDamage, false);
+	DrawRotaGraph(pos.x, pos.y, 1, 0, image[TRAP_ID::SLIP_DAMAGE], false);
 }
 
 int SlipDamage::Damage(int hp, bool flag)

@@ -13,6 +13,7 @@ TitleScene::TitleScene()
 
 	trapFlag = false;
 	cnt = 0;
+	HP = 50;
 }
 
 TitleScene::~TitleScene()
@@ -29,8 +30,6 @@ unique_Base TitleScene::Update(unique_Base own)
 	{
 		return std::make_unique<MainScene>();
 	}
-
-	slipDamage->Update();
 
 	return std::move(own);
 }
@@ -49,16 +48,17 @@ void TitleScene::Draw()
 	{
 		cnt++;
 		slipDamage->Draw();
-		if (cnt > 300)
+		if (cnt > 600)
 		{
 			cnt = 0;
 			trapFlag = false;
 		}
 	}
 
+	HP = slipDamage->Damage(HP, trapFlag);
 
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
-	//DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
+	DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
 	
 }
 
