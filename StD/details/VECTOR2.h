@@ -202,7 +202,7 @@ VECTOR2_TEMPLE<T> operator+(T u, const VECTOR2_TEMPLE<T>& v)
 
 //VECTOR2 + VECTOR2
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<T>& v)
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v)
 {
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x + v.x;
@@ -256,21 +256,19 @@ VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>&
 	return vec;
 }
 
-//VECTOR2 + Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
+// VECTOR2 + Vec2Float----------------------------
+static VECTOR2_TEMPLE<float> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
 {
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x + v.x;
 	vec.y = u.y + v.y;
 	return vec;
 
 }
-//VECTOR2 - Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+// VECTOR2 - Vec2Float----------------------------
+static VECTOR2_TEMPLE<float> operator-(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
 {
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x - v.x;
 	vec.y = u.y - v.y;
 	return vec;
@@ -279,24 +277,22 @@ VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<flo
 
 //VECTOR2 * Vec2Float----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
+static VECTOR2_TEMPLE<float> operator*(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
 {
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x * v.x;
 	vec.y = u.y * v.y;
 	return vec;
-
 }
 
 //VECTOR2 / Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+static VECTOR2_TEMPLE<float> operator/(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
 {
 	if (v.x == 0 || v.y == 0)
 	{
-		return VECTOR2_TEMPLE<T>();
+		return VECTOR2_TEMPLE<float>();
 	}
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x / v.x;
 	vec.y = u.y / v.y;
 	return vec;
@@ -304,21 +300,18 @@ VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<flo
 }
 
 //Vec2Float + VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+static VECTOR2_TEMPLE<float> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v)
 {
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x + v.x;
 	vec.y = u.y + v.y;
 	return vec;
-
 }
 
 //Vec2Float - VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+static VECTOR2_TEMPLE<float> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v)
 {
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x - v.x;
 	vec.y = u.y - v.y;
 	return vec;
@@ -326,27 +319,36 @@ VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE
 }
 
 //Vec2Float * VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v) 
+static VECTOR2_TEMPLE<float> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v)
 {
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x * v.x;
 	vec.y = u.y * v.y;
 	return vec;
 }
 
 //Vec2Float / VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
+static VECTOR2_TEMPLE<float> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v)
 {
 	if (v.x == 0 || v.y == 0)
 	{
-		return VECTOR2_TEMPLE<T>();
+		return VECTOR2_TEMPLE<float>();
 	}
-	VECTOR2_TEMPLE<T> vec;
+	VECTOR2_TEMPLE<float> vec;
 	vec.x = u.x / v.x;
 	vec.y = u.y / v.y;
 	return vec;
+}
 
+static VECTOR2_TEMPLE<float>& VecFCast(const VECTOR2_TEMPLE<int>& u)
+{
+	VECTOR2_TEMPLE<float> tmp = { static_cast<float>(u.x), static_cast<float>(u.y) };
+	return tmp;
+}
+
+static VECTOR2_TEMPLE<int>& VecICast(const VECTOR2_TEMPLE<float>& u)
+{
+	VECTOR2_TEMPLE<int> tmp = { static_cast<int>(u.x), static_cast<int>(u.y) };
+	return tmp;
 }
 

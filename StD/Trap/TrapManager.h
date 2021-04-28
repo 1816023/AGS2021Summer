@@ -1,5 +1,6 @@
 #pragma once
 #include <DxLib.h>
+#include "../VECTOR2.h"
 
 typedef enum
 {
@@ -18,5 +19,7 @@ public:
 private:
 	virtual void Draw();
 protected:
+	VECTOR2 pos;
+	int cnt;
 	int image[TRAP_ID::MAX];
 };

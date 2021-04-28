@@ -18,9 +18,9 @@
 #define MID_DIST 20
 #define HIGH_DIST 30
 // 速度
-#define LOW_SPEED 10
-#define MID_SPEED 20
-#define HIGH_SPEED 30
+#define LOW_SPEED 5
+#define MID_SPEED 10
+#define HIGH_SPEED 15
 
 // 大きさ
 #define E_SIZE_X 64
@@ -33,6 +33,8 @@ struct MapInfo
 	VECTOR2 mapSize;	// マップのチップ数
 };
 
+
+
 class Map;
 class Enemy : public Unit
 {
@@ -43,12 +45,30 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 	virtual Enemy* CreateClone() = 0;
-	virtual unsigned int GetHP();
-	virtual void SetPosition(Vec2Float pos);
-	virtual void SetRoot(std::vector<RootDir>& root);
+	unsigned int GetHP();
+	Vec2Float GetPosition();
+	void SetPosition(Vec2Float pos);
+	void SetRoot(std::vector<RootDir>& root);
 	bool IsDeath();
+	const float GetSpeed();
+	void SetSpeed(float speed);
 protected:
-	std::vector<RootDir> root_;
-	float scale_;
+	struct EnemyInfo
+	{
+		std::vector<RootDir> root;
+		float scale;
+		VECTOR2 mapChipSize;	// マップのチップサイズ
+		VECTOR2 mapSize;		// マップのチップ数
+		int rootIdx;	// ルートのインデックス
+		Vec2Float dirVec;		// 移動方向のベクトル
+		Vec2Float nowMove;		// 前回決定してからの移動値
+		float speed;
+	};
+	// 移動処理
+	void Move(float deltaTime);
+	// 移動方向の決定をする
+	void SearchRoot(float deltaTime);
+	
+	EnemyInfo enemyInfo_;
 };
 
