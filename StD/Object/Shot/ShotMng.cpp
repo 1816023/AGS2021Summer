@@ -20,7 +20,8 @@ void ShotMng::Draw(void)
 	{
 		for (auto& bulletdata : shotList_[data.first])
 		{
-			DrawCircle(bulletdata.x, bulletdata.y, 5, 0xffffff, true);
+			DrawCircle(bulletdata.first.x, bulletdata.first.y, 100, 0xff0000, false);
+			DrawCircle(bulletdata.second.x, bulletdata.second.y, BASE_SIZE, 0xffffff, true);
 		}
 	}
 }
@@ -31,7 +32,7 @@ void ShotMng::AddBullet(Player* ptr,Vec2Float pos)
 	if (shotSpan_[ptr] <= 0)
 	{
 		shotSpan_[ptr] = BASE_SPAN;
-		shotList_[ptr].push_back(pos);
+		shotList_[ptr].push_back(std::make_pair(pos,pos));
 	}
 }
 
@@ -40,23 +41,37 @@ void ShotMng::BulletMove(Player* ptr)
 	//こっこに角度を求める計算の記述
 	//攻撃範囲内の敵を探索する？
 	//
-	for (auto& bulletdata : shotList_[ptr])
+	if (!shotList_[ptr].empty())
 	{
-		//if (isRange())
-		//{
-			bulletdata += Vec2Float(0.0f, 5.0f);
-		//}
+		for (auto itr = shotList_[ptr].begin(); itr != shotList_[ptr].end();)
+		{
+			if (isRange(itr->first, itr->second, 100, BASE_SIZE))
+			{
+				//射程範囲内(弾を移動させる)
+				itr->second += Vec2Float(0.0f, 1.0f);
+				++itr;
+			}
+			else
+			{
+				//射程範囲外(リストから削除)
+				itr = shotList_[ptr].erase(itr);
+			}
+		}
 	}
 }
 
 bool ShotMng::isRange(Vec2Float unitPos, Vec2Float bulletPos,float unitSize,float bulletSize)
 {
+	//三平方の定理を使用した当たり判定(円と円)
 	auto ab = Vec2Float(std::abs(unitPos.x - bulletPos.x), std::abs(unitPos.y - bulletPos.y));
 	auto dist = std::sqrt((ab.x * ab.x) + (ab.y * ab.y));
-	if (dist<=(unitSize + bulletSize))
+
+	if (dist+(bulletSize*2)<=(unitSize + bulletSize))
 	{
+		//射程範囲内なのでtrue
 		return true;
 	}
+	//射程範囲外なのでfalse
 	return false;
 }
 
