@@ -1,9 +1,9 @@
 #include "SlipDamage.h"
-#include "MouseController.h"
+#include "../MouseController.h"
 
-SlipDamage::SlipDamage(VECTOR2 pos)
+SlipDamage::SlipDamage(VECTOR2 _pos)
 {
-	this->pos = pos;
+	pos = _pos;
 	cnt = 0;
 }
 
