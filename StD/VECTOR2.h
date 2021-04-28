@@ -1,5 +1,6 @@
 #pragma once
-template<class T>class VECTOR2_TEMPLE
+template<class T>
+class VECTOR2_TEMPLE
 {
 public:
 	VECTOR2_TEMPLE();
@@ -88,7 +89,7 @@ VECTOR2_TEMPLE<T> operator+(T u, const VECTOR2_TEMPLE<T>& v);
 
 //VECTOR2 + VECTOR2----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<T>& v);
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v);
 
 //VECTOR2 - VECTOR2----------------------------
 template<class T>
@@ -107,41 +108,35 @@ template<class T>
 VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v);
 
 //VECTOR2 + Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
+static VECTOR2_TEMPLE<float> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
 
 //VECTOR2 - Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v);
+static VECTOR2_TEMPLE<float> operator-(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
 
 //VECTOR2 * Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
+static VECTOR2_TEMPLE<float> operator*(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
 
 //VECTOR2 / Vec2Float----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v);
+static VECTOR2_TEMPLE<float> operator/(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
 
 //Vec2Float + VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v);
+static VECTOR2_TEMPLE<float> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
 
 //Vec2Float - VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v);
+static VECTOR2_TEMPLE<float> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
 
 //Vec2Float * VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
+static VECTOR2_TEMPLE<float> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
 
 //Vec2Float / VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v);
+static VECTOR2_TEMPLE<float> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
+
+static VECTOR2_TEMPLE<float>& VecFCast(const VECTOR2_TEMPLE<int>& u);
+static VECTOR2_TEMPLE<int>& VecICast(const VECTOR2_TEMPLE<float>& u);
 
 using VECTOR2 = VECTOR2_TEMPLE<int>;
 using Vec2Int = VECTOR2_TEMPLE<int>;
 using Vec2Float = VECTOR2_TEMPLE<float>;
-using Vec2Double = VECTOR2_TEMPLE<double>;
 
 
 #include"./details/VECTOR2.h"

@@ -71,9 +71,9 @@ void CustomMapScene::Draw()
 		
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
-			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0)-cPos, map_->GetMapSize() * map_->GetChipSize() -cPos))
+			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(map_->GetMapSize() - cPos  * map_->GetChipSize())))
 			{
-				mPos = (mPos+cPos) / (map_->GetChipSize()) * (map_->GetChipSize());
+				mPos = VecICast(mPos+cPos) / (map_->GetChipSize()) * (map_->GetChipSize());
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha_%256));
 				DrawBox(mPos.x, mPos.y, (mPos.x) + map_->GetChipSize().x, (mPos.y) + map_->GetChipSize().y, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
@@ -116,7 +116,7 @@ void CustomMapScene::Map_CuntomUpdate()
 		}
 		else
 		{
-			map_->SetChip(cPos + mPos , selChip_);
+			map_->SetChip(VecICast(cPos + mPos) , selChip_);
 		}
 	}
 	blendAlpha_+=2;
