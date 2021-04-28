@@ -41,6 +41,11 @@ public:
 		/*return ((this->x != vec.x) || (this->y != vec.y));*/
 	}
 
+	// êÿÇËéÃÇƒ
+	VECTOR2_TEMPLE<float> Floor();
+	// éléÃå‹ì¸
+	VECTOR2_TEMPLE<float> Round();
+
 	//íPçÄââéZéq------------------------------------------
 	VECTOR2_TEMPLE& operator +=(const VECTOR2_TEMPLE& vec);
 	VECTOR2_TEMPLE& operator -=(const VECTOR2_TEMPLE& vec);
@@ -83,7 +88,7 @@ VECTOR2_TEMPLE<T> operator+(T u, const VECTOR2_TEMPLE<T>& v);
 
 //VECTOR2 + VECTOR2----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v);
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<T>& v);
 
 //VECTOR2 - VECTOR2----------------------------
 template<class T>
@@ -103,7 +108,7 @@ VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>&
 
 //VECTOR2 + Vec2Float----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v);
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
 
 //VECTOR2 - Vec2Float----------------------------
 template<class T>
@@ -111,7 +116,7 @@ VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<flo
 
 //VECTOR2 * Vec2Float----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v);
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v);
 
 //VECTOR2 / Vec2Float----------------------------
 template<class T>
@@ -127,18 +132,11 @@ VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE
 
 //Vec2Float * VECTOR2----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v);
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
 
 //Vec2Float / VECTOR2----------------------------
 template<class T>
 VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v);
-
-//Vec2Float + VECTOR2----------------------------
-template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v);
-
-
-
 
 using VECTOR2 = VECTOR2_TEMPLE<int>;
 using Vec2Int = VECTOR2_TEMPLE<int>;

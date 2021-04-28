@@ -1,4 +1,5 @@
 #include "..\VECTOR2.h"
+#include <cmath>
 
 template<class T>
 VECTOR2_TEMPLE<T>::VECTOR2_TEMPLE()
@@ -21,7 +22,8 @@ VECTOR2_TEMPLE<T>::~VECTOR2_TEMPLE()
 {
 }
 
-template<class T>VECTOR2_TEMPLE<T>& VECTOR2_TEMPLE<T>::operator=(const VECTOR2_TEMPLE<T>& vec)
+template<class T>
+VECTOR2_TEMPLE<T>& VECTOR2_TEMPLE<T>::operator=(const VECTOR2_TEMPLE<T>& vec)
 {
 	/*(*this).x = vec.x;
 	  (*this).y = vec.y;*/
@@ -29,6 +31,7 @@ template<class T>VECTOR2_TEMPLE<T>& VECTOR2_TEMPLE<T>::operator=(const VECTOR2_T
 	this->y = vec.y;
 	return (*this);
 }
+
 template<class T>
 T& VECTOR2_TEMPLE<T>::operator[](int i)
 {
@@ -45,6 +48,18 @@ T& VECTOR2_TEMPLE<T>::operator[](int i)
 		return x;
 	}
 
+}
+
+template<class T>
+VECTOR2_TEMPLE<float> VECTOR2_TEMPLE<T>::Floor()
+{
+	return VECTOR2_TEMPLE<float>(std::floorf(this->x), std::floorf(this->y));
+}
+
+template<class T>
+inline VECTOR2_TEMPLE<float> VECTOR2_TEMPLE<T>::Round()
+{
+	return VECTOR2_TEMPLE<float>(std::roundf(this->x), std::roundf(this->y));
 }
 
 template<class T>
@@ -187,7 +202,7 @@ VECTOR2_TEMPLE<T> operator+(T u, const VECTOR2_TEMPLE<T>& v)
 
 //VECTOR2 + VECTOR2
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>& v)
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<T>& v)
 {
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x + v.x;
@@ -243,7 +258,7 @@ VECTOR2_TEMPLE<T> operator%(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<T>&
 
 //VECTOR2 + Vec2Float----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
 {
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x + v.x;
@@ -264,7 +279,7 @@ VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<flo
 
 //VECTOR2 * Vec2Float----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<float>& v)
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<int>& u, const VECTOR2_TEMPLE<float>& v)
 {
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x * v.x;
@@ -292,10 +307,6 @@ VECTOR2_TEMPLE<T> operator/(const VECTOR2_TEMPLE<T>& u, const VECTOR2_TEMPLE<flo
 template<class T>
 VECTOR2_TEMPLE<T> operator+(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v)
 {
-	if (v.x == 0 || v.y == 0)
-	{
-		return VECTOR2_TEMPLE<T>();
-	}
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x + v.x;
 	vec.y = u.y + v.y;
@@ -316,7 +327,7 @@ VECTOR2_TEMPLE<T> operator-(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE
 
 //Vec2Float * VECTOR2----------------------------
 template<class T>
-VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<T>& v) 
+VECTOR2_TEMPLE<T> operator*(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v) 
 {
 	VECTOR2_TEMPLE<T> vec;
 	vec.x = u.x * v.x;

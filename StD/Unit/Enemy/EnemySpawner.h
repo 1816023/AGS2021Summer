@@ -19,7 +19,6 @@ private:
 	std::vector<EnemyType>spawnList_;
 	EnemyManager* enemyMng_;
 	float cnt_;
-	//Map* map_;
 	std::vector<RootDir>root_;
 };
 

@@ -23,15 +23,18 @@ private:
 	// --- ŠeíXVˆ— ---
 	using Func_t = void (ECircle::*)(float);
 	Func_t updater_;
+	// ¶¬’¼Œã
+	void StartUpdate(float deltaTime);
 	// ˆÚ“®‚È‚Ç
 	void RunUpdate(float deltaTime);
-	// ˆÚ“®•ûŒü‚ÌŒˆ’è‚ğ‚·‚é
-	void SearchUpdate(float deltaTime);
+	
 	// €‚ñ‚¾‚Æ‚«
 	void deathUpdate(float deltaTime);
 	// --------------------
 
 	// ˆÚ“®ˆ—
 	void Move(float deltaTime);
+	// ˆÚ“®•ûŒü‚ÌŒˆ’è‚ğ‚·‚é
+	void SearchRoot(float deltaTime);
 };
 
