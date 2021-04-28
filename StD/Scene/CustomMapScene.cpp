@@ -5,25 +5,11 @@
 #include "CustomMapScene.h"
 #include "../Mng/ImageMng.h"
 #include "../MouseController.h"
-
+#include "../StringUtil.h"
 #define CUSTOM dynamic_cast<Custom*>(map_)
 CustomMapScene::CustomMapScene()
 {
-	map_ = std::make_unique<Custom>(VECTOR2());
-	nowState_ = CustomState::SET_STATE;
-	updateFunc_.try_emplace(CustomState::SET_STATE,std::bind(&CustomMapScene::SetStateUpdate,this));
-	updateFunc_.try_emplace(CustomState::MAP_CUSTOM,std::bind(&CustomMapScene::Map_CuntomUpdate,this));
-	updateFunc_.try_emplace(CustomState::END_CUSTOM,std::bind(&CustomMapScene::EndCustomUpdate,this));
-
-	drawFunc_.try_emplace(CustomState::SET_STATE, std::bind(&CustomMapScene::SetStateDraw, this));
-	drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCustomDraw, this));
-	drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomDraw, this));
-
-	mapSizeX_ = 0;
-	mapSizeY_ = 0;
-	fileName_[0] = TCHAR();
-	blendAlpha_ = 256;
-	LoadText();
+	Init();
 }
 
 CustomMapScene::~CustomMapScene()
@@ -39,10 +25,34 @@ unique_Base CustomMapScene::Update(unique_Base own)
 	{
 		return std::make_unique<TitleScene>();
 	}
-	//blendAlpha+=2;
 
 	updateFunc_[nowState_]();
 	return std::move(own);
+}
+
+bool CustomMapScene::Init()
+{
+	
+		map_ = std::make_unique<Custom>(VECTOR2());
+		nowState_ = CustomState::SET_STATE;
+		// update系関数保存
+		updateFunc_.try_emplace(CustomState::SET_STATE, std::bind(&CustomMapScene::SetStateUpdate, this));
+		updateFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::Map_CuntomUpdate, this));
+		updateFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomUpdate, this));
+		// draw系関数保存
+		drawFunc_.try_emplace(CustomState::SET_STATE, std::bind(&CustomMapScene::SetStateDraw, this));
+		drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCustomDraw, this));
+		drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomDraw, this));
+
+		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + 10,10),VECTOR2(SELECT_UI_POS.first.x + 64 + 10, 64 + 10) });
+
+		mapSizeX_ = 0;
+		mapSizeY_ = 0;
+		fileName_[0] = TCHAR();
+		blendAlpha_ = 256;
+		selChip_ = MapChipName::FIELD;
+		LoadText();
+	return true;
 }
 
 void CustomMapScene::Draw()
@@ -59,7 +69,7 @@ void CustomMapScene::Draw()
 	{
 		map_->Draw();
 		
-		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_DRAW.first, SELECT_UI_DRAW.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_DRAW.first, TEXT_UI_DRAW.second))
+		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
 			if (lpMouseController.IsHitBoxToMouse(VECTOR2(0, 0)-cPos, map_->GetMapSize() * map_->GetChipSize() -cPos))
 			{
@@ -98,17 +108,19 @@ void CustomMapScene::Map_CuntomUpdate()
 	VECTOR2 mPos;
 	GetMousePoint(&mPos.x, &mPos.y);
 	auto cPos = lpApplication.GetCamera().GetPos()*2.0f;
-	if (GetMouseInput() & MOUSE_INPUT_LEFT == 1)
+	if (lpMouseController.GetClicking())
 	{
-		if (mPos.x > SELECT_UI_DRAW.first.x)
+		if (mPos.x > SELECT_UI_POS.first.x)
 		{
 
 		}
 		else
 		{
-			map_->SetChip(cPos + mPos , MapChipName::ROOT);
+			map_->SetChip(cPos + mPos , selChip_);
 		}
 	}
+	blendAlpha_+=2;
+
 }
 
 void CustomMapScene::EndCustomUpdate()
@@ -127,6 +139,7 @@ void CustomMapScene::SetStateDraw()
 	DrawString(0, STRING_HIGHT + LINE_SPACING*2, L"ファイル名：", 0xffffff);
 	DrawString(0, STRING_HIGHT*2 + LINE_SPACING*2, L"※次の文字とスペースは使用できません\n「￥　／　：　＊　？　”　＜　＞　｜　.　& ( ) [ ] { } ^ = ; ! ' + , ` ~」", 0xff9999);
 	int tmpFlag = 0;
+	// 横幅入力
 	mapSizeX_ = KeyInputNumber(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
 	if (mapSizeX_<MIN_MAP_SIZE || mapSizeX_>MAX_MAP_SIZE)
 	{
@@ -137,6 +150,7 @@ void CustomMapScene::SetStateDraw()
 		tmpFlag++;
 	}
 	DrawFormatString(GetDrawStringWidth(L"マップの横幅：", GetStringLength(L"マップの横幅：")) + 1, STRING_HIGHT, 0xffffff, L"%d", mapSizeX_);
+	// 縦幅入力
 	mapSizeY_ = KeyInputNumber(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT+LINE_SPACING, MAX_MAP_SIZE, MIN_MAP_SIZE, true);
 	if (mapSizeY_<MIN_MAP_SIZE || mapSizeY_>MAX_MAP_SIZE)
 	{
@@ -147,11 +161,13 @@ void CustomMapScene::SetStateDraw()
 		tmpFlag++;
 	}
 	DrawFormatString(GetDrawStringWidth(L"マップの高さ：", GetStringLength(L"マップの高さ：")) + 1, STRING_HIGHT + LINE_SPACING, 0xffffff, L"%d", mapSizeY_);
+	// 名前入力
 	if (KeyInputString(GetDrawStringWidth(L"ファイル名：", GetStringLength(L"ファイル名：")) + 1, STRING_HIGHT+LINE_SPACING*2, MAX_NAME_SIZE, fileName_, true) != 1)
 	{
 		return;
 	}
 	else {
+		// ファイル名に非対応文字が含まれているか
 		if (FileNameErrorCheck(fileName_))
 		{
 			return;
@@ -167,32 +183,36 @@ void CustomMapScene::SetStateDraw()
 
 void CustomMapScene::MapCustomDraw()
 {
-	DrawString(0, 0, L"Custom", 0xffffff);
+	//DrawString(0, 0, L"Custom", 0xffffff);
+	// 枠表示
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawRoundRect(SELECT_UI_DRAW.first.x, SELECT_UI_DRAW.first.y, SELECT_UI_DRAW.second.x, SELECT_UI_DRAW.second.y,20,20, 0x555555, true);
-	DrawRoundRect(SELECT_UI_DRAW.first.x, SELECT_UI_DRAW.first.y, SELECT_UI_DRAW.second.x, SELECT_UI_DRAW.second.y, 20, 20, 0xffffff, false);
-	DrawRoundRect(TEXT_UI_DRAW.first.x, TEXT_UI_DRAW.first.y, TEXT_UI_DRAW.second.x, TEXT_UI_DRAW.second.y, 20, 20, 0x555555, true);
-	DrawRoundRect(TEXT_UI_DRAW.first.x, TEXT_UI_DRAW.first.y, TEXT_UI_DRAW.second.x, TEXT_UI_DRAW.second.y, 20, 20, 0xffffff, false);
+	DrawRoundRect(SELECT_UI_POS.first.x, SELECT_UI_POS.first.y, SELECT_UI_POS.second.x, SELECT_UI_POS.second.y,20,20, 0x555555, true);
+	DrawRoundRect(SELECT_UI_POS.first.x, SELECT_UI_POS.first.y, SELECT_UI_POS.second.x, SELECT_UI_POS.second.y, 20, 20, 0xffffff, false);
+	DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0x555555, true);
+	DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0xffffff, false);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
-
+	// 説明文の表示
+	DrawString(TEXT_UI_POS.first.x+30, TEXT_UI_POS.first.y+ (TEXT_UI_POS.second.y - TEXT_UI_POS.first.y) / 5,_StW(textData_[selChip_]).c_str(), 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
+	// とりあえずボタンの表示
+	int shadowOffset = 3;
+	int pushuOffset = 1;
 	if (lpMouseController.GetClicking())
 	{
-		if (lpMouseController.IsHitBoxToMouse(SELECT_UI_DRAW.first,SELECT_UI_DRAW.second))
+		if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first,SELECT_UI_POS.second))
 		{
-			DrawRoundRect(SELECT_UI_DRAW.first.x + 10+1, 10+1, SELECT_UI_DRAW.first.x + 64 + 10+1, 64 + 10+1, 10, 10, 0xffffff, true);
+			DrawRoundRect(bPosList_.front().first.x+ pushuOffset, bPosList_.front().first.y+ pushuOffset, bPosList_.front().second.x+ pushuOffset, bPosList_.front().second.y+ pushuOffset, 10, 10, 0xffffff, true);
 		}
 		else
 		{
-			DrawRoundRect(SELECT_UI_DRAW.first.x + 10 + 3, 10 + 3, SELECT_UI_DRAW.first.x + 64 + 10 + 3, 64 + 10 + 3, 10, 10, 0x000000, true);
-			DrawRoundRect(SELECT_UI_DRAW.first.x + 10, 10, SELECT_UI_DRAW.first.x + 64 + 10, 64 + 10, 10, 10, 0xffffff, true);
+			DrawRoundRect(bPosList_.front().first.x+ shadowOffset, bPosList_.front().first.y+ shadowOffset, bPosList_.front().second.x+ shadowOffset, bPosList_.front().second.y+ shadowOffset, 10, 10, 0x000000, true);
+			DrawRoundRect(bPosList_.front().first.x, bPosList_.front().first.y, bPosList_.front().second.x, bPosList_.front().second.y, 10, 10, 0xffffff, true);
 		}
 	}
 	else {
-		DrawRoundRect(SELECT_UI_DRAW.first.x + 10 + 3, 10 + 3, SELECT_UI_DRAW.first.x + 64 + 10 + 3, 64 + 10 + 3, 10, 10, 0x000000, true);
-		DrawRoundRect(SELECT_UI_DRAW.first.x + 10, 10, SELECT_UI_DRAW.first.x + 64 + 10, 64 + 10, 10, 10, 0xffffff, true);
+		DrawRoundRect(bPosList_.front().first.x + shadowOffset, bPosList_.front().first.y + shadowOffset, bPosList_.front().second.x + shadowOffset, bPosList_.front().second.y + shadowOffset, 10, 10, 0x000000, true);
+		DrawRoundRect(bPosList_.front().first.x, bPosList_.front().first.y, bPosList_.front().second.x, bPosList_.front().second.y, 10, 10, 0xffffff, true);
 	}
-	
 #ifdef _DEBUG
 
 	DrawFormatString(mPos.x, mPos.y+10, 0x00ff00, L"%d:%d", mPos.x, mPos.y);
@@ -259,11 +279,11 @@ bool CustomMapScene::LoadText()
 	{
 		return false;
 	}
-	textData_.push_back({L"mainstay" ,doc.FirstChildElement("mainstay")->GetText() });
-	textData_.push_back({L"spawner" ,doc.FirstChildElement("spawner")->GetText() });
-	textData_.push_back({L"root" ,doc.FirstChildElement("root")->GetText() });
-	textData_.push_back({L"field" ,doc.FirstChildElement("field")->GetText() });
-	textData_.push_back({L"wall" ,doc.FirstChildElement("wall")->GetText() });
+	textData_.try_emplace( MapChipName::MAINSTAY ,doc.FirstChildElement("mainstay")->GetText() );
+	textData_.try_emplace( MapChipName::SPAWNER ,doc.FirstChildElement("spawner")->GetText() );
+	textData_.try_emplace( MapChipName::ROOT ,doc.FirstChildElement("root")->GetText() );
+	textData_.try_emplace( MapChipName::FIELD ,doc.FirstChildElement("field")->GetText() );
+	textData_.try_emplace( MapChipName::WALL ,doc.FirstChildElement("wall")->GetText() );
 
 	return true;
 }

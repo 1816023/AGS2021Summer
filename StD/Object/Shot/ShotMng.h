@@ -9,6 +9,7 @@
 
 constexpr auto BASE_SPAN = 15;	//Šî‘b’eŠÔŠu
 constexpr auto BASE_DIST = 150;	//Šî‘bË’ö
+constexpr auto BASE_SIZE = 5;	//’e‚Ì”¼Œa
 
 #define lpShotMng ShotMng::GetInstance()
 
@@ -31,7 +32,7 @@ public:
 	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
 private:
 	ShotMng();
-	std::map<Player*, std::list<Vec2Float>> shotList_;	//’eŠÇ——p
+	std::map<Player*, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//’eŠÇ——p (ƒŠƒXƒg‚Ìfirst‚É‚ÍËo“_second‚É‚Í’e‚ÌŒ»İÀ•W‚ª“ü‚é)
 	std::map<Player*, int> shotSpan_;	//”­ËŠÔŠuŠÇ——p
 };
 
