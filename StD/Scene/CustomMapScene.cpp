@@ -116,8 +116,7 @@ void CustomMapScene::Map_CuntomUpdate()
 		}
 		else
 		{
-			map_->SetChip(cPos + mPos , MapChipName::ROOT);
-			map_->SetChip(mPos+cPos, selChip_);
+			map_->SetChip(cPos + mPos , selChip_);
 		}
 	}
 	blendAlpha_+=2;
