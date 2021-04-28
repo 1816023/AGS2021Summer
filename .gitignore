@@ -34,3 +34,7 @@
 /StD/x64
 /StD/.vs
 /StD/Debug
+/StD/*.filters
+/StD/*.user
+/StD/*.sln
+/StD/*.vcxproj
