@@ -21,6 +21,10 @@ public:
 	virtual ~Unit() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
+	const Vec2Float GetPosition();
+	void SetPosition(Vec2Float pos);
+	unsigned int GetHP();
+	const bool IsDeath();
 protected:
 	UnitStat state_;
 };

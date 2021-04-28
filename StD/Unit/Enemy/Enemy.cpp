@@ -24,29 +24,9 @@ void Enemy::Draw()
 {
 }
 
-unsigned int Enemy::GetHP()
-{
-	return state_.life;
-}
-
-Vec2Float Enemy::GetPosition()
-{
-	return state_.pos;
-}
-
-void Enemy::SetPosition(Vec2Float pos)
-{
-	state_.pos = pos;
-}
-
 void Enemy::SetRoot(std::vector<RootDir>& root)
 {
 	enemyInfo_.root = root;
-}
-
-bool Enemy::IsDeath()
-{
-	return state_.isDead;
 }
 
 const float Enemy::GetSpeed()

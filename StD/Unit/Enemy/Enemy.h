@@ -33,8 +33,6 @@ struct MapInfo
 	VECTOR2 mapSize;	// マップのチップ数
 };
 
-
-
 class Map;
 class Enemy : public Unit
 {
@@ -45,24 +43,21 @@ public:
 	virtual void Update(float deltaTime);
 	virtual void Draw();
 	virtual Enemy* CreateClone() = 0;
-	unsigned int GetHP();
-	Vec2Float GetPosition();
-	void SetPosition(Vec2Float pos);
 	void SetRoot(std::vector<RootDir>& root);
-	bool IsDeath();
 	const float GetSpeed();
 	void SetSpeed(float speed);
 protected:
+	// 敵のみの情報
 	struct EnemyInfo
 	{
-		std::vector<RootDir> root;
-		float scale;
+		std::vector<RootDir> root;	// 移動ルート
 		VECTOR2 mapChipSize;	// マップのチップサイズ
-		VECTOR2 mapSize;		// マップのチップ数
-		int rootIdx;	// ルートのインデックス
+		VECTOR2 mapSize;		// マップのチップ数	
 		Vec2Float dirVec;		// 移動方向のベクトル
 		Vec2Float nowMove;		// 前回決定してからの移動値
-		float speed;
+		float speed;			// 移動速度
+		float scale;			// 大きさ
+		int rootIdx;			// ルートのインデックス
 	};
 	// 移動処理
 	void Move(float deltaTime);
