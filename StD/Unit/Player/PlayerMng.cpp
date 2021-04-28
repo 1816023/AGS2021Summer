@@ -1,12 +1,15 @@
 #include "PlayerMng.h"
 #include "../../Object/Shot/ShotMng.h"
 #include "Yellow.h"
+#include "Green.h"
 
 void PlayerMng::Update(float deltaTime)
 {
     for (auto& unit : unitList_)
     {
         unit->Update(deltaTime);
+        lpShotMng.AddBullet(unit,unit->GetPos());
+        lpShotMng.BulletMove(unit);
     }
 }
 
@@ -16,6 +19,7 @@ void PlayerMng::Draw(void)
     {
         unit->Draw();
     }
+    lpShotMng.Draw();
 }
 
 bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
@@ -27,6 +31,7 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
         ptr = std::make_shared<Yellow>(pos);
         break;
     case PlayerUnit::GREEN:
+        ptr = std::make_shared<Green>(pos);
         break;
     case PlayerUnit::BLUE:
         break;

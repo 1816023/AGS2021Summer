@@ -26,7 +26,7 @@ unique_Base ResultScene::Update(unique_Base own)
 
 	if (lpMouseController.GetClickTrg())
 	{
-		lpPlayerMng.Spawner(PlayerUnit::YELLOW,Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
+		lpPlayerMng.Spawner(PlayerUnit::GREEN,Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
 	}
 	auto delta = Application::Instance().GetDelta();
 	lpPlayerMng.Update(delta);

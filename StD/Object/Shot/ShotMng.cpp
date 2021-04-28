@@ -26,7 +26,7 @@ void ShotMng::Draw(void)
 	}
 }
 
-void ShotMng::AddBullet(Player* ptr,Vec2Float pos)
+void ShotMng::AddBullet(std::shared_ptr<Player> ptr,Vec2Float pos)
 {
 	shotSpan_[ptr]--;
 	if (shotSpan_[ptr] <= 0)
@@ -36,7 +36,7 @@ void ShotMng::AddBullet(Player* ptr,Vec2Float pos)
 	}
 }
 
-void ShotMng::BulletMove(Player* ptr)
+void ShotMng::BulletMove(std::shared_ptr<Player> ptr)
 {
 	//‚±‚Á‚±‚ÉŠp“x‚ð‹‚ß‚éŒvŽZ‚Ì‹Lq
 	//UŒ‚”ÍˆÍ“à‚Ì“G‚ð’Tõ‚·‚éH
@@ -45,10 +45,10 @@ void ShotMng::BulletMove(Player* ptr)
 	{
 		for (auto itr = shotList_[ptr].begin(); itr != shotList_[ptr].end();)
 		{
-			if (isRange(itr->first, itr->second, 100, BASE_SIZE))
+			if (isRange(itr->first, itr->second, 100*ptr->GetAtkRange(), BASE_SIZE))
 			{
 				//ŽË’ö”ÍˆÍ“à(’e‚ðˆÚ“®‚³‚¹‚é)
-				itr->second += Vec2Float(0.0f, 1.0f);
+				itr->second += Vec2Float(0.0f, 1.0f*ptr->GetBulletSpeed());
 				++itr;
 			}
 			else
