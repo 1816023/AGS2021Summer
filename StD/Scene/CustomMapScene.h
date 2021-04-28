@@ -9,8 +9,8 @@
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
 #define LINE_SPACING 30		// 行間
-#define SELECT_UI_DRAW std::pair<VECTOR2,VECTOR2>(VECTOR2(DEF_SCREEN_SIZE_X/1.5,0),VECTOR2(DEF_SCREEN_SIZE_X,DEF_SCREEN_SIZE_Y))
-#define TEXT_UI_DRAW std::pair<VECTOR2,VECTOR2>(VECTOR2(0,DEF_SCREEN_SIZE_Y/1.5),VECTOR2(SELECT_UI_DRAW.first.x-10,DEF_SCREEN_SIZE_Y))
+#define SELECT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(DEF_SCREEN_SIZE_X/1.5,0),VECTOR2(DEF_SCREEN_SIZE_X,DEF_SCREEN_SIZE_Y))
+#define TEXT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(0,DEF_SCREEN_SIZE_Y/1.25),VECTOR2(SELECT_UI_POS.first.x-10,DEF_SCREEN_SIZE_Y))
 
 enum class CustomState {
 	SET_STATE,			// マップの幅や高さを設定する状態
@@ -28,6 +28,8 @@ public:
 	unique_Base Update(unique_Base own) override;
 	SCENE_ID GetScnID(void) override { return SCENE_ID::MAIN; }
 private:
+	// 初期化用
+	bool Init();
 	// 基本的なメイン物の描画
 	void Draw()override;
 	// UI系の描画
@@ -48,7 +50,11 @@ private:
 	// 変動するアルファ値
 	int blendAlpha_;
 	// ファイルからロードした説明文
-	std::list<std::pair<std::wstring,std::string>> textData_;
+	std::map<MapChipName,std::string> textData_;
+	// ボタンの位置の座標リスト
+	std::list<std::pair<VECTOR2, VECTOR2>> bPosList_;
+	// 選択中のマップチップ　何もないときはMAX(6)
+	MapChipName selChip_;
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					
