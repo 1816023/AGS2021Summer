@@ -17,7 +17,7 @@ struct ButtomState {
 	bool pushFlag;		// 押下フラグ
 	std::wstring name;	// ボタンの名前
 	int CorH;			// ボタンの色または画像ハンドル
-
+	std::function<void(ButtomState&)> func;	// ボタンが押されたときに呼ばれる関数
 };
 
 enum class CustomState {

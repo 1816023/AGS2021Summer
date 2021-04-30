@@ -32,7 +32,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 
 bool CustomMapScene::Init()
 {
-	
+
 	map_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SET_STATE;
 	// updateånä÷êîï€ë∂
@@ -48,12 +48,23 @@ bool CustomMapScene::Init()
 	const int bSpace = 20;
 	const int basePosX = SELECT_UI_POS.first.x + bSpace;
 	const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
-	bList_.push_back({ VECTOR2(basePosX,bSpace),VECTOR2(basePosY, bSize + bSpace),false,L"1" ,0x007fff });
-	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace),false,L"2",0xff0f0f });
-	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace),false,L"3" ,0xafff00 });
-	bList_.push_back({ VECTOR2(basePosX,bSpace + (bSize + bSpace)),VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace)),false,L"4" ,0xe3e3e3 });
-	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),false,L"5",0x333333 });
-	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"save" ,0xffffff});
+	auto nFunc = [&](ButtomState& state) {
+		if (state.pushFlag = !state.pushFlag)
+		{
+			selChip_ = static_cast<MapChipName>(std::atoi(_WtS(state.name).c_str()));
+		}
+		else
+		{
+			selChip_ = MapChipName::MAX;
+		} 
+	};
+	auto sFunc = [&](ButtomState& state) {state.pushFlag = true; CUSTOM->SaveFile(); };
+	bList_.push_back({ VECTOR2(basePosX,bSpace),VECTOR2(basePosY, bSize + bSpace),false,L"1" ,0x007fff,nFunc });
+	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace),false,L"2",0xff0f0f,nFunc });
+	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace),false,L"3" ,0xafff00, nFunc });
+	bList_.push_back({ VECTOR2(basePosX,bSpace + (bSize + bSpace)),VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace)),false,L"4" ,0xe3e3e3, nFunc });
+	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),false,L"5",0x333333,nFunc });
+	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"save" ,0xffffff, sFunc});
 
 	mapSizeX_ = 0;
 	mapSizeY_ = 0;
@@ -137,21 +148,24 @@ void CustomMapScene::MapCuntomUpdate()
 								bl.pushFlag = false;
 							}
 						}
+						list.func(list);
 						// ÉtÉâÉOÇîΩì]Ç≥ÇπÇÈ
-						if (list.pushFlag = !list.pushFlag)
-						{
-							if (list.name >= L"1" && list.name <= L"5")
-							{
-								selChip_ = static_cast<MapChipName>(std::atoi(_WtS(list.name).c_str()));
-							}
-							else if(list.name==L"save")
-							{
-								list.pushFlag = true;
-							}
-						}
-						else {
-							selChip_ = MapChipName::MAX;
-						}
+						//if (list.pushFlag = !list.pushFlag)
+						//{
+						//	/*if (list.name >= L"1" && list.name <= L"5")
+						//	{
+						//		selChip_ = static_cast<MapChipName>(std::atoi(_WtS(list.name).c_str()));
+						//	}
+						//	else if(list.name==L"save")
+						//	{
+						//		list.pushFlag = true;
+
+						//	}*/
+
+						//}
+						//else {
+						//	selChip_ = MapChipName::MAX;
+						//}
 					}
 				}
 			}
