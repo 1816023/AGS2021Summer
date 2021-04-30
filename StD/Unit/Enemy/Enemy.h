@@ -34,17 +34,24 @@ struct MapInfo
 };
 
 class Map;
+// 敵クラス
 class Enemy : public Unit
 {
 public:
 	Enemy();
 	Enemy(MapInfo& mapInfo);
 	virtual ~Enemy();
+	// 更新
 	virtual void Update(float deltaTime);
+	// 描画
 	virtual void Draw();
+	// クローン作製
 	virtual Enemy* CreateClone() = 0;
+	// ルートを設定
 	void SetRoot(std::vector<RootDir>& root);
+	// スピードを取得
 	const float GetSpeed();
+	// スピード設定
 	void SetSpeed(float speed);
 protected:
 	// 敵のみの情報
@@ -64,6 +71,6 @@ protected:
 	// 移動方向の決定をする
 	void SearchRoot(float deltaTime);
 	
-	EnemyInfo enemyInfo_;
+	EnemyInfo enemyInfo_;	// 敵の情報
 };
 

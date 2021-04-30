@@ -20,12 +20,13 @@ public:
 	void Update(float deltaTime);	
 	// •`‰æ
 	void Draw();	
+	// “GƒŠƒXƒg‚ğæ“¾(‚·‚×‚Ä‚Ì“G)
 	EnemyList& GetEnemies();
 private:
 	// “G‚ğì¬‚·‚é
 	Enemy& CreateEnemy(EnemyType type);
 
-	EnemyList enemies_;	// “G‚½‚¿
+	EnemyList enemies_;	// “GƒŠƒXƒg
 	using Prototype = std::unordered_map<EnemyType, Enemy*>;
 	Prototype prototype_;	// “G‚Ìƒvƒƒgƒ^ƒCƒv
 };

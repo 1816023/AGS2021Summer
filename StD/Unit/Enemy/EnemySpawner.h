@@ -12,13 +12,16 @@ friend class EnemyManager;
 public:
 	EnemySpawner(Vec2Float pos, EnemyManager& enemyMng);
 	~EnemySpawner();
-	void Spawn(EnemyType type);	// 敵をスポーン
+	// 敵をスポーン
+	void Spawn(EnemyType type);	
+	// 更新
 	void Update(float deltaTime);
 private:
 	Vec2Float pos_;	// 座標
-	std::vector<EnemyType>spawnList_;
-	EnemyManager* enemyMng_;
-	float cnt_;
-	std::vector<RootDir>root_;
+	std::vector<EnemyType>spawnList_;	// スポーンする敵の種類のリスト
+	EnemyManager* enemyMng_;	// 敵管理用
+	std::vector<RootDir>root_;	// 敵移動ルートのリスト
+	float cnt_;					
+	
 };
 

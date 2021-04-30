@@ -32,6 +32,7 @@
     <ClCompile Include="Trap\Support.cpp" />
     <ClCompile Include="Trap\Explosion.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
+    <ClCompile Include="Unit\Player\Green.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -69,5 +70,6 @@
     <ClInclude Include="Trap\Support.h" />
     <ClInclude Include="Trap\Explosion.h" />
     <ClInclude Include="Trap\Interference.h" />
+    <ClInclude Include="Unit\Player\Green.h" />
   </ItemGroup>
 </Project>

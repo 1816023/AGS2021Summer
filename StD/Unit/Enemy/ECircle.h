@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-
+// 円形の敵
 class ECircle : public Enemy
 {
 public:
@@ -9,9 +9,12 @@ public:
 	ECircle(MapInfo& mapInfo);
 	~ECircle();
 
+	// 更新
 	void Update(float deltaTime)override;
+	// 描画
 	void Draw()override;
-	Enemy* CreateClone();
+	// クローン作製
+	Enemy* CreateClone()override;
 private:	
 	// --- 各種更新処理 ---
 	using Func_t = void (ECircle::*)(float);
@@ -20,7 +23,6 @@ private:
 	void StartUpdate(float deltaTime);
 	// 移動など
 	void RunUpdate(float deltaTime);
-	
 	// 死んだとき
 	void deathUpdate(float deltaTime);
 	// --------------------
