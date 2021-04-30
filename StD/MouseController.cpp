@@ -3,19 +3,30 @@
 
 std::unique_ptr<MouseController, MouseController::MouseDelete> MouseController::s_Instans(new MouseController);
 
-bool MouseController::GetClickTrg()
+bool MouseController::GetClickTrg(int mouseType)
 {
-	if (data && !dataOld)
+	if (data && !dataOld && data & mouseType)
+	{
+		clickPos_ = pos;
+		return true;
+	}
+	return false;
+}
+
+bool MouseController::GetClicking(int mouseType)
+{
+	if (data && dataOld && data & mouseType)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool MouseController::GetClicking()
+bool MouseController::GetClickUp(int mouseType)
 {
-	if (data && dataOld)
+	if (!data && dataOld && data & mouseType)
 	{
+		clickPos_ = VECTOR2(0,0);
 		return true;
 	}
 	return false;
@@ -35,8 +46,6 @@ const bool MouseController::IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd)
 	{
 		return true;
 	}
-
-
 	return false;
 }
 
@@ -45,6 +54,7 @@ MouseController::MouseController()
 	data = 0;
 	dataOld = 0;
 	wheel = 0;
+	clickPos_ = VECTOR2(0, 0);
 }
 
 MouseController::~MouseController()

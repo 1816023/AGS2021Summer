@@ -49,7 +49,7 @@ void TitleScene::Draw()
 {
 	if (!trapFlag)
 	{
-		if (lpMouseController.GetClickTrg())
+		if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 		{
 			interference = new Interference(lpMouseController.GetPos());
 			trapFlag = true;

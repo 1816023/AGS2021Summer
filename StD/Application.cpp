@@ -54,6 +54,7 @@ void Application::Run()
 		camera_->Control();
 		lpKeyController.Update();
 		lpMouseController.Update();
+		
 		auto now = system_clock::now();
 		if (GetNoActiveState(true)== 0)
 		{
