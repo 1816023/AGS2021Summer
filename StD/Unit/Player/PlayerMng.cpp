@@ -2,6 +2,8 @@
 #include "../../Object/Shot/ShotMng.h"
 #include "Yellow.h"
 #include "Green.h"
+#include "Blue.h"
+#include "Pink.h"
 
 void PlayerMng::Update(float deltaTime)
 {
@@ -34,8 +36,10 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
         ptr = std::make_shared<Green>(pos);
         break;
     case PlayerUnit::BLUE:
+        ptr = std::make_shared<Blue>(pos);
         break;
     case PlayerUnit::PINK:
+        ptr = std::make_shared<Pink>(pos);
         break;
     case PlayerUnit::MAX:
         break;
