@@ -137,6 +137,7 @@ static VECTOR2_TEMPLE<int>& VecICast(const VECTOR2_TEMPLE<float>& u);
 using VECTOR2 = VECTOR2_TEMPLE<int>;
 using Vec2Int = VECTOR2_TEMPLE<int>;
 using Vec2Float = VECTOR2_TEMPLE<float>;
+using Vec2Double = VECTOR2_TEMPLE<double>;
 
 
 #include"./details/VECTOR2.h"

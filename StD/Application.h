@@ -42,5 +42,6 @@ private:
 
 	std::chrono::system_clock::time_point old_;	// 1ƒtƒŒ[ƒ€‘O‚ÌŠÔ
 	float delta_;
+	int wheel;
 };
 
