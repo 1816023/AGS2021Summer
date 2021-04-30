@@ -24,7 +24,7 @@ unique_Base ResultScene::Update(unique_Base own)
 		return std::make_unique<MainScene>();
 	}
 
-	if (lpMouseController.GetClickTrg())
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 	{
 		lpPlayerMng.Spawner(PlayerUnit::GREEN,Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
 	}

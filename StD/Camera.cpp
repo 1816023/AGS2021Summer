@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include <DxLib.h>
+#include "MouseController.h"
 
 Camera::Camera()
 {
@@ -28,6 +29,11 @@ void Camera::Control()
 	if (CheckHitKey(KEY_INPUT_DOWN))
 	{
 		pos_.y--;
+	}
+	auto wheel = static_cast<float>(lpMouseController.GetWheel());
+	if (wheel != 0)
+	{
+		scale_ += wheel * 0.01f;
 	}
 }
 

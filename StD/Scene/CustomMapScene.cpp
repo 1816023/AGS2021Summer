@@ -118,7 +118,7 @@ void CustomMapScene::MapCuntomUpdate()
 	VECTOR2 mPos;
 	GetMousePoint(&mPos.x, &mPos.y);
 	auto cPos = lpApplication.GetCamera().GetPos()*2.0f;
-	if (lpMouseController.GetClickTrg())
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 	{
 		if (mPos.x > SELECT_UI_POS.first.x)
 		{

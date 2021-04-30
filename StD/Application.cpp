@@ -67,6 +67,7 @@ void Application::Run()
 
 void Application::Draw()
 {
+	ClsDrawScreen();
 	// ƒQ[ƒ€•`‰æ
 	SetDrawScreen(gameScreen_);
 	ClsDrawScreen();
