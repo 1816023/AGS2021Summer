@@ -13,6 +13,7 @@ public:
 	// 
 	bool SetChip(VECTOR2 pos, MapChipName chip);
 	bool CreateMapFile(VECTOR2 mapSize,std::wstring name);
+	bool SaveFile();
 private:
 	// 描画のオフセット
 	VECTOR2 offset_;
