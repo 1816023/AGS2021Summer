@@ -40,7 +40,8 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 	VECTOR2 mapPos = pos / state_.chipSize_;
 	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
 	{
-		mapData_[mapPos.y][mapPos.x] = chip;
+		
+		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ?chip:mapData_[mapPos.y][mapPos.x] ;
 		return true;
 	}
 	

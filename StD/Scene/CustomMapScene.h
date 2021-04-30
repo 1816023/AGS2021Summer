@@ -11,6 +11,13 @@
 #define LINE_SPACING 30		// 行間
 #define SELECT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(DEF_SCREEN_SIZE_X/1.5,0),VECTOR2(DEF_SCREEN_SIZE_X,DEF_SCREEN_SIZE_Y))
 #define TEXT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(0,DEF_SCREEN_SIZE_Y/1.25),VECTOR2(SELECT_UI_POS.first.x-10,DEF_SCREEN_SIZE_Y))
+struct ButtomState {
+	VECTOR2 luPos;		// 左上座標
+	VECTOR2 rdPos;		// 右上座標
+	bool pushFlag;		// 押下フラグ
+	std::wstring name;	// ボタンの名前
+	int color;
+};
 
 enum class CustomState {
 	SET_STATE,			// マップの幅や高さを設定する状態
@@ -51,15 +58,15 @@ private:
 	int blendAlpha_;
 	// ファイルからロードした説明文
 	std::map<MapChipName,std::string> textData_;
-	// ボタンの位置の座標リスト
-	std::list<std::pair<VECTOR2, VECTOR2>> bPosList_;
+	// ボタンの情報リスト
+	std::list<ButtomState>bList_;
 	// 選択中のマップチップ　何もないときはMAX(6)
 	MapChipName selChip_;
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					
 	// MAP_CUNSTOMに対応するUpdate関数
-	void Map_CuntomUpdate();			
+	void MapCuntomUpdate();			
 	// END_CUSTOMに対応するUpdate関数
 	void EndCustomUpdate();				
 	// SET_STATEに対応するDraw関数
