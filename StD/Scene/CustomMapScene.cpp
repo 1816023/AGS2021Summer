@@ -43,16 +43,22 @@ bool CustomMapScene::Init()
 		drawFunc_.try_emplace(CustomState::SET_STATE, std::bind(&CustomMapScene::SetStateDraw, this));
 		drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&CustomMapScene::MapCustomDraw, this));
 		drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&CustomMapScene::EndCustomDraw, this));
+
 		const int bSize = 64;
 		const int bSpace = 20;
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace) });
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace),bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace), bSize + bSpace) });
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace)*2,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace)*2, bSize + bSpace) });
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace+ (bSize + bSpace)) });
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace+ (bSize + bSpace),bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace+ (bSize + bSpace), bSize + bSpace+ (bSize + bSpace)) });
-		bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace+ (bSize + bSpace)*2,bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace+ (bSize + bSpace)*2, bSize + bSpace+ (bSize + bSpace)) });
+		//bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace) });
+		//bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace),bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace), bSize + bSpace) });
+		//bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace)*2,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace)*2, bSize + bSpace) });
+		//bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace+ (bSize + bSpace)) });
+		//bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace+ (bSize + bSpace),bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace+ (bSize + bSpace), bSize + bSpace+ (bSize + bSpace)) });
+		//bPosList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace+ (bSize + bSpace)*2,bSpace+(bSize+bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace+ (bSize + bSpace)*2, bSize + bSpace+ (bSize + bSpace)) });
 
-
+		bList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace),false,L"" });
+		bList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace),bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace), bSize + bSpace),false,L"" });
+		bList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace) * 2,bSpace),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace) * 2, bSize + bSpace),false,L"" });
+		bList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace,bSpace + (bSize + bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace, bSize + bSpace + (bSize + bSpace)),false,L"" });
+		bList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace),bSpace + (bSize + bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),false,L"" });
+		bList_.push_back({ VECTOR2(SELECT_UI_POS.first.x + bSpace + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(SELECT_UI_POS.first.x + bSize + bSpace + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"" });
 
 		mapSizeX_ = 0;
 		mapSizeY_ = 0;
@@ -121,13 +127,23 @@ void CustomMapScene::Map_CuntomUpdate()
 	{
 		if (mPos.x > SELECT_UI_POS.first.x)
 		{
-
+			if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second))
+			{
+				for (auto list : bList_)
+				{
+					if (lpMouseController.IsHitBoxToMouse(list.luPos, list.rdPos))
+					{
+						list.pushFlag = true;
+					}
+				}
+			}
 		}
 		else
 		{
 			map_->SetChip(VecICast(cPos + mPos) , selChip_);
 		}
 	}
+
 	blendAlpha_+=2;
 
 }
@@ -206,25 +222,20 @@ void CustomMapScene::MapCustomDraw()
 	// ‚Æ‚è‚ ‚¦‚¸ƒ{ƒ^ƒ“‚Ì•\Ž¦
 	int shadowOffset = 3;
 	int pushuOffset = 1;
-	for (auto list : bPosList_)
+	for (auto list : bList_)
 	{
-	if (lpMouseController.GetClicking())
-	{
-		if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first,SELECT_UI_POS.second))
+		if (list.pushFlag)
 		{
-			DrawRoundRect(list.first.x+ pushuOffset, list.first.y+ pushuOffset, list.second.x+ pushuOffset, list.second.y+ pushuOffset, 10, 10, 0xffffff, true);
+			DrawRoundRect(list.luPos.x+ pushuOffset, list.luPos.y+ pushuOffset, list.rdPos.x+ pushuOffset, list.rdPos.y+ pushuOffset, 10, 10, 0xffffff, true);
+
 		}
 		else
 		{
-			DrawRoundRect(list.first.x+ shadowOffset, list.first.y+ shadowOffset, list.second.x+ shadowOffset, list.second.y+ shadowOffset, 10, 10, 0x000000, true);
-			DrawRoundRect(list.first.x, list.first.y, list.second.x, list.second.y, 10, 10, 0xffffff, true);
-		}
-	}
-	else {
-		DrawRoundRect(list.first.x + shadowOffset, list.first.y + shadowOffset, list.second.x + shadowOffset, list.second.y + shadowOffset, 10, 10, 0x000000, true);
-		DrawRoundRect(list.first.x, list.first.y, list.second.x, list.second.y, 10, 10, 0xffffff, true);
-	}
+			DrawRoundRect(list.luPos.x + shadowOffset, list.luPos.y + shadowOffset, list.rdPos.x + shadowOffset, list.rdPos.y + shadowOffset, 10, 10, 0x000000, true);
+			DrawRoundRect(list.luPos.x, list.luPos.y, list.rdPos.x, list.rdPos.y, 10, 10, 0xffffff, true);
 
+		}
+	
 	}
 #ifdef _DEBUG
 
