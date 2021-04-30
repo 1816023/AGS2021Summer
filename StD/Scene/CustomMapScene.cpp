@@ -6,7 +6,7 @@
 #include "../Mng/ImageMng.h"
 #include "../MouseController.h"
 #include "../StringUtil.h"
-#define CUSTOM dynamic_cast<Custom*>(map_)
+#define CUSTOM dynamic_cast<Custom*>(map_.get())
 CustomMapScene::CustomMapScene()
 {
 	Init();
@@ -53,7 +53,7 @@ bool CustomMapScene::Init()
 	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace),false,L"3" ,0xafff00 });
 	bList_.push_back({ VECTOR2(basePosX,bSpace + (bSize + bSpace)),VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace)),false,L"4" ,0xe3e3e3 });
 	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),false,L"5",0x333333 });
-	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"6" ,0xffffff});
+	bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"save" ,0xffffff});
 
 	mapSizeX_ = 0;
 	mapSizeY_ = 0;
@@ -144,6 +144,10 @@ void CustomMapScene::MapCuntomUpdate()
 							{
 								selChip_ = static_cast<MapChipName>(std::atoi(_WtS(list.name).c_str()));
 							}
+							else if(list.name==L"save")
+							{
+								list.pushFlag = true;
+							}
 						}
 						else {
 							selChip_ = MapChipName::MAX;
@@ -167,6 +171,10 @@ void CustomMapScene::EndCustomUpdate()
 	if ((now[KEY_INPUT_BACK]) & (~old[KEY_INPUT_BACK]))
 	{
 		nowState_ = CustomState::SET_STATE;
+	}
+	if ((now[KEY_INPUT_RETURN]) & (~old[KEY_INPUT_RETURN]))
+	{
+		CUSTOM->SaveFile();
 	}
 }
 
@@ -216,7 +224,7 @@ void CustomMapScene::SetStateDraw()
 	if (tmpFlag >= 3)
 	{
 		nowState_= CustomState::MAP_CUSTOM;
-		dynamic_cast<Custom*>(map_.get())->SetUp(fileName_, VECTOR2(mapSizeX_, mapSizeY_));
+		CUSTOM->SetUp(fileName_, VECTOR2(mapSizeX_, mapSizeY_));
 	}
 }
 
@@ -240,13 +248,13 @@ void CustomMapScene::MapCustomDraw()
 	{
 		if (list.pushFlag)
 		{
-			DrawRoundRect(list.luPos.x+ pushuOffset, list.luPos.y+ pushuOffset, list.rdPos.x+ pushuOffset, list.rdPos.y+ pushuOffset, 10, 10, list.color, true);
+			DrawRoundRect(list.luPos.x+ pushuOffset, list.luPos.y+ pushuOffset, list.rdPos.x+ pushuOffset, list.rdPos.y+ pushuOffset, 10, 10, list.CorH, true);
 
 		}
 		else
 		{
 			DrawRoundRect(list.luPos.x + shadowOffset, list.luPos.y + shadowOffset, list.rdPos.x + shadowOffset, list.rdPos.y + shadowOffset, 10, 10, 0x000000, true);
-			DrawRoundRect(list.luPos.x, list.luPos.y, list.rdPos.x, list.rdPos.y, 10, 10, list.color, true);
+			DrawRoundRect(list.luPos.x, list.luPos.y, list.rdPos.x, list.rdPos.y, 10, 10, list.CorH, true);
 
 		}
 	
