@@ -56,7 +56,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	{
 		return false;
 	}
-	std::string filePath = "data/mapData/" + StringUtil::WStringToString(name) + ".xml";
+	std::string filePath = "data/mapData/" + _WtS(name) + ".xml";
 	std::ofstream file;
 	file.open(filePath.c_str());
 	if (!file)
@@ -89,6 +89,34 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 
 	error=document_.SaveFile(filePath.c_str());
 	if (error)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool Custom::SaveFile()
+{
+	std::string mapData="\n";
+	for (auto data1 : mapData_)
+	{
+		for (auto data2 : data1)
+		{
+			mapData += std::to_string(static_cast<char>(data2));
+			mapData += ",";
+		}
+		mapData += "\n";
+	}
+	std::string filePath="data/mapData/"+ _WtS(state_.name_)+".xml";
+	auto error=document_.LoadFile(filePath.c_str());
+	if (error != tinyxml2::XML_SUCCESS)
+	{
+		return false;
+	}
+	auto elm = document_.FirstChildElement("map");
+	elm->SetText(mapData.c_str());
+	error=document_.SaveFile(filePath.c_str());
+	if (error != tinyxml2::XML_SUCCESS)
 	{
 		return false;
 	}

@@ -16,7 +16,8 @@ struct ButtomState {
 	VECTOR2 rdPos;		// 右上座標
 	bool pushFlag;		// 押下フラグ
 	std::wstring name;	// ボタンの名前
-	int color;
+	int CorH;			// ボタンの色または画像ハンドル
+	std::function<void(ButtomState&)> func;	// ボタンが押されたときに呼ばれる関数
 };
 
 enum class CustomState {
@@ -79,6 +80,7 @@ private:
 	bool FileNameErrorCheck(std::wstring fileName);
 	// 説明文をファイルからロードする
 	bool LoadText();
+
 
 };
 
