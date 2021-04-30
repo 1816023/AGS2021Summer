@@ -46,6 +46,10 @@ public:
 	VECTOR2_TEMPLE<float> Floor();
 	// lÌŒÜ“ü
 	VECTOR2_TEMPLE<float> Round();
+	// ‘å‚«‚³
+	float Magnitude();
+	// ³‹K‰»
+	VECTOR2_TEMPLE<float> Normarize();
 
 	//’P€‰‰Zq------------------------------------------
 	VECTOR2_TEMPLE& operator +=(const VECTOR2_TEMPLE& vec);

@@ -7,7 +7,6 @@ bool MouseController::GetClickTrg(int mouseType)
 {
 	if (data && !dataOld && data & mouseType)
 	{
-		clickPos_ = pos;
 		return true;
 	}
 	return false;
@@ -25,8 +24,7 @@ bool MouseController::GetClicking(int mouseType)
 bool MouseController::GetClickUp(int mouseType)
 {
 	if (!data && dataOld && data & mouseType)
-	{
-		clickPos_ = VECTOR2(0,0);
+	{		
 		return true;
 	}
 	return false;
@@ -38,7 +36,7 @@ void MouseController::Update()
 	dataOld = data;
 	data = GetMouseInput();
 	wheel += GetMouseWheelRotVol();
-}
+
 
 const bool MouseController::IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd)
 {

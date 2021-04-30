@@ -19,7 +19,6 @@ public:
 	void Update(void);		// マウスの状態更新
 	const VECTOR2& GetPos() { return pos; }	// マウスの位置の取得
 	const int& GetWheel() { return wheel; }	// ホイールの取得
-	const VECTOR2& GetDragDist() { return pos - clickPos_; }	// ドラッグの距離の取得
 	const bool IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd);
 private:
 	struct MouseDelete
@@ -36,7 +35,7 @@ private:
 	char data;		// 現在のマウスのクリック状態
 	char dataOld;	// 1フレーム前のマウスのクリック状態
 	int wheel;		// ホイール増減値
-	VECTOR2 clickPos_;	// クリックした瞬間のマウスの座標
+	
 
 	static std::unique_ptr<MouseController, MouseDelete> s_Instans;
 };

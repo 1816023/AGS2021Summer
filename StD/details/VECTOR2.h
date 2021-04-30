@@ -63,6 +63,22 @@ inline VECTOR2_TEMPLE<float> VECTOR2_TEMPLE<T>::Round()
 }
 
 template<class T>
+float VECTOR2_TEMPLE<T>::Magnitude()
+{
+	float mag;
+	mag = hypot(static_cast<float>(this->x), static_cast<float>(this->y));
+	return mag;
+}
+
+template<class T>
+VECTOR2_TEMPLE<float> VECTOR2_TEMPLE<T>::Normarize()
+{
+	VECTOR2_TEMPLE<float> vec(x, y);
+	auto mag = vec.Magnitude();
+	return VECTOR2_TEMPLE<float>(this->x / mag, this->y / mag);
+}
+
+template<class T>
 VECTOR2_TEMPLE<T>& VECTOR2_TEMPLE<T>::operator+=(const VECTOR2_TEMPLE<T>& vec)
 {
 	this->x += vec.x;

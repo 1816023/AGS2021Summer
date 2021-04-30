@@ -85,6 +85,8 @@ void Application::Draw()
 	sceneController_->DrawUI();
 	DrawFormatString(0, 32, 0xffffff, L"%f", delta_);
 	DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", pos.x, pos.y, scale);
+	auto dist = lpMouseController.GetDragDist();
+	DrawFormatString(0, 86, 0xffffff, L"%d, %d", dist.x, dist.y);
 	ScreenFlip();
 }
 
