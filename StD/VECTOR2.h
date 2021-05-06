@@ -61,9 +61,6 @@ public:
 
 	VECTOR2_TEMPLE operator+()const;
 	VECTOR2_TEMPLE operator-()const;
-	
-
-	
 };
 
 //ÍÞ¸ÄÙ‚Ì‰‰ŽZ//////////////////////////////////
