@@ -36,7 +36,7 @@ void MouseController::Update()
 	dataOld = data;
 	data = GetMouseInput();
 	wheel += GetMouseWheelRotVol();
-
+}
 
 const bool MouseController::IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd)
 {
@@ -52,7 +52,6 @@ MouseController::MouseController()
 	data = 0;
 	dataOld = 0;
 	wheel = 0;
-	clickPos_ = VECTOR2(0, 0);
 }
 
 MouseController::~MouseController()

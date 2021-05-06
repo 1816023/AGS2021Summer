@@ -33,6 +33,8 @@
     <ClCompile Include="Trap\Explosion.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
     <ClCompile Include="Unit\Player\Green.cpp" />
+    <ClCompile Include="Unit\Player\Pink.cpp" />
+    <ClCompile Include="Unit\Player\Blue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -71,5 +73,7 @@
     <ClInclude Include="Trap\Explosion.h" />
     <ClInclude Include="Trap\Interference.h" />
     <ClInclude Include="Unit\Player\Green.h" />
+    <ClInclude Include="Unit\Player\Pink.h" />
+    <ClInclude Include="Unit\Player\Blue.h" />
   </ItemGroup>
 </Project>

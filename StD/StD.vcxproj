@@ -173,7 +173,9 @@
     <ClCompile Include="Trap\TrapManager.cpp" />
     <ClCompile Include="Unit\Enemy\Enemy.cpp" />
     <ClCompile Include="Unit\Enemy\EnemySpawner.cpp" />
+    <ClCompile Include="Unit\Player\Blue.cpp" />
     <ClCompile Include="Unit\Player\Green.cpp" />
+    <ClCompile Include="Unit\Player\Pink.cpp" />
     <ClCompile Include="Unit\Player\Player.cpp" />
     <ClCompile Include="Unit\Player\PlayerMng.cpp" />
     <ClCompile Include="Unit\Player\Yellow.cpp" />
@@ -209,7 +211,9 @@
     <ClInclude Include="Unit\Enemy\Enemy.h" />
     <ClInclude Include="Unit\Enemy\EnemySpawner.h" />
     <ClInclude Include="Unit\Enemy\EnemyType.h" />
+    <ClInclude Include="Unit\Player\Blue.h" />
     <ClInclude Include="Unit\Player\Green.h" />
+    <ClInclude Include="Unit\Player\Pink.h" />
     <ClInclude Include="Unit\Player\Player.h" />
     <ClInclude Include="Unit\Player\PlayerMng.h" />
     <ClInclude Include="Unit\Player\PlayerType.h" />

@@ -35,7 +35,6 @@ private:
 	char data;		// 現在のマウスのクリック状態
 	char dataOld;	// 1フレーム前のマウスのクリック状態
 	int wheel;		// ホイール増減値
-	
 
 	static std::unique_ptr<MouseController, MouseDelete> s_Instans;
 };
