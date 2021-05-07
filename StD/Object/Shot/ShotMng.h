@@ -13,7 +13,7 @@ constexpr auto BASE_SIZE = 5;	//’e‚Ì”¼Œa
 
 #define lpShotMng ShotMng::GetInstance()
 
-class Player;
+class Unit;
 
 class ShotMng
 {
@@ -27,13 +27,13 @@ public:
 	void Init(void);				//‰Šú‰»
 	void Update(float deltaTime);	//XV
 	void Draw(void);				//’e‚Ì•`‰æ
-	void AddBullet(std::shared_ptr<Player> ptr, Vec2Float pos);			//Unit‚©‚ç”­Ë‚³‚ê‚é’e‚Ìì¬
-	void BulletMove(std::shared_ptr<Player> ptr,Vec2Float pos);			//’e‚ÌˆÚ“®
+	void AddBullet(std::shared_ptr<Unit> ptr, Vec2Float pos);			//Unit‚©‚ç”­Ë‚³‚ê‚é’e‚Ìì¬
+	void BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos);			//’e‚ÌˆÚ“®
 	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
 	bool isHitBvE(Vec2Float bulletPos);		//’e‚Æ“G‚Ì“–‚½‚è”»’è
 private:
 	ShotMng();
-	std::map<std::shared_ptr<Player>, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//’eŠÇ——p (ƒŠƒXƒg‚Ìfirst‚É‚ÍËo“_second‚É‚Í’e‚ÌŒ»İÀ•W‚ª“ü‚é)
-	std::map<std::shared_ptr<Player>, int> shotSpan_;	//”­ËŠÔŠuŠÇ——p
+	std::map<std::shared_ptr<Unit>, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//’eŠÇ——p (ƒŠƒXƒg‚Ìfirst‚É‚ÍËo“_second‚É‚Í’e‚ÌŒ»İÀ•W‚ª“ü‚é)
+	std::map<std::shared_ptr<Unit>, int> shotSpan_;	//”­ËŠÔŠuŠÇ——p
 };
 

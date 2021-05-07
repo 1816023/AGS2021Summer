@@ -6,8 +6,8 @@
 struct UnitStat
 {
 	Vec2Float pos;			// À•W
-	float atkSpeed;			// UŒ‚‘¬“x
-	float atkDist;			// Ë’ö
+	float atkSpeed;			// UŒ‚ŠÔŠu
+	float atkRange;			// Ë’ö
 	unsigned int power;		// UŒ‚—Í
 	unsigned int life;		// ‘Ì—Í
 	bool isDead;			// €‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
@@ -21,7 +21,9 @@ public:
 	virtual ~Unit() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
-	const Vec2Float GetPosition();
+	float GetBulletSpeed(void);
+	float GetAtkRange(void);
+	const Vec2Float GetPos();
 	void SetPosition(Vec2Float pos);
 	unsigned int GetHP();
 	const bool IsDeath();

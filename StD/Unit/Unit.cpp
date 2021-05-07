@@ -1,6 +1,16 @@
 #include "Unit.h"
 
-const Vec2Float Unit::GetPosition()
+float Unit::GetBulletSpeed(void)
+{
+	return state_.atkSpeed;
+}
+
+float Unit::GetAtkRange(void)
+{
+	return state_.atkRange;
+}
+
+const Vec2Float Unit::GetPos()
 {
 	return state_.pos;
 }

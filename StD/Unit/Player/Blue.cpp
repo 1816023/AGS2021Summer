@@ -31,21 +31,6 @@ void Blue::Draw()
 	DrawGraph(stat_.pos.x-gSize.x/2,stat_.pos.y-gSize.y/2,imageID,true);
 }
 
-Vec2Float Blue::GetPos(void)
-{
-	return stat_.pos;
-}
-
-float Blue::GetBulletSpeed(void)
-{
-	return stat_.atkSpeed;
-}
-
-float Blue::GetAtkRange(void)
-{
-	return stat_.atkDist;
-}
-
 //void Blue::Skill(void)
 //{
 //	stat_.life += 10;

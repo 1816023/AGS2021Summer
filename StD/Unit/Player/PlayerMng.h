@@ -6,8 +6,7 @@
 
 #define lpPlayerMng PlayerMng::GetInstance()
 
-class PlayerMng :
-	public Player
+class PlayerMng
 {
 public:
 	static PlayerMng& GetInstance()
@@ -21,8 +20,6 @@ public:
 	void Draw(void);
 	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};
-
-	Vec2Float GetPos(void)override;
 private:
 	PlayerMng();
 	void Init();

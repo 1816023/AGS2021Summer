@@ -27,7 +27,7 @@ void ShotMng::Draw(void)
 	}
 }
 
-void ShotMng::AddBullet(std::shared_ptr<Player> ptr,Vec2Float pos)
+void ShotMng::AddBullet(std::shared_ptr<Unit> ptr,Vec2Float pos)
 {
 	shotSpan_[ptr]--;
 	if (shotSpan_[ptr] <= 0)
@@ -37,7 +37,7 @@ void ShotMng::AddBullet(std::shared_ptr<Player> ptr,Vec2Float pos)
 	}
 }
 
-void ShotMng::BulletMove(std::shared_ptr<Player> ptr,Vec2Float pos)
+void ShotMng::BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos)
 {
 	//‚±‚Á‚±‚ÉŠp“x‚ð‹‚ß‚éŒvŽZ‚Ì‹Lq
 	auto ab = Vec2Float((pos.x - ptr->GetPos().x), (pos.y - ptr->GetPos().y));

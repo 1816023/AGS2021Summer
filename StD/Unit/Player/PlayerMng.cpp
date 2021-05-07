@@ -55,11 +55,6 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
     return true;
 }
 
-Vec2Float PlayerMng::GetPos(void)
-{
-    return Vec2Float();
-}
-
 PlayerMng::PlayerMng()
 {
 }
