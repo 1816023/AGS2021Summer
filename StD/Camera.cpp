@@ -4,7 +4,7 @@
 
 Camera::Camera()
 {
-	pos_ = Vec2Float(-486.0f, 0.0f);
+	pos_ = Vec2Float(0.0f, 0.0f);
 	scale_ = 1.0f;
 	beforePos_ = Vec2Float(0.0f, 0.0f);
 	clickPos_ = VECTOR2(0, 0);
@@ -33,10 +33,8 @@ void Camera::Control()
 		pos_.y--;
 	}*/
 	auto wheel = static_cast<float>(lpMouseController.GetWheel());
-	if (wheel != 0)
-	{
-		scale_ = 1.0f + wheel * 0.01f;	
-	}
+	scale_ = 1.0f + wheel * 0.01f;	
+	
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_RIGHT))
 	{
 		clickPos_ = lpMouseController.GetPos();
@@ -54,8 +52,14 @@ void Camera::Control()
 		if (dist != VECTOR2(0.0f, 0.0f))
 		{
 			auto distF = VecFCast(dist);
-			pos_ = beforePos_ - distF / 2.0f;
+			// 1.0fÇÕíËêî
+			// scale_Ç™1ÇÃéû2Ç…Ç»ÇÈ
+			pos_ = beforePos_ - distF * (1.0f / (1.0f + scale_));
 		}
+	}
+	if (CheckHitKey(KEY_INPUT_R))
+	{
+		pos_ = Vec2Float(0.0f, 0.0f);
 	}
 }
 

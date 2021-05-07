@@ -53,6 +53,8 @@ public:
 	const float GetSpeed();
 	// スピード設定
 	void SetSpeed(float speed);
+	// 拠点に到達しているかどうか
+	bool IsGoal();
 protected:
 	// 敵のみの情報
 	struct EnemyInfo
@@ -65,6 +67,7 @@ protected:
 		float speed;			// 移動速度
 		float scale;			// 大きさ
 		int rootIdx;			// ルートのインデックス
+		bool isGoal;
 	};
 	// 移動処理
 	void Move(float deltaTime);

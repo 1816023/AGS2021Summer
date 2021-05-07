@@ -21,7 +21,6 @@ private:
 	std::vector<EnemyType>spawnList_;	// スポーンする敵の種類のリスト
 	EnemyManager* enemyMng_;	// 敵管理用
 	std::vector<RootDir>root_;	// 敵移動ルートのリスト
-	float cnt_;					
-	
+	float cnt_;		// 敵の出現間隔カウンタ
 };
 

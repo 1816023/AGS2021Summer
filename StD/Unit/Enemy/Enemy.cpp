@@ -6,11 +6,19 @@ Enemy::Enemy()
 
 Enemy::Enemy(MapInfo& mapInfo)
 {
+	state_.isDead = false;
+	state_.life = MID_HP;
+	// ----- 敵情報設定(デフォルト) -----
+	enemyInfo_.dirVec = { 0,0 };
+	enemyInfo_.nowMove = { 0,0 };
+	enemyInfo_.rootIdx = 0;
+	enemyInfo_.speed = MID_SPEED;
 	// x方向にスケーリング
 	enemyInfo_.scale = E_SIZE_X / mapInfo.chipSize.x;
-	state_.isDead = false;
 	enemyInfo_.mapChipSize = mapInfo.chipSize;
 	enemyInfo_.mapSize = mapInfo.mapSize;
+	enemyInfo_.isGoal = false;
+	// ----------------------------------
 }
 
 Enemy::~Enemy()
@@ -37,6 +45,11 @@ const float Enemy::GetSpeed()
 void Enemy::SetSpeed(float speed)
 {
 	enemyInfo_.speed = speed;
+}
+
+bool Enemy::IsGoal()
+{
+	return enemyInfo_.isGoal;
 }
 
 void Enemy::Move(float deltaTime)

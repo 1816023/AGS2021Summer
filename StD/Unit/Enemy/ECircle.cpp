@@ -10,10 +10,8 @@ ECircle::ECircle() : Enemy()
 ECircle::ECircle(MapInfo& mapInfo):Enemy(mapInfo)
 {
 	updater_ = &ECircle::StartUpdate;
+	// 円の敵固有パラメータ設定
 	state_.life = MID_HP;
-	enemyInfo_.dirVec = { 0,0 };
-	enemyInfo_.nowMove = { 0,0 };
-	enemyInfo_.rootIdx = 0;
 	enemyInfo_.speed = MID_SPEED;
 }
 

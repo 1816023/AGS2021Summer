@@ -28,16 +28,18 @@ unique_Base GameScene::Update(unique_Base own)
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
-	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
-	{
-		return std::make_unique<ResultScene>();
-	}
+	
 	auto delta = Application::Instance().GetDelta();
 	for (auto& spawners : enemySpawner_)
 	{
 		spawners->Update(delta);
 	}
 	enemyMng_->Update(delta);
+
+	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
+	{
+		return std::make_unique<ResultScene>();
+	}
 	return std::move(own);
 }
 
