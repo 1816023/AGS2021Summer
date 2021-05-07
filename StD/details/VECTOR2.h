@@ -15,8 +15,6 @@ VECTOR2_TEMPLE<T>::VECTOR2_TEMPLE(T x, T y)
 	this->y = y;
 }
 
-
-
 template<class T>
 VECTOR2_TEMPLE<T>::~VECTOR2_TEMPLE()
 {
