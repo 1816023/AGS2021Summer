@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
     <ClCompile Include="Trap\Explosion.cpp" />
     <ClCompile Include="Mng\ImageMng.cpp" />
@@ -184,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Trap\Interference.h" />
     <ClInclude Include="Trap\Explosion.h" />
     <ClInclude Include="Mng\ImageMng.h" />

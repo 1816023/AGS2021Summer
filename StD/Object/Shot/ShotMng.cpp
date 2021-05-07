@@ -1,5 +1,6 @@
 #include "ShotMng.h"
 #include <cmath>
+#include "../../Collision.h"
 #include "../../Unit/Player/Yellow.h"
 
 ShotMng::~ShotMng()
@@ -63,11 +64,7 @@ void ShotMng::BulletMove(std::shared_ptr<Player> ptr,Vec2Float pos)
 
 bool ShotMng::isRange(Vec2Float unitPos, Vec2Float bulletPos,float unitSize,float bulletSize)
 {
-	//O•½•û‚Ì’è—‚ğg—p‚µ‚½“–‚½‚è”»’è(‰~‚Æ‰~)
-	auto ab = Vec2Float(std::abs(unitPos.x - bulletPos.x), std::abs(unitPos.y - bulletPos.y));
-	auto dist = std::sqrt((ab.x * ab.x) + (ab.y * ab.y));
-
-	if (dist+(bulletSize*2)<=(unitSize + bulletSize))
+	if (lpCollison.CvC(unitPos,unitSize,bulletPos,bulletSize))
 	{
 		//Ë’ö”ÍˆÍ“à‚È‚Ì‚Åtrue
 		return true;
