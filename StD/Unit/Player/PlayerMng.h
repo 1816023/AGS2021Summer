@@ -17,6 +17,7 @@ public:
 	}
 	~PlayerMng() = default;
 	void Update(float deltaTime);
+	void Update(float deltaTime,Vec2Float pos);
 	void Draw(void);
 	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};

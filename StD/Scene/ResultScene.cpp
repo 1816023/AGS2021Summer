@@ -3,6 +3,7 @@
 #include "../Application.h"
 #include "../MouseController.h"
 #include "../Unit/Player/PlayerMng.h"
+#include "../Trap/Interference.h"
 #include "../VECTOR2.h"
 #include "MainScene.h"
 
@@ -16,20 +17,10 @@ ResultScene::~ResultScene()
 
 unique_Base ResultScene::Update(unique_Base own)
 {
-	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
-	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
-
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
 		return std::make_unique<MainScene>();
 	}
-
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-	{
-		lpPlayerMng.Spawner(PlayerUnit::GREEN,Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
-	}
-	auto delta = Application::Instance().GetDelta();
-	lpPlayerMng.Update(delta);
 	return std::move(own);
 }
 

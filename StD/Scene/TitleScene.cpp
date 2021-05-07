@@ -1,7 +1,9 @@
 #include "TitleScene.h"
 #include <DxLib.h>
 #include "MainScene.h"
+#include "../Application.h"
 #include "../Unit/Enemy/ECircle.h"
+#include "../Unit/Player/PlayerMng.h"
 #include "../MouseController.h"
 #include "../Trap/SlipDamage.h"
 #include "../Trap/Support.h"
@@ -20,7 +22,7 @@ TitleScene::TitleScene()
 	trapFlag = false;
 	cnt = 0;
 	HP = 50;
-	pos = { 10,100 };
+	pos = { 100,100 };
 	speed = 2;
 }
 
@@ -42,6 +44,12 @@ unique_Base TitleScene::Update(unique_Base own)
 		return std::make_unique<MainScene>();
 	}
 
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	{
+		lpPlayerMng.Spawner(PlayerUnit::GREEN, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
+	}
+	auto delta = Application::Instance().GetDelta();
+	lpPlayerMng.Update(delta,pos);
 	return std::move(own);
 }
 
@@ -70,7 +78,8 @@ void TitleScene::Draw()
 
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
 	//DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
-	
+
+	lpPlayerMng.Draw();
 }
 
 void TitleScene::DrawUI()

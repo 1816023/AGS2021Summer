@@ -8,7 +8,7 @@ Green::Green()
 Green::Green(Vec2Float pos)
 {
 	imageID = LoadGraph(L"data/image/Hexagon_Green.png");
-	stat_ = UnitStat{ pos,1.0f,2.0f,6,10,false };
+	stat_ = UnitStat{ pos,15.0f,2.0f,6,10,false };
 	isSkill_ = false;
 }
 

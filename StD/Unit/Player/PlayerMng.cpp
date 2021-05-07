@@ -7,11 +7,15 @@
 
 void PlayerMng::Update(float deltaTime)
 {
+}
+
+void PlayerMng::Update(float deltaTime,Vec2Float pos)
+{
     for (auto& unit : unitList_)
     {
         unit->Update(deltaTime);
         lpShotMng.AddBullet(unit,unit->GetPos());
-        lpShotMng.BulletMove(unit);
+        lpShotMng.BulletMove(unit,pos);
     }
 }
 

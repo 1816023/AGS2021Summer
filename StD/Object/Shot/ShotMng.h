@@ -28,8 +28,9 @@ public:
 	void Update(float deltaTime);	//XV
 	void Draw(void);				//’e‚Ì•`‰æ
 	void AddBullet(std::shared_ptr<Player> ptr, Vec2Float pos);			//Unit‚©‚ç”­Ë‚³‚ê‚é’e‚Ìì¬
-	void BulletMove(std::shared_ptr<Player> ptr);	//’e‚ÌˆÚ“®
+	void BulletMove(std::shared_ptr<Player> ptr,Vec2Float pos);			//’e‚ÌˆÚ“®
 	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
+	bool inScreen(Vec2Float bulletPos);
 private:
 	ShotMng();
 	std::map<std::shared_ptr<Player>, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//’eŠÇ——p (ƒŠƒXƒg‚Ìfirst‚É‚ÍËo“_second‚É‚Í’e‚ÌŒ»İÀ•W‚ª“ü‚é)
