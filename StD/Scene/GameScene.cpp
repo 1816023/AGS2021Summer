@@ -28,7 +28,6 @@ unique_Base GameScene::Update(unique_Base own)
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
-	
 	auto delta = Application::Instance().GetDelta();
 	for (auto& spawners : enemySpawner_)
 	{

@@ -12,6 +12,5 @@ public:
 	void Draw();
 	//void Skill(void)override;	//SkillŠÇ—
 private:
-	UnitStat stat_;
 };
 

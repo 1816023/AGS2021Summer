@@ -8,7 +8,7 @@ Yellow::Yellow()
 Yellow::Yellow(Vec2Float pos)
 {
 	imageID = LoadGraph(L"data/image/Hexagon_Yellow.png");
-	stat_ = UnitStat{ pos,2,0.8f,10,20,false };
+	state_ = UnitStat{ pos,2,0.8f,10,20,false };
 	isSkill_ = false;
 }
 
@@ -28,10 +28,10 @@ void Yellow::Draw()
 {
 	Vec2Int gSize;
 	GetGraphSize(imageID, &gSize.x, &gSize.y);
-	DrawGraph(stat_.pos.x-gSize.x/2,stat_.pos.y-gSize.y/2,imageID,true);
+	DrawGraph(state_.pos.x-gSize.x/2, state_.pos.y-gSize.y/2,imageID,true);
 }
 
 //void Yellow::Skill(void)
 //{
-//	stat_.life += 10;
+//	state_.life += 10;
 //}

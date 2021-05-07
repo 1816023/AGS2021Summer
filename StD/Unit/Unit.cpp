@@ -1,11 +1,11 @@
 #include "Unit.h"
 
-float Unit::GetBulletSpeed(void)
+const float Unit::GetBulletSpeed(void)
 {
 	return state_.atkSpeed;
 }
 
-float Unit::GetAtkRange(void)
+const float Unit::GetAtkRange(void)
 {
 	return state_.atkRange;
 }
@@ -20,7 +20,7 @@ void Unit::SetPosition(Vec2Float pos)
 	state_.pos = pos;
 }
 
-unsigned int Unit::GetHP()
+const unsigned int Unit::GetHP()
 {
 	return state_.life;
 }

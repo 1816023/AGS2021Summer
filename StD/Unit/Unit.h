@@ -21,11 +21,11 @@ public:
 	virtual ~Unit() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
-	float GetBulletSpeed(void);
-	float GetAtkRange(void);
+	const float GetBulletSpeed(void);
+	const float GetAtkRange(void);
 	const Vec2Float GetPos();
 	void SetPosition(Vec2Float pos);
-	unsigned int GetHP();
+	const unsigned int GetHP();
 	const bool IsDeath();
 protected:
 	UnitStat state_;
