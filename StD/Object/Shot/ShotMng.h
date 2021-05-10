@@ -30,7 +30,7 @@ public:
 	void AddBullet(std::shared_ptr<Unit> ptr, Vec2Float pos);			//Unit‚©‚ç”­Ë‚³‚ê‚é’e‚Ìì¬
 	void BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos);			//’e‚ÌˆÚ“®
 	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
-	bool isHitBvE(Vec2Float bulletPos);		//’e‚Æ“G‚Ì“–‚½‚è”»’è
+	bool isHitBvE(Vec2Float bulletPos, float bulletSize, Vec2Float unitPos, Vec2Float unitSize);		//’e‚Æ“G‚Ì“–‚½‚è”»’è
 private:
 	ShotMng();
 	std::map<std::shared_ptr<Unit>, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//’eŠÇ——p (ƒŠƒXƒg‚Ìfirst‚É‚ÍËo“_second‚É‚Í’e‚ÌŒ»İÀ•W‚ª“ü‚é)

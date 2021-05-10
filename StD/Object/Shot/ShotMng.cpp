@@ -51,7 +51,15 @@ void ShotMng::BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos)
 			{
 				//射程範囲内(弾を移動させる)
 				itr->second += Vec2Float(n.x * ptr->GetBulletSpeed(), n.y*ptr->GetBulletSpeed());
-				++itr;
+				if (isHitBvE(itr->second, BASE_SIZE, pos, Vec2Float(60, 60)))
+				{
+					//射程範囲外(リストから削除)
+					itr = shotList_[ptr].erase(itr);
+				}
+				else
+				{
+					++itr;
+				}
 			}
 			else
 			{
@@ -70,6 +78,16 @@ bool ShotMng::isRange(Vec2Float unitPos, Vec2Float bulletPos,float unitSize,floa
 		return true;
 	}
 	//射程範囲外なのでfalse
+	return false;
+}
+
+bool ShotMng::isHitBvE(Vec2Float bulletPos,float bulletSize,Vec2Float unitPos,Vec2Float unitSize)
+{
+	auto size = Vec2Float(unitSize.x / 2, unitSize.y / 2);
+	if (lpCollison.CvB(bulletPos, bulletSize, unitPos, size))
+	{
+		return true;
+	}
 	return false;
 }
 
