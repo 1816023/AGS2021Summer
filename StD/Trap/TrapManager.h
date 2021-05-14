@@ -28,6 +28,7 @@ public:
 	float Efficacy(float num, bool flag);
 	void Draw();
 	void Delete();
+	int TrapCost(int cost);
 
 private:
 	TrapManager();

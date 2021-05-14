@@ -59,3 +59,11 @@ void TrapManager::Delete()
 {
     trapList.clear();
 }
+
+int TrapManager::TrapCost(int cost)
+{
+    for (auto& trap : trapList)
+    {
+        return trap->TrapCost(cost);
+    }
+}
