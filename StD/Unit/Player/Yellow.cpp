@@ -31,6 +31,11 @@ void Yellow::Draw()
 	DrawGraph(state_.pos.x-gSize.x/2, state_.pos.y-gSize.y/2,imageID,true);
 }
 
+int Yellow::GetSpawnCost(void)
+{
+	return 5;
+}
+
 //void Yellow::Skill(void)
 //{
 //	state_.life += 10;

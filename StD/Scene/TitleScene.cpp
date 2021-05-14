@@ -24,6 +24,7 @@ TitleScene::TitleScene()
 	HP = 50;
 	pos = { 100,100 };
 	speed = 2;
+	lpPlayerMng.Init();
 }
 
 TitleScene::~TitleScene()

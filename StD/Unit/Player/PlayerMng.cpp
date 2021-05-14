@@ -26,6 +26,7 @@ void PlayerMng::Draw(void)
         unit->Draw();
     }
     lpShotMng.Draw();
+    DrawFormatString(100, 0, 0xffffff, L"cost:%d", cost);
 }
 
 bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
@@ -51,8 +52,23 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
         return false;
         break;
     }
-    unitList_.emplace_back(ptr);
+    auto spawnCost = ptr->GetSpawnCost();
+    if ((cost - spawnCost) >= 0)
+    {
+        cost -= spawnCost;
+        unitList_.emplace_back(ptr);
+    }
     return true;
+}
+
+int PlayerMng::GetCost(void)
+{
+    return cost;
+}
+
+void PlayerMng::SetCost(int cost)
+{
+    this->cost = cost;
 }
 
 PlayerMng::PlayerMng()
@@ -61,4 +77,5 @@ PlayerMng::PlayerMng()
 
 void PlayerMng::Init()
 {
+    cost = MAX_COST;
 }
