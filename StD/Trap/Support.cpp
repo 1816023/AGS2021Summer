@@ -1,6 +1,6 @@
 #include "Support.h"
 
-Support::Support(VECTOR2 _pos)
+Support::Support(Vec2Float _pos)
 {
 	image = LoadGraph(L"data/image/support.png");
 	pos = _pos;
@@ -16,19 +16,19 @@ void Support::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-int Support::Healing(int hp, bool flag)
+float Support::Efficacy(float num, bool flag)
 {
 	if (flag)
 	{
 		cnt++;
 		if (cnt >= 60)
 		{
-			hp++;
+			num++;
 			cnt = 0;
 		}
 	}
 
-	return hp;
+	return num;
 }
 
 int Support::TrapCost(int cost)

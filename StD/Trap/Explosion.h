@@ -4,11 +4,11 @@ class Explosion :
 	public Trap
 {
 public:
-	Explosion(VECTOR2 _pos);
+	Explosion(Vec2Float _pos);
 	~Explosion();
 
 	void Draw() override;
-	int Damage(int hp, bool flag);
+	float Efficacy(float num, bool flag) override;
 	int TrapCost(int cost) override;
 };
 

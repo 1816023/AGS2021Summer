@@ -4,11 +4,11 @@ class Support:
 	public Trap
 {
 public:
-	Support(VECTOR2 _pos);
+	Support(Vec2Float _pos);
 	~Support();
 
 	void Draw() override;
-	int Healing(int hp, bool flag);
+	float Efficacy(float num, bool flag) override;
 	int TrapCost(int cost) override;
 };
 

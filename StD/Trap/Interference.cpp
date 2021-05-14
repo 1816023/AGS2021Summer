@@ -1,6 +1,6 @@
 #include "Interference.h"
 
-Interference::Interference(VECTOR2 _pos)
+Interference::Interference(Vec2Float _pos)
 {
 	image = LoadGraph(L"data/image/interference.png");
 	pos = _pos;
@@ -16,15 +16,15 @@ void Interference::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float Interference::Delay(float speed, bool flag)
+float Interference::Efficacy(float num, bool flag)
 {
 	if (flag)
 	{
-		return speed * 0.3;
+		return num * 0.3;
 	}
 	else
 	{
-		return speed;
+		return num;
 	}
 }
 

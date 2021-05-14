@@ -31,6 +31,14 @@ bool TrapManager::Spawner(TRAP_ID id, Vec2Float pos)
 	return false;
 }
 
+float TrapManager::Efficacy(float num, bool flag)
+{
+    for (auto& trap : trapList)
+    {
+        return trap->Efficacy(num, flag);
+    }
+}
+
 TrapManager::TrapManager()
 {
 }
@@ -45,4 +53,9 @@ void TrapManager::Draw()
     {
         trap->Draw();
     }
+}
+
+void TrapManager::Delete()
+{
+    trapList.clear();
 }

@@ -1,8 +1,8 @@
 #include "Explosion.h"
 
-Explosion::Explosion(VECTOR2 _pos)
+Explosion::Explosion(Vec2Float _pos)
 {
-	image - LoadGraph(L"data/image/explosion.png");
+	image = LoadGraph(L"data/image/explosion.png");
 	pos = _pos;
 	cnt = 0;
 }
@@ -16,19 +16,19 @@ void Explosion::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-int Explosion::Damage(int hp, bool flag)
+float Explosion::Efficacy(float num, bool flag)
 {
 	if (flag)
 	{
 		cnt++;
 		if (cnt >= 60)
 		{
-			hp -= 20;
+			num -= 20;
 			cnt = 0;
 		}
 	}
 
-	return hp;
+	return num;
 }
 
 int Explosion::TrapCost(int cost)

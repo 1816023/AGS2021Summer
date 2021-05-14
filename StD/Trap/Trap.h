@@ -8,12 +8,13 @@ public:
 	Trap() {};
 	virtual ~Trap() {};
 	virtual void Draw() {};
+	virtual float Efficacy(float num, bool flag) = 0;
 
 private:
 	virtual int TrapCost(int cost) = 0;
 
 protected:
-	VECTOR2 pos;
+	Vec2Float pos;
 	int cnt;
 	int image;
 };

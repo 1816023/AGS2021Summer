@@ -4,11 +4,11 @@ class SlipDamage :
 	public Trap
 {
 public:
-	SlipDamage(VECTOR2 _pos);
+	SlipDamage(Vec2Float _pos);
 	~SlipDamage();
 
 	void Draw() override;
-	int Damage(int hp, bool flag);
+	float Efficacy(float num, bool flag) override;
 	int TrapCost(int cost) override;
 };
 

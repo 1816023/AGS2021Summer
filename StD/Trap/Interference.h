@@ -4,11 +4,11 @@ class Interference :
 	public Trap
 {
 public:
-	Interference(VECTOR2 _pos);
+	Interference(Vec2Float _pos);
 	~Interference();
 
 	void Draw() override;
-	float Delay(float speed, bool flag);
+	float Efficacy(float num, bool flag) override;
 	int TrapCost(int cost) override;
 };
 

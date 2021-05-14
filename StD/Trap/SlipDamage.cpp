@@ -1,7 +1,7 @@
 #include "SlipDamage.h"
 #include "../MouseController.h"
 
-SlipDamage::SlipDamage(VECTOR2 _pos)
+SlipDamage::SlipDamage(Vec2Float _pos)
 {
 	image = LoadGraph(L"data/image/slip_damege.png");
 	pos = _pos;
@@ -17,19 +17,19 @@ void SlipDamage::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-int SlipDamage::Damage(int hp, bool flag)
+float SlipDamage::Efficacy(float num, bool flag)
 {
 	if (flag)
 	{
 		cnt++;
 		if (cnt >= 60)
 		{
-			hp--;
+			num--;
 			cnt = 0;
 		}
 	}
 
-	return hp;
+	return num;
 }
 
 int SlipDamage::TrapCost(int cost)

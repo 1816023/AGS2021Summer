@@ -3,10 +3,6 @@
 #include "../VECTOR2.h"
 
 class ECircle;
-class SlipDamage;
-class Support;
-class Explosion;
-class Interference;
 
 class TitleScene :
 	public BaseScene
@@ -20,11 +16,6 @@ public:
 private:
 	void Draw()override;
 	void DrawUI()override;
-
-	SlipDamage* slipDamage;
-	Support* support;
-	Explosion* explosion;
-	Interference* interference;
 
 	bool trapFlag;
 	int cnt;

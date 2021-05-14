@@ -25,7 +25,9 @@ public:
 		return s_Instance;
 	}
 	bool Spawner(TRAP_ID id, Vec2Float pos);
+	float Efficacy(float num, bool flag);
 	void Draw();
+	void Delete();
 
 private:
 	TrapManager();

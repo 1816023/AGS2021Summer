@@ -9,16 +9,11 @@
 #include "../Trap/Support.h"
 #include "../Trap/Explosion.h"
 #include "../Trap/Interference.h"
+#include "../Trap/TrapManager.h"
 #include "../Unit/Enemy/EnemyManager.h"
 
 TitleScene::TitleScene()
 {
-
-	slipDamage = new SlipDamage(lpMouseController.GetPos());
-	support = new Support(lpMouseController.GetPos());
-	explosion = new Explosion(lpMouseController.GetPos());
-	interference = new Interference(lpMouseController.GetPos());
-
 	trapFlag = false;
 	cnt = 0;
 	HP = 50;
@@ -29,10 +24,6 @@ TitleScene::TitleScene()
 
 TitleScene::~TitleScene()
 {
-	delete slipDamage;
-	delete support;
-	delete explosion;
-	delete interference;
 }
 
 unique_Base TitleScene::Update(unique_Base own)
@@ -58,23 +49,25 @@ void TitleScene::Draw()
 {
 	if (!trapFlag)
 	{
+		pos.x += speed;
 		if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 		{
-			interference = new Interference(lpMouseController.GetPos());
+			lpTrapManager.Spawner(TRAP_ID::INTERFERENCE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
 			trapFlag = true;
 		}
 	}
 	if (trapFlag)
 	{
 		cnt++;
-		interference->Draw();
+		lpTrapManager.Draw();
+		pos.x += lpTrapManager.Efficacy(speed, trapFlag);
 		if (cnt > 300)
 		{
 			cnt = 0;
 			trapFlag = false;
+			lpTrapManager.Delete();
 		}
 	}
-	pos.x += interference->Delay(speed, trapFlag);
 	DrawBox(pos.x, pos.y, pos.x+60, pos.y+60, 0xffffff, true);
 
 	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
