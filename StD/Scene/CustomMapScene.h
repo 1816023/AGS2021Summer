@@ -5,6 +5,7 @@
 #include <memory>
 #include <map>
 #include <list>
+#include "../Button.h"
 
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
@@ -63,6 +64,8 @@ private:
 	std::list<ButtomState>bList_;
 	// 選択中のマップチップ　何もないときはMAX(6)
 	MapChipName selChip_;
+	// ボタン格納用リスト
+	std::list<std::unique_ptr<Button>>button_;
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					

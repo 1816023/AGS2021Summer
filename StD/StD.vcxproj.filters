@@ -36,6 +36,7 @@
     <ClCompile Include="Unit\Player\Pink.cpp" />
     <ClCompile Include="Unit\Player\Blue.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Button.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -77,5 +78,6 @@
     <ClInclude Include="Unit\Player\Pink.h" />
     <ClInclude Include="Unit\Player\Blue.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Button.h" />
   </ItemGroup>
 </Project>
