@@ -31,6 +31,11 @@ void Green::Draw()
 	DrawGraph(state_.pos.x-gSize.x/2, state_.pos.y-gSize.y/2,imageID,true);
 }
 
+int Green::GetSpawnCost(void)
+{
+	return 8;
+}
+
 //void Green::Skill(void)
 //{
 //	stat_.life += 10;

@@ -31,6 +31,11 @@ void Blue::Draw()
 	DrawGraph(state_.pos.x-gSize.x/2, state_.pos.y-gSize.y/2,imageID,true);
 }
 
+int Blue::GetSpawnCost(void)
+{
+	return 12;
+}
+
 //void Blue::Skill(void)
 //{
 //	stat_.life += 10;
