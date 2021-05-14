@@ -77,5 +77,6 @@
     <ClInclude Include="Unit\Player\Pink.h" />
     <ClInclude Include="Unit\Player\Blue.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Trap\Trap.h" />
   </ItemGroup>
 </Project>

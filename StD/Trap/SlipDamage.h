@@ -1,7 +1,7 @@
 #pragma once
-#include "TrapManager.h"
+#include "Trap.h"
 class SlipDamage :
-	public TrapManager
+	public Trap
 {
 public:
 	SlipDamage(VECTOR2 _pos);
@@ -9,5 +9,6 @@ public:
 
 	void Draw() override;
 	int Damage(int hp, bool flag);
+	int TrapCost(int cost) override;
 };
 

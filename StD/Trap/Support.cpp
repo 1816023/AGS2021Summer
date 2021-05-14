@@ -2,6 +2,7 @@
 
 Support::Support(VECTOR2 _pos)
 {
+	image = LoadGraph(L"data/image/support.png");
 	pos = _pos;
 	cnt = 0;
 }
@@ -12,7 +13,7 @@ Support::~Support()
 
 void Support::Draw()
 {
-	DrawRotaGraph(pos.x, pos.y, 1, 0, image[TRAP_ID::SUPPORT], false);
+	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
 int Support::Healing(int hp, bool flag)
@@ -28,4 +29,10 @@ int Support::Healing(int hp, bool flag)
 	}
 
 	return hp;
+}
+
+int Support::TrapCost(int cost)
+{
+	int _cost = 10;
+	return cost - _cost;
 }

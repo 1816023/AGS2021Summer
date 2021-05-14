@@ -1,7 +1,7 @@
 #pragma once
-#include "TrapManager.h"
+#include "Trap.h"
 class Support:
-	public TrapManager
+	public Trap
 {
 public:
 	Support(VECTOR2 _pos);
@@ -9,5 +9,6 @@ public:
 
 	void Draw() override;
 	int Healing(int hp, bool flag);
+	int TrapCost(int cost) override;
 };
 

@@ -3,6 +3,7 @@
 
 SlipDamage::SlipDamage(VECTOR2 _pos)
 {
+	image = LoadGraph(L"data/image/slip_damege.png");
 	pos = _pos;
 	cnt = 0;
 }
@@ -13,7 +14,7 @@ SlipDamage::~SlipDamage()
 
 void SlipDamage::Draw()
 {
-	DrawRotaGraph(pos.x, pos.y, 1, 0, image[TRAP_ID::SLIP_DAMAGE], false);
+	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
 int SlipDamage::Damage(int hp, bool flag)
@@ -29,4 +30,10 @@ int SlipDamage::Damage(int hp, bool flag)
 	}
 
 	return hp;
+}
+
+int SlipDamage::TrapCost(int cost)
+{
+	int _cost = 10;
+	return cost - _cost;
 }

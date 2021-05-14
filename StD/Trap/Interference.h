@@ -1,7 +1,7 @@
 #pragma once
-#include "TrapManager.h"
+#include "Trap.h"
 class Interference :
-	public TrapManager
+	public Trap
 {
 public:
 	Interference(VECTOR2 _pos);
@@ -9,5 +9,6 @@ public:
 
 	void Draw() override;
 	float Delay(float speed, bool flag);
+	int TrapCost(int cost) override;
 };
 
