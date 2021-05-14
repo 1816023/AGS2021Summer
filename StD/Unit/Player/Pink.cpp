@@ -31,6 +31,11 @@ void Pink::Draw()
 	DrawGraph(state_.pos.x-gSize.x/2, state_.pos.y-gSize.y/2,imageID,true);
 }
 
+int Pink::GetSpawnCost(void)
+{
+	return 10;
+}
+
 //void Pink::Skill(void)
 //{
 //	stat_.life += 10;

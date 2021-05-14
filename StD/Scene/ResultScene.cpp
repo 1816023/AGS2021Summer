@@ -5,7 +5,7 @@
 #include "../Unit/Player/PlayerMng.h"
 #include "../Trap/Interference.h"
 #include "../VECTOR2.h"
-#include "MainScene.h"
+#include "TitleScene.h"
 
 ResultScene::ResultScene()
 {
@@ -17,9 +17,11 @@ ResultScene::~ResultScene()
 
 unique_Base ResultScene::Update(unique_Base own)
 {
+	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
+	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
-		return std::make_unique<MainScene>();
+		return std::make_unique<TitleScene>();
 	}
 	return std::move(own);
 }

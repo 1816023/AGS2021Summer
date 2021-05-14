@@ -9,7 +9,8 @@ public:
 	~Green();
 	void Init();
 	void Update(float deltaTime);
-	void Draw();
+	void Draw(); 
+	int GetSpawnCost(void);
 	//void Skill(void)override;	//Skillä«óù
 private:
 };
