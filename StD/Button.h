@@ -24,16 +24,21 @@ public:
 	// 画像を用いた丸いボタン	
 	Button(VECTOR2 pos, int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()>func, VECTOR2 offset);
 	~Button();
+	void Update();
 	// カーソルがある位置との当たり判定(マウスポジション指定)
 	bool IsHit(VECTOR2 mPos);
 	// カーソルがある位置との当たり判定(マウスポジション自動取得)
 	bool IsHit();
 	// 押されたときに呼び出す
-	bool PushFunction() { return func_(); };
+	bool PushFunction() { return func_(); }
 	// 押されてるかの取得
 	bool isPush() { return isPush_; }
 	// ボタンの描画
 	void Draw();
+	// z軸の設定
+	void SetZbuff(int z);
+	// z軸の取得デフォルトは0
+	int GetZBuff() { return zBuff_; }
 private:
 	// 各ボタンごとの当たり判定
 	bool BoxHit(VECTOR2 mPos);
@@ -57,7 +62,10 @@ private:
 	std::function<void()>drawFunc_;
 	// 
 	bool isClick_;
-	/*引数を保管用*/
+	// Z軸
+	int zBuff_;
+
+	/*--引数を保管用--*/
 	// 押されたときに呼び出される関数格納用
 	std::function<bool()> func_;
 	// 左上座標
@@ -78,6 +86,8 @@ private:
 	std::wstring pushImagePath_;
 	// 画像のサイズ
 	VECTOR2 size_;
+	/*------------------*/
+	
 	// どのタイプのボタンか
 	ButtonType type_;
 };

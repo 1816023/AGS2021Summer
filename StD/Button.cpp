@@ -57,6 +57,11 @@ Button::~Button()
 {
 }
 
+void Button::Update()
+{
+	isPush_ = false;
+}
+
 bool Button::IsHit(VECTOR2 mPos)
 {
 	return isHitFunc_(mPos);
@@ -72,6 +77,11 @@ bool Button::IsHit()
 void Button::Draw()
 {
 	drawFunc_();
+}
+
+void Button::SetZbuff(int z)
+{
+	zBuff_ = z;
 }
 
 bool Button::BoxHit(VECTOR2 mPos)

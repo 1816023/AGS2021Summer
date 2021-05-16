@@ -67,7 +67,12 @@ bool CustomMapScene::Init()
 	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"save" ,0xffffff, sFunc});
 	
 
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX, bSpace), VECTOR2(basePosY, bSize + bSpace),VECTOR2(10,10), 0x007fff, []() {return false; }, VECTOR2()));
+	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX, bSpace), VECTOR2(basePosY, bSize + bSpace), VECTOR2(10, 10), 0x007fff, [&]() {selChip_ = MapChipName::MAINSTAY; return false; }, VECTOR2()));
+	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace), bSpace), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace),VECTOR2(10,10), 0xff0f0f, [&]() {selChip_ = MapChipName::SPAWNER; return false; }, VECTOR2()));
+	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace),VECTOR2(10,10), 0xfff00, [&]() {selChip_ = MapChipName::ROOT; return false; }, VECTOR2()));
+	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX, bSpace + (bSize + bSpace)), VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace)), VECTOR2(10,10),0xe3e3e3, [&]() {selChip_ = MapChipName::FIELD; return false; }, VECTOR2()));
+	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace)), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),VECTOR2(10,10), 0x333333, [&]() {selChip_ = MapChipName::WALL; return false; }, VECTOR2()));
+	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace)), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),VECTOR2(10,10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return false; }, VECTOR2()));
 
 
 
@@ -127,6 +132,10 @@ void CustomMapScene::SetStateUpdate()
 
 void CustomMapScene::MapCuntomUpdate()
 {
+	for (auto&& list : button_)
+	{
+		list->Update();
+	}
 	if ((now[KEY_INPUT_BACK]) & (~old[KEY_INPUT_BACK]))
 	{
 		nowState_ = CustomState::END_CUSTOM;
@@ -134,44 +143,51 @@ void CustomMapScene::MapCuntomUpdate()
 	VECTOR2 mPos;
 	GetMousePoint(&mPos.x, &mPos.y);
 	auto cPos = lpApplication.GetCamera().GetPos()*2.0f;
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	if (lpMouseController.GetClicking(MOUSE_INPUT_LEFT))
 	{
 		if (mPos.x > SELECT_UI_POS.first.x)
 		{
-			if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second))
+			//if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second))
+			//{
+			//	for (auto& list : bList_)
+			//	{
+			//		if (lpMouseController.IsHitBoxToMouse(list.luPos, list.rdPos))
+			//		{
+			//			// 押したボタン以外のフラグを偽にする
+			//			auto name = list.name;
+			//			for (auto& bl : bList_)
+			//			{
+			//				if (bl.name != name)
+			//				{
+			//					bl.pushFlag = false;
+			//				}
+			//			}
+			//			list.func(list);
+			//			// フラグを反転させる
+			//			//if (list.pushFlag = !list.pushFlag)
+			//			//{
+			//			//	/*if (list.name >= L"1" && list.name <= L"5")
+			//			//	{
+			//			//		selChip_ = static_cast<MapChipName>(std::atoi(_WtS(list.name).c_str()));
+			//			//	}
+			//			//	else if(list.name==L"save")
+			//			//	{
+			//			//		list.pushFlag = true;
+
+			//			//	}*/
+
+			//			//}
+			//			//else {
+			//			//	selChip_ = MapChipName::MAX;
+			//			//}
+			//		}
+			//	}
+			//}
+			for (auto&& list : button_)
 			{
-				for (auto& list : bList_)
+				if(list->IsHit(lpMouseController.GetPos()))
 				{
-					if (lpMouseController.IsHitBoxToMouse(list.luPos, list.rdPos))
-					{
-						// 押したボタン以外のフラグを偽にする
-						auto name = list.name;
-						for (auto& bl : bList_)
-						{
-							if (bl.name != name)
-							{
-								bl.pushFlag = false;
-							}
-						}
-						list.func(list);
-						// フラグを反転させる
-						//if (list.pushFlag = !list.pushFlag)
-						//{
-						//	/*if (list.name >= L"1" && list.name <= L"5")
-						//	{
-						//		selChip_ = static_cast<MapChipName>(std::atoi(_WtS(list.name).c_str()));
-						//	}
-						//	else if(list.name==L"save")
-						//	{
-						//		list.pushFlag = true;
-
-						//	}*/
-
-						//}
-						//else {
-						//	selChip_ = MapChipName::MAX;
-						//}
-					}
+					list->PushFunction();
 				}
 			}
 		}
