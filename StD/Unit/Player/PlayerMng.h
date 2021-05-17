@@ -27,6 +27,7 @@ public:
 	void SetCost(int cost);
 private:
 	PlayerMng();
+	void SkillCtl(void);
 	std::vector<std::shared_ptr<Player>> unitList_;
 	int cost;		//所持コスト保存用
 };

@@ -1,7 +1,8 @@
 #include "ShotMng.h"
 #include <cmath>
+#include <DxLib.h>
 #include "../../Collision.h"
-#include "../../Unit/Player/Yellow.h"
+#include "../../Unit/Unit.h"
 
 ShotMng::~ShotMng()
 {
@@ -53,11 +54,13 @@ void ShotMng::BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos)
 				itr->second += Vec2Float(n.x * ptr->GetBulletSpeed(), n.y*ptr->GetBulletSpeed());
 				if (isHitBvE(itr->second, BASE_SIZE, pos, Vec2Float(60, 60)))
 				{
+					shooterPtr_ = ptr;
 					//Ë’ö”ÍˆÍŠO(ƒŠƒXƒg‚©‚çíœ)
 					itr = shotList_[ptr].erase(itr);
 				}
 				else
 				{
+					shooterPtr_ = nullptr;
 					++itr;
 				}
 			}
@@ -93,4 +96,5 @@ bool ShotMng::isHitBvE(Vec2Float bulletPos,float bulletSize,Vec2Float unitPos,Ve
 
 ShotMng::ShotMng()
 {
+	shooterPtr_ = nullptr;
 }

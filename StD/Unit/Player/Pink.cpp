@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include "PlayerMng.h"
 #include "Pink.h"
 
 Pink::Pink()
@@ -10,6 +11,7 @@ Pink::Pink(Vec2Float pos)
 	imageID = LoadGraph(L"data/image/Hexagon_Pink.png");
 	state_ = UnitStat{ pos,1.0f,2.0f,6,10,false };
 	isSkill_ = false;
+	UnitID = PlayerUnit::PINK;
 }
 
 Pink::~Pink()
@@ -36,7 +38,7 @@ int Pink::GetSpawnCost(void)
 	return 10;
 }
 
-//void Pink::Skill(void)
-//{
-//	stat_.life += 10;
-//}
+void Pink::Skill(void)
+{
+	lpPlayerMng.SetCost(lpPlayerMng.GetCost()+1);
+}

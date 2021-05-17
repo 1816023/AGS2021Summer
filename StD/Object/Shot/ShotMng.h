@@ -28,12 +28,18 @@ public:
 	void Update(float deltaTime);	//更新
 	void Draw(void);				//弾の描画
 	void AddBullet(std::shared_ptr<Unit> ptr, Vec2Float pos);			//Unitから発射される弾の作成
-	void BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos);			//弾の移動
+	void BulletMove(std::shared_ptr<Unit> ptr/*射出点ユニット*/,Vec2Float pos/*射出点座標*/);	//弾の移動
 	bool isRange(Vec2Float unitPos,Vec2Float bulletPos,float unitSize,float bulletSize);
-	bool isHitBvE(Vec2Float bulletPos, float bulletSize, Vec2Float unitPos, Vec2Float unitSize);		//弾と敵の当たり判定
+	bool isHitBvE(Vec2Float bulletPos, float bulletSize, Vec2Float unitPos, Vec2Float unitSize);
+
+	const std::shared_ptr<Unit>& GetShooterPtr()
+	{
+		return shooterPtr_;
+	}
 private:
 	ShotMng();
 	std::map<std::shared_ptr<Unit>, std::list<std::pair<Vec2Float, Vec2Float>>> shotList_;	//弾管理用 (リストのfirstには射出点secondには弾の現在座標が入る)
 	std::map<std::shared_ptr<Unit>, int> shotSpan_;	//発射間隔管理用
+	std::shared_ptr<Unit> shooterPtr_;
 };
 

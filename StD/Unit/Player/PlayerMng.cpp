@@ -13,7 +13,8 @@ void PlayerMng::Update(float deltaTime,Vec2Float pos)
 {
     for (auto& unit : unitList_)
     {
-        unit->Update(deltaTime);
+        SkillCtl();
+        //unit->Update(deltaTime);
         lpShotMng.AddBullet(unit,unit->GetPos());
         lpShotMng.BulletMove(unit,pos);
     }
@@ -73,6 +74,18 @@ void PlayerMng::SetCost(int cost)
 
 PlayerMng::PlayerMng()
 {
+}
+
+void PlayerMng::SkillCtl(void)
+{
+    auto result = std::find(unitList_.begin(), unitList_.end(), lpShotMng.GetShooterPtr());
+    if (result != unitList_.end())
+    {
+        if ((*result)->GetID() == PlayerUnit::PINK)
+        {
+            (*result)->Skill();
+        }
+    }
 }
 
 void PlayerMng::Init()
