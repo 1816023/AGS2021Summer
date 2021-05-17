@@ -13,11 +13,11 @@ void PlayerMng::Update(float deltaTime,Vec2Float pos)
 {
     for (auto& unit : unitList_)
     {
-        SkillCtl();
         //unit->Update(deltaTime);
         lpShotMng.AddBullet(unit,unit->GetPos());
         lpShotMng.BulletMove(unit,pos);
     }
+    SkillCtl();
 }
 
 void PlayerMng::Draw(void)
@@ -84,6 +84,13 @@ void PlayerMng::SkillCtl(void)
         if ((*result)->GetID() == PlayerUnit::PINK)
         {
             (*result)->Skill();
+        }
+    }
+    for (auto& unit : unitList_)
+    {
+        if (unit->GetID() != PlayerUnit::PINK)
+        {
+            unit->Skill();
         }
     }
 }

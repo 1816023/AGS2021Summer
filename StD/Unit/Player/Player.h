@@ -19,6 +19,7 @@ public:
 protected:
 	PlayerUnit id;
 	int imageID;
+	float coolTime_;	//skillÄg—p‚Ü‚Å‚ÌŠÔ
 	bool isSkill_;	//skill‚ª”­“®‰Â”\‚©
 	PlayerUnit UnitID;
 private:
