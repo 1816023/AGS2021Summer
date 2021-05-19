@@ -8,3 +8,11 @@ enum class PlayerUnit
 	PINK,
 	MAX
 };
+
+enum class AttackType
+{
+	NON,	//UŒ‚•s‰Â
+	SHOT,	//’P‘ÌUŒ‚
+	AREA,	//”ÍˆÍUŒ‚
+	MAX
+};

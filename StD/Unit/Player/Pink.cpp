@@ -6,12 +6,13 @@ Pink::Pink()
 {
 }
 
-Pink::Pink(Vec2Float pos)
+Pink::Pink(Vec2Float pos, AttackType type)
 {
 	imageID = LoadGraph(L"data/image/Hexagon_Pink.png");
 	state_ = UnitStat{ pos,1.0f,2.0f,6,10,false };
 	isSkill_ = false;
 	UnitID = PlayerUnit::PINK;
+	this->type = type;
 }
 
 Pink::~Pink()

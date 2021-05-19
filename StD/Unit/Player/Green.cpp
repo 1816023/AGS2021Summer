@@ -5,11 +5,12 @@ Green::Green()
 {
 }
 
-Green::Green(Vec2Float pos)
+Green::Green(Vec2Float pos, AttackType type)
 {
 	imageID = LoadGraph(L"data/image/Hexagon_Green.png");
 	state_ = UnitStat{ pos,15.0f,2.0f,6,10,false };
 	isSkill_ = false;
+	this->type = type;
 }
 
 Green::~Green()
@@ -22,6 +23,11 @@ void Green::Init()
 
 void Green::Update(float deltaTime)
 {
+	if (!executable)
+	{
+		coolTime_--;
+		executable = (coolTime_ <= 0 ? true : false);
+	}
 }
 
 void Green::Draw()
