@@ -5,7 +5,7 @@ class Pink :
 {
 public:
 	Pink();
-	Pink(Vec2Float pos);
+	Pink(Vec2Float pos, AttackType type);
 	~Pink();
 	void Init();
 	void Update(float deltaTime);

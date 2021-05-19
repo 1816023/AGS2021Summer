@@ -5,7 +5,7 @@ class Blue :
 {
 public:
 	Blue();
-	Blue(Vec2Float pos);
+	Blue(Vec2Float pos, AttackType type);
 	~Blue();
 	void Init();
 	void Update(float deltaTime);

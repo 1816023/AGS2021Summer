@@ -13,9 +13,21 @@ void PlayerMng::Update(float deltaTime,Vec2Float pos)
 {
     for (auto& unit : unitList_)
     {
-        //unit->Update(deltaTime);
-        lpShotMng.AddBullet(unit,unit->GetPos());
-        lpShotMng.BulletMove(unit,pos);
+        unit->Update(deltaTime);
+
+        auto type = unit->GetType();
+        if (type != AttackType::NON)
+        {
+            if (type != AttackType::AREA)
+            {
+                lpShotMng.AddBullet(unit, unit->GetPos());
+                lpShotMng.BulletMove(unit, pos);
+            }
+            else
+            {
+
+            }
+        }
     }
     SkillCtl();
 }
@@ -36,16 +48,16 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
     switch (id)
     {
     case PlayerUnit::YELLOW:
-        ptr = std::make_shared<Yellow>(pos);
+        ptr = std::make_shared<Yellow>(pos,AttackType::SHOT);
         break;
     case PlayerUnit::GREEN:
-        ptr = std::make_shared<Green>(pos);
+        ptr = std::make_shared<Green>(pos,AttackType::AREA);
         break;
     case PlayerUnit::BLUE:
-        ptr = std::make_shared<Blue>(pos);
+        ptr = std::make_shared<Blue>(pos, AttackType::SHOT);
         break;
     case PlayerUnit::PINK:
-        ptr = std::make_shared<Pink>(pos);
+        ptr = std::make_shared<Pink>(pos, AttackType::NON);
         break;
     case PlayerUnit::MAX:
         break;
@@ -90,7 +102,10 @@ void PlayerMng::SkillCtl(void)
     {
         if (unit->GetID() != PlayerUnit::PINK)
         {
-            unit->Skill();
+            if (unit->isExecutable())
+            {
+                unit->Skill();
+            }
         }
     }
 }

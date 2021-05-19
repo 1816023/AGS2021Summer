@@ -5,7 +5,7 @@ class Yellow :
 {
 public:
 	Yellow();
-	Yellow(Vec2Float pos);
+	Yellow(Vec2Float pos, AttackType type);
 	~Yellow();
 	void Init();
 	void Update(float deltaTime);
