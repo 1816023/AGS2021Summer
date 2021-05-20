@@ -7,7 +7,7 @@ class Trap
 public:
 	Trap() {};
 	virtual ~Trap() {};
-	virtual void Draw() {};
+	virtual void Draw() = 0;
 	virtual float Efficacy(float num, bool flag) = 0;
 	virtual int TrapCost(int cost) = 0;
 
