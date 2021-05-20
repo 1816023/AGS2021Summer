@@ -5,12 +5,14 @@ Yellow::Yellow()
 {
 }
 
-Yellow::Yellow(Vec2Float pos)
+Yellow::Yellow(Vec2Float pos, AttackType type)
 {
-	coolTime_ = 600;
 	imageID = LoadGraph(L"data/image/Hexagon_Yellow.png");
 	state_ = UnitStat{ pos,2,0.8f,10,20,false };
 	isSkill_ = false;
+	this->type = type;
+	executable = false;
+	coolTime_ = 600;
 }
 
 Yellow::~Yellow()
@@ -23,6 +25,11 @@ void Yellow::Init()
 
 void Yellow::Update(float deltaTime)
 {
+	if (!executable)
+	{
+		coolTime_--;
+		executable = (coolTime_ <= 0 ? true : false);
+	}
 }
 
 void Yellow::Draw()
@@ -41,19 +48,15 @@ int Yellow::GetSpawnCost(void)
 
 void Yellow::Skill(void)
 {
-	if (coolTime_ <= 0)
-	{
-		if (coolTime_ > -600)
-		{
-			if ((int)coolTime_ % 100 == 0)
-			{
-				state_.life += 2;
-			}
-		}
-		else
-		{
-			coolTime_ = 600;
-		}
-	}
 	coolTime_--;
+	if ((int)coolTime_ % 100 == 0)
+	{
+		state_.life += 2;
+	}
+
+	if (coolTime_ <= -600)
+	{
+		executable = false;
+		coolTime_ = 600;
+	}
 }

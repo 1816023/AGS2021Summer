@@ -5,7 +5,7 @@ class Green :
 {
 public:
 	Green();
-	Green(Vec2Float pos);
+	Green(Vec2Float pos, AttackType type);
 	~Green();
 	void Init();
 	void Update(float deltaTime);

@@ -16,11 +16,21 @@ public:
 	{
 		return UnitID;
 	};
+	const AttackType& GetType()
+	{
+		return type;
+	}
+	bool isExecutable()
+	{
+		return executable;
+	}
 protected:
 	PlayerUnit id;
+	AttackType type;
 	int imageID;
 	float coolTime_;	//skill再使用までの時間
 	bool isSkill_;	//skillが発動可能か
+	bool executable; //実行可能か
 	PlayerUnit UnitID;
 private:
 };
