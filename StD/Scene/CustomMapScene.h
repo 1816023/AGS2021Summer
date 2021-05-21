@@ -5,7 +5,7 @@
 #include <memory>
 #include <map>
 #include <list>
-#include "../Button.h"
+#include "../Button/RoundRectButton.h"
 
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
@@ -26,6 +26,12 @@ enum class CustomState {
 	MAP_CUSTOM,			// マップを作成している状態
 	END_CUSTOM,			// 作成終了後の保存時の状態
 	MAX
+};
+struct ButtonText
+{
+	std::string str_;		// 文章
+	unsigned int color_;	// 文字色
+	VECTOR2 pos_;			// 描画位置
 };
 class CustomMapScene :
 	public BaseScene
@@ -66,6 +72,8 @@ private:
 	MapChipName selChip_;
 	// ボタン格納用リスト
 	std::list<std::unique_ptr<Button>>button_;
+	// ボタンの説明文描画用
+	std::list<ButtonText>buttonText_;
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					

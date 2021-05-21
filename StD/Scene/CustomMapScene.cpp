@@ -6,6 +6,7 @@
 #include "../Mng/ImageMng.h"
 #include "../MouseController.h"
 #include "../StringUtil.h"
+
 #define CUSTOM dynamic_cast<Custom*>(map_.get())
 CustomMapScene::CustomMapScene()
 {
@@ -67,13 +68,18 @@ bool CustomMapScene::Init()
 	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"save" ,0xffffff, sFunc});
 	
 
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX, bSpace), VECTOR2(basePosY, bSize + bSpace), VECTOR2(10, 10), 0x007fff, [&]() {selChip_ = MapChipName::MAINSTAY; return false; }, VECTOR2()));
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace), bSpace), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace),VECTOR2(10,10), 0xff0f0f, [&]() {selChip_ = MapChipName::SPAWNER; return false; }, VECTOR2()));
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace),VECTOR2(10,10), 0xfff00, [&]() {selChip_ = MapChipName::ROOT; return false; }, VECTOR2()));
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX, bSpace + (bSize + bSpace)), VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace)), VECTOR2(10,10),0xe3e3e3, [&]() {selChip_ = MapChipName::FIELD; return false; }, VECTOR2()));
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace)), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),VECTOR2(10,10), 0x333333, [&]() {selChip_ = MapChipName::WALL; return false; }, VECTOR2()));
-	button_.emplace_back(std::make_unique<Button>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace)), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),VECTOR2(10,10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return false; }, VECTOR2()));
-
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace*2), VECTOR2(basePosY, bSize + bSpace*2), VECTOR2(10, 10), 0x007fff, [&]() {selChip_ = MapChipName::MAINSTAY; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "自拠点",0xffffff,VECTOR2(basePosX,  bSpace*2-GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace*2), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace * 2),VECTOR2(10,10), 0xff0f0f, [&]() {selChip_ = MapChipName::SPAWNER; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "敵出現", 0xffffff, VECTOR2(basePosX + (bSize + bSpace), bSpace * 2-GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace * 2),VECTOR2(10,10), 0xfff00, [&]() {selChip_ = MapChipName::ROOT; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "敵侵攻",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2- GetFontSize() ) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace * 2)), VECTOR2(10,10),0xe3e3e3, [&]() {selChip_ = MapChipName::FIELD; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "自機配置",0xffffff,VECTOR2(basePosX, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace ), bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace * 2)),VECTOR2(10,10), 0x333333, [&]() {selChip_ = MapChipName::WALL; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "設置不可",0xffffff,VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2) - GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace ) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace * 2)),VECTOR2(10,10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "選択解除",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
 
 
 	mapSizeX_ = 0;
@@ -277,7 +283,7 @@ void CustomMapScene::MapCustomDraw()
 	DrawString(TEXT_UI_POS.first.x+30, TEXT_UI_POS.first.y+ (TEXT_UI_POS.second.y - TEXT_UI_POS.first.y) / 5,_StW(textData_[selChip_]).c_str(), 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
 	// とりあえずボタンの表示
-	int shadowOffset = 3;
+	/*int shadowOffset = 3;
 	int pushuOffset = 1;
 	for (auto list : bList_)
 	{
@@ -293,10 +299,14 @@ void CustomMapScene::MapCustomDraw()
 
 		}
 	
-	}
+	}*/
 	for (auto&& list : button_)
 	{
 		list->Draw();
+	}
+	for (auto list : buttonText_)
+	{
+		DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
 	}
 #ifdef _DEBUG
 
