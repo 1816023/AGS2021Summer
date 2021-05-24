@@ -1,5 +1,5 @@
 #pragma once
-#include "VECTOR2.h"
+#include "../VECTOR2.h"
 #include <vector>
 #include <map>
 
