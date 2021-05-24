@@ -8,6 +8,8 @@ Enemy::Enemy(MapInfo& mapInfo)
 {
 	state_.isDead = false;
 	state_.life = MID_HP;
+	state_.atkSpeed = 2.0f;
+	state_.atkRange = MID_DIST;
 	// ----- 敵情報設定(デフォルト) -----
 	enemyInfo_.dirVec = { 0,0 };
 	enemyInfo_.nowMove = { 0,0 };

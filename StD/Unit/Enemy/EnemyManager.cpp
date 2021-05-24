@@ -2,6 +2,7 @@
 #include "ECircle.h"
 #include "../../Map/Map.h"
 #include <algorithm>
+#include "../../Object/Shot/ShotMng.h"
 
 using namespace std;
 
@@ -28,12 +29,15 @@ void EnemyManager::Update(float deltaTime)
 	for (auto& enemy : enemies_)
 	{
 		enemy->Update(deltaTime);
+		lpShotMng.AddBullet(enemy,enemy->GetPos());
+		lpShotMng.BulletMove(enemy, Vec2Float(100, 100));
 	}
 	enemies_.erase(remove_if(enemies_.begin(), enemies_.end(),
 		[](shared_ptr<Enemy>& enemy)
 		{
 			return enemy->IsDeath();
 		}), enemies_.end());
+	
 }
 
 void EnemyManager::Draw()
@@ -42,6 +46,7 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
+	lpShotMng.Draw();
 }
 
 EnemyList& EnemyManager::GetEnemies()

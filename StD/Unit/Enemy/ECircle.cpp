@@ -47,7 +47,7 @@ void ECircle::StartUpdate(float deltaTime)
 void ECircle::RunUpdate(float deltaTime)
 {
 	Move(deltaTime);
-	if (state_.life <= 0)
+	if (state_.isDead >= 180)
 	{
 		state_.isDead = true;
 	}

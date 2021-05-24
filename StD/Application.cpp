@@ -29,7 +29,7 @@ bool Application::Init()
 	GetScreenState(&x, &y, &col);
 	gameScreen_ = MakeScreen(chipSize * mapSize, chipSize * mapSize);
 	sceneController_ = std::make_unique<TitleScene>();
-	old_ = system_clock::now();
+	oldTime_ = system_clock::now();
 	camera_ = std::make_unique<Camera>();
 	return true;
 }
@@ -58,9 +58,9 @@ void Application::Run()
 		auto now = system_clock::now();
 		if (GetNoActiveState(true)== 0)
 		{
-			delta_ = static_cast<float>(duration_cast<microseconds>(now - old_).count()) * 0.00001f;
+			delta_ = static_cast<float>(duration_cast<microseconds>(now - oldTime_).count()) * 0.00001f;
 		}
-		old_ = now;
+		oldTime_ = now;
 		Draw();
 	}
 }
