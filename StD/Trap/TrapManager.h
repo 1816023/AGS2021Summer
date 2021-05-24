@@ -9,10 +9,12 @@
 
 enum class TRAP_ID
 {
-	INTERFERENCE,	// 妨害
+	INTERFERENCE,	// 移動妨害
 	SLIP_DAMAGE,	// 継続ダメージ
 	SUPPORT,		// 支援
 	EXPLOSION,		// 単発ダメージ
+	DEFENSE_DOWN,	// 防御ダウン
+	POWER_DOWN,		// 攻撃ダウン
 	MAX
 };
 

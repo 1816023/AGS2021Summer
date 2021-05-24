@@ -42,6 +42,8 @@
     <ClCompile Include="Button\RoundRectButton.cpp" />
     <ClCompile Include="Button\CircleButton.cpp" />
     <ClCompile Include="Button\ImageRectButton.cpp" />
+    <ClCompile Include="Trap\PowerDown.cpp" />
+    <ClCompile Include="Trap\DefenseDown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -90,5 +92,7 @@
     <ClInclude Include="Button\RoundRectButton.h" />
     <ClInclude Include="Button\CircleButton.h" />
     <ClInclude Include="Button\ImageRectButton.h" />
+    <ClInclude Include="Trap\PowerDown.h" />
+    <ClInclude Include="Trap\DefenseDown.h" />
   </ItemGroup>
 </Project>

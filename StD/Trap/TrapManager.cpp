@@ -3,6 +3,8 @@
 #include "Interference.h"
 #include "SlipDamage.h"
 #include "Support.h"
+#include "DefenseDown.h"
+#include "PowerDown.h"
 
 bool TrapManager::Spawner(TRAP_ID id, Vec2Float pos)
 {
@@ -20,6 +22,12 @@ bool TrapManager::Spawner(TRAP_ID id, Vec2Float pos)
         break;
     case TRAP_ID::EXPLOSION:
         ptr = std::make_shared<Explosion>(pos);
+        break;
+    case TRAP_ID::DEFENSE_DOWN:
+        ptr = std::make_shared<DefenseDown>(pos);
+        break;
+    case TRAP_ID::POWER_DOWN:
+        ptr = std::make_shared<PowerDown>(pos);
         break;
     case TRAP_ID::MAX:
         break;

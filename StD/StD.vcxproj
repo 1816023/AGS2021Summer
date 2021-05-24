@@ -157,6 +157,8 @@
     <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Button\RectButton.cpp" />
     <ClCompile Include="Button\RoundRectButton.cpp" />
+    <ClCompile Include="Trap\DefenseDown.cpp" />
+    <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
     <ClCompile Include="Trap\Explosion.cpp" />
     <ClCompile Include="Mng\ImageMng.cpp" />
@@ -200,6 +202,8 @@
     <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Button\RectButton.h" />
     <ClInclude Include="Button\RoundRectButton.h" />
+    <ClInclude Include="Trap\DefenseDown.h" />
+    <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\Trap.h" />
     <ClInclude Include="Trap\Interference.h" />
     <ClInclude Include="Trap\Explosion.h" />
