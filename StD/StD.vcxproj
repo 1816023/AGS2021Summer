@@ -149,9 +149,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Button\Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Button\CircleButton.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="Button\ImageCircleButton.cpp" />
+    <ClCompile Include="Button\ImageRectButton.cpp" />
+    <ClCompile Include="Button\RectButton.cpp" />
+    <ClCompile Include="Button\RoundRectButton.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
     <ClCompile Include="Trap\Explosion.cpp" />
     <ClCompile Include="Mng\ImageMng.cpp" />
@@ -187,9 +192,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="Button\Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Button\CircleButton.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="Button\ImageCircleButton.h" />
+    <ClInclude Include="Button\ImageRectButton.h" />
+    <ClInclude Include="Button\RectButton.h" />
+    <ClInclude Include="Button\RoundRectButton.h" />
     <ClInclude Include="Trap\Trap.h" />
     <ClInclude Include="Trap\Interference.h" />
     <ClInclude Include="Trap\Explosion.h" />
