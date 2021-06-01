@@ -17,9 +17,6 @@ ImageCircleButton::~ImageCircleButton()
 {
 }
 
-void ImageCircleButton::Update()
-{
-}
 
 bool ImageCircleButton::IsHit(VECTOR2 mPos)
 {

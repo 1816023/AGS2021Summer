@@ -18,9 +18,6 @@ ImageRectButton::~ImageRectButton()
 {
 }
 
-void ImageRectButton::Update()
-{
-}
 
 bool ImageRectButton::IsHit(VECTOR2 mPos)
 {

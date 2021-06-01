@@ -6,7 +6,6 @@ class RoundRectButton:
 public:
 	RoundRectButton(VECTOR2 lu, VECTOR2 rd, VECTOR2 radius, int color, std::function<bool()>func, VECTOR2 offset);
 	~RoundRectButton();
-	void Update();
 	// カーソルがある位置との当たり判定(マウスポジション指定)
 	bool IsHit(VECTOR2 mPos);
 	// ボタンの描画

@@ -18,10 +18,6 @@ CircleButton::~CircleButton()
 {
 }
 
-void CircleButton::Update()
-{
-}
-
 bool CircleButton::IsHit(VECTOR2 mPos)
 {
 	auto tmp = pos_ - mPos;

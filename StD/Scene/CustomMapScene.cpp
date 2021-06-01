@@ -80,7 +80,10 @@ bool CustomMapScene::Init()
 	buttonText_.emplace_back(ButtonText{ "設置不可",0xffffff,VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2) - GetFontSize()) });
 	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace ) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace * 2)),VECTOR2(10,10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return false; }, VECTOR2()));
 	buttonText_.emplace_back(ButtonText{ "選択解除",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
-
+	for (auto&& b : button_)
+	{
+		b->SetAuto();
+	}
 
 	mapSizeX_ = 0;
 	mapSizeY_ = 0;
@@ -153,49 +156,6 @@ void CustomMapScene::MapCuntomUpdate()
 	{
 		if (mPos.x > SELECT_UI_POS.first.x)
 		{
-			//if (lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second))
-			//{
-			//	for (auto& list : bList_)
-			//	{
-			//		if (lpMouseController.IsHitBoxToMouse(list.luPos, list.rdPos))
-			//		{
-			//			// 押したボタン以外のフラグを偽にする
-			//			auto name = list.name;
-			//			for (auto& bl : bList_)
-			//			{
-			//				if (bl.name != name)
-			//				{
-			//					bl.pushFlag = false;
-			//				}
-			//			}
-			//			list.func(list);
-			//			// フラグを反転させる
-			//			//if (list.pushFlag = !list.pushFlag)
-			//			//{
-			//			//	/*if (list.name >= L"1" && list.name <= L"5")
-			//			//	{
-			//			//		selChip_ = static_cast<MapChipName>(std::atoi(_WtS(list.name).c_str()));
-			//			//	}
-			//			//	else if(list.name==L"save")
-			//			//	{
-			//			//		list.pushFlag = true;
-
-			//			//	}*/
-
-			//			//}
-			//			//else {
-			//			//	selChip_ = MapChipName::MAX;
-			//			//}
-			//		}
-			//	}
-			//}
-			for (auto&& list : button_)
-			{
-				if(list->IsHit(lpMouseController.GetPos()))
-				{
-					list->PushFunction();
-				}
-			}
 		}
 		else
 		{

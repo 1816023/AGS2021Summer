@@ -18,9 +18,6 @@ RectButton::~RectButton()
 {
 }
 
-void RectButton::Update()
-{
-}
 
 bool RectButton::IsHit(VECTOR2 mPos)
 {

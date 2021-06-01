@@ -20,19 +20,25 @@ public:
 	// カーソルがある位置との当たり判定(マウスポジション指定)
 	virtual bool IsHit(VECTOR2 mPos)=0;
 	// カーソルがある位置との当たり判定(マウスポジション自動取得)
-	virtual bool IsHit();
+	virtual const bool IsHit();
 	// 押されたときに呼び出す
-	virtual bool PushFunction() { return func_(); }
+	virtual const bool PushFunction() const { return func_(); }
 	// 押されてるかの取得
-	virtual bool isPush() { return isPush_; }
+	virtual const bool isPush() const { return isPush_; }
 	// ボタンの描画
 	virtual void Draw()=0;
 	// z軸の設定
 	virtual void SetZbuff(int z);
 	// z軸の取得デフォルトは0
-	virtual int GetZBuff() { return zBuff_; }
+	virtual const int GetZBuff() const { return zBuff_; }
 	// ボタン上に描画する文字とその位置
 	virtual void SetString(std::string str, VECTOR2 sPos);
+	// アップデートで自動で当たり判定や判定処理を行うようになる
+	virtual void SetAuto();
+	// クリックで押された時でなく離れたときに処理を行うようになる
+	virtual void SetReversePush();
+	// DXLIBのMOUSE_INPUT_LEFT,MOUSE_INPUT_RIGHT,MOUSE_INPUT_WHEELのいずれかを指定する
+	virtual void SetClickType(int type);
 protected:
 	// 座標補正
 	const VECTOR2 offset_;
@@ -46,7 +52,15 @@ protected:
 	bool isClick_;
 	// Z軸
 	int zBuff_;
-
+	// 自動処理のフラグ
+	bool autoFlag_;
+	// 離れたときに処理をするかのフラグ
+	bool reverseFlag_;
+	// どのタイプのボタンか
+	ButtonType type_;
+	// DxLibのマウスクリックの判定でどの判定を使用するか
+	// デフォルトはMOUSE_INPUT_LEFT
+	int clickType_;
 	/*--引数を保管用--*/
 	// 押されたときに呼び出される関数格納用
 	std::function<bool()> func_;
@@ -74,7 +88,5 @@ protected:
 	VECTOR2 sPos_;
 	/*------------------*/
 	
-	// どのタイプのボタンか
-	ButtonType type_;
 };
 
