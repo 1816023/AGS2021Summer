@@ -94,5 +94,6 @@
     <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
+    <ClInclude Include="File\FileSystem.h" />
   </ItemGroup>
 </Project>

@@ -5,11 +5,11 @@ class ImageRectButton :
 {
 public:
     ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()>func, VECTOR2 offset);
-    ~ImageRectButton();
+    ~ImageRectButton()override;
 	// カーソルがある位置との当たり判定(マウスポジション指定)
-	bool IsHit(VECTOR2 mPos);
+	bool IsHit(VECTOR2 mPos)override;
 	// ボタンの描画
-	void Draw();
+	void Draw()override;
 private:
 };
 
