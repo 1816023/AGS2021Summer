@@ -25,6 +25,7 @@ public:
 	void Skill(void) {};
 	int GetCost(void);
 	void SetCost(int cost);
+	float SpeedDelay(void);
 private:
 	PlayerMng();
 	void SkillCtl(void);

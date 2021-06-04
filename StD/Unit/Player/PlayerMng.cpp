@@ -84,6 +84,20 @@ void PlayerMng::SetCost(int cost)
     this->cost = cost;
 }
 
+float PlayerMng::SpeedDelay(void)
+{
+    int cnt = 0;
+    for (auto& unit : unitList_)
+    {
+        if (unit->isExecutable() && unit->GetID() == PlayerUnit::GREEN)
+        {
+            cnt++;
+        }
+    }
+    auto delay = std::powf(0.3, cnt);
+    return delay;
+}
+
 PlayerMng::PlayerMng()
 {
 }

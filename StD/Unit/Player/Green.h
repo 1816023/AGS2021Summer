@@ -12,7 +12,7 @@ public:
 	void Draw(); 
 	void Skill(void);
 	int GetSpawnCost(void);
-	//void Skill(void)override;	//SkillŠÇ—
 private:
+	int defaultPower_;	//’Êí‚Ì‰Î—Í
 };
 
