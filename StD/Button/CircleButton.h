@@ -5,13 +5,11 @@ class CircleButton :
 {
 public:
     CircleButton(VECTOR2 pos, int radius, int color, std::function<bool()>func, VECTOR2 offset);
-    ~CircleButton();
-
-	void Update();
+    ~CircleButton()override;
 	// カーソルがある位置との当たり判定(マウスポジション指定)
-	bool IsHit(VECTOR2 mPos);
+	bool IsHit(VECTOR2 mPos)override;
 	// ボタンの描画
-	void Draw();
+	void Draw()override;
 private:
 };
 

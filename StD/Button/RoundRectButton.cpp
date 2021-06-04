@@ -19,10 +19,6 @@ RoundRectButton::~RoundRectButton()
 {
 }
 
-void RoundRectButton::Update()
-{
-	isPush_ = false;
-}
 
 bool RoundRectButton::IsHit(VECTOR2 mPos)
 {

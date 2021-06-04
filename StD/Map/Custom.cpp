@@ -50,6 +50,11 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 
 bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 {
+
+
+
+
+
 	std::ifstream sample;
 	sample.open("data/mapData/sample_data.xml");
 	if (!sample)
@@ -66,6 +71,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	file << sample.rdbuf() << std::flush;
 	sample.close();
 	file.close();
+
 	auto error = document_.LoadFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{

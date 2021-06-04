@@ -24,6 +24,7 @@ struct ButtomState {
 enum class CustomState {
 	SET_STATE,			// マップの幅や高さを設定する状態
 	MAP_CUSTOM,			// マップを作成している状態
+	ENEMY_CUSTOM,		// 敵の配置と敵の侵攻ルート設定
 	END_CUSTOM,			// 作成終了後の保存時の状態
 	MAX
 };

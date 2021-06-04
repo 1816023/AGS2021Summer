@@ -202,6 +202,7 @@
     <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Button\RectButton.h" />
     <ClInclude Include="Button\RoundRectButton.h" />
+    <ClInclude Include="File\FileSystem.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\Trap.h" />

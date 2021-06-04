@@ -5,12 +5,11 @@ class RectButton :
 {
 public:
     RectButton(VECTOR2 lu, VECTOR2 rd, int color, std::function<bool()> func, VECTOR2 offset);
-    ~RectButton();
-	void Update();
+    ~RectButton()override;
 	// カーソルがある位置との当たり判定(マウスポジション指定)
-	bool IsHit(VECTOR2 mPos);
+	bool IsHit(VECTOR2 mPos)override;
 	// ボタンの描画
-	void Draw();
+	void Draw()override;
 
 private:
 	//const VECTOR2 offset_;
