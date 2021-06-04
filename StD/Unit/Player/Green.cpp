@@ -14,6 +14,7 @@ Green::Green(Vec2Float pos, AttackType type)
 	this->type = type;
 	executable = false;
 	coolTime_ = 600;
+	UnitID = PlayerUnit::GREEN;
 }
 
 Green::~Green()
@@ -61,8 +62,3 @@ int Green::GetSpawnCost(void)
 {
 	return 8;
 }
-
-//void Green::Skill(void)
-//{
-//	stat_.life += 10;
-//}
