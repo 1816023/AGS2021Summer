@@ -5,7 +5,9 @@
 #include "../StringUtil.h"
 struct FileSystem
 {
+private:
 	using StrList = std::list<std::string>;
+public:
 	// 指定フォルダー内にあるファイルをすべて取得する
 	static bool serch(std::string folderPath, StrList& fileNameList)
 	{
@@ -22,7 +24,6 @@ struct FileSystem
 		do {
 			if (win32fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
 				/* ディレクトリの場合は何もしない */
-				printf("directory\n");
 			}
 			else {
 				/* ファイルが見つかったら配列に保存する */
@@ -30,6 +31,7 @@ struct FileSystem
 				fileNameList.push_back(name);
 			}
 		} while (FindNextFile(hFind, &win32fd));
-
+		FindClose(hFind);
+		return !fileNameList.empty();
 	}
 };

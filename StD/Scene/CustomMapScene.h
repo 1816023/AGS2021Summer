@@ -6,7 +6,7 @@
 #include <map>
 #include <list>
 #include "../Button/RoundRectButton.h"
-
+#include "../CustomState/CustomState.h"
 #define MAX_NAME_SIZE 20	// ファイル名の最大文字数
 #define STRING_HIGHT 20		// 文字の高さ
 #define LINE_SPACING 30		// 行間
@@ -34,6 +34,10 @@ struct ButtonText
 	unsigned int color_;	// 文字色
 	VECTOR2 pos_;			// 描画位置
 };
+class SetState;
+class MapCustom;
+class EnemyCustom;
+class EndCustom;
 class CustomMapScene :
 	public BaseScene
 {
@@ -52,10 +56,8 @@ private:
 	void DrawUI()override;
 	// customクラスのポインター
 	std::unique_ptr<Custom>map_;
-	// 各ステータスごとのアップデート関数格納用function
-	std::map<CustomState, std::function<void(void)>>updateFunc_;
-	// 各ステータスごとの描画用関数格納用function,基本的にはUI系
-	std::map<CustomState, std::function<void(void)>>drawFunc_;
+	//
+	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
 	CustomState nowState_;
 	// マップサイズ入力の保存用
@@ -75,6 +77,8 @@ private:
 	std::list<std::unique_ptr<Button>>button_;
 	// ボタンの説明文描画用
 	std::list<ButtonText>buttonText_;
+	// 
+
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					
@@ -94,5 +98,9 @@ private:
 	bool LoadText();
 
 
+	friend SetState;
+	friend MapCustom;
+	friend EnemyCustom;
+	friend EndCustom;
 };
 

@@ -1,6 +1,9 @@
 #include "Custom.h"
 #include <fstream>
 #include <Windows.h>
+#include <functional>
+#include <sstream>
+#include "../File/FileSystem.h"
 #include "../StringUtil.h"
 Custom::Custom(VECTOR2 offset):offset_(offset)
 {
@@ -50,54 +53,127 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 
 bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 {
-
-
-
-
-
-	std::ifstream sample;
-	sample.open("data/mapData/sample_data.xml");
-	if (!sample)
-	{
-		return false;
-	}
+	std::list<std::string>fileList;
+	FileSystem::serch("data/mapData", fileList);
+	auto itr=std::find(fileList.begin(), fileList.end(),_WtS(name) + ".xml");
 	std::string filePath = "data/mapData/" + _WtS(name) + ".xml";
-	std::ofstream file;
-	file.open(filePath.c_str());
-	if (!file)
-	{
-		return false;
-	}
-	file << sample.rdbuf() << std::flush;
-	sample.close();
-	file.close();
-
-	auto error = document_.LoadFile(filePath.c_str());
-	if (error != tinyxml2::XML_SUCCESS)
-	{
-		return false;
-	}
-	tinyxml2::XMLElement* mapElm= document_.FirstChildElement("map");
-	mapElm->SetAttribute("hight", mapSize.x);
-	mapElm->SetAttribute("width", mapSize.y);
-	std::string mapData="\n";
-	for (auto& y : mapData_)
-	{
-		for (auto& data : y)
+	std::function<bool(int)>create = [&](int num) {
+		std::ifstream sample;
+		sample.open("data/mapData/sample_data.xml");
+		if (!sample)
 		{
-			mapData += std::to_string(static_cast<char>(data));
-			mapData += ",";
-			
+			return false;
 		}
-		mapData += "\n";
-	}
-	mapElm->SetText(mapData.c_str());
+		if (num != 0)
+		{
+			char tmp[256];
+			sprintf_s(tmp, "%d", num);
+			filePath="data/mapData/" + _WtS(name)+"("+tmp+")" + ".xml";
 
-	error=document_.SaveFile(filePath.c_str());
-	if (error)
+		}
+		std::ofstream file;
+		file.open(filePath.c_str());
+		if (!file)
+		{
+			return false;
+		}
+		file << sample.rdbuf() << std::flush;
+		sample.close();
+		file.close();
+		
+		auto error = document_.LoadFile(filePath.c_str());
+		if (error != tinyxml2::XML_SUCCESS)
+		{
+			return false;
+		}
+		tinyxml2::XMLElement* mapElm = document_.FirstChildElement("map");
+		mapElm->SetAttribute("hight", mapSize.x);
+		mapElm->SetAttribute("width", mapSize.y);
+		std::string mapData = "\n";
+		for (auto& y : mapData_)
+		{
+			for (auto& data : y)
+			{
+				mapData += std::to_string(static_cast<char>(data));
+				mapData += ",";
+
+			}
+			mapData += "\n";
+		}
+		mapElm->SetText(mapData.c_str());
+
+		error = document_.SaveFile(filePath.c_str());
+		if (error)
+		{
+			return false;
+		}
+		return true;
+	};
+	if (itr == fileList.end())
 	{
-		return false;
+		return create(0);
 	}
+	else
+	{
+		
+		auto error = document_.LoadFile(filePath.c_str());
+		if (error != tinyxml2::XML_SUCCESS)
+		{
+			return false;
+		}
+		tinyxml2::XMLElement* mapElm = document_.FirstChildElement("map");
+		if (mapElm->IntAttribute("width") == state_.mapSize_.x && mapElm->IntAttribute("hight") == state_.mapSize_.y)
+		{
+			std::string mapStr = mapElm->GetText();
+			std::stringstream ss{ mapStr };
+			std::string buf;
+			int y = 0;
+			int x = 0;
+			while (std::getline(ss, buf, ','))
+			{
+
+				mapData_[y][x++] = (static_cast<MapChipName>(std::atoi(buf.c_str())));
+				if (x >= state_.mapSize_.x)
+				{
+					y++;
+					x = 0;
+				}
+				if (y >= state_.mapSize_.y)
+				{
+					break;
+				}
+			}
+			error = document_.SaveFile(filePath.c_str());
+			if (error)
+			{
+				return false;
+			}
+
+		}
+		else
+		{
+			std::function<void(int&, std::list<std::string>)>check = [&](int &num,std::list<std::string>fileList) {
+				char tmp[256];
+				sprintf_s(tmp, "%d", num);
+				auto fItr=std::find(fileList.begin(), fileList.end(), _WtS(name) + "(" + tmp + ").xml");
+				if (fItr == fileList.end())
+				{
+					return;
+				}
+				else
+				{
+					num++;
+					check(num,fileList);
+				}
+			};
+			int num = 1;
+			check(num,fileList);
+			create(num);
+		}
+
+	}
+
+
 	return true;
 }
 

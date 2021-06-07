@@ -95,5 +95,10 @@
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
     <ClInclude Include="File\FileSystem.h" />
+    <ClInclude Include="CustomState\SetrState.h" />
+    <ClInclude Include="CustomState\MapCustom.h" />
+    <ClInclude Include="CustomState\EnemyCustom.h" />
+    <ClInclude Include="CustomState\EndCustom.h" />
+    <ClInclude Include="CustomState\CustomState.h" />
   </ItemGroup>
 </Project>
