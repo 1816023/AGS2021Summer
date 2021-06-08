@@ -81,12 +81,12 @@ struct SetState:public CustomStateBase
 	}
 private:
 	// 
-	DataState GetData(std::string path) {
+	/*DataState GetData(std::string path) {
 		tinyxml2::XMLDocument doc;
 		doc.LoadFile(path.c_str());
 
-	}
+	}*/
 	// ファイル名のリスト格納用
 	std::list<std::string>fileList_;
-	std::list<Button>ButtomList_;
+	std::list<std::unique_ptr<Button>>buttomList_;
 };

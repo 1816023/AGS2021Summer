@@ -1,6 +1,7 @@
 #pragma once
 #include "../Scene/CustomMapScene.h"
 #include "CustomState.h"
+#include "../Button/RoundRectButton.h"
 #include "../StringUtil.h"
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
