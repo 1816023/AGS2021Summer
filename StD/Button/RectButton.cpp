@@ -21,7 +21,9 @@ RectButton::~RectButton()
 
 bool RectButton::IsHit(VECTOR2 mPos)
 {
-	if (!((mPos.x < lu_.x || mPos.y < lu_.y) || (mPos.x<lu_.x || mPos.y>rd_.y) || (mPos.x > rd_.x || mPos.y < lu_.y) || (mPos.x > rd_.x || mPos.y > rd_.y)))
+	auto lu = lu_ + offset_;
+	auto rd = rd_ + offset_;
+	if (!((mPos.x < lu.x || mPos.y < lu.y) || (mPos.x<lu.x || mPos.y>rd.y) || (mPos.x > rd.x || mPos.y < lu.y) || (mPos.x > rd.x || mPos.y > rd.y)))
 	{
 		isPush_ = true;
 		return true;
@@ -41,13 +43,13 @@ void RectButton::Draw()
 	if (isPush_)
 	{
 		DrawBox(lu_.x + offset_.x + push, lu_.y + offset_.y + push, rd_.x + offset_.x + push, rd_.y + offset_.y + push, color_, true);
-		DrawString(lu_.x, lu_.y, _StW(str_).c_str(), ~color_);
+		DrawString(lu_.x+offset_.x+ push+sPos_.x, lu_.y+offset_.y+ push+sPos_.y, _StW(str_).c_str(), ~color_);
 	}
 	else
 	{
 		DrawBox(lu_.x + offset_.x + shadow, lu_.y + offset_.y + shadow, rd_.x + offset_.x + shadow, rd_.y + offset_.y + shadow, 0x000000, true);
-		DrawBox(lu_.x, lu_.y, rd_.x, rd_.y, color_, true);
-		DrawString(lu_.x, lu_.y, _StW(str_).c_str(), ~color_);
+		DrawBox(lu_.x+offset_.x, lu_.y+offset_.y, rd_.x+offset_.x, rd_.y+offset_.y, color_, true);
+		DrawString(lu_.x+offset_.x+sPos_.x, lu_.y+offset_.y+sPos_.y, _StW(str_).c_str(), ~color_);
 
 	}
 

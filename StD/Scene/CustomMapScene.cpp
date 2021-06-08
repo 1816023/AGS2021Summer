@@ -5,7 +5,8 @@
 #include "CustomMapScene.h"
 #include "../Mng/ImageMng.h"
 #include "../MouseController.h"
-#include "../CustomState/SetrState.h"
+#include "../CustomState/SelectFile.h"
+#include "../CustomState/SetState.h"
 #include "../CustomState/MapCustom.h"
 #include "../CustomState/EnemyCustom.h"
 #include "../CustomState/EndCustom.h"
@@ -39,7 +40,8 @@ bool CustomMapScene::Init()
 {
 
 	map_ = std::make_unique<Custom>(VECTOR2());
-	nowState_ = CustomState::SET_STATE;
+	nowState_ = CustomState::SELECT_FILE;
+	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
 	custom_.try_emplace(CustomState::SET_STATE, std::make_unique<SetState>());
 	custom_.try_emplace(CustomState::MAP_CUSTOM, std::make_unique<MapCustom>());
 	custom_.try_emplace(CustomState::ENEMY_CUSTOM, std::make_unique<EnemyCustom>());

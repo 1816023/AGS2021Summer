@@ -22,6 +22,7 @@ struct ButtomState {
 };
 
 enum class CustomState {
+	SELECT_FILE,		// 既存のファイルから選択する
 	SET_STATE,			// マップの幅や高さを設定する状態
 	MAP_CUSTOM,			// マップを作成している状態
 	ENEMY_CUSTOM,		// 敵の配置と敵の侵攻ルート設定
@@ -34,6 +35,7 @@ struct ButtonText
 	unsigned int color_;	// 文字色
 	VECTOR2 pos_;			// 描画位置
 };
+class SelectFile;
 class SetState;
 class MapCustom;
 class EnemyCustom;
@@ -97,7 +99,7 @@ private:
 	// 説明文をファイルからロードする
 	bool LoadText();
 
-
+	friend SelectFile;
 	friend SetState;
 	friend MapCustom;
 	friend EnemyCustom;

@@ -197,6 +197,8 @@ bool Custom::SaveFile()
 	}
 	auto elm = document_.FirstChildElement("map");
 	elm->SetText(mapData.c_str());
+	elm->SetAttribute("hight", mapData_.size());
+	elm->SetAttribute("width", mapData_[0].size());
 	error=document_.SaveFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{

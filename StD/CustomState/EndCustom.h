@@ -7,11 +7,11 @@ struct EndCustom :CustomStateBase
 {
 	EndCustom() {};
 	~EndCustom() {};
-	bool Init(CustomMapScene* scene)
+	bool Init(CustomMapScene* scene)override
 	{
 		return false;
 	}
-	void Update(CustomMapScene* scene)
+	void Update(CustomMapScene* scene)override
 	{
 		if ((scene->now[KEY_INPUT_BACK]) & (~scene->old[KEY_INPUT_BACK]))
 		{
@@ -26,7 +26,7 @@ struct EndCustom :CustomStateBase
 
 	}
 
-	void Draw(CustomMapScene* scene)
+	void Draw(CustomMapScene* scene)override
 	{
 
 	}
