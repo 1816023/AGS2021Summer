@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScene.h"
+
+class PlayerMng;
 class ResultScene :
 	public BaseScene
 {
@@ -12,5 +14,6 @@ public:
 private:
 	void Draw()override;
 	void DrawUI()override;
+	std::unique_ptr<PlayerMng> player_;
 };
 

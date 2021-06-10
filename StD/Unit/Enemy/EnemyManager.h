@@ -8,6 +8,7 @@
 class Enemy;
 using EnemyList = std::vector<std::shared_ptr<Enemy>>;
 
+class ShotMng;
 class Map;
 // 敵管理クラス
 class EnemyManager
@@ -29,5 +30,6 @@ private:
 	EnemyList enemies_;	// 敵リスト
 	using Prototype = std::unordered_map<EnemyType, Enemy*>;
 	Prototype prototype_;	// 敵のプロトタイプ
+	std::unique_ptr<ShotMng> shotMng_;
 };
 

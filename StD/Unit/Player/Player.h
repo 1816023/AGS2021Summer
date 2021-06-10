@@ -2,6 +2,7 @@
 #include "PlayerType.h"
 #include "../Unit.h"
 
+class PlayerMng;
 class Player: public Unit
 {
 public:
@@ -25,6 +26,7 @@ public:
 		return executable;
 	}
 protected:
+	PlayerMng* player_;
 	PlayerUnit id;
 	AttackType type;
 	int imageID;

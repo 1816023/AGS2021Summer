@@ -12,6 +12,7 @@ EnemyManager::EnemyManager(Map& map)
 	mapInfo.chipSize = map.GetChipSize();
 	mapInfo.mapSize = map.GetMapSize();
 	prototype_.emplace(EnemyType::Circle, new ECircle(mapInfo));
+	shotMng_ = std::make_unique<ShotMng>();
 }
 
 EnemyManager::~EnemyManager()
@@ -29,8 +30,8 @@ void EnemyManager::Update(float deltaTime)
 	for (auto& enemy : enemies_)
 	{
 		enemy->Update(deltaTime);
-		lpShotMng.AddBullet(enemy,enemy->GetPos());
-		lpShotMng.BulletMove(enemy, Vec2Float(100, 100));
+		shotMng_->AddBullet(enemy,enemy->GetPos());
+		shotMng_->BulletMove(enemy, Vec2Float(100, 100));
 	}
 	enemies_.erase(remove_if(enemies_.begin(), enemies_.end(),
 		[](shared_ptr<Enemy>& enemy)
@@ -46,7 +47,7 @@ void EnemyManager::Draw()
 	{
 		enemy->Draw();
 	}
-	lpShotMng.Draw();
+	shotMng_->Draw();
 }
 
 EnemyList& EnemyManager::GetEnemies()

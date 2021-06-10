@@ -3,6 +3,7 @@
 #include "../VECTOR2.h"
 
 class ECircle;
+class PlayerMng;
 
 class TitleScene :
 	public BaseScene
@@ -16,6 +17,8 @@ public:
 private:
 	void Draw()override;
 	void DrawUI()override;
+
+	std::shared_ptr<PlayerMng> player_;
 
 	bool trapFlag;
 	int cnt;

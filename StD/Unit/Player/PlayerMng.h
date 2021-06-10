@@ -6,17 +6,12 @@
 
 constexpr int MAX_COST = 16;
 
-#define lpPlayerMng PlayerMng::GetInstance()
-
+class ShotMng;
 class PlayerMng
 {
 public:
-	static PlayerMng& GetInstance()
-	{
-		static PlayerMng s_Instance;
-		return s_Instance;
-	}
-	~PlayerMng() = default;
+	PlayerMng();
+	~PlayerMng();
 	void Init();
 	void Update(float deltaTime);
 	void Update(float deltaTime,Vec2Float pos);
@@ -27,8 +22,8 @@ public:
 	void SetCost(int cost);
 	float SpeedDelay(void);
 private:
-	PlayerMng();
 	void SkillCtl(void);
+	std::unique_ptr<ShotMng> shotMng_;
 	std::vector<std::shared_ptr<Player>> unitList_;
 	int cost;		//所持コスト保存用
 };
