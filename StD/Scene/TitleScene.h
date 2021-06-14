@@ -18,8 +18,6 @@ private:
 	void Draw()override;
 	void DrawUI()override;
 
-	std::shared_ptr<PlayerMng> player_;
-
 	bool trapFlag;
 	int cnt;
 	int HP;

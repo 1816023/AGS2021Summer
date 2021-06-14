@@ -1,8 +1,10 @@
 #include "GameScene.h"
-#include "../Unit/Player/PlayerMng.h"
 #include <DxLib.h>
 #include "ResultScene.h"
 #include "../Application.h"
+#include "../MouseController.h"
+#include "../Object/Shot/ShotMng.h"
+#include "../Unit/Player/PlayerMng.h"
 #include "../Unit/Enemy/EnemyManager.h"
 #include "../Unit/Enemy/EnemySpawner.h"
 #include "../Mng/ImageMng.h"
@@ -14,6 +16,8 @@ GameScene::GameScene()
 	map->SetUp("defalt_map");
 
 	IMAGE_ID(L"data/image/circle.png");
+	shotMng_ = std::make_unique<ShotMng>();
+	playerMng_ = std::make_unique<PlayerMng>();
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
 	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(32, 224), *enemyMng_));
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
@@ -35,6 +39,38 @@ unique_Base GameScene::Update(unique_Base own)
 	}
 	enemyMng_->Update(delta);
 
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	{
+		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
+	}
+	playerMng_->Update(delta);
+	auto unitList = playerMng_->GetUnitList();
+	auto enemyList = enemyMng_->GetEnemies();
+
+	for (auto& unit : unitList)
+	{
+		auto type = unit->GetType();
+		if (type != AttackType::NON)
+		{
+			if (type != AttackType::AREA)
+			{
+				shotMng_->AddBullet(unit, unit->GetPos());
+				for (auto enemy : enemyList)
+				{
+					if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64,100*unit->GetAtkRange()))
+					{
+						auto shooter = shotMng_->BulletMove(unit, enemy->GetPos());
+						if (shooter != nullptr)
+						{
+							enemy->SetHP(1);
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
 		return std::make_unique<ResultScene>();
@@ -45,6 +81,8 @@ unique_Base GameScene::Update(unique_Base own)
 void GameScene::Draw()
 {
 	map->Draw();
+	shotMng_->Draw();
+	playerMng_->Draw();
 	enemyMng_->Draw();
 }
 

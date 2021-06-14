@@ -6,6 +6,8 @@
 
 constexpr int MAX_COST = 16;
 
+using UnitList = std::vector<std::shared_ptr<Player>>;
+
 class ShotMng;
 class PlayerMng
 {
@@ -14,17 +16,16 @@ public:
 	~PlayerMng();
 	void Init();
 	void Update(float deltaTime);
-	void Update(float deltaTime,Vec2Float pos);
 	void Draw(void);
 	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};
+	UnitList GetUnitList(void);	//プレイヤー側のUnitリストの取得
 	int GetCost(void);
 	void SetCost(int cost);
 	float SpeedDelay(void);
 private:
 	void SkillCtl(void);
-	std::unique_ptr<ShotMng> shotMng_;
-	std::vector<std::shared_ptr<Player>> unitList_;
+	UnitList unitList_;
 	int cost;		//所持コスト保存用
 };
 

@@ -25,6 +25,11 @@ const unsigned int Unit::GetHP()
 	return state_.life;
 }
 
+void Unit::SetHP(int power)
+{
+	state_.life -= std::abs(power);
+}
+
 const bool Unit::IsDeath()
 {
 	return state_.isDead;

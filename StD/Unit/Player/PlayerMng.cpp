@@ -1,5 +1,6 @@
 #include "PlayerMng.h"
 #include "../../Object/Shot/ShotMng.h"
+#include "../Enemy/Enemy.h"
 #include "Yellow.h"
 #include "Green.h"
 #include "Blue.h"
@@ -7,24 +8,6 @@
 
 void PlayerMng::Update(float deltaTime)
 {
-}
-
-void PlayerMng::Update(float deltaTime,Vec2Float pos)
-{
-    for (auto& unit : unitList_)
-    {
-        unit->Update(deltaTime);
-
-        auto type = unit->GetType();
-        if (type != AttackType::NON)
-        {
-            if (type != AttackType::AREA)
-            {
-                shotMng_->AddBullet(unit, unit->GetPos());
-                shotMng_->BulletMove(unit, pos);
-            }
-        }
-    }
     SkillCtl();
 }
 
@@ -34,7 +17,6 @@ void PlayerMng::Draw(void)
     {
         unit->Draw();
     }
-    shotMng_->Draw();
     DrawFormatString(100, 0, 0xffffff, L"cost:%d", cost);
 }
 
@@ -70,6 +52,11 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
     return true;
 }
 
+UnitList PlayerMng::GetUnitList(void)
+{
+    return unitList_;
+}
+
 int PlayerMng::GetCost(void)
 {
     return cost;
@@ -101,7 +88,7 @@ PlayerMng::PlayerMng()
 
 void PlayerMng::SkillCtl(void)
 {
-    auto result = std::find(unitList_.begin(), unitList_.end(), shotMng_->GetShooterPtr());
+    /*auto result = std::find(unitList_.begin(), unitList_.end(), shotMng_->GetShooterPtr());
     if (result != unitList_.end())
     {
         if ((*result)->GetID() == PlayerUnit::PINK)
@@ -118,7 +105,7 @@ void PlayerMng::SkillCtl(void)
                 unit->Skill();
             }
         }
-    }
+    }*/
 }
 
 PlayerMng::~PlayerMng()
@@ -128,5 +115,4 @@ PlayerMng::~PlayerMng()
 void PlayerMng::Init()
 {
     cost = MAX_COST;
-    shotMng_ = std::make_unique<ShotMng>();
 }
