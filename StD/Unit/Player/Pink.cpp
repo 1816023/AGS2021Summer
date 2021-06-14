@@ -6,13 +6,14 @@ Pink::Pink()
 {
 }
 
-Pink::Pink(Vec2Float pos, AttackType type)
+Pink::Pink(Vec2Float pos, AttackType type,PlayerMng* mng_)
 {
 	imageID = LoadGraph(L"data/image/Hexagon_Pink.png");
 	state_ = UnitStat{ pos,1.0f,2.0f,6,10,false };
 	isSkill_ = false;
 	UnitID = PlayerUnit::PINK;
 	this->type = type;
+	player_ = mng_;
 }
 
 Pink::~Pink()
@@ -41,5 +42,5 @@ int Pink::GetSpawnCost(void)
 
 void Pink::Skill(void)
 {
-	lpPlayerMng.SetCost(lpPlayerMng.GetCost()+1);
+	player_->SetCost(player_->GetCost()+1);
 }

@@ -1,5 +1,6 @@
 #include "PlayerMng.h"
 #include "../../Object/Shot/ShotMng.h"
+#include "../Enemy/Enemy.h"
 #include "Yellow.h"
 #include "Green.h"
 #include "Blue.h"
@@ -7,28 +8,6 @@
 
 void PlayerMng::Update(float deltaTime)
 {
-}
-
-void PlayerMng::Update(float deltaTime,Vec2Float pos)
-{
-    for (auto& unit : unitList_)
-    {
-        unit->Update(deltaTime);
-
-        auto type = unit->GetType();
-        if (type != AttackType::NON)
-        {
-            if (type != AttackType::AREA)
-            {
-                lpShotMng.AddBullet(unit, unit->GetPos());
-                lpShotMng.BulletMove(unit, pos);
-            }
-            else
-            {
-
-            }
-        }
-    }
     SkillCtl();
 }
 
@@ -38,7 +17,6 @@ void PlayerMng::Draw(void)
     {
         unit->Draw();
     }
-    lpShotMng.Draw();
     DrawFormatString(100, 0, 0xffffff, L"cost:%d", cost);
 }
 
@@ -57,7 +35,7 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
         ptr = std::make_shared<Blue>(pos, AttackType::SHOT);
         break;
     case PlayerUnit::PINK:
-        ptr = std::make_shared<Pink>(pos, AttackType::NON);
+        ptr = std::make_shared<Pink>(pos, AttackType::NON,this);
         break;
     case PlayerUnit::MAX:
         break;
@@ -72,6 +50,11 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
         unitList_.emplace_back(ptr);
     }
     return true;
+}
+
+UnitList PlayerMng::GetUnitList(void)
+{
+    return unitList_;
 }
 
 int PlayerMng::GetCost(void)
@@ -100,11 +83,12 @@ float PlayerMng::SpeedDelay(void)
 
 PlayerMng::PlayerMng()
 {
+    Init();
 }
 
 void PlayerMng::SkillCtl(void)
 {
-    auto result = std::find(unitList_.begin(), unitList_.end(), lpShotMng.GetShooterPtr());
+    /*auto result = std::find(unitList_.begin(), unitList_.end(), shotMng_->GetShooterPtr());
     if (result != unitList_.end())
     {
         if ((*result)->GetID() == PlayerUnit::PINK)
@@ -121,7 +105,11 @@ void PlayerMng::SkillCtl(void)
                 unit->Skill();
             }
         }
-    }
+    }*/
+}
+
+PlayerMng::~PlayerMng()
+{
 }
 
 void PlayerMng::Init()

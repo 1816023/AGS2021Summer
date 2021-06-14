@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Yellow.h"
+#include "PlayerMng.h"
 
 void Player::Init()
 {

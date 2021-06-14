@@ -1,11 +1,13 @@
 #pragma once
 #include "Player.h"
+
+class PlayerMng;
 class Pink :
 	public Player
 {
 public:
 	Pink();
-	Pink(Vec2Float pos, AttackType type);
+	Pink(Vec2Float pos, AttackType type,PlayerMng* mng_);
 	~Pink();
 	void Init();
 	void Update(float deltaTime);

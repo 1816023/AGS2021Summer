@@ -25,9 +25,9 @@ void Blue::Init()
 
 void Blue::Update(float deltaTime)
 {
+	coolTime_--;
 	if (!executable)
 	{
-		coolTime_--;
 		executable = (coolTime_ <= 0 ? true : false);
 	}
 }
@@ -45,7 +45,6 @@ void Blue::Draw()
 
 void Blue::Skill(void)
 {
-	coolTime_--;
 	if (type != AttackType::AREA)
 	{
 		type = AttackType::AREA;

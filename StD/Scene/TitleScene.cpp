@@ -19,7 +19,6 @@ TitleScene::TitleScene()
 	HP = 50;
 	pos = { 100,100 };
 	speed = 2;
-	lpPlayerMng.Init();
 }
 
 TitleScene::~TitleScene()
@@ -35,32 +34,20 @@ unique_Base TitleScene::Update(unique_Base own)
 	{
 		return std::make_unique<MainScene>();
 	}
-
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-	{
-		lpPlayerMng.Spawner(PlayerUnit::YELLOW, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
-	}
-	auto delta = Application::Instance().GetDelta();
-	lpPlayerMng.Update(delta,pos);
 	return std::move(own);
 }
 
 void TitleScene::Draw()
 {
-	if (!trapFlag)
+	if (!trapFlag && lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 	{
-		pos.x += speed;
-		if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-		{
-			lpTrapManager.Spawner(TRAP_ID::INTERFERENCE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
-			trapFlag = true;
-		}
+		lpTrapManager.Spawner(TRAP_ID::INTERFERENCE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
+		trapFlag = true;
 	}
 	if (trapFlag)
 	{
 		cnt++;
 		lpTrapManager.Draw();
-		pos.x += lpTrapManager.Efficacy(speed, trapFlag);
 		if (cnt > 300)
 		{
 			cnt = 0;
@@ -68,15 +55,17 @@ void TitleScene::Draw()
 			lpTrapManager.Delete();
 		}
 	}
-	DrawBox(pos.x, pos.y, pos.x+60, pos.y+60, 0xffffff, true);
+	/*auto delaySpeed = speed * player_->SpeedDelay();
+	pos.x += (delaySpeed>=0 ? delaySpeed:0);*/
+	DrawBox(pos.x, pos.y, pos.x + 60, pos.y + 60, 0xffffff, true);
 
-	//DrawFormatString( 0, 10, 0xfffff, L"%d, %d", lpMouseController.GetPos().x, lpMouseController.GetPos().y);
+	DrawFormatString( pos.x+70, pos.y, 0xfffff, L"HP:%d",HP);
 	//DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
 
-	lpPlayerMng.Draw();
+	//player_->Draw();
 }
 
 void TitleScene::DrawUI()
 {
-	DrawString(0, 0, L"TitleScene", 0xffffff);
+	DrawString(0, 48, L"TitleScene", 0xffffff);
 }

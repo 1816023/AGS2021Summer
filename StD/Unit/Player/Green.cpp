@@ -27,10 +27,16 @@ void Green::Init()
 
 void Green::Update(float deltaTime)
 {
-	if (!executable)
+	if (coolTime_ <= 0)
+	{
+		if (!executable)
+		{
+
+		}
+	}
+	else
 	{
 		coolTime_--;
-		executable = (coolTime_ <= 0 ? true : false);
 	}
 }
 
@@ -43,12 +49,11 @@ void Green::Draw()
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 20, 0xffffff, L"coolTime_:%f", coolTime_);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 40, 0xffffff, L"power:%d", state_.power);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 60, 0xffffff, L"type:%d", type);
+	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 80, 0xffffff, L"Skill:%s",(coolTime_ <= 0 ? L"OK":L"WAIT"));
 }
 
 void Green::Skill(void)
 {
-	coolTime_--;
-
 	state_.power = defaultPower_ * 1.5;
 	if (coolTime_ <= -600)
 	{

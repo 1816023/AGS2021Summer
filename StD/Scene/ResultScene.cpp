@@ -28,7 +28,6 @@ unique_Base ResultScene::Update(unique_Base own)
 
 void ResultScene::Draw()
 {
-	lpPlayerMng.Draw();
 }
 
 void ResultScene::DrawUI()
