@@ -36,6 +36,7 @@ bool ImageCircleButton::IsHit(VECTOR2 mPos)
 
 void ImageCircleButton::Draw()
 {
+	
 	if (isPush_)
 	{
 		DrawGraph(pos_.x + offset_.x, pos_.x + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);

@@ -20,4 +20,6 @@ struct EnemyCustom :public CustomStateBase
 	{
 
 	}
+	void Delete() {
+	}
 };

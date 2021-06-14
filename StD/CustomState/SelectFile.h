@@ -37,31 +37,42 @@ struct SelectFile:public CustomStateBase
 			{
 				continue;
 			}
-			buttomList_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, 50), VECTOR2(300, 70), 0xffffff, [&]() {return true; }, VECTOR2(10 + a / 14 * 310, a % 14 * 30)));
-			buttomList_.back()->SetAuto();
-			buttomList_.back()->SetReversePush();
-			buttomList_.back()->SetString(list + "：" + std::to_string(data.mapSize.x) + "：" + std::to_string(data.mapSize.y), VECTOR2(5,2));
+			buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, 50), VECTOR2(300, 70), 0xffffff, 
+				[&,scene,list,data]() {
+					scene->nowState_ = CustomState::MAP_CUSTOM;
+					scene->map_->SetUp(_StW(list), data.mapSize);
+					scene->custom_[scene->nowState_]->Init(scene);
+					Delete();
+					return true; }, VECTOR2(10 + a / 14 * 310, a % 14 * 30)));
+			buttonList_.back()->SetAuto();
+			//buttomList_.back()->SetReversePush();
+			buttonList_.back()->SetString(list + "：" + std::to_string(data.mapSize.x) + "：" + std::to_string(data.mapSize.y), VECTOR2(5,2));
 			a++;
 		}
 		VECTOR2 sSize;
 		int bit;
 		GetScreenState(&sSize.x, &sSize.y, &bit);
 		isNewCreate_ = false;
-		buttomList_.emplace_back(std::make_unique<RectButton>(VECTOR2(sSize.x / 1.25, 10), VECTOR2(sSize.x / 1.25 + 100, 30), 0xffffff, [&]() {isNewCreate_ = true; return true; }, VECTOR2(0, 0)));
-		buttomList_.back()->SetString("新規作成", VECTOR2(12, 2));
-		buttomList_.back()->SetAuto();
+		buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(sSize.x / 1.25, 10), VECTOR2(sSize.x / 1.25 + 100, 30), 0xffffff, [&]() {isNewCreate_ = true; return true; }, VECTOR2(0, 0)));
+		buttonList_.back()->SetString("新規作成", VECTOR2(12, 2));
+		buttonList_.back()->SetAuto();
 		return true;
 	}
 	void Update(CustomMapScene* scene)override
 	{
-		for (auto&& list : buttomList_)
+		for (auto&& list : buttonList_)
 		{
-			list->Update();
+			if (list->Update())
+			{
+				return;
+			}
+
 		}
 		if (isNewCreate_)
 		{
 			scene->nowState_ = CustomState::SET_STATE;
 			scene->custom_[scene->nowState_]->Init(scene);
+			Delete();
 		}
 	}
 	void Draw(CustomMapScene* scene)override
@@ -73,10 +84,15 @@ struct SelectFile:public CustomStateBase
 		DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0xffffff, true);
 		DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0x000000, false);
 		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
-		for (auto&& list : buttomList_)
+		for (auto&& list : buttonList_)
 		{
 			list->Draw();
 		}
+
+	}
+	void Delete() {
+		fileList_.clear();
+		buttonList_.clear();
 
 	}
 private:
@@ -100,7 +116,7 @@ private:
 		return state;
 	}
 	std::list<std::string>fileList_;
-	std::list<std::unique_ptr<Button>>buttomList_;
+	std::list<std::unique_ptr<Button>>buttonList_;
 	bool isNewCreate_;
 
 };

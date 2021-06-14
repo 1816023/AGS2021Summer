@@ -42,15 +42,27 @@ void RoundRectButton::Draw()
 	if (isPush_)
 	{
 		DrawRoundRect(lu_.x + offset_.x + push, lu_.y + offset_.y + push, rd_.x + offset_.x + push, rd_.y + offset_.y + push, radius2_.x, radius2_.y, color_, true);
-		DrawString(sPos_.x + push, sPos_.y + push, _StW(str_).c_str(), ~color_);
+		if (fontHandle_ != -1)
+		{
+			DrawStringToHandle(lu_.x + sPos_.x + push+ offset_.x, lu_.y + sPos_.y + push+ offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
+		}
+		else {
+			DrawString(lu_.x + sPos_.x + push+offset_.x, lu_.y + sPos_.y + push+offset_.y, _StW(str_).c_str(), ~color_);
 
+		}
 	}
 	else
 	{
 		DrawRoundRect(lu_.x + offset_.x + shadow, lu_.y + offset_.y + shadow, rd_.x + offset_.x + shadow, rd_.y + offset_.y + shadow, radius2_.x, radius2_.y, 0x000000, true);
 		DrawRoundRect(lu_.x + offset_.x, lu_.y + offset_.y, rd_.x + offset_.x, rd_.y + offset_.y, radius2_.x, radius2_.y, color_, true);
-		DrawString(sPos_.x, sPos_.y, _StW(str_).c_str(), ~color_);
+		if (fontHandle_ != -1)
+		{
+			DrawStringToHandle(lu_.x + sPos_.x  + offset_.x, lu_.y + sPos_.y  + offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
+		}
+		else {
+			DrawString(lu_.x + sPos_.x  + offset_.x, lu_.y + sPos_.y  + offset_.y, _StW(str_).c_str(), ~color_);
 
+		}
 	}
 
 

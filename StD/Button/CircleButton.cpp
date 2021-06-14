@@ -42,15 +42,28 @@ void CircleButton::Draw()
 	if (isPush_)
 	{
 		DrawCircle(pos_.x + offset_.x + push, pos_.y + offset_.y + push, radius_, color_, true);
-		DrawString(pos_.x, pos_.y, _StW(str_).c_str(), ~color_);
+		if (fontHandle_ != -1)
+		{
+			DrawStringToHandle(lu_.x + sPos_.x + push + offset_.x, lu_.y + sPos_.y + push + offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
+		}
+		else {
+			DrawString(lu_.x + sPos_.x + push + offset_.x, lu_.y + sPos_.y + push + offset_.y, _StW(str_).c_str(), ~color_);
+
+		}
 
 	}
 	else
 	{
 		DrawCircle(pos_.x + offset_.x + shadow, pos_.y + offset_.y + shadow, radius_, 0x000000, true);
 		DrawCircle(pos_.x, pos_.y, radius_, color_, true);
-		DrawString(pos_.x, pos_.y, _StW(str_).c_str(), ~color_);
+		if (fontHandle_ != -1)
+		{
+			DrawStringToHandle(lu_.x + sPos_.x  + offset_.x, lu_.y + sPos_.y  + offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
+		}
+		else {
+			DrawString(lu_.x + sPos_.x  + offset_.x, lu_.y + sPos_.y  + offset_.y, _StW(str_).c_str(), ~color_);
 
+		}
 	}
 
 }
