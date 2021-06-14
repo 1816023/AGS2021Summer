@@ -48,22 +48,23 @@ std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr,Vec2Float po
 	{
 		for (auto itr = shotList_[ptr].begin(); itr != shotList_[ptr].end();)
 		{
-				//射程範囲内(弾を移動させる)
-				itr->second += Vec2Float(n.x * ptr->GetBulletSpeed(), n.y*ptr->GetBulletSpeed());
-				if (isHitBvE(itr->second, BASE_SIZE, pos, Vec2Float(60, 60)))
-				{
-					shooterPtr_ = ptr;
-					//射程範囲外(リストから削除)
-					itr = shotList_[ptr].erase(itr);
-					return shooterPtr_ = ptr;
-				}
-				else
-				{
-					shooterPtr_ = nullptr;
-					++itr;
-				}
+			//射程範囲内(弾を移動させる)
+			itr->second += Vec2Float(n.x * ptr->GetBulletSpeed(), n.y*ptr->GetBulletSpeed());
+			if (isHitBvE(itr->second, BASE_SIZE, pos, Vec2Float(60, 60)))
+			{
+				shooterPtr_ = ptr;
+				//射程範囲外(リストから削除)
+				itr = shotList_[ptr].erase(itr);
+				return shooterPtr_ = ptr;
+			}
+			else
+			{
+				shooterPtr_ = nullptr;
+				++itr;
+			}
 		}
 	}
+	return nullptr;
 }
 
 bool ShotMng::isRange(Vec2Float unitPos, Vec2Float shooterPos, float unitSize, float rangeSize)
