@@ -3,15 +3,17 @@
 #include "../Mng/ImageMng.h"
 #include "../StringUtil.h"
 #include "../MouseController.h"
+#include "../Mng/SoundMng.h"
 #include "Button.h"
 
 
 Button::Button(VECTOR2 offset) :offset_(offset)
 {
 	isPush_ = false;
-	isClick_ = false;
 	autoFlag_ = false;
 	reverseFlag_ = false;
+	soundHandle_ = -1;
+	fontHandle_ = -1;
 	clickType_ = MOUSE_INPUT_LEFT;
 	tag_ = -1;
 }
@@ -38,6 +40,10 @@ bool Button::Update()
 		{
 			if (lpMouseController.GetClickUp(clickType_))
 			{
+				if (soundHandle_ != -1)
+				{
+					PlaySoundMem(soundHandle_, DX_PLAYTYPE_BACK);
+				}
 				PushFunction();
 				return true;
 			}
@@ -48,6 +54,10 @@ bool Button::Update()
 			{
 				if (IsHit())
 				{
+					if (soundHandle_ != -1)
+					{
+						PlaySoundMem(soundHandle_, DX_PLAYTYPE_BACK);
+					}
 					PushFunction();
 					return true;
 				}
@@ -100,5 +110,10 @@ void Button::SetClickType(int type)
 void Button::SetTag(int tag)
 {
 	tag_ = tag;
+}
+
+void Button::SetSound(int handle)
+{
+	soundHandle_ = (handle==-2?lpSoundMng.GetID("data/Sound/SE/DefaultButton.mp3"):handle);
 }
 

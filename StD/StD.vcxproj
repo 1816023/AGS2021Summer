@@ -157,6 +157,7 @@
     <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Button\RectButton.cpp" />
     <ClCompile Include="Button\RoundRectButton.cpp" />
+    <ClCompile Include="Mng\SoundMng.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="CustomState\SelectFile.h" />
     <ClInclude Include="CustomState\SetState.h" />
     <ClInclude Include="File\FileSystem.h" />
+    <ClInclude Include="Mng\SoundMng.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\Trap.h" />

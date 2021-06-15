@@ -44,6 +44,7 @@
     <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
+    <ClCompile Include="Mng\SoundMng.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -101,5 +102,6 @@
     <ClInclude Include="CustomState\CustomState.h" />
     <ClInclude Include="CustomState\SetState.h" />
     <ClInclude Include="CustomState\SelectFile.h" />
+    <ClInclude Include="Mng\SoundMng.h" />
   </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 {
 	state_.mapSize_ = mapSize;
 	state_.chipSize_ = { 64,64 };
+	mapData_.clear();
 	mapData_.resize(mapSize.y);
 	state_.name_ = fileName;
 	for (auto& map : mapData_)
@@ -55,8 +56,12 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 {
 	std::list<std::string>fileList;
 	FileSystem::serch("data/mapData", fileList);
-	auto itr=std::find(fileList.begin(), fileList.end(),_WtS(name) + ".xml");
-	std::string filePath = "data/mapData/" + _WtS(name) + ".xml";
+	if (name.find(L".xml") == name.npos)
+	{
+		name += L".xml";
+	}
+	auto itr=std::find(fileList.begin(), fileList.end(),_WtS(name));
+	std::string filePath = "data/mapData/" + _WtS(name);
 	std::function<bool(int)>create = [&](int num) {
 		std::ifstream sample;
 		sample.open("data/mapData/sample_data.xml");
@@ -189,7 +194,8 @@ bool Custom::SaveFile()
 		}
 		mapData += "\n";
 	}
-	std::string filePath="data/mapData/"+ _WtS(state_.name_)+".xml";
+	
+	std::string filePath = "data/mapData/" + _WtS(state_.name_) + (state_.name_.find(L".xml") != state_.name_.npos ? "" : ".xml");
 	auto error=document_.LoadFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{

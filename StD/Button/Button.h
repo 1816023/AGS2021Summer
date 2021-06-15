@@ -20,28 +20,32 @@ public:
 	// カーソルがある位置との当たり判定(マウスポジション指定)
 	virtual bool IsHit(VECTOR2 mPos)=0;
 	// カーソルがある位置との当たり判定(マウスポジション自動取得)
-	virtual const bool IsHit();
+	const bool IsHit();
 	// 押されたときに呼び出す
-	virtual const bool PushFunction() const { return func_(); }
+	const bool PushFunction() const { return func_(); }
 	// 押されてるかの取得
-	virtual const bool isPush() const { return isPush_; }
+	const bool isPush() const { return isPush_; }
 	// ボタンの描画
 	virtual void Draw()=0;
 	// z軸の設定
-	virtual void SetZbuff(int z);
+	void SetZbuff(int z);
 	// z軸の取得デフォルトは0
-	virtual const int GetZBuff() const { return zBuff_; }
+	const int GetZBuff() const { return zBuff_; }
 	// ボタン上に描画する文字とその位置
-	virtual void SetString(std::string str, VECTOR2 sPos, int fontHandle=-1);
+	void SetString(std::string str, VECTOR2 sPos, int fontHandle=-1);
 	// アップデートで自動で当たり判定や判定処理を行うようになる
-	virtual void SetAuto();
+	void SetAuto();
 	// クリックで押された時でなく離れたときに処理を行うようになる
-	virtual void SetReversePush();
+	void SetReversePush();
 	// DXLIBのMOUSE_INPUT_LEFT,MOUSE_INPUT_RIGHT,MOUSE_INPUT_WHEELのいずれかを指定する
-	virtual void SetClickType(int type);
+	void SetClickType(int type);
 	// 検索用のタグ設定
-	virtual void SetTag(int tag);
-	virtual const int GetTag() { return tag_; }
+	void SetTag(int tag);
+	// 検索用タグ取得
+	const int GetTag() { return tag_; }
+	// 押したときのサウンドハンドル設定
+	// -2,指定なしでデフォルトのSEを設定
+	void SetSound(int handle=-2);
 protected:
 	// 座標補正
 	const VECTOR2 offset_;
@@ -51,8 +55,6 @@ protected:
 	std::function<bool(VECTOR2)>isHitFunc_;
 	// 描画関数格納用
 	std::function<void()>drawFunc_;
-	// 
-	bool isClick_;
 	// Z軸
 	int zBuff_;
 	// 自動処理のフラグ
@@ -68,6 +70,8 @@ protected:
 	int fontHandle_;
 	// 検索用タグ
 	int tag_;
+	// ボタンを押したときのサウンドハンドル格納用
+	int soundHandle_;
 	/*--引数を保管用--*/
 	// 押されたときに呼び出される関数格納用
 	std::function<bool()> func_;

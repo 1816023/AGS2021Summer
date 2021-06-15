@@ -17,7 +17,11 @@ struct SetState:public CustomStateBase
 		{
 			buttonList_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(defPos.x + (buttonSize + 5) * (a % 5),defPos.y + (buttonSize + 5) * (a / 5)),
 				VECTOR2(defPos.x + (buttonSize + 5) * (a % 5) + buttonSize, defPos.y + buttonSize + (buttonSize + 5) * (a / 5)), 
-				VECTOR2(10, 10), 0xffffff, [&, a]() {if (inputcnt_ < 2) { inputNum_[inputcnt_] = std::to_string(10 + a); } 
+				VECTOR2(10, 10), 0xffffff, [&, a]() {
+					if (inputcnt_ < 2)
+					{
+						inputNum_[inputcnt_] = std::to_string(10 + a); 
+					} 
 			return true; }, VECTOR2()));
 			buttonList_.back()->SetString(std::to_string(10+a), VECTOR2(5, 5), CreateFontToHandle(NULL, 40, 9, DX_FONTTYPE_ANTIALIASING));
 			buttonList_.back()->SetAuto();
