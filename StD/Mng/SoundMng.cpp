@@ -8,7 +8,6 @@ const int& SoundMng::GetID(std::string f_name)
 	// map‚É±¸¾½‚µ‚½uŠÔÃŞ°À¶‚ª‚È‚©‚Á‚½‚çƒƒ‚ƒŠ‚ğŠm•Û‚µ‚Ä‚»‚Ì’l‚ğ•Ô‚·
 	if (sndMap.find(f_name) == sndMap.end())
 	{
-		// imgMap[map][VEC_INT]
 		sndMap[f_name] = LoadSoundMem(_StW(f_name).c_str());
 		if (sndMap[f_name] == -1)
 		{
