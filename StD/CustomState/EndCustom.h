@@ -15,9 +15,9 @@ struct EndCustom :CustomStateBase
 	{
 		if ((scene->now[KEY_INPUT_BACK]) & (~scene->old[KEY_INPUT_BACK]))
 		{
-			scene->nowState_ = CustomState::SET_STATE;
+			scene->nowState_ = CustomState::SELECT_FILE;
 			scene->custom_[scene->nowState_]->Init(scene);
-
+			Delete();
 		}
 		if ((scene->now[KEY_INPUT_RETURN]) & (~scene->old[KEY_INPUT_RETURN]))
 		{
@@ -29,5 +29,7 @@ struct EndCustom :CustomStateBase
 	void Draw(CustomMapScene* scene)override
 	{
 
+	}
+	void Delete() {
 	}
 };

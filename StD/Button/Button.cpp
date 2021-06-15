@@ -13,13 +13,18 @@ Button::Button(VECTOR2 offset) :offset_(offset)
 	autoFlag_ = false;
 	reverseFlag_ = false;
 	clickType_ = MOUSE_INPUT_LEFT;
+	tag_ = -1;
 }
 
 Button::~Button()
 {
+	if (fontHandle_ != -1)
+	{
+		DeleteFontToHandle(fontHandle_);
+	}
 }
 
-void Button::Update()
+bool Button::Update()
 {
 	isPush_ = false;
 	//lpMouseController.Update();
@@ -34,6 +39,7 @@ void Button::Update()
 			if (lpMouseController.GetClickUp(clickType_))
 			{
 				PushFunction();
+				return true;
 			}
 		}
 		else
@@ -43,12 +49,13 @@ void Button::Update()
 				if (IsHit())
 				{
 					PushFunction();
+					return true;
 				}
 			}
 
 		}
 	}
-
+	return false;
 }
 
 const bool Button::IsHit()
@@ -68,10 +75,11 @@ void Button::SetZbuff(int z)
 	zBuff_ = z;
 }
 
-void Button::SetString(std::string str, VECTOR2 sPos)
+void Button::SetString(std::string str, VECTOR2 sPos, int fontHandle)
 {
 	str_ = str;
 	sPos_ = sPos;
+	fontHandle_ = fontHandle;
 }
 
 void Button::SetAuto()
@@ -87,5 +95,10 @@ void Button::SetReversePush()
 void Button::SetClickType(int type)
 {
 	clickType_ = type;
+}
+
+void Button::SetTag(int tag)
+{
+	tag_ = tag;
 }
 
