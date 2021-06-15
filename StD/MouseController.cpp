@@ -5,7 +5,7 @@ std::unique_ptr<MouseController, MouseController::MouseDelete> MouseController::
 
 bool MouseController::GetClickTrg(int mouseType)
 {
-	if (data && !dataOld && data & mouseType)
+	if (data && !dataOld && (data & mouseType))
 	{
 		return true;
 	}
@@ -14,7 +14,7 @@ bool MouseController::GetClickTrg(int mouseType)
 
 bool MouseController::GetClicking(int mouseType)
 {
-	if (data && dataOld && data & mouseType)
+	if (data && dataOld && (data & mouseType))
 	{
 		return true;
 	}
@@ -23,7 +23,7 @@ bool MouseController::GetClicking(int mouseType)
 
 bool MouseController::GetClickUp(int mouseType)
 {
-	if (!data && dataOld && data & mouseType)
+	if (!data && dataOld && (dataOld & mouseType))
 	{		
 		return true;
 	}
