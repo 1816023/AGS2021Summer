@@ -32,6 +32,25 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 
 		}
 	}
+	
+	mainStay_ = { -1, -1 };
+	int y = 0;
+	// é©ãíì_ÇåüçıÇ∑ÇÈ
+	for (auto map : mapData_)
+	{
+		auto find = std::find_if(map.begin(), map.end(), [](const MapChipName& data)
+			{
+				return data == MapChipName::MAINSTAY;
+			});
+
+		if (find != map.end())
+		{
+			mainStay_ = { static_cast<int>(std::distance(map.begin(),find)), y };
+			break;
+		}
+		y++;
+	}
+
 	CreateMapFile(mapSize, fileName);
 }
 
@@ -48,8 +67,22 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 	VECTOR2 mapPos = pos / state_.chipSize_;
 	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
 	{
-		
-		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ?chip:mapData_[mapPos.y][mapPos.x] ;
+		if (chip == MapChipName::MAINSTAY)
+		{
+			if (mainStay_ == VECTOR2(-1, -1))
+			{
+				mainStay_ = mapPos;
+				mapData_[mapPos.y][mapPos.x] = chip;
+			}
+		}
+		else
+		{
+			if (mainStay_ == mapPos)
+			{
+				mainStay_ = { -1, -1 };
+			}
+			mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
+		}
 		return true;
 	}
 	
