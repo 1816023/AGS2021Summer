@@ -17,6 +17,7 @@ enum class MapChipName:unsigned int
 
 };
 
+
 // 
 struct MapState {
 	VECTOR2 mapSize_;

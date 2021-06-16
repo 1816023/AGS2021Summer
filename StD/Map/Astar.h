@@ -12,14 +12,23 @@ enum class NodeState
 	Closed,		// 捜索終了
 };
 
-enum class MapState
+//enum class MapState
+//{
+//	START,		// スタート
+//	GOAL,		// ゴール
+//	ROOT,		// 進路
+//	ROAD,		// 道
+//	WALL,		// 壁
+//};
+enum class RootDir	// ルート向き
 {
-	START,		// スタート
-	GOAL,		// ゴール
-	ROOT,		// 進路
-	ROAD,		// 道
-	WALL,		// 壁
+	UP,		// ↑
+	DOWN,	// ↓
+	RIGHT,	// →
+	LEFT,	// ←
+	MAX
 };
+
 
 struct Node
 {
@@ -45,10 +54,12 @@ struct Node
 		parent = nullptr;
 	}
 };
+class Custom;
 class Astar
 {
 public:
-	Astar();
+	Astar(Custom& map);
+	std::vector<RootDir> AstarStart(VECTOR2 start, VECTOR2 goal);
 	void Draw();
 private:
 	void OpenAround(Node& node);
@@ -64,7 +75,8 @@ private:
 	VECTOR2 goal_;
 	std::map<int,Node> nodePool_;
 	std::vector<Node> openList_;
-	std::vector<Node> root;
-	std::vector<std::vector<MapState>> mapData_;
+	std::vector<RootDir> root_;
+	Custom& cusMap_;
+	//std::vector<std::vector<MapState>> mapData_;
 };
 

@@ -27,3 +27,13 @@ std::wstring StringUtil::StringToWString(std::string oString)
     delete[] cpUCS2;
     return oRet;
 }
+
+std::string StringUtil::SpritExtention(std::string string)
+{
+	int idx = static_cast<int>(string.rfind("."));
+	if (idx == std::string::npos)
+	{
+		return string;
+	}
+	return string.substr(0, idx);
+}

@@ -20,13 +20,17 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 	mapData_.clear();
 	mapData_.resize(mapSize.y);
 	state_.name_ = fileName;
-	for (auto& map : mapData_)
+	if (!Map::SetUp(StringUtil::WStringToString(fileName)))
 	{
-		while( map.size() < state_.mapSize_.x )
+		mapData_.resize(mapSize.y);
+		for (auto& map : mapData_)
 		{
-			map.push_back(MapChipName::WALL);
+			while (map.size() < state_.mapSize_.x)
+			{
+				map.push_back(MapChipName::WALL);
+			}
+
 		}
-		
 	}
 	CreateMapFile(mapSize, fileName);
 }
@@ -211,5 +215,15 @@ bool Custom::SaveFile()
 		return false;
 	}
 	return true;
+}
+
+const VECTOR2& Custom::GetMainStay()
+{
+	return mainStay_;
+}
+
+const std::map<int, VECTOR2>& Custom::Getspawner()
+{
+	return spawners_;
 }
 

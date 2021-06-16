@@ -1,7 +1,7 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
-#define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
+#define CUSTOM dynamic_cast<Custom*>(scene->cusMap_.get())
 
 struct EndCustom :CustomStateBase
 {

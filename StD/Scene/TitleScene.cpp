@@ -34,6 +34,10 @@ unique_Base TitleScene::Update(unique_Base own)
 	{
 		return std::make_unique<MainScene>();
 	}
+	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
+	{
+		return std::make_unique<MainScene>();
+	}
 	return std::move(own);
 }
 
