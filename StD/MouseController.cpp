@@ -45,7 +45,7 @@ const VECTOR2& MouseController::GetOffsetPos()
 {
 	Vec2Float screenS = { DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y };
 	auto set = VecICast(screenS * (1.0f / (1.0f + scale_)));
-	return pos + VecICast(offset_) + VECTOR2(142, 80);
+	return pos + VecICast(offset_);
 }
 
 const bool MouseController::IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd)
