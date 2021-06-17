@@ -44,30 +44,17 @@ unique_Base GameScene::Update(unique_Base own)
 		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
 	}
 	playerMng_->Update(delta);
-	auto unitList = playerMng_->GetUnitList();
-	auto enemyList = enemyMng_->GetEnemies();
+	BulletControler();
 
-	for (auto& unit : unitList)
+	for (auto enemy : enemyMng_->GetEnemies())
 	{
-		auto type = unit->GetType();
-		if (type != AttackType::NON)
+		if (enemy == nullptr)
 		{
-			if (type != AttackType::AREA)
-			{
-				shotMng_->AddBullet(unit, unit->GetPos());
-				for (auto enemy : enemyList)
-				{
-					if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64,100*unit->GetAtkRange()))
-					{
-						auto shooter = shotMng_->BulletMove(unit, enemy->GetPos());
-						if (shooter != nullptr)
-						{
-							enemy->SetHP(1);
-						}
-						break;
-					}
-				}
-			}
+			break;
+		}
+		if (enemy->IsDeath())
+		{
+			enemyMng_->Killer(enemy);
 		}
 	}
 
@@ -76,6 +63,48 @@ unique_Base GameScene::Update(unique_Base own)
 		return std::make_unique<ResultScene>();
 	}
 	return std::move(own);
+}
+
+void GameScene::BulletControler(void)
+{
+	auto unitList = playerMng_->GetUnitList();
+	auto enemyList = enemyMng_->GetEnemies();
+
+	//Playerのユニットが発射した攻撃の管理
+	for (auto& unit : unitList)
+	{
+		auto type = unit->GetType();
+		
+		if (type != AttackType::NON && type != AttackType::AREA)
+		{
+			shotMng_->AddBullet(unit, unit->GetPos());
+			for (auto enemy : enemyList)
+			{
+				if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
+				{
+					auto shooter = shotMng_->BulletMove(unit, enemy->GetPos());
+					if (shooter != nullptr)
+					{
+						enemy->SetHP(shooter->GetAttackPower());
+					}
+					if (enemy->GetHP() <= 0)
+					{
+						enemy->SetDeath(true);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	//Enemy側のユニットが発射した攻撃の管理
+	for (auto enemy : enemyList)
+	{
+		for (auto& unit : unitList)
+		{
+
+		}
+	}
 }
 
 void GameScene::Draw()

@@ -27,6 +27,8 @@ public:
 	void SetPosition(Vec2Float pos);
 	const unsigned int GetHP();
 	void SetHP(int power);
+	unsigned int GetAttackPower(void);	
+	void SetDeath(bool flag);
 	const bool IsDeath();
 protected:
 	UnitStat state_;

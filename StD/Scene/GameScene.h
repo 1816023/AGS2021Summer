@@ -18,6 +18,7 @@ public:
 private:
 	void Draw()override;
 	void DrawUI()override;
+	void BulletControler(void);
 	//デバッグ
 	std::unique_ptr<Map> map;
 	std::unique_ptr<PlayerMng> playerMng_;

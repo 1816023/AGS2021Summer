@@ -30,6 +30,16 @@ void Unit::SetHP(int power)
 	state_.life -= std::abs(power);
 }
 
+unsigned int Unit::GetAttackPower(void)
+{
+	return state_.power;
+}
+
+void Unit::SetDeath(bool flag)
+{
+	state_.isDead = flag;
+}
+
 const bool Unit::IsDeath()
 {
 	return state_.isDead;
