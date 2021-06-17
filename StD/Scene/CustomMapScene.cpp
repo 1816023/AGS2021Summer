@@ -134,13 +134,12 @@ void CustomMapScene::Draw()
 
 	if (nowState_ == CustomState::MAP_CUSTOM)
 	{
-#ifdef _DEBUG
-	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
 
-#endif // DEBUG
 
 		cusMap_->Draw();
-		
+		#ifdef _DEBUG
+		DrawFormatString(mPos.x + cPos.x, mPos.y + cPos.y - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
+		#endif // DEBUG
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
 			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(cusMap_->GetMapSize() - cPos  * cusMap_->GetChipSize())))

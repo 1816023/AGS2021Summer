@@ -16,8 +16,9 @@ public:
 	bool GetClickTrg(int mouseType);		// クリックした瞬間の場合、true
 	bool GetClicking(int mouseType);		// クリック中の場合、true
 	bool GetClickUp(int mouseType);			// クリックをやめた場合、true
-	void Update(void);		// マウスの状態更新
+	void Update(Vec2Float offset, float scale);		// マウスの状態更新
 	const VECTOR2& GetPos() { return pos; }	// マウスの位置の取得
+	const VECTOR2& GetOffsetPos(); 	// マウスの位置の取得カメラオフセット込み
 	const int& GetWheel() { return wheel; }	// ホイールの取得
 	const bool IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd);
 private:
@@ -35,6 +36,8 @@ private:
 	char data;		// 現在のマウスのクリック状態
 	char dataOld;	// 1フレーム前のマウスのクリック状態
 	int wheel;		// ホイール増減値
+	Vec2Float offset_;	// カメラオフセット
+	float scale_;		// 拡大率
 
 	static std::unique_ptr<MouseController, MouseDelete> s_Instans;
 };
