@@ -60,7 +60,8 @@ bool Map::SetUp(std::string mapName)
 	state_.mapSize_ = { mapElm->IntAttribute("hight"),mapElm->IntAttribute("width") };
 	const tinyxml2::XMLElement* chipElm = document_.FirstChildElement("chip");
 	state_.chipSize_ = { chipElm->IntAttribute("hight"), chipElm->IntAttribute("width") };
-	mapData_.resize(state_.mapSize_.y);
+	dataVec mapData;
+	mapData.resize(state_.mapSize_.y);
 	//for (int y = 0; y < mapSize_.y; y++)
 	//{
 	//	mapData_[y].resize(mapSize_.y);
@@ -71,14 +72,13 @@ bool Map::SetUp(std::string mapName)
 	int y = 0;
 	while (std::getline(ss, buf, ','))
 	{
-		
-		mapData_[y].push_back(static_cast<MapChipName>(std::atoi(buf.c_str())));
-		if (mapData_[y].size()>=state_.mapSize_.x)
+		mapData[y].push_back(static_cast<MapChipName>(std::atoi(buf.c_str())));
+		if (mapData[y].size()>=state_.mapSize_.x)
 		{
 			y++;
 		}
-		
 	}
+	mapData_ = mapData;
 	return true;
 }
 

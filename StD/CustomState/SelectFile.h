@@ -38,7 +38,7 @@ struct SelectFile:public CustomStateBase
 			buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, 50), VECTOR2(300, 70), 0xffffff, 
 				[&,scene,list,data]() {
 					scene->nowState_ = CustomState::MAP_CUSTOM;
-					scene->map_->SetUp(_StW(list), data.mapSize);
+					scene->cusMap_->SetUp(_StW(StringUtil::SpritExtention(list)), data.mapSize);
 					scene->custom_[scene->nowState_]->Init(scene);
 					Delete();
 					return true; }, VECTOR2(10 + a / 14 * 310, a % 14 * 30)));

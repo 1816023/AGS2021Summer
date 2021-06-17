@@ -157,6 +157,7 @@
     <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Button\RectButton.cpp" />
     <ClCompile Include="Button\RoundRectButton.cpp" />
+    <ClCompile Include="Map\Astar.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Button\RectButton.h" />
     <ClInclude Include="Button\RoundRectButton.h" />
+    <ClInclude Include="Map\Astar.h" />
     <ClInclude Include="CustomState\CustomState.h" />
     <ClInclude Include="CustomState\EndCustom.h" />
     <ClInclude Include="CustomState\EnemyCustom.h" />

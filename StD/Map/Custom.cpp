@@ -21,14 +21,37 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 	mapData_.clear();
 	mapData_.resize(mapSize.y);
 	state_.name_ = fileName;
-	for (auto& map : mapData_)
+	if (!Map::SetUp(StringUtil::WStringToString(fileName)))
 	{
-		while( map.size() < state_.mapSize_.x )
+		mapData_.resize(mapSize.y);
+		for (auto& map : mapData_)
 		{
-			map.push_back(MapChipName::WALL);
+			while (map.size() < state_.mapSize_.x)
+			{
+				map.push_back(MapChipName::WALL);
+			}
+
 		}
-		
 	}
+	
+	mainStay_ = { -1, -1 };
+	int y = 0;
+	// Ž©‹’“_‚ðŒŸõ‚·‚é
+	for (auto map : mapData_)
+	{
+		auto find = std::find_if(map.begin(), map.end(), [](const MapChipName& data)
+			{
+				return data == MapChipName::MAINSTAY;
+			});
+
+		if (find != map.end())
+		{
+			mainStay_ = { static_cast<int>(std::distance(map.begin(),find)), y };
+			break;
+		}
+		y++;
+	}
+
 	CreateMapFile(mapSize, fileName);
 }
 
@@ -45,8 +68,22 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 	VECTOR2 mapPos = pos / VECTOR2(state_.chipSize_.x,state_.chipSize_.y);
  	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
 	{
-		
-		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ?chip:mapData_[mapPos.y][mapPos.x] ;
+		if (chip == MapChipName::MAINSTAY)
+		{
+			if (mainStay_ == VECTOR2(-1, -1))
+			{
+				mainStay_ = mapPos;
+				mapData_[mapPos.y][mapPos.x] = chip;
+			}
+		}
+		else
+		{
+			if (mainStay_ == mapPos)
+			{
+				mainStay_ = { -1, -1 };
+			}
+			mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
+		}
 		return true;
 	}
 	
@@ -212,5 +249,15 @@ bool Custom::SaveFile()
 		return false;
 	}
 	return true;
+}
+
+const VECTOR2& Custom::GetMainStay()
+{
+	return mainStay_;
+}
+
+const std::map<int, VECTOR2>& Custom::Getspawner()
+{
+	return spawners_;
 }
 

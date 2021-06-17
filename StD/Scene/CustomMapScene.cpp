@@ -11,8 +11,9 @@
 #include "../CustomState/EnemyCustom.h"
 #include "../CustomState/EndCustom.h"
 #include "../StringUtil.h"
+#include "../Map/Astar.h"
 
-#define CUSTOM dynamic_cast<Custom*>(map_.get())
+#define CUSTOM dynamic_cast<Custom*>(cusMap_.get())
 CustomMapScene::CustomMapScene()
 {
 	Init();
@@ -39,7 +40,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 bool CustomMapScene::Init()
 {
 
-	map_ = std::make_unique<Custom>(VECTOR2());
+	cusMap_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SELECT_FILE;
 	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
 	custom_.try_emplace(CustomState::SET_STATE, std::make_unique<SetState>());
@@ -47,6 +48,80 @@ bool CustomMapScene::Init()
 	custom_.try_emplace(CustomState::ENEMY_CUSTOM, std::make_unique<EnemyCustom>());
 	custom_.try_emplace(CustomState::END_CUSTOM, std::make_unique<EndCustom>());
 	custom_[nowState_]->Init(this);
+	//// updateånä÷êîï€ë∂
+	//updateFunc_.try_emplace(CustomState::SET_STATE, std::bind(&SetState::Update,this));
+	//updateFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&MapCustom::Update,this));
+	//updateFunc_.try_emplace(CustomState::ENEMY_CUSTOM, std::bind(&EnemyCustom::Update,this));
+	//updateFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&EndCustom::Update,this));
+	//// drawånä÷êîï€ë∂
+	//drawFunc_.try_emplace(CustomState::SET_STATE, std::bind(&SetState::Draw, this));
+	//drawFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&MapCustom::Draw, this));
+	//drawFunc_.try_emplace(CustomState::ENEMY_CUSTOM, std::bind(&EnemyCustom::Draw, this));
+	//drawFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&EndCustom::Draw, this));
+	//// initånä÷êîï€ë∂
+	//initFunc_.try_emplace(CustomState::SET_STATE, std::bind(&SetState::Init, this));
+	//initFunc_.try_emplace(CustomState::MAP_CUSTOM, std::bind(&MapCustom::Init, this));
+	//initFunc_.try_emplace(CustomState::ENEMY_CUSTOM, std::bind(&EnemyCustom::Init, this));
+	//initFunc_.try_emplace(CustomState::END_CUSTOM, std::bind(&EndCustom::Init, this));
+	//initFunc_[nowState_](this);
+	//const int bSize = 64;
+	//const int bSpace = 20;
+	//const int basePosX = SELECT_UI_POS.first.x + bSpace;
+	//const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
+	//auto nFunc = [&](ButtomState& state) {
+	//	if (state.pushFlag = !state.pushFlag)
+	//	{
+	//		selChip_ = static_cast<MapChipName>(std::atoi(_WtS(state.name).c_str()));
+	//	}
+	//	else
+	//	{
+	//		selChip_ = MapChipName::MAX;
+	//	} 
+	//};
+	//auto sFunc = [&](ButtomState& state) {state.pushFlag = true; CUSTOM->SaveFile(); };
+	//bList_.push_back({ VECTOR2(basePosX,bSpace),VECTOR2(basePosY, bSize + bSpace),false,L"1" ,0x007fff,nFunc });
+	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace),false,L"2",0xff0f0f,nFunc });
+	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace),false,L"3" ,0xafff00, nFunc });
+	//bList_.push_back({ VECTOR2(basePosX,bSpace + (bSize + bSpace)),VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace)),false,L"4" ,0xe3e3e3, nFunc });
+	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace),bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace)),false,L"5",0x333333,nFunc });
+	//bList_.push_back({ VECTOR2(basePosX + (bSize + bSpace) * 2,bSpace + (bSize + bSpace)),VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace)),false,L"save" ,0xffffff, sFunc});
+	
+
+	/*button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace*2), VECTOR2(basePosY, bSize + bSpace*2), VECTOR2(10, 10), 0x007fff, [&]() {selChip_ = MapChipName::MAINSTAY; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "é©ãíì_",0xffffff,VECTOR2(basePosX,  bSpace*2-GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace*2), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace * 2),VECTOR2(10,10), 0xff0f0f, [&]() {selChip_ = MapChipName::SPAWNER; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "ìGèoåª", 0xffffff, VECTOR2(basePosX + (bSize + bSpace), bSpace * 2-GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace * 2),VECTOR2(10,10), 0xfff00, [&]() {selChip_ = MapChipName::ROOT; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "ìGêNçU",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2- GetFontSize() ) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace * 2)), VECTOR2(10,10),0xe3e3e3, [&]() {selChip_ = MapChipName::FIELD; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "é©ã@îzíu",0xffffff,VECTOR2(basePosX, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace ), bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace * 2)),VECTOR2(10,10), 0x333333, [&]() {selChip_ = MapChipName::WALL; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "ê›íuïsâ¬",0xffffff,VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2) - GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace ) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace * 2)),VECTOR2(10,10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return false; }, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "ëIëâèú",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
+	button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSize * 2 + bSpace * 4), VECTOR2(basePosY, bSize * 3 + bSpace * 4), VECTOR2(10, 10), 0xffffff, 
+		[&]() 
+		{
+			const auto& spawners = cusMap_->Getspawner();
+			const auto& mainStay = cusMap_->GetMainStay();
+			if (mainStay != VECTOR2(-1, -1) && spawners.size() != 0)
+			{
+				astar_->AstarStart(mainStay, spawners.at(0));
+			}
+			return false; 
+		}, VECTOR2()));
+	buttonText_.emplace_back(ButtonText{ "ÉãÅ[ÉgçÏê¨",0xffffff,VECTOR2(basePosX, bSize * 2 + bSpace * 4 - GetFontSize()) });
+	for (auto&& b : button_)
+	{
+		b->SetAuto();
+	}*/
+
+	//mapSizeX_ = 0;
+	//mapSizeY_ = 0;
+	//fileName_[0] = TCHAR();
+	//blendAlpha_ = 256;
+	//selChip_ = MapChipName::MAX;
+	//LoadText();
 	return true;
 }
 
@@ -60,31 +135,31 @@ void CustomMapScene::Draw()
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
 	{
 #ifdef _DEBUG
-	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(map_->GetMapChip((mPos + cPos))));
+	DrawFormatString(mPos.x+cPos.x, mPos.y+cPos.y-10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
+
 #endif // DEBUG
 
-		map_->Draw();
+		cusMap_->Draw();
 		
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
-			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(map_->GetMapSize() - cPos  * map_->GetChipSize())))
+			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(cusMap_->GetMapSize() - cPos  * cusMap_->GetChipSize())))
 			{
-				mPos = VecICast(mPos+cPos) / (map_->GetChipSize()) * (map_->GetChipSize());
+				mPos = VecICast(mPos+cPos) / (cusMap_->GetChipSize()) * (cusMap_->GetChipSize());
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha_%256));
-				DrawBox(mPos.x, mPos.y, (mPos.x) + map_->GetChipSize().x, (mPos.y) + map_->GetChipSize().y, 0xcccc00, true);
+				DrawBox(mPos.x, mPos.y, (mPos.x) + cusMap_->GetChipSize().x, (mPos.y) + cusMap_->GetChipSize().y, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
 			}
 		}
 	}
-
-
 }
 
 void CustomMapScene::DrawUI()
 {
 	custom_[nowState_]->Draw(this);
-	
+	const auto& mainStay = cusMap_->GetMainStay();
+	DrawFormatString(0, 48, 0xffffff, L"mainStay x %d, y %d", mainStay.x, mainStay.y);
 }
 
 bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)

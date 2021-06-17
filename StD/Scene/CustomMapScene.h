@@ -35,6 +35,7 @@ struct ButtonText
 	unsigned int color_;	// 文字色
 	VECTOR2 pos_;			// 描画位置
 };
+class Astar;
 class SelectFile;
 class SetState;
 class MapCustom;
@@ -57,7 +58,8 @@ private:
 	// UI系の描画
 	void DrawUI()override;
 	// customクラスのポインター
-	std::unique_ptr<Custom>map_;
+	std::unique_ptr<Custom>cusMap_;
+	
 	//
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
@@ -68,8 +70,7 @@ private:
 	int blendAlpha_;
 	// ファイルからロードした説明文
 	std::map<MapChipName,std::string> textData_;
-	// 
-
+	
 
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
 	bool FileNameErrorCheck(std::wstring fileName);
