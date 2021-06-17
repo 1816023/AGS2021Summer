@@ -5,6 +5,7 @@
 #include <sstream>
 #include "../File/FileSystem.h"
 #include "../StringUtil.h"
+#include "../Application.h"
 Custom::Custom(VECTOR2 offset):offset_(offset)
 {
 }
@@ -37,12 +38,12 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 	{
 		return false;
 	}
-	if (0 > pos.y || pos.y > state_.mapSize_.y * state_.chipSize_.y)
+	if (0 > pos.y || pos.y > state_.mapSize_.y * state_.chipSize_.y )
 	{
 		return false;
 	}
-	VECTOR2 mapPos = pos / state_.chipSize_;
-	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
+	VECTOR2 mapPos = pos / VECTOR2(state_.chipSize_.x,state_.chipSize_.y);
+ 	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
 	{
 		
 		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ?chip:mapData_[mapPos.y][mapPos.x] ;

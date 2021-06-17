@@ -19,8 +19,6 @@ struct SelectFile:public CustomStateBase
 
 	bool Init(CustomMapScene* scene)override
 	{
-		scene->mapSizeX_ = 0;
-		scene->mapSizeY_ = 0;
 		scene->fileName_[0] = TCHAR();
 		FileSystem::serch("data/mapData", fileList_);
 		int a = 0;

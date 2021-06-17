@@ -62,38 +62,15 @@ private:
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
 	CustomState nowState_;
-	// マップサイズ入力の保存用
-	int mapSizeX_;
-	int mapSizeY_;
 	// マップファイル名の保存用
 	TCHAR fileName_[20];
 	// 変動するアルファ値
 	int blendAlpha_;
 	// ファイルからロードした説明文
 	std::map<MapChipName,std::string> textData_;
-	// ボタンの情報リスト
-	std::list<ButtomState>bList_;
-	// 選択中のマップチップ　何もないときはMAX(6)
-	MapChipName selChip_;
-	// ボタン格納用リスト
-	std::list<std::unique_ptr<Button>>button_;
-	// ボタンの説明文描画用
-	std::list<ButtonText>buttonText_;
 	// 
 
 
-	// SET_STATEに対応するUpdate関数
-	void SetStateUpdate();					
-	// MAP_CUNSTOMに対応するUpdate関数
-	void MapCuntomUpdate();			
-	// END_CUSTOMに対応するUpdate関数
-	void EndCustomUpdate();				
-	// SET_STATEに対応するDraw関数
-	void SetStateDraw();				
-	// MAP_CUNSTOMに対応するDraw関数
-	void MapCustomDraw();				
-	// END_CUSTOMに対応するDraw関数
-	void EndCustomDraw();				
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
 	bool FileNameErrorCheck(std::wstring fileName);
 	// 説明文をファイルからロードする
