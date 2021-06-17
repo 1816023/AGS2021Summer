@@ -8,6 +8,7 @@
 #include "../Application.h"
 Custom::Custom(VECTOR2 offset):offset_(offset)
 {
+	mapIdx = 0;
 }
 
 Custom::~Custom()
@@ -85,6 +86,11 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 			if (mainStay_ == mapPos)
 			{
 				mainStay_ = { -1, -1 };
+			}
+			if (chip == MapChipName::SPAWNER)
+			{
+				spawners_.try_emplace(mapIdx, mapPos);
+				mapIdx++;
 			}
 			mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
 		}

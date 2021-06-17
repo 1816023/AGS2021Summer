@@ -13,7 +13,7 @@ public:
 	EnemySpawner(Vec2Float pos, EnemyManager& enemyMng);
 	~EnemySpawner();
 	// 敵をスポーン
-	void Spawn(EnemyType type);	
+	void Spawn(EnemyType type);
 	// 更新
 	void Update(float deltaTime);
 private:

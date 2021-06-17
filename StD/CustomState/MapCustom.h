@@ -77,8 +77,7 @@ struct MapCustom:public CustomStateBase
 				break;
 			}
 		}
-		VECTOR2 mPos;
-		GetMousePoint(&mPos.x, &mPos.y);
+		VECTOR2 mPos = lpMouseController.GetOffsetPos();
 		auto cPos = lpApplication.GetCamera().GetPos() * 2.0f;
 		if (lpMouseController.GetClicking(MOUSE_INPUT_LEFT))
 		{

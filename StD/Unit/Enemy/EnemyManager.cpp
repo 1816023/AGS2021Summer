@@ -54,3 +54,8 @@ EnemyList& EnemyManager::GetEnemies()
 {
 	return enemies_;
 }
+
+void EnemyManager::Killer(std::shared_ptr<Enemy> enemy)
+{
+	enemies_.erase(std::find(enemies_.begin(), enemies_.end(), enemy));
+}

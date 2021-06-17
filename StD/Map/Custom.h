@@ -23,5 +23,6 @@ private:
 	std::map<int, VECTOR2>spawners_;
 	// 描画のオフセット
 	VECTOR2 offset_;
+	int mapIdx;
 };
 

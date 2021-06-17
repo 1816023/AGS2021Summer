@@ -23,6 +23,8 @@ public:
 	void Draw();	
 	// “GƒŠƒXƒg‚ğæ“¾(‚·‚×‚Ä‚Ì“G)
 	EnemyList& GetEnemies();
+	// €–S‚µ‚½“G‚Ìíœ
+	void Killer(std::shared_ptr<Enemy> enemy);
 private:
 	// “G‚ğì¬‚·‚é
 	Enemy& CreateEnemy(EnemyType type);

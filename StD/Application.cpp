@@ -53,7 +53,7 @@ void Application::Run()
 		sceneController_ = (*sceneController_).Update(std::move(sceneController_));
 		camera_->Control();
 		lpKeyController.Update();
-		lpMouseController.Update();
+		lpMouseController.Update(camera_->GetPos(), camera_->GetScale());
 		
 		auto now = system_clock::now();
 		if (GetNoActiveState(true)== 0)
