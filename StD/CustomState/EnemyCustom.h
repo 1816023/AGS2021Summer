@@ -1,8 +1,8 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
-#include "../Unit/Enemy/Enemy.h"
-#include "../Unit/Enemy/EnemyType.h"
+//#include "../Unit/Enemy/Enemy.h"
+
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase

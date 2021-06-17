@@ -16,6 +16,10 @@ Custom::~Custom()
 
 void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 {
+	if (fileName.find(L".xml") == fileName.npos)
+	{
+		fileName += L".xml";
+	}
 	state_.mapSize_ = mapSize;
 	state_.chipSize_ = { 64,64 };
 	mapData_.clear();
