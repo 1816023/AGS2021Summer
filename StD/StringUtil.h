@@ -8,5 +8,7 @@ struct StringUtil
 	static std::string WStringToString(std::wstring oWString);
 	// string‚ğwstring‚É•ÏŠ·‚·‚é
 	static std::wstring StringToWString(std::string oString);
+	// Šg’£qíœ
+	static std::string SpritExtention(std::string string);
 };
 

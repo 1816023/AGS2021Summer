@@ -35,6 +35,7 @@ struct ButtonText
 	unsigned int color_;	// 文字色
 	VECTOR2 pos_;			// 描画位置
 };
+class Astar;
 class SelectFile;
 class SetState;
 class MapCustom;
@@ -57,7 +58,8 @@ private:
 	// UI系の描画
 	void DrawUI()override;
 	// customクラスのポインター
-	std::unique_ptr<Custom>map_;
+	std::unique_ptr<Custom>cusMap_;
+	
 	//
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
@@ -79,8 +81,7 @@ private:
 	std::list<std::unique_ptr<Button>>button_;
 	// ボタンの説明文描画用
 	std::list<ButtonText>buttonText_;
-	// 
-
+	
 
 	// SET_STATEに対応するUpdate関数
 	void SetStateUpdate();					

@@ -41,7 +41,7 @@ unique_Base GameScene::Update(unique_Base own)
 
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 	{
-		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
+		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y));
 	}
 	playerMng_->Update(delta);
 	BulletControler();

@@ -2,7 +2,8 @@
 #include "../Scene/CustomMapScene.h"
 #include "CustomState.h"
 #include "../StringUtil.h"
-#define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
+#include "../Map/Astar.h"
+#define CUSTOM dynamic_cast<Custom*>(scene->cusMap_.get())
 
 struct MapCustom:public CustomStateBase
 {
@@ -10,6 +11,7 @@ struct MapCustom:public CustomStateBase
 	~MapCustom() {};
 	bool Init(CustomMapScene* scene)override
 	{
+		astar_ = std::make_unique<Astar>(*scene->cusMap_);
 		const int bSize = 64;
 		const int bSpace = 20;
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
@@ -42,6 +44,18 @@ struct MapCustom:public CustomStateBase
 		button_.back()->SetString("Back", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Back", GetStringLength(L"Back")) / 2, bSize / 4 - GetFontSize() / 2));
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10,10), 0xffffff, [=]() {CUSTOM->SaveFile(); return  true; }, VECTOR2()));
 		button_.back()->SetString("Save", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Save", GetStringLength(L"Save")) / 2, bSize / 4 - GetFontSize() / 2));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSize * 2 + bSpace * 4), VECTOR2(basePosY, bSize * 3 + bSpace * 4), VECTOR2(10, 10), 0xffffff,
+			[&]()
+			{
+				const auto& spawners = scene->cusMap_->Getspawner();
+				const auto& mainStay = scene->cusMap_->GetMainStay();
+				if (mainStay != VECTOR2(-1, -1) && spawners.size() != 0)
+				{
+					astar_->AstarStart(mainStay, spawners.at(0));
+				}
+				return false;
+			}, VECTOR2()));
+		buttonText_.emplace_back(ButtonText{ "ルート作成",0xffffff,VECTOR2(basePosX, bSize * 2 + bSpace * 4 - GetFontSize()) });
 		for (auto&& b : button_)
 		{
 			b->SetAuto();
@@ -64,8 +78,7 @@ struct MapCustom:public CustomStateBase
 			scene->custom_[scene->nowState_]->Init(scene);
 			Delete();
 		}
-		VECTOR2 mPos;
-		GetMousePoint(&mPos.x, &mPos.y);
+		VECTOR2 mPos = lpMouseController.GetOffsetPos();
 		auto cPos = lpApplication.GetCamera().GetPos() * 2.0f;
 		if (lpMouseController.GetClicking(MOUSE_INPUT_LEFT))
 		{
@@ -74,7 +87,7 @@ struct MapCustom:public CustomStateBase
 			}
 			else
 			{
-				scene->map_->SetChip(VecICast(cPos + mPos), selChip_);
+				scene->cusMap_->SetChip(VecICast(cPos + mPos), selChip_);
 			}
 		}
 
@@ -117,4 +130,6 @@ private:
 	MapChipName selChip_;
 	std::list<std::unique_ptr<Button>>button_;
 	std::list<ButtonText>buttonText_;
+	// Astarクラスのポインター
+	std::unique_ptr<Astar>astar_;
 };

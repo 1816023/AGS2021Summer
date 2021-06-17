@@ -42,6 +42,7 @@
     <ClCompile Include="Button\RoundRectButton.cpp" />
     <ClCompile Include="Button\CircleButton.cpp" />
     <ClCompile Include="Button\ImageRectButton.cpp" />
+    <ClCompile Include="Map\Astar.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Button\RoundRectButton.h" />
     <ClInclude Include="Button\CircleButton.h" />
     <ClInclude Include="Button\ImageRectButton.h" />
+    <ClInclude Include="Map\Astar.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
     <ClInclude Include="File\FileSystem.h" />

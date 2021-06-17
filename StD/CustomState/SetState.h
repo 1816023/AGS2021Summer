@@ -35,10 +35,15 @@ struct SetState:public CustomStateBase
 		buttonList_.back()->SetTag(1);
 		buttonList_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(defPos.x + (buttonSize + 5) * (13 % 5), defPos.y + (buttonSize + 5) * (13 / 5)),
 			VECTOR2(defPos.x + (buttonSize + 5) * (13 % 5) + buttonSize * 2 + 5, defPos.y + buttonSize + (buttonSize + 5) * (13 / 5)),
-			VECTOR2(10, 10), 0xffffff, [&]() {
+			VECTOR2(10, 10), 0xffffff, [&]() 
+			{
 				inputcnt_ += (inputcnt_ >= 3 ? 0 : 1);
-				if (inputcnt_ == 2) { SetActiveKeyInput(keyhandle_); }
-				return true; }, VECTOR2()));
+				if (inputcnt_ == 2)
+				{
+					SetActiveKeyInput(keyhandle_);
+				}
+				return true;
+			}, VECTOR2()));
 		buttonList_.back()->SetString("next", VECTOR2(5,5),CreateFontToHandle(NULL,40,9,DX_FONTTYPE_ANTIALIASING));
 		buttonList_.back()->SetAuto();
 		buttonList_.back()->SetTag(1);
@@ -73,7 +78,7 @@ struct SetState:public CustomStateBase
 				return; 
 			}
 			scene->nowState_ = CustomState::MAP_CUSTOM;
-			scene->map_->SetUp(_StW(inputNum_[2]), VECTOR2(std::atoi(inputNum_[0].c_str()), std::atoi(inputNum_[1].c_str())));
+			scene->cusMap_->SetUp(_StW(inputNum_[2]), VECTOR2(std::atoi(inputNum_[0].c_str()), std::atoi(inputNum_[1].c_str())));
 			scene->custom_[scene->nowState_]->Init(scene);
 			Delete();
 
@@ -99,7 +104,8 @@ struct SetState:public CustomStateBase
 				list->Draw();
 			}
 
-		}		DrawStringToHandle(350, 50, _StW("マップの横のマス数:" + (inputNum_[0])).c_str(), 0x000000, fontHandle_);
+		}		
+		DrawStringToHandle(350, 50, _StW("マップの横のマス数:" + (inputNum_[0])).c_str(), 0x000000, fontHandle_);
 		DrawStringToHandle(350, 50 + GetFontSizeToHandle(fontHandle_), _StW("マップの縦のマス数:" + (inputNum_[1])).c_str(), 0x000000, fontHandle_);
 		DrawStringToHandle(350, 50 + GetFontSizeToHandle(fontHandle_) * 2, _StW("ファイル名\n"+(inputNum_[2])).c_str(), 0x00000, fontHandle_);
 		DrawString(350,  50+GetFontSizeToHandle(fontHandle_)*4, L"※次の文字とスペースは使用できません\n「￥　／　：　＊　？　”　＜　＞　｜　.\n     　& ( ) [ ] { } ^ = ; ! ' + , ` ~」", 0xff9999);
@@ -143,8 +149,7 @@ struct SetState:public CustomStateBase
 private:
 	void NewCreate()
 	{
-
-		//DrawString(0, 0, L"Set", 0xffffff);
+	//DrawString(0, 0, L"Set", 0xffffff);
 	//DrawString(0, STRING_HIGHT, L"マップの横幅：", 0xffffff);
 	//DrawString(0, STRING_HIGHT + LINE_SPACING, L"マップの高さ：", 0xffffff);
 	//DrawString(0, STRING_HIGHT + LINE_SPACING * 2, L"ファイル名：", 0xffffff);
