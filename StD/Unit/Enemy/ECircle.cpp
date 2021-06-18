@@ -27,7 +27,7 @@ void ECircle::Update(float deltaTime)
 void ECircle::Draw()
 {
 	DrawRotaGraph(state_.pos.x, state_.pos.y, enemyInfo_.scale, 0.0f, IMAGE_ID(L"data/image/circle.png"), true);
-	DrawFormatString(state_.pos.x, state_.pos.y + 64, 0xffffff, L"HP:%d", state_.life);
+	DrawFormatString(state_.pos.x, state_.pos.y +8, 0xffffff, L"HP:%d", state_.life);
 	DrawCircle(state_.pos.x, state_.pos.y, 5, 0xffffff, true);
 }
 

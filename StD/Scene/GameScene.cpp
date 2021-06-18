@@ -77,12 +77,12 @@ void GameScene::BulletControler(void)
 		
 		if (type != AttackType::NON && type != AttackType::AREA)
 		{
-			shotMng_->AddBullet(unit, unit->GetPos());
 			for (auto enemy : enemyList)
 			{
 				if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
 				{
-					auto shooter = shotMng_->BulletMove(unit, enemy->GetPos());
+					shotMng_->AddBullet(unit, enemy);
+					auto shooter = shotMng_->BulletMove(unit, enemy);
 					if (shooter != nullptr)
 					{
 						enemy->SetHP(shooter->GetAttackPower());
