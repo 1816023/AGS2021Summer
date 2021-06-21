@@ -17,15 +17,16 @@ Custom::~Custom()
 
 void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 {
+	state_.name_ = fileName;
 	if (fileName.find(L".xml") == fileName.npos)
 	{
-		fileName += L".xml";
+		state_.name_ += L".xml";
 	}
 	state_.mapSize_ = mapSize;
 	state_.chipSize_ = { 64,64 };
 	mapData_.clear();
 	mapData_.resize(mapSize.y);
-	state_.name_ = fileName;
+	
 	if (!Map::SetUp(StringUtil::WStringToString(fileName)))
 	{
 		mapData_.resize(mapSize.y);
@@ -35,7 +36,6 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 			{
 				map.push_back(MapChipName::WALL);
 			}
-
 		}
 	}
 	
@@ -233,12 +233,17 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 bool Custom::SaveFile()
 {
 	std::string mapData="\n";
-	for (auto data1 : mapData_)
+	int idx = 0;
+	for (auto& data1 : mapData_)
 	{
-		for (auto data2 : data1)
+		for (auto& data2 : data1)
 		{
+			idx++;
 			mapData += std::to_string(static_cast<char>(data2));
-			mapData += ",";
+			if (idx != data1.size() * mapData_.size())
+			{
+				mapData += ",";
+			}
 		}
 		mapData += "\n";
 	}

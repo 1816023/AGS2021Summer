@@ -2,6 +2,7 @@
 #include <sstream>
 #include <array>
 #include "Map.h"
+#include "../StringUtil.h"
 
 Map::Map()
 {
@@ -124,7 +125,8 @@ VECTOR2 Map::GetChipSize()
 
 bool Map::LoadMap(std::string mapName)
 {
-	auto path = "./data/mapData/" + mapName+".xml";
+	auto path = StringUtil::SpritExtention(mapName);
+	path = "./data/mapData/" + path +".xml";
 	auto error = document_.LoadFile(path.c_str());
 	if (error != tinyxml2::XML_ERROR_FILE_NOT_FOUND)
 	{
