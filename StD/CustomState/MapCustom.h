@@ -11,7 +11,7 @@ struct MapCustom:public CustomStateBase
 	~MapCustom() {};
 	bool Init(CustomMapScene* scene)override
 	{
-		astar_ = std::make_unique<Astar>(*scene->cusMap_);
+		/*astar_ = std::make_unique<Astar>(*scene->cusMap_);*/
 		const int bSize = 64;
 		const int bSpace = 20;
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
@@ -45,18 +45,18 @@ struct MapCustom:public CustomStateBase
 		button_.back()->SetString("Next", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Next", GetStringLength(L"Next")) / 2, bSize / 4 - GetFontSize() / 2));
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10,10), 0xffffff, [=]() {CUSTOM->SaveFile(); return  true; }, VECTOR2()));
 		button_.back()->SetString("Save", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Save", GetStringLength(L"Save")) / 2, bSize / 4 - GetFontSize() / 2));
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSize * 2 + bSpace * 4), VECTOR2(basePosY, bSize * 3 + bSpace * 4), VECTOR2(10, 10), 0xffffff,
-			[&]()
-			{
-				const auto& spawners = scene->cusMap_->Getspawner();
-				const auto& mainStay = scene->cusMap_->GetMainStay();
-				if (mainStay != VECTOR2(-1, -1) && spawners.size() != 0)
-				{
-					astar_->AstarStart(mainStay, spawners.at(0));
-				}
-				return false;
-			}, VECTOR2()));
-		buttonText_.emplace_back(ButtonText{ "ルート作成",0xffffff,VECTOR2(basePosX, bSize * 2 + bSpace * 4 - GetFontSize()) });
+		//button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSize * 2 + bSpace * 4), VECTOR2(basePosY, bSize * 3 + bSpace * 4), VECTOR2(10, 10), 0xffffff,
+		//	[&,scene]()
+		//	{
+		//		const auto& spawners = scene->cusMap_->Getspawner();
+		//		const auto& mainStay = scene->cusMap_->GetMainStay();
+		//		if (mainStay != VECTOR2(-1, -1) && spawners.size() != 0)
+		//		{
+		//			astar_->AstarStart(mainStay, spawners.at(0));
+		//		}
+		//		return false;
+		//	}, VECTOR2()));
+		//buttonText_.emplace_back(ButtonText{ "ルート作成",0xffffff,VECTOR2(basePosX, bSize * 2 + bSpace * 4 - GetFontSize()) });
 		// 全てのボタンを自動化する
 		for (auto&& b : button_)
 		{
@@ -116,7 +116,7 @@ struct MapCustom:public CustomStateBase
 		}
 #ifdef _DEBUG
 
-		DrawFormatString(mPos.x, mPos.y + 10, 0x00ff00, L"%d:%d", mPos.x, mPos.y);
+		DrawFormatString(mPos.x, mPos.y + 10, 0x00ff00, L"%d:%d", lpMouseController.GetOffsetPos().x,lpMouseController.GetOffsetPos().y );
 		DrawFormatString(mPos.x, mPos.y + 30, 0x0000ff, L"%d:%d", mPos.x + static_cast<int>(lpApplication.GetCamera().GetPos().x), mPos.y + static_cast<int>(lpApplication.GetCamera().GetPos().y));
 #endif // _DEBUG
 
@@ -129,6 +129,6 @@ private:
 	MapChipName selChip_;
 	std::list<std::unique_ptr<Button>>button_;
 	std::list<ButtonText>buttonText_;
-	// Astarクラスのポインター
-	std::unique_ptr<Astar>astar_;
+	//// Astarクラスのポインター
+	//std::unique_ptr<Astar>astar_;
 };
