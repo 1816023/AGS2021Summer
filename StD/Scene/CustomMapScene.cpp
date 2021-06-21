@@ -59,8 +59,6 @@ void CustomMapScene::Draw()
 
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
 	{
-		
-
 		cusMap_->Draw();
 		#ifdef _DEBUG
 		DrawFormatString(mPos.x + cPos.x, mPos.y + cPos.y - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));

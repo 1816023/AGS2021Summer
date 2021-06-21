@@ -15,7 +15,7 @@ public:
 	PlayerMng();
 	~PlayerMng();
 	void Init();
-	void Update(float deltaTime);
+	void Update(float deltaTime,std::shared_ptr<Unit> shooter);
 	void Draw(void);
 	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};
@@ -24,7 +24,7 @@ public:
 	void SetCost(int cost);
 	float SpeedDelay(void);
 private:
-	void SkillCtl(void);
+	void SkillCtl(std::shared_ptr<Unit> shooter);
 	UnitList unitList_;
 	int cost;		//所持コスト保存用
 };
