@@ -22,38 +22,46 @@ void ShotMng::Draw(void)
 	{
 		for (auto& bulletdata : shotList_[data.first])
 		{
-			DrawCircle(bulletdata.first.x, bulletdata.first.y, 80, 0xff0000, false);
-			DrawCircle(bulletdata.second.x, bulletdata.second.y, BASE_SIZE, 0xffffff, true);
+			DrawCircle(bulletdata.first.x, bulletdata.first.y, BASE_SIZE, 0xffffff, true);
 		}
 	}
 }
 
-void ShotMng::AddBullet(std::shared_ptr<Unit> ptr,Vec2Float pos)
+void ShotMng::AddBullet(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target)
 {
 	shotSpan_[ptr]--;
 	if (shotSpan_[ptr] <= 0)
 	{
 		shotSpan_[ptr] = BASE_SPAN;
-		shotList_[ptr].push_back(std::make_pair(pos,pos));
+		shotList_[ptr].push_back(std::make_pair(ptr->GetPos(),target));
 	}
 }
 
-std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr,Vec2Float pos)
+std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target)
 {
-	//こっこに角度を求める計算の記述
-	auto ab = Vec2Float((pos.x - ptr->GetPos().x), (pos.y - ptr->GetPos().y));
-	auto n = ab.Normarize();
 	//攻撃範囲内の敵を探索する？
 	if (!shotList_[ptr].empty())
 	{
 		for (auto itr = shotList_[ptr].begin(); itr != shotList_[ptr].end();)
 		{
+			//こっこに角度を求める計算の記述
+			auto ab = Vec2Float((itr->second->GetPos().x - ptr->GetPos().x), (itr->second->GetPos().y - ptr->GetPos().y));
+			auto n = ab.Normarize();
+
 			//射程範囲内(弾を移動させる)
-			itr->second += Vec2Float(n.x * ptr->GetBulletSpeed(), n.y*ptr->GetBulletSpeed());
-			if (isHitBvE(itr->second, BASE_SIZE, pos, Vec2Float(60, 60)))
+			itr->first += Vec2Float(n.x * 15, n.y*15);
+
+			if (!isRange(itr->first, ptr->GetPos(), BASE_SIZE, 150))
+			{
+				//射程範囲外(リストから削除)
+				itr = shotList_[ptr].erase(itr);
+				return nullptr;
+			}
+
+			if (isHitBvE(itr->first, BASE_SIZE, target->GetPos(), Vec2Float(60, 60)))
 			{
 				shooterPtr_ = ptr;
-				//射程範囲外(リストから削除)
+				//命中したので削除
 				itr = shotList_[ptr].erase(itr);
 				return shooterPtr_ = ptr;
 			}

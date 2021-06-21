@@ -30,8 +30,8 @@ void EnemyManager::Update(float deltaTime)
 	for (auto& enemy : enemies_)
 	{
 		enemy->Update(deltaTime);
-		shotMng_->AddBullet(enemy,enemy->GetPos());
-		shotMng_->BulletMove(enemy, Vec2Float(100, 100));
+		/*shotMng_->AddBullet(enemy,enemy->GetPos());
+		shotMng_->BulletMove(enemy, Vec2Float(100, 100));*/
 	}
 	enemies_.erase(remove_if(enemies_.begin(), enemies_.end(),
 		[](shared_ptr<Enemy>& enemy)

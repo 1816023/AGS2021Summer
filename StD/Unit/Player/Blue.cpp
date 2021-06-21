@@ -37,6 +37,7 @@ void Blue::Draw()
 	Vec2Int gSize;
 	GetGraphSize(imageID, &gSize.x, &gSize.y);
 	DrawGraph(state_.pos.x-gSize.x/2, state_.pos.y-gSize.y/2,imageID,true);
+	DrawCircle(state_.pos.x, state_.pos.y,150, 0xff0000, false);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y, 0xffffff, L"HP:%d", state_.life);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 20, 0xffffff, L"coolTime_:%f", coolTime_);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 40, 0xffffff, L"power:%d", state_.power);
