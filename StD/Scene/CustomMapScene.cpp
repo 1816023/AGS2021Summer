@@ -39,7 +39,6 @@ unique_Base CustomMapScene::Update(unique_Base own)
 
 bool CustomMapScene::Init()
 {
-
 	cusMap_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SELECT_FILE;
 	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
@@ -60,8 +59,6 @@ void CustomMapScene::Draw()
 
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
 	{
-
-
 		cusMap_->Draw();
 		#ifdef _DEBUG
 		DrawFormatString(mPos.x + cPos.x, mPos.y + cPos.y - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
