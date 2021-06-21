@@ -39,7 +39,6 @@ unique_Base CustomMapScene::Update(unique_Base own)
 
 bool CustomMapScene::Init()
 {
-
 	cusMap_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SELECT_FILE;
 	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
@@ -60,7 +59,7 @@ void CustomMapScene::Draw()
 
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
 	{
-
+		
 
 		cusMap_->Draw();
 		#ifdef _DEBUG
@@ -85,6 +84,39 @@ void CustomMapScene::DrawUI()
 	custom_[nowState_]->Draw(this);
 	const auto& mainStay = cusMap_->GetMainStay();
 	DrawFormatString(0, 48, 0xffffff, L"mainStay x %d, y %d", mainStay.x, mainStay.y);
+}
+
+int CustomMapScene::SaveCheck()
+{
+	int mainStayNum = 0;
+	int spawnerNum = 0;
+	for (int y = 0; y < cusMap_->GetMapSize().y; y++)
+	{
+		for (int x = 0; x < cusMap_->GetMapSize().x; x++)
+		{
+			auto chip = cusMap_->GetMapChip(VECTOR2(x, y) * cusMap_->GetChipSize());
+			mainStayNum += (MapChipName::MAINSTAY ==chip  ? 1 : 0);
+			spawnerNum += (MapChipName::SPAWNER == chip ? 1 : 0);
+
+		}
+	}
+	if (mainStayNum >= 3 && spawnerNum >= 3)
+	{
+		return 1;
+	}
+	else if(mainStayNum>=3)
+	{
+		return 2;
+	}
+	else if(spawnerNum>=3)
+	{
+		return 3;
+	}
+	else
+	{
+		return 0;
+	}
+	return false;
 }
 
 bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)

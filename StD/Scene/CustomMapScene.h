@@ -70,8 +70,12 @@ private:
 	int blendAlpha_;
 	// ファイルからロードした説明文
 	std::map<MapChipName,std::string> textData_;
-	
-
+	// 保存するときに最低限の状態になっているかの
+	// return 0 エラーなし
+	// return 1 自拠点敵拠点の数異常
+	// return 2 自拠点の数異常
+	// return 3 敵拠点の数異常
+	int SaveCheck();
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
 	bool FileNameErrorCheck(std::wstring fileName);
 	// 説明文をファイルからロードする

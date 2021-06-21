@@ -43,7 +43,17 @@ struct MapCustom:public CustomStateBase
 			Delete();
 			return false; }, VECTOR2()));
 		button_.back()->SetString("Next", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Next", GetStringLength(L"Next")) / 2, bSize / 4 - GetFontSize() / 2));
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10,10), 0xffffff, [=]() {CUSTOM->SaveFile(); return  true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
+			if (scene->SaveCheck()==0)
+			{
+				CUSTOM->SaveFile(); 
+				return  true; 
+			}
+			else
+			{
+				return false;
+			}
+			}, VECTOR2()));
 		button_.back()->SetString("Save", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Save", GetStringLength(L"Save")) / 2, bSize / 4 - GetFontSize() / 2));
 		//button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSize * 2 + bSpace * 4), VECTOR2(basePosY, bSize * 3 + bSpace * 4), VECTOR2(10, 10), 0xffffff,
 		//	[&,scene]()
@@ -57,6 +67,7 @@ struct MapCustom:public CustomStateBase
 		//		return false;
 		//	}, VECTOR2()));
 		//buttonText_.emplace_back(ButtonText{ "ルート作成",0xffffff,VECTOR2(basePosX, bSize * 2 + bSpace * 4 - GetFontSize()) });
+		
 		// 全てのボタンを自動化する
 		for (auto&& b : button_)
 		{
