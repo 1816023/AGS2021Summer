@@ -21,7 +21,7 @@ public:
 	virtual ~Unit() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
-	const float GetBulletSpeed(void);
+	const float GetAttackSpan(void);
 	const float GetAtkRange(void);
 	const Vec2Float GetPos();
 	void SetPosition(Vec2Float pos);

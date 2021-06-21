@@ -23,6 +23,7 @@ public:
 	void Draw(void);				//弾の描画
 	void AddBullet(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target/*目標のポインタ*/);			//Unitから発射される弾の作成
 	std::shared_ptr<Unit> BulletMove(std::shared_ptr<Unit> ptr/*射出点ユニット*/, std::shared_ptr<Unit> target/*射出点座標*/);	//弾の移動
+	void AreaAttackCtl(std::vector<std::shared_ptr<Unit>> unitList);
 	bool isRange(Vec2Float unitPos/*判定対象*/,Vec2Float shooterPos/*射出位置*/,float unitSize/*対象のサイズ*/,float rangeSize/*範囲*/);
 	bool isHitBvE(Vec2Float bulletPos, float bulletSize, Vec2Float unitPos, Vec2Float unitSize);
 

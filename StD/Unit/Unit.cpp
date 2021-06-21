@@ -1,6 +1,6 @@
 #include "Unit.h"
 
-const float Unit::GetBulletSpeed(void)
+const float Unit::GetAttackSpan(void)
 {
 	return state_.atkSpeed;
 }

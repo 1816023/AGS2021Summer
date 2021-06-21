@@ -32,7 +32,7 @@ void ShotMng::AddBullet(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target)
 	shotSpan_[ptr]--;
 	if (shotSpan_[ptr] <= 0)
 	{
-		shotSpan_[ptr] = BASE_SPAN;
+		shotSpan_[ptr] = BASE_SPAN*ptr->GetAttackSpan();
 		shotList_[ptr].push_back(std::make_pair(ptr->GetPos(),target));
 	}
 }
@@ -73,6 +73,10 @@ std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared
 		}
 	}
 	return nullptr;
+}
+
+void ShotMng::AreaAttackCtl(std::vector<std::shared_ptr<Unit>> unitList)
+{
 }
 
 bool ShotMng::isRange(Vec2Float unitPos, Vec2Float shooterPos, float unitSize, float rangeSize)

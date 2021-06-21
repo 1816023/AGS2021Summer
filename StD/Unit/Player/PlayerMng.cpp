@@ -6,9 +6,13 @@
 #include "Blue.h"
 #include "Pink.h"
 
-void PlayerMng::Update(float deltaTime)
+void PlayerMng::Update(float deltaTime,std::shared_ptr<Unit> shooter)
 {
-    SkillCtl();
+    for (auto& unit : unitList_)
+    {
+        SkillCtl(shooter);
+        unit->Update(deltaTime);
+    }
 }
 
 void PlayerMng::Draw(void)
@@ -86,9 +90,9 @@ PlayerMng::PlayerMng()
     Init();
 }
 
-void PlayerMng::SkillCtl(void)
+void PlayerMng::SkillCtl(std::shared_ptr<Unit> shooter)
 {
-    /*auto result = std::find(unitList_.begin(), unitList_.end(), shotMng_->GetShooterPtr());
+    auto result = std::find(unitList_.begin(), unitList_.end(), shooter);
     if (result != unitList_.end())
     {
         if ((*result)->GetID() == PlayerUnit::PINK)
@@ -105,7 +109,7 @@ void PlayerMng::SkillCtl(void)
                 unit->Skill();
             }
         }
-    }*/
+    }
 }
 
 PlayerMng::~PlayerMng()

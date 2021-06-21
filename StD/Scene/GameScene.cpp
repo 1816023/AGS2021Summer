@@ -33,18 +33,21 @@ unique_Base GameScene::Update(unique_Base own)
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
 	auto delta = Application::Instance().GetDelta();
+
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	{
+		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y));
+	}
+
+	playerMng_->Update(delta, shotMng_->GetShooterPtr());
+	BulletControler();
+
 	for (auto& spawners : enemySpawner_)
 	{
 		spawners->Update(delta);
 	}
 	enemyMng_->Update(delta);
 
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-	{
-		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y));
-	}
-	playerMng_->Update(delta);
-	BulletControler();
 
 	for (auto enemy : enemyMng_->GetEnemies())
 	{
@@ -74,8 +77,14 @@ void GameScene::BulletControler(void)
 	for (auto& unit : unitList)
 	{
 		auto type = unit->GetType();
-		
-		if (type != AttackType::NON && type != AttackType::AREA)
+
+		if (type == AttackType::NON)
+		{
+			//UŒ‚‚µ‚È‚¢ƒ†ƒjƒbƒg‚¾‚Á‚½‚çŽŸ‚Ö
+			continue;
+		}
+
+		if (type == AttackType::SHOT)
 		{
 			for (auto enemy : enemyList)
 			{
@@ -86,12 +95,21 @@ void GameScene::BulletControler(void)
 					if (shooter != nullptr)
 					{
 						enemy->SetHP(shooter->GetAttackPower());
-					}
-					if (enemy->GetHP() <= 0)
-					{
-						enemy->SetDeath(true);
+						enemy->SetDeath(enemy->GetHP() <= 0 ? true : false);
 					}
 					break;
+				}
+			}
+		}
+
+		if(type == AttackType::AREA)
+		{
+			for (auto enemy : enemyList)
+			{
+				if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
+				{
+					enemy->SetHP(unit->GetAttackPower());
+					enemy->SetDeath(enemy->GetHP() <= 0 ? true : false);
 				}
 			}
 		}
