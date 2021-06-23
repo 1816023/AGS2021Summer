@@ -159,6 +159,7 @@
     <ClCompile Include="Button\RoundRectButton.cpp" />
     <ClCompile Include="Map\Astar.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
+    <ClCompile Include="ScrollList.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="CustomState\SetState.h" />
     <ClInclude Include="File\FileSystem.h" />
     <ClInclude Include="Mng\SoundMng.h" />
+    <ClInclude Include="ScrollList.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\Trap.h" />
