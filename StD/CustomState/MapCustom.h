@@ -37,14 +37,13 @@ struct MapCustom:public CustomStateBase
 			return false; }, VECTOR2()));
 		button_.back()->SetString("Back", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Back", GetStringLength(L"Back")) / 2, bSize / 4 - GetFontSize() / 2));
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX+bSize+bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(basePosX + bSize*2+bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
-			CUSTOM->SaveFile();
 			scene->nowState_ = CustomState::ENEMY_CUSTOM;
 			scene->custom_[scene->nowState_]->Init(scene);
 			Delete();
-			return false; }, VECTOR2()));
+			return true; }, VECTOR2()));
 		button_.back()->SetString("Next", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Next", GetStringLength(L"Next")) / 2, bSize / 4 - GetFontSize() / 2));
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
-			if (scene->SaveCheck()==0)
+			if (errorNum_=scene->SaveCheck()==0)
 			{
 				CUSTOM->SaveFile(); 
 				return  true; 
@@ -76,6 +75,14 @@ struct MapCustom:public CustomStateBase
 		scene->blendAlpha_ = 256;
 		selChip_ = MapChipName::MAX;
 		scene->LoadText();
+		errorNum_ = 0;
+		// エラーの内容
+		// 最大列数（日本語全角で16文字）
+		// 最大行数（6行）
+		errorText_.push_back("");
+		errorText_.push_back("拠点とスポナーの数が多すぎます。\n最大数は各2つまでです。");
+		errorText_.push_back("拠点の数が多すぎます。\n最大数は2つまでです。");
+		errorText_.push_back("スポナーの数が多すぎます。\n最大数は2つまでです。");
 		return false;
 
 	}
@@ -115,7 +122,7 @@ struct MapCustom:public CustomStateBase
 		DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0xffffff, false);
 		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 		// 説明文の表示
-		DrawString(TEXT_UI_POS.first.x + 30, TEXT_UI_POS.first.y + (TEXT_UI_POS.second.y - TEXT_UI_POS.first.y) / 5, _StW(scene->textData_[selChip_]).c_str(), 0xffffff);
+		DrawString(TEXT_UI_POS.first.x + 3, TEXT_UI_POS.first.y + (TEXT_UI_POS.second.y - TEXT_UI_POS.first.y) / 5, _StW(scene->textData_[selChip_]).c_str(), 0xffffff);
 		VECTOR2 mPos = lpMouseController.GetPos();
 		for (auto&& list : button_)
 		{
@@ -125,6 +132,7 @@ struct MapCustom:public CustomStateBase
 		{
 			DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
 		}
+		DrawString(SELECT_UI_POS.first.x + 10, SELECT_UI_POS.first.y + (SELECT_UI_POS.second.y - SELECT_UI_POS.first.y) / 1.5f, _StW(errorText_[errorNum_]).c_str(), 0xff0000);
 #ifdef _DEBUG
 
 		DrawFormatString(mPos.x, mPos.y + 10, 0x00ff00, L"%d:%d", lpMouseController.GetOffsetPos().x,lpMouseController.GetOffsetPos().y );
@@ -142,4 +150,6 @@ private:
 	std::list<ButtonText>buttonText_;
 	//// Astarクラスのポインター
 	//std::unique_ptr<Astar>astar_;
+	int errorNum_;
+	std::vector<std::string> errorText_;
 };
