@@ -77,8 +77,6 @@ struct MapCustom:public CustomStateBase
 		scene->LoadText();
 		errorNum_ = 0;
 		// エラーの内容
-		// 最大列数（日本語全角で16文字）
-		// 最大行数（6行）
 		errorText_.push_back("");
 		errorText_.push_back("拠点とスポナーの数が多すぎます。\n最大数は各2つまでです。");
 		errorText_.push_back("拠点の数が多すぎます。\n最大数は2つまでです。");
@@ -150,6 +148,11 @@ private:
 	std::list<ButtonText>buttonText_;
 	//// Astarクラスのポインター
 	//std::unique_ptr<Astar>astar_;
+	
+	// エラーナンバー
 	int errorNum_;
+	// エラー内容
+	// 最大列数（日本語全角で16文字）
+	// 最大行数（6行）
 	std::vector<std::string> errorText_;
 };

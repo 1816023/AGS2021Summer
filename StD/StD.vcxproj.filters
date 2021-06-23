@@ -46,6 +46,7 @@
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
+    <ClCompile Include="ScrollList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -105,5 +106,6 @@
     <ClInclude Include="CustomState\SetState.h" />
     <ClInclude Include="CustomState\SelectFile.h" />
     <ClInclude Include="Mng\SoundMng.h" />
+    <ClInclude Include="ScrollList.h" />
   </ItemGroup>
 </Project>
