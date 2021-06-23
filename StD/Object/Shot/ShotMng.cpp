@@ -29,8 +29,7 @@ void ShotMng::Draw(void)
 
 void ShotMng::AddBullet(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target)
 {
-	shotSpan_[ptr]--;
-	if (shotSpan_[ptr] <= 0)
+	if (isCoolTime(ptr))
 	{
 		shotSpan_[ptr] = BASE_SPAN*ptr->GetAttackSpan();
 		shotList_[ptr].push_back(std::make_pair(ptr->GetPos(),target));
@@ -87,6 +86,17 @@ bool ShotMng::isRange(Vec2Float unitPos, Vec2Float shooterPos, float unitSize, f
 		return true;
 	}
 	//ŽË’ö”ÍˆÍŠO‚È‚Ì‚Åfalse
+	return false;
+}
+
+bool ShotMng::isCoolTime(std::shared_ptr<Unit> ptr)
+{
+	shotSpan_[ptr]--;
+	if (shotSpan_[ptr] <= 0)
+	{
+		shotSpan_[ptr] = BASE_SPAN * ptr->GetAttackSpan();
+		return true;
+	}
 	return false;
 }
 

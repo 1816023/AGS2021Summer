@@ -102,14 +102,18 @@ void GameScene::BulletControler(void)
 			}
 		}
 
-		if(type == AttackType::AREA)
+		if (type == AttackType::AREA)
 		{
-			for (auto enemy : enemyList)
+			//クールタイムを設定することで解決？
+			if (shotMng_->isCoolTime(unit))
 			{
-				if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
+				for (auto enemy : enemyList)
 				{
-					enemy->SetHP(unit->GetAttackPower());
-					enemy->SetDeath(enemy->GetHP() <= 0 ? true : false);
+					if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
+					{
+						enemy->SetHP(unit->GetAttackPower());
+						enemy->SetDeath(enemy->GetHP() <= 0 ? true : false);
+					}
 				}
 			}
 		}

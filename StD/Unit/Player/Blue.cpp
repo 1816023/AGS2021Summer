@@ -12,7 +12,7 @@ Blue::Blue(Vec2Float pos, AttackType type)
 	isSkill_ = false;
 	this->type = type;
 	executable = false;
-	coolTime_ = 0;
+	coolTime_ = 600;
 }
 
 Blue::~Blue()
@@ -25,10 +25,14 @@ void Blue::Init()
 
 void Blue::Update(float deltaTime)
 {
-	coolTime_--;
 	if (!executable)
 	{
+		coolTime_--;
 		executable = (coolTime_ <= 0 ? true : false);
+	}
+	else
+	{
+		coolTime_++;
 	}
 }
 
@@ -40,8 +44,8 @@ void Blue::Draw()
 	DrawCircle(state_.pos.x, state_.pos.y,150, 0xff0000, false);
 	auto gageMin = (state_.pos.x - gSize.x / 2);
 	auto gageMax = (state_.pos.x + gSize.x / 2);
-	DrawBox(state_.pos.x - gSize.x / 2, state_.pos.y - gSize.y, gageMin - gSize.x *(coolTime_/600), state_.pos.y - gSize.y + 10, 0xffffff, true);
-	DrawBox(state_.pos.x - gSize.x / 2, state_.pos.y - gSize.y, state_.pos.x + gSize.x / 2, state_.pos.y - gSize.y + 10, 0xffffff, false);
+	DrawBox(gageMin, state_.pos.y - gSize.y, gageMax - gSize.x *(coolTime_/600), state_.pos.y - gSize.y + 10, 0xffffff, true);
+	DrawBox(gageMin, state_.pos.y - gSize.y, state_.pos.x + gSize.x / 2, state_.pos.y - gSize.y + 10, 0xffffff, false);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y, 0xffffff, L"HP:%d", state_.life);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 20, 0xffffff, L"coolTime_:%f", coolTime_);
 	DrawFormatString(state_.pos.x, state_.pos.y + gSize.y + 40, 0xffffff, L"power:%d", state_.power);
@@ -56,7 +60,7 @@ void Blue::Skill(void)
 		state_.power = state_.power * 1.5;
 	}
 	
-	if (coolTime_ <= -600)
+	if (coolTime_ >= 600)
 	{
 		executable = false;
 		type = AttackType::SHOT;
