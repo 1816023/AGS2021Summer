@@ -2,6 +2,7 @@
 #include "../VECTOR2.h"
 #include <vector>
 #include <map>
+#include "../Unit/Enemy/EnemyType.h"
 
 #define CHIP_SIZE 32
 #define MAP_SIZE 10
@@ -20,14 +21,14 @@ enum class NodeState
 //	ROAD,		// 道
 //	WALL,		// 壁
 //};
-enum class RootDir	// ルート向き
-{
-	UP,		// ↑
-	DOWN,	// ↓
-	RIGHT,	// →
-	LEFT,	// ←
-	MAX
-};
+//enum class RootDir	// ルート向き
+//{
+//	UP,		// ↑
+//	DOWN,	// ↓
+//	RIGHT,	// →
+//	LEFT,	// ←
+//	MAX
+//};
 
 
 struct Node

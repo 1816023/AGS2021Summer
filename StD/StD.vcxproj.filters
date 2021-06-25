@@ -15,7 +15,6 @@
     <ClCompile Include="Unit\Enemy\Enemy.cpp" />
     <ClCompile Include="tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="Map\Map.cpp" />
-    <ClCompile Include="Unit\Enemy\ECircle.cpp" />
     <ClCompile Include="Unit\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Object\Shot\ShotMng.cpp" />
     <ClCompile Include="Unit\Player\PlayerMng.cpp" />
@@ -47,6 +46,10 @@
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
     <ClCompile Include="ScrollList.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\ECircle.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -65,7 +68,6 @@
     <ClInclude Include="Map\Map.h" />
     <ClInclude Include="VECTOR2.h" />
     <ClInclude Include="details\VECTOR2.h" />
-    <ClInclude Include="Unit\Enemy\ECircle.h" />
     <ClInclude Include="Unit\Enemy\EnemyManager.h" />
     <ClInclude Include="Object\Shot\ShotMng.h" />
     <ClInclude Include="Unit\Player\PlayerMng.h" />
@@ -107,5 +109,9 @@
     <ClInclude Include="CustomState\SelectFile.h" />
     <ClInclude Include="Mng\SoundMng.h" />
     <ClInclude Include="ScrollList.h" />
+    <ClInclude Include="Unit\Enemy\Mob\ECircle.h" />
+    <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />
+    <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
+    <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
   </ItemGroup>
 </Project>

@@ -157,6 +157,9 @@
     <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Button\RectButton.cpp" />
     <ClCompile Include="Button\RoundRectButton.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
     <ClCompile Include="Map\Astar.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
     <ClCompile Include="ScrollList.cpp" />
@@ -172,7 +175,7 @@
     <ClCompile Include="Map\Custom.cpp" />
     <ClCompile Include="Object\Shot\ShotMng.cpp" />
     <ClCompile Include="Trap\SlipDamage.cpp" />
-    <ClCompile Include="Unit\Enemy\ECircle.cpp" />
+    <ClCompile Include="Unit\Enemy\Mob\ECircle.cpp" />
     <ClCompile Include="KeyController.cpp" />
     <ClCompile Include="Map\Map.cpp" />
     <ClCompile Include="Scene\BaseScene.cpp" />
@@ -205,6 +208,9 @@
     <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Button\RectButton.h" />
     <ClInclude Include="Button\RoundRectButton.h" />
+    <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
+    <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
+    <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />
     <ClInclude Include="Map\Astar.h" />
     <ClInclude Include="CustomState\CustomState.h" />
     <ClInclude Include="CustomState\EndCustom.h" />
@@ -228,7 +234,7 @@
     <ClInclude Include="Map\Custom.h" />
     <ClInclude Include="Object\Shot\ShotMng.h" />
     <ClInclude Include="Trap\SlipDamage.h" />
-    <ClInclude Include="Unit\Enemy\ECircle.h" />
+    <ClInclude Include="Unit\Enemy\Mob\ECircle.h" />
     <ClInclude Include="details\VECTOR2.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="KeyController.h" />
