@@ -95,7 +95,6 @@ void GameScene::BulletControler(void)
 					if (shooter != nullptr)
 					{
 						enemy->SetHP(shooter->GetAttackPower());
-						enemy->SetDeath(enemy->GetHP() <= 0 ? true : false);
 					}
 					break;
 				}
@@ -112,7 +111,6 @@ void GameScene::BulletControler(void)
 					if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
 					{
 						enemy->SetHP(unit->GetAttackPower());
-						enemy->SetDeath(enemy->GetHP() <= 0 ? true : false);
 					}
 				}
 			}

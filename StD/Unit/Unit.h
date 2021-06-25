@@ -9,7 +9,7 @@ struct UnitStat
 	float atkSpeed;			// UŒ‚ŠÔŠu
 	float atkRange;			// Ë’ö
 	unsigned int power;		// UŒ‚—Í
-	unsigned int life;		// ‘Ì—Í
+	int life;		// ‘Ì—Í
 	bool isDead;			// €‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
 };
 
@@ -25,10 +25,10 @@ public:
 	const float GetAtkRange(void);
 	const Vec2Float GetPos();
 	void SetPosition(Vec2Float pos);
-	const unsigned int GetHP();
+	const int GetHP();
 	void SetHP(int power);
 	unsigned int GetAttackPower(void);	
-	void SetDeath(bool flag);
+	//void SetDeath(bool flag);
 	const bool IsDeath();
 protected:
 	UnitStat state_;
