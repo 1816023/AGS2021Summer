@@ -10,8 +10,9 @@ EPentagon::EPentagon() : Enemy()
 EPentagon::EPentagon(MapInfo& mapInfo) : Enemy(mapInfo)
 {
 	updater_ = &EPentagon::StartUpdate;
-	// 円の敵固有パラメータ設定
-	state_.life = MID_HP;
+	// 五角形の敵固有パラメータ設定
+	state_.life = LOW_HP;
+	state_.power = HIGH_ATK;
 	enemyInfo_.speed = MID_SPEED;
 }
 
@@ -26,7 +27,7 @@ void EPentagon::Update(float deltaTime)
 
 void EPentagon::Draw()
 {
-	DrawRotaGraph(state_.pos.x, state_.pos.y, enemyInfo_.scale, 0.0f, IMAGE_ID(L"data/image/circle.png"), true);
+	DrawRotaGraph(state_.pos.x, state_.pos.y, enemyInfo_.scale, 0.0f, IMAGE_ID(L"data/image/pentagon.png"), true);
 	DrawFormatString(state_.pos.x, state_.pos.y + 8, 0xffffff, L"HP:%d", state_.life);
 	DrawCircle(state_.pos.x, state_.pos.y, 5, 0xffffff, true);
 }

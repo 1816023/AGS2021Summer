@@ -11,9 +11,9 @@ ESquare::ESquare(MapInfo& mapInfo) : Enemy(mapInfo)
 {
 	updater_ = &ESquare::StartUpdate;
 	// 三角の敵固有パラメータ設定
-	state_.life = MID_HP;
-	state_.power = LOW_ATK;
-	enemyInfo_.speed = HIGH_SPEED;
+	state_.life = HIGH_HP;
+	state_.power = MID_ATK;
+	enemyInfo_.speed = LOW_SPEED;
 }
 
 ESquare::~ESquare()
