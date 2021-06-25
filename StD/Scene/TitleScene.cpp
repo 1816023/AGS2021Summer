@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include "MainScene.h"
 #include "../Application.h"
-#include "../Unit/Enemy/ECircle.h"
+#include "../Unit/Enemy/Mob/ECircle.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../MouseController.h"
 #include "../Trap/SlipDamage.h"
