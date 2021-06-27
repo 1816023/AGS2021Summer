@@ -1,6 +1,6 @@
 #pragma once
 #include "CustomState.h"
-#include "../Unit/Enemy/EnemyType.h"
+//#include "../Unit/Enemy/EnemyType.h"
 #include "../Scene/CustomMapScene.h"
 //#include "../Unit/Enemy/Enemy.h"
 
@@ -49,7 +49,7 @@ struct EnemyCustom :public CustomStateBase
 	std::unique_ptr<Astar>astar_;
 	std::map<int, VECTOR2>spawner_;
 
-	EnemyType selEnemy_;
+	//EnemyType selEnemy_;
 
 	std::list<std::unique_ptr<Button>>button_;
 	std::list<ButtonText>buttonText_;

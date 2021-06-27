@@ -1,5 +1,5 @@
 #pragma once
-#include "Enemy.h"
+#include "../Enemy.h"
 
 // ‰~Œ`‚Ì“G
 class ECircle : public Enemy

@@ -1,10 +1,10 @@
 #include "ECircle.h"
-#include "../../Mng/ImageMng.h"
-#include "../../Map/Map.h"
+#include "../../../Mng/ImageMng.h"
+#include "../../../Map/Map.h"
 
 ECircle::ECircle() : Enemy()
 {
-	
+	updater_ = &ECircle::StartUpdate;
 }
 
 ECircle::ECircle(MapInfo& mapInfo):Enemy(mapInfo)
