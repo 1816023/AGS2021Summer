@@ -158,7 +158,7 @@ bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)
 	return false;
 }
 
-bool CustomMapScene::LoadText()
+bool CustomMapScene::LoadText(std::string type)
 {
 	tinyxml2::XMLDocument doc;
 	auto error=doc.LoadFile("data/textData.xml");
@@ -166,11 +166,28 @@ bool CustomMapScene::LoadText()
 	{
 		return false;
 	}
-	textData_.try_emplace( MapChipName::MAINSTAY ,doc.FirstChildElement("mainstay")->GetText() );
-	textData_.try_emplace( MapChipName::SPAWNER ,doc.FirstChildElement("spawner")->GetText() );
-	textData_.try_emplace( MapChipName::ROOT ,doc.FirstChildElement("root")->GetText() );
-	textData_.try_emplace( MapChipName::FIELD ,doc.FirstChildElement("field")->GetText() );
-	textData_.try_emplace( MapChipName::WALL ,doc.FirstChildElement("wall")->GetText() );
+	if (type == "map")
+	{
+		auto elm = doc.FirstChildElement(type.c_str());
+		textData_.try_emplace(MapChipName::MAINSTAY, elm->FirstChildElement("mainstay")->GetText());
+		textData_.try_emplace(MapChipName::SPAWNER, elm->FirstChildElement("spawner")->GetText());
+		textData_.try_emplace(MapChipName::ROOT, elm->FirstChildElement("root")->GetText());
+		textData_.try_emplace(MapChipName::FIELD, elm->FirstChildElement("field")->GetText());
+		textData_.try_emplace(MapChipName::WALL, elm->FirstChildElement("wall")->GetText());
+	}
+	else if("Enemy")
+	{
+		auto elm = doc.FirstChildElement(type.c_str());
+		textData_.try_emplace(MapChipName::MAINSTAY, elm->FirstChildElement("mainstay")->GetText());
+		textData_.try_emplace(MapChipName::SPAWNER, elm->FirstChildElement("spawner")->GetText());
+		textData_.try_emplace(MapChipName::ROOT, elm->FirstChildElement("root")->GetText());
+		textData_.try_emplace(MapChipName::FIELD, elm->FirstChildElement("field")->GetText());
+		textData_.try_emplace(MapChipName::WALL, elm->FirstChildElement("wall")->GetText());
 
+	}
+	else
+	{
+		return false;
+	}
 	return true;
 }

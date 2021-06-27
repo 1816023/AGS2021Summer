@@ -79,7 +79,7 @@ private:
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
 	bool FileNameErrorCheck(std::wstring fileName);
 	// 説明文をファイルからロードする
-	bool LoadText();
+	bool LoadText(std::string type);
 
 	friend SelectFile;
 	friend SetState;
