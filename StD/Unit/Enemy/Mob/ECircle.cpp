@@ -53,11 +53,6 @@ void ECircle::RunUpdate(float deltaTime)
 	{
 		state_.isDead = true;
 	}
-	static int cnt = 0;
-	if (cnt++ > 60)
-	{
-		state_.isDead = true;
-	}
 }
 
 void ECircle::deathUpdate(float deltaTime)
