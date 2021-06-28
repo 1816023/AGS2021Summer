@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include <DxLib.h>
 #include "ResultScene.h"
+#include "GameOverScene.h"
 #include "../Application.h"
 #include "../MouseController.h"
 #include "../Object/Shot/ShotMng.h"
@@ -42,9 +43,11 @@ unique_Base GameScene::Update(unique_Base own)
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
 	BulletControler();
 
+	int spawnRemain = 0;
 	for (auto& spawners : enemySpawner_)
 	{
 		spawners->Update(delta);
+		spawnRemain += spawners->GetRemainSpawnCnt();
 	}
 	enemyMng_->Update(delta);
 
@@ -61,9 +64,14 @@ unique_Base GameScene::Update(unique_Base own)
 		}
 	}
 
-	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
+	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE])
+		|| spawnRemain == 0 && enemyMng_->GetEnemies().size() == 0)
 	{
 		return std::make_unique<ResultScene>();
+	}
+	if (enemyMng_->IsGoal() == true)
+	{
+		return std::make_unique<GameOverScene>();
 	}
 	return std::move(own);
 }

@@ -13,6 +13,7 @@ EnemyManager::EnemyManager(Map& map)
 	mapInfo.mapSize = map.GetMapSize();
 	prototype_.emplace(EnemyType::Circle, new ECircle(mapInfo));
 	shotMng_ = std::make_unique<ShotMng>();
+	isGoal_ = false;
 }
 
 EnemyManager::~EnemyManager()
@@ -32,6 +33,15 @@ void EnemyManager::Update(float deltaTime)
 		enemy->Update(deltaTime);
 		/*shotMng_->AddBullet(enemy,enemy->GetPos());
 		shotMng_->BulletMove(enemy, Vec2Float(100, 100));*/
+	}
+	auto find = std::find_if(enemies_.begin(), enemies_.end(),
+		[](shared_ptr<Enemy>& enemy)
+		{
+			return enemy->IsGoal();
+		});
+	if (find != enemies_.end())
+	{
+		isGoal_ = true;
 	}
 	enemies_.erase(remove_if(enemies_.begin(), enemies_.end(),
 		[](shared_ptr<Enemy>& enemy)
@@ -58,4 +68,9 @@ EnemyList& EnemyManager::GetEnemies()
 void EnemyManager::Killer(std::shared_ptr<Enemy> enemy)
 {
 	enemies_.erase(std::find(enemies_.begin(), enemies_.end(), enemy));
+}
+
+bool EnemyManager::IsGoal()
+{
+	return isGoal_;
 }

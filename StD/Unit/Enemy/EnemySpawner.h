@@ -16,6 +16,8 @@ public:
 	void Spawn(EnemyType type);
 	// 更新
 	void Update(float deltaTime);
+	// 残りの敵の数
+	int GetRemainSpawnCnt();
 private:
 	Vec2Float pos_;	// 座標
 	std::vector<EnemyType>spawnList_;	// スポーンする敵の種類のリスト

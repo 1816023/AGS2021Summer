@@ -82,6 +82,7 @@ void Enemy::SearchRoot(float deltaTime)
 	if (enemyInfo_.root.size() <= enemyInfo_.rootIdx)
 	{
 		enemyInfo_.rootIdx = 0;
+		enemyInfo_.isGoal = true;
 	}
 	switch (enemyInfo_.root[enemyInfo_.rootIdx])
 	{

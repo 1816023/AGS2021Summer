@@ -20,8 +20,10 @@ public:
 	const Vec2Float GetPos();
 	// Šg‘å—¦æ“¾
 	const float GetScale();	
+	void ScaleLock(bool lock);
 	void DebugDraw();
 private:
+	bool scaleLock_;	// Šgk‚µ‚È‚¢true
 	Vec2Float pos_;		// À•W
 	float scale_;		// Šg‘å—¦
 	Vec2Float beforePos_;		// ˆÚ“®‘OÀ•W

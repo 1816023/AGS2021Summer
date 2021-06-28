@@ -57,3 +57,8 @@ void EnemySpawner::Update(float deltaTime)
 		spawnList_.pop_back();
 	}
 }
+
+int EnemySpawner::GetRemainSpawnCnt()
+{
+	return spawnList_.size();
+}

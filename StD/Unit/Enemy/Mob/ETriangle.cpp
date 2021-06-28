@@ -50,7 +50,7 @@ void ETriangle::StartUpdate(float deltaTime)
 void ETriangle::RunUpdate(float deltaTime)
 {
 	Move(deltaTime);
-	if (state_.isDead)
+	if (state_.life <= 0)
 	{
 		state_.isDead = true;
 	}
