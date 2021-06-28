@@ -3,7 +3,7 @@
 //#include "../Unit/Enemy/EnemyType.h"
 #include "../Scene/CustomMapScene.h"
 //#include "../Unit/Enemy/Enemy.h"
-
+#include "../ScrollList.h"
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase
@@ -23,13 +23,17 @@ struct EnemyCustom :public CustomStateBase
 				astar_->AstarStart(mainStay, spawners.at(0));
 			}
 		}
+		list = std::make_unique<ScrollList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/3), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50), ListType::STRING);
+		list->Add(StringState{ "草草草",0xffffff });
+		list->Add(StringState{ "草草草",0xff0000 });
 		spawner_= scene->cusMap_->Getspawner();
 		return true;
 	}
 	void Update(CustomMapScene* scene)
 	{
-
-	}
+		list->Update();
+		lpApplication.GetCamera().SetScale(1.0f);
+	};
 
 	void Draw(CustomMapScene* scene)
 	{
@@ -42,6 +46,7 @@ struct EnemyCustom :public CustomStateBase
 		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 		// 説明文の表示
 
+		list->Draw();
 	}
 	void Delete() {
 	}
@@ -59,5 +64,6 @@ struct EnemyCustom :public CustomStateBase
 	// 最大列数（日本語全角で16文字）
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
+	std::unique_ptr<ScrollList> list;
 
 };

@@ -80,8 +80,8 @@ void CustomMapScene::Draw()
 void CustomMapScene::DrawUI()
 {
 	custom_[nowState_]->Draw(this);
-	const auto& mainStay = cusMap_->GetMainStay();
-	DrawFormatString(0, 48, 0xffffff, L"mainStay x %d, y %d", mainStay.at(1).x, mainStay.at(1).y);
+	//const auto& mainStay = cusMap_->GetMainStay();
+	//DrawFormatString(0, 48, 0xffffff, L"mainStay x %d, y %d", mainStay.at(1).x, mainStay.at(1).y);
 }
 
 int CustomMapScene::SaveCheck()
