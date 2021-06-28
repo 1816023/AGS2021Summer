@@ -52,9 +52,9 @@ void ScrollList::Update()
     lpMouseController.GetWheel();
     if (lpMouseController.IsHitBoxToMouse(pos_,pos_+size_))
     {
-        scrollPos_ = 0;
+        //scrollPos_ = 0;
         scrollPos_ += lpMouseController.GetWheel();
-        scrollPos_ = (scrollPos_ <= 0 ? scrollPos_ : 0);
+        scrollPos_ = (scrollPos_ <= 0.0f ? scrollPos_ : 0.0f);
         int size=0;
         switch (type_)
         {
@@ -98,7 +98,7 @@ void ScrollList::Draw()
     default:
         break;
     }
-    DrawFormatString(0, 10, 0xffffff, L"%d", scrollPos_);
+    DrawFormatString(0, 10, 0xffffff, L"%f", scrollPos_);
     SetDrawScreen(defScreen);
     DrawGraph(pos_.x, pos_.y, screen_, true);
 }

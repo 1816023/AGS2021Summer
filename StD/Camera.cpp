@@ -36,7 +36,7 @@ void Camera::Control()
 	if (!scaleLock_)
 	{
 		auto wheel = static_cast<float>(lpMouseController.GetWheel());
-		scale_ = 1.0f + wheel * 0.01f;
+		scale_ += wheel * 0.01f;
 	}
 	
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_RIGHT))

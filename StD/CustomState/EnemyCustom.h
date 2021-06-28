@@ -28,7 +28,14 @@ struct EnemyCustom :public CustomStateBase
 	void Update(CustomMapScene* scene)
 	{
 		list->Update();
-		lpApplication.GetCamera().ScaleLock(true);
+		if (lpMouseController.IsHitBoxToMouse(VECTOR2(), VECTOR2(SELECT_UI_POS.first.x, TEXT_UI_POS.first.y)))
+		{
+			lpApplication.GetCamera().ScaleLock(false);
+		}
+		else
+		{
+			lpApplication.GetCamera().ScaleLock(true);
+		}
 	};
 
 	void Draw(CustomMapScene* scene)

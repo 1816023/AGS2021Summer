@@ -42,7 +42,7 @@ public:
 	void Draw();
 private:
 	// スクロール量
-	int scrollPos_;
+	float scrollPos_;
 	// 描画位置（左上）
 	VECTOR2 pos_;
 	// 描画サイズ
