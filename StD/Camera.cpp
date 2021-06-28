@@ -8,6 +8,7 @@ Camera::Camera()
 	scale_ = 1.0f;
 	beforePos_ = Vec2Float(0.0f, 0.0f);
 	clickPos_ = VECTOR2(0, 0);
+	wheelLock_ = true;
 }
 
 Camera::~Camera()
@@ -32,8 +33,11 @@ void Camera::Control()
 	{
 		pos_.y--;
 	}*/
-	auto wheel = static_cast<float>(lpMouseController.GetWheel());
-	scale_ = 1.0f + wheel * 0.01f;	
+	if (!wheelLock_)
+	{
+		auto wheel = static_cast<float>(lpMouseController.GetWheel());
+		scale_ = 1.0f + wheel * 0.01f;
+	}
 	
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_RIGHT))
 	{
@@ -76,6 +80,11 @@ const Vec2Float Camera::GetPos()
 const float Camera::GetScale()
 {
 	return scale_;
+}
+
+void Camera::WheelLock(bool lock)
+{
+	wheelLock_ = lock;
 }
 
 void Camera::DebugDraw()
