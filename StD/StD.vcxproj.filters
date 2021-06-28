@@ -50,6 +50,7 @@
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
+    <ClCompile Include="Scene\GameOverScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -113,5 +114,6 @@
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
+    <ClInclude Include="Scene\GameOverScene.h" />
   </ItemGroup>
 </Project>
