@@ -16,6 +16,7 @@ GameScene::GameScene()
 	map->SetUp("defalt_map");
 
 	IMAGE_ID(L"data/image/circle.png");
+	IMAGE_ID(L"data/image/Hexagon_Blue.png");
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
@@ -35,6 +36,11 @@ unique_Base GameScene::Update(unique_Base own)
 	auto delta = Application::Instance().GetDelta();
 
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	{
+
+	}
+
+	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
 		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y));
 	}
@@ -142,4 +148,25 @@ void GameScene::DrawUI()
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
 	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
+	
+	MenuDraw(m_pos);
+}
+
+void GameScene::MenuDraw(VECTOR2& m_pos)
+{
+	auto menuSize = Vec2Int(DEF_SCREEN_SIZE_X / 4, DEF_SCREEN_SIZE_Y);
+
+	//menu‰æ–Ê
+	DrawBox(DEF_SCREEN_SIZE_X - menuSize.x, menuSize.y, DEF_SCREEN_SIZE_X, 0, 0x000000, true);
+	DrawLine(DEF_SCREEN_SIZE_X - menuSize.x, menuSize.y, DEF_SCREEN_SIZE_X - menuSize.x, 0, 0xffffff);
+	DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, 0, lpImageMng.GetID(L"data/image/Hexagon_Blue.png"), true);
+
+	//Ú×•\Ž¦
+	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)
+	{
+		auto size_x = (m_pos.x + 200 <= DEF_SCREEN_SIZE_X ? 200 : -200);
+		auto size_y = (m_pos.y <= DEF_SCREEN_SIZE_Y / 2 ? 100 : -100);
+		DrawBox(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 0x000000, true);
+		DrawBox(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 0xffffff, false);
+	}
 }

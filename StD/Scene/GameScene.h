@@ -18,6 +18,7 @@ public:
 private:
 	void Draw()override;
 	void DrawUI()override;
+	void MenuDraw(VECTOR2& m_pos);
 	void BulletControler(void);
 	//デバッグ
 	std::unique_ptr<Map> map;
