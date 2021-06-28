@@ -1,8 +1,6 @@
 #pragma once
 #include "CustomState.h"
-//#include "../Unit/Enemy/EnemyType.h"
 #include "../Scene/CustomMapScene.h"
-//#include "../Unit/Enemy/Enemy.h"
 #include "../ScrollList.h"
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
@@ -12,22 +10,46 @@ struct EnemyCustom :public CustomStateBase
 	~EnemyCustom() {};
 	bool Init(CustomMapScene* scene)
 	{
+		const int bSize = 64;
+		const int bSpace = 20;
+		const int basePosX = SELECT_UI_POS.first.x + bSpace;
+		const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
 		astar_ = std::make_unique<Astar>(*scene->cusMap_);
 		const auto& spawners = scene->cusMap_->Getspawner();
 		const auto& mainStay = scene->cusMap_->GetMainStay();
+		// ボタンの作成
+		if (spawners.size() == 2)
+		{
+			button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace * 2), VECTOR2(basePosY, bSize + bSpace * 2), VECTOR2(10, 10), 0xff0000, [&]() { return true; }, VECTOR2()));
+			buttonText_.emplace_back(ButtonText{ "スポナー1",0xffffff,VECTOR2(basePosX,  bSpace * 2 - GetFontSize()) });
+		
+			button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace * 2), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace * 2), VECTOR2(10, 10), 0xffffff, [&]() {return true; }, VECTOR2()));
+			buttonText_.emplace_back(ButtonText{ "スポナー2", 0xffffff, VECTOR2(basePosX + (bSize + bSpace), bSpace * 2 - GetFontSize()) });
+
+		}
+		else if(spawners.size()==1)
+		{
+			
+		}
+		else
+		{
+			// エラー
+		}
+
+		
 		if (mainStay != VECTOR2(-1,-1) && spawners.size() != 0)
 		{
 			astar_->AstarStart(mainStay, spawners.at(0));
 		}
-		list = std::make_unique<ScrollList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/3), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50), ListType::STRING);
-		list->Add(StringState{ "草草草",0xffffff });
-		list->Add(StringState{ "草草草",0xff0000 });
+		list_ = std::make_unique<ScrollList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/1.5), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), (SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50)/2), ListType::STRING);
+		list_->Add(StringState{ "草草草",0xffffff });
+		list_->Add(StringState{ "草草草",0xff0000 });
 		spawner_= scene->cusMap_->Getspawner();
 		return true;
 	}
 	void Update(CustomMapScene* scene)
 	{
-		list->Update();
+		list_->Update();
 		if (lpMouseController.IsHitBoxToMouse(VECTOR2(), VECTOR2(SELECT_UI_POS.first.x, TEXT_UI_POS.first.y)))
 		{
 			lpApplication.GetCamera().ScaleLock(false);
@@ -35,6 +57,10 @@ struct EnemyCustom :public CustomStateBase
 		else
 		{
 			lpApplication.GetCamera().ScaleLock(true);
+		}
+		for (auto&& list : button_)
+		{
+			list->Update();
 		}
 	};
 
@@ -49,7 +75,15 @@ struct EnemyCustom :public CustomStateBase
 		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 		// 説明文の表示
 
-		list->Draw();
+		for (auto&& list : button_)
+		{
+			list->Draw();
+		}
+		for (auto&& list : buttonText_)
+		{
+			DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
+		}
+		list_->Draw();
 	}
 	void Delete() {
 	}
@@ -67,6 +101,6 @@ struct EnemyCustom :public CustomStateBase
 	// 最大列数（日本語全角で16文字）
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
-	std::unique_ptr<ScrollList> list;
+	std::unique_ptr<ScrollList> list_;
 
 };

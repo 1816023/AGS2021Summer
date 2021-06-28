@@ -10,7 +10,7 @@ ScrollList::ScrollList(VECTOR2 pos,VECTOR2 size, ListType type, int fonthande)
     size_ = size;
     type_ = type;
     fontH_ =fonthande;
-    screen_ = MakeScreen(size_.x, size_.y,0);
+    screen_ = MakeScreen(size_.x, size_.y,1);
 }
 
 ScrollList::~ScrollList()
@@ -98,7 +98,8 @@ void ScrollList::Draw()
     default:
         break;
     }
-    DrawFormatString(0, 10, 0xffffff, L"%f", scrollPos_);
+    //DrawFormatString(0, 10, 0xffffff, L"%f", scrollPos_);
+    DrawBox(0, 0, size_.x, size_.y, 0xffffff, false);
     SetDrawScreen(defScreen);
     DrawGraph(pos_.x, pos_.y, screen_, true);
 }
@@ -112,11 +113,11 @@ void ScrollList::sDraw()
     {
         if (fontH_ ==-1)
         {
-            DrawString(0, fontsize*cnt+scrollPos_, _StW("・"+list.str).c_str(), list.color);
+            DrawString(1,1 + fontsize*cnt+scrollPos_, _StW("・"+list.str).c_str(), list.color);
         }
         else
         {
-            DrawStringToHandle(0, fontsize*cnt+scrollPos_, _StW("・"+list.str).c_str(), list.color, fontH_);
+            DrawStringToHandle(1,1 + fontsize*cnt+scrollPos_, _StW("・"+list.str).c_str(), list.color, fontH_);
         }
         cnt++;
     }
