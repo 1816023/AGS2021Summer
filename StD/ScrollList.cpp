@@ -54,6 +54,26 @@ void ScrollList::Update()
     {
         scrollPos_ = 0;
         scrollPos_ += lpMouseController.GetWheel();
+        scrollPos_ = (scrollPos_ <= 0 ? scrollPos_ : 0);
+        int size=0;
+        switch (type_)
+        {
+        case ListType::STRING:
+            size = slist_.size();
+            break;
+        case ListType::IMAGE:
+            size = ilist_.size();
+            break;
+        case ListType::COLOR_BOX:
+            size = blist_.size();
+            break;
+        case ListType::Max:
+            break;
+        default:
+            break;
+        }
+        scrollPos_ = (scrollPos_ >= -GetFontSize() * size ? scrollPos_ : -GetFontSize() * size);
+
     }
 }
 
@@ -78,6 +98,7 @@ void ScrollList::Draw()
     default:
         break;
     }
+    DrawFormatString(0, 10, 0xffffff, L"%d", scrollPos_);
     SetDrawScreen(defScreen);
     DrawGraph(pos_.x, pos_.y, screen_, true);
 }

@@ -15,9 +15,9 @@ struct EnemyCustom :public CustomStateBase
 		astar_ = std::make_unique<Astar>(*scene->cusMap_);
 		const auto& spawners = scene->cusMap_->Getspawner();
 		const auto& mainStay = scene->cusMap_->GetMainStay();
-		if (mainStay.size() != 0 && spawners.size() != 0)
+		if (mainStay != VECTOR2(-1,-1) && spawners.size() != 0)
 		{
-			astar_->AstarStart(mainStay.at(1), spawners.at(0));
+			astar_->AstarStart(mainStay, spawners.at(0));
 		}
 		list = std::make_unique<ScrollList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/3), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50), ListType::STRING);
 		list->Add(StringState{ "‘‘‘",0xffffff });
@@ -28,7 +28,7 @@ struct EnemyCustom :public CustomStateBase
 	void Update(CustomMapScene* scene)
 	{
 		list->Update();
-		lpApplication.GetCamera().SetScale(1.0f);
+		lpApplication.GetCamera().ScaleLock(true);
 	};
 
 	void Draw(CustomMapScene* scene)
