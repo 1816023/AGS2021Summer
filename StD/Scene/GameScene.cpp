@@ -61,7 +61,8 @@ unique_Base GameScene::Update(unique_Base own)
 		}
 	}
 
-	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
+	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE])
+		|| enemyMng_->IsGoal() == true)
 	{
 		return std::make_unique<ResultScene>();
 	}
