@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="Shift_JIS"?>
-<mainstay>防衛拠点
+<map>
+  <mainstay>防衛拠点
 敵はこの場所を目指し侵攻してくる
-この場所に敵がたどり着くとゲームオーバー</mainstay>
-<spawner>敵出現位置
-敵はこの場所から生成される</spawner>
-<root>敵侵攻ルート
+この場所に敵がたどり着くとゲームオーバー
+  </mainstay>
+  <spawner>敵出現位置
+敵はこの場所から生成される
+  </spawner>
+  <root>敵侵攻ルート
 敵はこの場所のみ通行可能
-「敵出現位置」と「防衛拠点」につながっている必要がある</root>
-<field>自機配置箇所
-自身のユニットを配置できる場所</field>
-<wall>壁
-自身のユニットも敵のユニットも配置・侵攻することができない場所</wall>
+「敵出現位置」と「防衛拠点」につながっている必要がある
+  </root>
+  <field>自機配置箇所
+自身のユニットを配置できる場所
+  </field>
+  <wall>壁
+自身のユニットも敵のユニットも配置・侵攻することができない場所
+  </wall>
+</map>
+<Enemy>
+  <triangle>
+  </triangle>
+  <circle>
+  </circle>
+  <rect>
+  </rect>
+  <star>
+  </star>
+</Enemy>

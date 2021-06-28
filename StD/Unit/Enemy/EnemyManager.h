@@ -25,10 +25,13 @@ public:
 	EnemyList& GetEnemies();
 	// €–S‚µ‚½“G‚Ìíœ
 	void Killer(std::shared_ptr<Enemy> enemy);
+	// ‚¢‚¸‚ê‚©‚Ì“G‚ªƒS[ƒ‹‚µ‚½‚©
+	bool IsGoal();
 private:
 	// “G‚ğì¬‚·‚é
 	Enemy& CreateEnemy(EnemyType type);
 
+	bool isGoal_;	// ƒS[ƒ‹‚µ‚Ä‚¢‚é‚©
 	EnemyList enemies_;	// “GƒŠƒXƒg
 	using Prototype = std::unordered_map<EnemyType, Enemy*>;
 	Prototype prototype_;	// “G‚Ìƒvƒƒgƒ^ƒCƒv

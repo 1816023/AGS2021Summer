@@ -74,7 +74,7 @@ struct MapCustom:public CustomStateBase
 		}
 		scene->blendAlpha_ = 256;
 		selChip_ = MapChipName::MAX;
-		scene->LoadText();
+		scene->LoadText("map");
 		errorNum_ = 0;
 		// ƒGƒ‰[‚Ì“à—e
 		errorText_.push_back("");

@@ -157,6 +157,7 @@
     <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Button\RectButton.cpp" />
     <ClCompile Include="Button\RoundRectButton.cpp" />
+    <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Button\RectButton.h" />
     <ClInclude Include="Button\RoundRectButton.h" />
+    <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />

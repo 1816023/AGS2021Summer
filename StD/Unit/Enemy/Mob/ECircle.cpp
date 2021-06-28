@@ -49,7 +49,7 @@ void ECircle::StartUpdate(float deltaTime)
 void ECircle::RunUpdate(float deltaTime)
 {
 	Move(deltaTime);
-	if (state_.isDead)
+	if (state_.life <= 0)
 	{
 		state_.isDead = true;
 	}

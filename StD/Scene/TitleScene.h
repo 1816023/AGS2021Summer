@@ -3,8 +3,6 @@
 #include "../VECTOR2.h"
 
 class ECircle;
-class PlayerMng;
-
 class TitleScene :
 	public BaseScene
 {
