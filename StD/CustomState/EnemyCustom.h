@@ -15,7 +15,7 @@ struct EnemyCustom :public CustomStateBase
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
 		const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
 		astar_ = std::make_unique<Astar>(*scene->cusMap_);
-		const auto& spawners = scene->cusMap_->Getspawner();
+		const auto& spawners = scene->cusMap_->GetSpawner();
 		const auto& mainStay = scene->cusMap_->GetMainStay();
 		// ボタンの作成
 		if (spawners.size() == 2)
@@ -37,14 +37,16 @@ struct EnemyCustom :public CustomStateBase
 		}
 
 		
-		if (mainStay != VECTOR2(-1,-1) && spawners.size() != 0)
+		if (mainStay.size() != 0 && spawners.size() != 0)
 		{
-			astar_->AstarStart(mainStay, spawners.at(0));
+
+			astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
+							   scene->cusMap_->PosFromIndex(spawners[0]));
 		}
 		list_ = std::make_unique<ScrollList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/1.5), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), (SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50)/2), ListType::STRING);
 		list_->Add(StringState{ "草草草",0xffffff });
 		list_->Add(StringState{ "草草草",0xff0000 });
-		spawner_= scene->cusMap_->Getspawner();
+		spawner_= spawners;
 		return true;
 	}
 	void Update(CustomMapScene* scene)
@@ -89,7 +91,7 @@ struct EnemyCustom :public CustomStateBase
 	}
 	// Astarクラスのポインター
 	std::unique_ptr<Astar>astar_;
-	std::map<int, VECTOR2>spawner_;
+	std::vector<int>spawner_;
 
 	//EnemyType selEnemy_;
 

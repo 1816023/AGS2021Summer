@@ -35,12 +35,15 @@ struct ButtonText
 	unsigned int color_;	// 文字色
 	VECTOR2 pos_;			// 描画位置
 };
+
+
 class Astar;
 class SelectFile;
 class SetState;
 class MapCustom;
 class EnemyCustom;
 class EndCustom;
+enum class ErrorCode : int;
 class CustomMapScene :
 	public BaseScene
 {
@@ -59,7 +62,7 @@ private:
 	void DrawUI()override;
 	// customクラスのポインター
 	std::unique_ptr<Custom>cusMap_;
-	
+
 	//
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
@@ -75,7 +78,7 @@ private:
 	// return 1 自拠点敵拠点の数異常
 	// return 2 自拠点の数異常
 	// return 3 敵拠点の数異常
-	int SaveCheck();
+	ErrorCode SaveCheck();
 	// 入力されたファイル名にエラーがないかチェックする,trueならエラー
 	bool FileNameErrorCheck(std::wstring fileName);
 	// 説明文をファイルからロードする

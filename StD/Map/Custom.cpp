@@ -3,9 +3,12 @@
 #include <Windows.h>
 #include <functional>
 #include <sstream>
+#include <cassert>
 #include "../File/FileSystem.h"
 #include "../StringUtil.h"
 #include "../Application.h"
+#include "../MapEnum.h"
+
 Custom::Custom(VECTOR2 offset):offset_(offset)
 {
 	mapIdx = 0;
@@ -29,6 +32,7 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 	
 	if (!Map::SetUp(StringUtil::WStringToString(fileName)))
 	{
+		// マップが存在しない時
 		mapData_.resize(mapSize.y);
 		for (auto& map : mapData_)
 		{
@@ -38,25 +42,19 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 			}
 		}
 	}
-	
-	mainStay_ = { -1, -1 };
-	int y = 0;
-	// 自拠点を検索する
-	for (auto map : mapData_)
+	else 
 	{
-		auto find = std::find_if(map.begin(), map.end(), [](const MapChipName& data)
-			{
-				return data == MapChipName::MAINSTAY;
-			});
-
-		if (find != map.end())
+		// マップが存在した時
+		int y = 0;
+		// 自拠点を検索して格納する
+		for (auto map : mapData_)
 		{
-			mainStay_ = { static_cast<int>(std::distance(map.begin(),find)), y };
-			break;
+			// 再起
+			FindMainStay(map, y, map.begin());
+			y++;
 		}
-		y++;
+		// セーブされたスポナーを読み込み
 	}
-
 	CreateMapFile(mapSize, fileName);
 }
 
@@ -71,33 +69,43 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		return false;
 	}
 	VECTOR2 mapPos = pos / VECTOR2(state_.chipSize_.x,state_.chipSize_.y);
- 	if (mapData_.size() > mapPos.y && mapData_[mapPos.y].size() > mapPos.x)
+	int id = mapPos.x + mapPos.y * state_.mapSize_.x;
+	if (mapData_.size() <= mapPos.y && mapData_[mapPos.y].size() <= mapPos.x)
 	{
-		if (chip == MapChipName::MAINSTAY)
-		{
-			if (mainStay_ == VECTOR2(-1, -1))
-			{
-				mainStay_ = mapPos;
-				mapData_[mapPos.y][mapPos.x] = chip;
-			}
-		}
-		else
-		{
-			if (mainStay_ == mapPos)
-			{
-				mainStay_ = { -1, -1 };
-			}
-			if (chip == MapChipName::SPAWNER)
-			{
-				spawners_.try_emplace(mapIdx, mapPos);
-				mapIdx++;
-			}
-			mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
-		}
-		return true;
+		return false;
 	}
-	
-	return false;
+	auto msFind = std::find(mainStay_.begin(), mainStay_.end(), id);
+	auto spFind = std::find(spawners_.begin(), spawners_.end(), id);
+	if (chip == MapChipName::MAINSTAY)
+	{
+		if (mainStay_.size() < 2 && msFind == mainStay_.end())
+		{
+			mainStay_.emplace_back(id);
+			mapData_[mapPos.y][mapPos.x] = chip;
+		}
+	}
+	else if (chip == MapChipName::SPAWNER)
+	{
+		if (spFind == spawners_.end() && spawners_.size() < 2)
+		{
+			spawners_.emplace_back(id);
+			mapData_[mapPos.y][mapPos.x] = chip;
+			return true;
+		}
+	}
+	else
+	{
+		if (msFind != mainStay_.end())
+		{
+			mainStay_.erase(msFind);
+		}
+		if (spFind != spawners_.end())
+		{
+			spawners_.erase(spFind);
+		}
+		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
+	}	
+	return true;
 }
 
 bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
@@ -168,7 +176,6 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 	}
 	else
 	{
-		
 		auto error = document_.LoadFile(filePath.c_str());
 		if (error != tinyxml2::XML_SUCCESS)
 		{
@@ -225,8 +232,6 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 		}
 
 	}
-
-
 	return true;
 }
 
@@ -266,13 +271,42 @@ bool Custom::SaveFile()
 	return true;
 }
 
-const VECTOR2& Custom::GetMainStay()
+void Custom::FindMainStay(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
+{
+	auto find = std::find_if(fStart, map.end(), [](const MapChipName& data)
+		{
+			return data == MapChipName::MAINSTAY;
+		});
+
+	if (find != map.end())
+	{
+		// 拠点限界以上のデータだった場合
+		// ※マップデータ外部でいじる時注意
+		if (mainStay_.size() > 2)
+		{
+			assert(false);
+		}
+		auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
+		mainStay_.emplace_back(point.x + point.y * state_.mapSize_.x);
+
+		// 再帰的に次を返す
+		FindMainStay(map, y, find + 1);
+	}
+}
+
+const std::vector<int>& Custom::GetMainStay()
 {
 	return mainStay_;
 }
 
-const std::map<int, VECTOR2>& Custom::Getspawner()
+const std::vector<int>& Custom::GetSpawner()
 {
 	return spawners_;
 }
+
+VECTOR2 Custom::PosFromIndex(int index)
+{
+	auto y = index / state_.mapSize_.x;
+	return VECTOR2(index - y * state_.mapSize_.x,y );
+} 
 
