@@ -28,9 +28,9 @@ bool Application::Init()
 	int x, y, col;
 	GetScreenState(&x, &y, &col);
 	gameScreen_ = MakeScreen(chipSize * mapSize, chipSize * mapSize);
+	camera_ = std::make_unique<Camera>();
 	sceneController_ = std::make_unique<TitleScene>();
 	oldTime_ = system_clock::now();
-	camera_ = std::make_unique<Camera>();
 	return true;
 }
 
