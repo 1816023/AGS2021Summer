@@ -12,7 +12,7 @@
 #include "../CustomState/EndCustom.h"
 #include "../StringUtil.h"
 #include "../Map/Astar.h"
-
+#include "../MapEnum.h"
 #define CUSTOM dynamic_cast<Custom*>(cusMap_.get())
 CustomMapScene::CustomMapScene()
 {
@@ -80,11 +80,25 @@ void CustomMapScene::Draw()
 void CustomMapScene::DrawUI()
 {
 	custom_[nowState_]->Draw(this);
-	//const auto& mainStay = cusMap_->GetMainStay();
-	//DrawFormatString(0, 48, 0xffffff, L"mainStay x %d, y %d", mainStay.at(1).x, mainStay.at(1).y);
+	const auto& mainStay = cusMap_->GetMainStay();
+	int cnt = 0;
+	auto mapSize = cusMap_->GetMapSize().x;
+	for( auto& ms : mainStay)
+	{
+		auto y = ms / mapSize;
+		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"mainStay%d = x %d, y %d", cnt+1, ms - y * mapSize, y);
+		cnt++;
+	}
+	const auto& spawners = cusMap_->GetSpawner();
+	for (auto& sp : spawners)
+	{
+		auto y = sp / mapSize;
+		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - mainStay.size(), sp - y * mapSize, y);
+		cnt++;
+	}
 }
 
-int CustomMapScene::SaveCheck()
+ErrorCode CustomMapScene::SaveCheck()
 {
 	int mainStayNum = 0;
 	int spawnerNum = 0;
@@ -100,21 +114,21 @@ int CustomMapScene::SaveCheck()
 	}
 	if (mainStayNum >= 3 && spawnerNum >= 3)
 	{
-		return 1;
+		return ErrorCode::MsSpError;
 	}
 	else if(mainStayNum>=3)
 	{
-		return 2;
+		return ErrorCode::MsError;
 	}
 	else if(spawnerNum>=3)
 	{
-		return 3;
+		return ErrorCode::SpError;
 	}
 	else
 	{
-		return 0;
+		return ErrorCode::NoError;
 	}
-	return false;
+	return ErrorCode::NoError;
 }
 
 bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)
@@ -153,8 +167,6 @@ bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)
 			return true;
 		}
 	}
-
-
 	return false;
 }
 
