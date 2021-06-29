@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "MainScene.h"
 #include "../Application.h"
+#include "../Camera.h"
 #include "../Unit/Enemy/Mob/ECircle.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../MouseController.h"
@@ -19,6 +20,8 @@ TitleScene::TitleScene()
 	HP = 50;
 	pos = { 100,100 };
 	speed = 2;
+	lpApplication.GetCamera().SetScale(1.0f);
+	lpApplication.GetCamera().ScaleLock(true);
 }
 
 TitleScene::~TitleScene()
