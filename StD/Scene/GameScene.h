@@ -1,6 +1,14 @@
 #pragma once
+#include <string>
 #include "BaseScene.h"
 #include "../Map/Map.h"
+
+struct MenuState
+{
+	std::string name;
+	int imageId;
+	Vec2Float pos;
+};
 
 class ShotMng;
 class PlayerMng;
@@ -24,7 +32,6 @@ private:
 	std::unique_ptr<Map> map;
 	std::unique_ptr<PlayerMng> playerMng_;
 	std::unique_ptr<EnemyManager> enemyMng_;
-
 	// Œ»İ‚Í‚±‚±‚ÉMap‚ÉˆÚ‚·—\’è
 	std::vector<std::shared_ptr<EnemySpawner>>enemySpawner_;	// “G¶¬ƒNƒ‰ƒX
 

@@ -165,16 +165,20 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 	auto menuSize = Vec2Int(DEF_SCREEN_SIZE_X / 4, DEF_SCREEN_SIZE_Y);
 
 	//menu‰æ–Ê
-	DrawBox(DEF_SCREEN_SIZE_X - menuSize.x, menuSize.y, DEF_SCREEN_SIZE_X, 0, 0x000000, true);
-	DrawLine(DEF_SCREEN_SIZE_X - menuSize.x, menuSize.y, DEF_SCREEN_SIZE_X - menuSize.x, 0, 0xffffff);
-	DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, 0, lpImageMng.GetID(L"data/image/Hexagon_Blue.png"), true);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0x888888, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0xffffff, false);
+	DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, 10, lpImageMng.GetID(L"data/image/Hexagon_Blue.png"), true);
 
 	//Ú×•\Ž¦
 	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)
 	{
 		auto size_x = (m_pos.x + 200 <= DEF_SCREEN_SIZE_X ? 200 : -200);
 		auto size_y = (m_pos.y <= DEF_SCREEN_SIZE_Y / 2 ? 100 : -100);
-		DrawBox(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 0x000000, true);
-		DrawBox(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 0xffffff, false);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0x888888, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0xffffff, false);
 	}
 }
