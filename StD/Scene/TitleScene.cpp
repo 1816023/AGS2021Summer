@@ -35,7 +35,7 @@ void TitleScene::Draw()
 	DrawRotaGraph(420, 150, 1, 0, image, false);
 
 	SetFontSize(40);
-	DrawString(280, 400, L"Touch To Start", 0xffffff);
+	DrawString(280, 400, L"Push To Space", 0xffffff);
 	SetFontSize(16);
 }
 
