@@ -90,5 +90,5 @@ void Camera::ScaleLock(bool lock)
 void Camera::DebugDraw()
 {
 	auto dist = lpMouseController.GetPos() - clickPos_;
-	DrawFormatString(0, 0, 0xffffff, L"dist %d, %d", dist.x, dist.y);
+	//DrawFormatString(0, 0, 0xffffff, L"dist %d, %d", dist.x, dist.y);
 }

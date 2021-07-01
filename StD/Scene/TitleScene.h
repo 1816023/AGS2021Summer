@@ -16,6 +16,8 @@ private:
 	void Draw()override;
 	void DrawUI()override;
 
-	int image;
+	int logoImage;
+	int pushImage;
+	int cnt;
 };
 
