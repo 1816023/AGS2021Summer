@@ -15,5 +15,7 @@ private:
 	void Draw()override;
 	void DrawUI()override;
 	std::list<std::unique_ptr<Button>>button_;
+	bool gameTransition_;
+	bool customTransition_;
 };
 
