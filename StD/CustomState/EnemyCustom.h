@@ -39,7 +39,6 @@ struct EnemyCustom :public CustomStateBase
 		
 		if (mainStay.size() != 0 && spawners.size() != 0)
 		{
-
 			astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
 							   scene->cusMap_->PosFromIndex(spawners[0]));
 		}

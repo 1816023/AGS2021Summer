@@ -1,5 +1,7 @@
 #pragma once
 #include "BaseScene.h"
+#include <list>
+class Button;
 class MainScene :
 	public BaseScene
 {
@@ -12,5 +14,6 @@ public:
 private:
 	void Draw()override;
 	void DrawUI()override;
+	std::list<std::unique_ptr<Button>>button_;
 };
 

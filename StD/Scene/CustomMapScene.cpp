@@ -27,7 +27,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 {
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
-	
+
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
 		return std::make_unique<TitleScene>();
@@ -52,7 +52,7 @@ bool CustomMapScene::Init()
 
 void CustomMapScene::Draw()
 {
-	Vec2Float cPos= Application::Instance().GetCamera().GetPos();
+	Vec2Float cPos = Application::Instance().GetCamera().GetPos();
 	cPos *= 2.0f;
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
@@ -60,15 +60,15 @@ void CustomMapScene::Draw()
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
 	{
 		cusMap_->Draw();
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		DrawFormatString(mPos.x + cPos.x, mPos.y + cPos.y - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
-		#endif // DEBUG
+#endif // DEBUG
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
-			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(cusMap_->GetMapSize() - cPos  * cusMap_->GetChipSize())))
+			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(cusMap_->GetMapSize() - cPos * cusMap_->GetChipSize())))
 			{
-				mPos = VecICast(mPos+cPos) / (cusMap_->GetChipSize()) * (cusMap_->GetChipSize());
-				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA,std::abs(128- blendAlpha_%256));
+				mPos = VecICast(mPos + cPos) / (cusMap_->GetChipSize()) * (cusMap_->GetChipSize());
+				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, std::abs(128 - blendAlpha_ % 256));
 				DrawBox(mPos.x, mPos.y, (mPos.x) + cusMap_->GetChipSize().x, (mPos.y) + cusMap_->GetChipSize().y, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
@@ -83,10 +83,10 @@ void CustomMapScene::DrawUI()
 	const auto& mainStay = cusMap_->GetMainStay();
 	int cnt = 0;
 	auto mapSize = cusMap_->GetMapSize().x;
-	for( auto& ms : mainStay)
+	for (auto& ms : mainStay)
 	{
 		auto y = ms / mapSize;
-		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"mainStay%d = x %d, y %d", cnt+1, ms - y * mapSize, y);
+		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"mainStay%d = x %d, y %d", cnt + 1, ms - y * mapSize, y);
 		cnt++;
 	}
 	const auto& spawners = cusMap_->GetSpawner();
@@ -107,7 +107,7 @@ ErrorCode CustomMapScene::SaveCheck()
 		for (int x = 0; x < cusMap_->GetMapSize().x; x++)
 		{
 			auto chip = cusMap_->GetMapChip(VECTOR2(x, y) * cusMap_->GetChipSize());
-			mainStayNum += (MapChipName::MAINSTAY ==chip  ? 1 : 0);
+			mainStayNum += (MapChipName::MAINSTAY == chip ? 1 : 0);
 			spawnerNum += (MapChipName::SPAWNER == chip ? 1 : 0);
 
 		}
@@ -116,11 +116,11 @@ ErrorCode CustomMapScene::SaveCheck()
 	{
 		return ErrorCode::MsSpError;
 	}
-	else if(mainStayNum>=3)
+	else if (mainStayNum >= 3)
 	{
 		return ErrorCode::MsError;
 	}
-	else if(spawnerNum>=3)
+	else if (spawnerNum >= 3)
 	{
 		return ErrorCode::SpError;
 	}
@@ -173,7 +173,7 @@ bool CustomMapScene::FileNameErrorCheck(std::wstring fileName)
 bool CustomMapScene::LoadText(std::string type)
 {
 	tinyxml2::XMLDocument doc;
-	auto error=doc.LoadFile("data/textData.xml");
+	auto error = doc.LoadFile("data/textData.xml");
 	if (error != tinyxml2::XML_SUCCESS)
 	{
 		return false;
@@ -187,7 +187,7 @@ bool CustomMapScene::LoadText(std::string type)
 		textData_.try_emplace(MapChipName::FIELD, elm->FirstChildElement("field")->GetText());
 		textData_.try_emplace(MapChipName::WALL, elm->FirstChildElement("wall")->GetText());
 	}
-	else if("Enemy")
+	else if ("Enemy")
 	{
 		auto elm = doc.FirstChildElement(type.c_str());
 		textData_.try_emplace(MapChipName::MAINSTAY, elm->FirstChildElement("mainstay")->GetText());

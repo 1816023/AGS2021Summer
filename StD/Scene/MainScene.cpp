@@ -2,9 +2,12 @@
 #include <DxLib.h>
 #include "GameScene.h"
 #include "CustomMapScene.h"
+#include "../Button/ImageRectButton.h"
 
 MainScene::MainScene()
 {
+	button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(0,100), VECTOR2(150, 80), 
+		L"data/image/Custom_Botton1.png", L"data/image/Custom_Botton2.png", [&]() {return false; }, VECTOR2()));
 }
 
 MainScene::~MainScene()
