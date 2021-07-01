@@ -75,6 +75,13 @@ void MainScene::Draw()
 void MainScene::DrawUI()
 {
 	DrawString(100, 100, L"MainScene", 0xffffff);
+	VECTOR2 sSize;
+	int bit;
+	GetScreenState(&sSize.x, &sSize.y, &bit);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 128);
+	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0xffffff, true);
+	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0x000000, false);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 	for (auto& button : button_)
 	{
 		button->Draw();
