@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "../Mng/ImageMng.h"
 #include "ImageRectButton.h"
+#include "../StringUtil.h"
 
 ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset)
 	:Button(offset)
@@ -36,13 +37,29 @@ bool ImageRectButton::IsHit(VECTOR2 mPos)
 
 void ImageRectButton::Draw()
 {
+	const int push = size_.y / 5;
 	if (isPush_)
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.x + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);
+		DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);
+		if (fontHandle_ != -1)
+		{
+			DrawStringToHandle(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y + push, _StW(str_).c_str(), ~color_, fontHandle_);
+		}
+		else
+		{
+			DrawString(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y + push, _StW(str_).c_str(), ~color_);
+		}
 	}
 	else
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.x + offset_.y, IMAGE_ID(imagePath_.c_str()), true);
+		DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(imagePath_.c_str()), true);
+		if (fontHandle_ != -1)
+		{
+			DrawStringToHandle(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
+		}
+		else 
+		{
+			DrawString(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y, _StW(str_).c_str(), ~color_);
+		}
 	}
-
 }

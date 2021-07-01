@@ -46,9 +46,9 @@ void RoundRectButton::Draw()
 		{
 			DrawStringToHandle(lu_.x + sPos_.x + push+ offset_.x, lu_.y + sPos_.y + push+ offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
 		}
-		else {
+		else 
+		{
 			DrawString(lu_.x + sPos_.x + push+offset_.x, lu_.y + sPos_.y + push+offset_.y, _StW(str_).c_str(), ~color_);
-
 		}
 	}
 	else

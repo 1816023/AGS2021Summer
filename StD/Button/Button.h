@@ -24,7 +24,7 @@ public:
 	// ‰Ÿ‚³‚ê‚½‚Æ‚«‚ÉŒÄ‚Ño‚·
 	const bool PushFunction() const { return func_(); }
 	// ‰Ÿ‚³‚ê‚Ä‚é‚©‚Ìæ“¾
-	const bool isPush() const { return isPush_; }
+	const bool IsPush() const { return isPush_; }
 	// ƒ{ƒ^ƒ“‚Ì•`‰æ
 	virtual void Draw()=0;
 	// z²‚Ìİ’è

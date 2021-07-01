@@ -2,24 +2,16 @@
 #include <DxLib.h>
 #include "MainScene.h"
 #include "../Application.h"
-#include "../Camera.h"
 #include "../Unit/Enemy/Mob/ECircle.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../MouseController.h"
-#include "../Trap/SlipDamage.h"
-#include "../Trap/Support.h"
-#include "../Trap/Explosion.h"
-#include "../Trap/Interference.h"
-#include "../Trap/TrapManager.h"
 #include "../Unit/Enemy/EnemyManager.h"
 
 TitleScene::TitleScene()
 {
-	trapFlag = false;
-	cnt = 0;
-	HP = 50;
-	pos = { 100,100 };
-	speed = 2;
+	logoImage = LoadGraph(L"data/image/Title_logo.png");
+	pushImage = LoadGraph(L"data/image/Title_push.png");
+	cnt = 255;
 	lpApplication.GetCamera().SetScale(1.0f);
 	lpApplication.GetCamera().ScaleLock(true);
 }
@@ -42,33 +34,21 @@ unique_Base TitleScene::Update(unique_Base own)
 
 void TitleScene::Draw()
 {
-	if (!trapFlag && lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, false);
+	if (cnt >= 50)
 	{
-		lpTrapManager.Spawner(TRAP_ID::INTERFERENCE, Vec2Float(lpMouseController.GetPos().x, lpMouseController.GetPos().y));
-		trapFlag = true;
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
 	}
-	if (trapFlag)
+	else
 	{
-		cnt++;
-		lpTrapManager.Draw();
-		if (cnt > 300)
-		{
-			cnt = 0;
-			trapFlag = false;
-			lpTrapManager.Delete();
-		}
+		cnt = 255;
 	}
-	/*auto delaySpeed = speed * player_->SpeedDelay();
-	pos.x += (delaySpeed>=0 ? delaySpeed:0);*/
-	DrawBox(pos.x, pos.y, pos.x + 60, pos.y + 60, 0xffffff, true);
-
-	DrawFormatString( pos.x+70, pos.y, 0xfffff, L"HP:%d",HP);
-	//DrawFormatString(50, 50, 0xffffff, L"HP : %d", HP);
-
-	//player_->Draw();
+	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 400, 1, 0, pushImage, false);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	cnt -= 2;
 }
 
 void TitleScene::DrawUI()
 {
-	DrawString(0, 48, L"TitleScene", 0xffffff);
+	// DrawString(0, 48, L"TitleScene", 0xffffff);
 }

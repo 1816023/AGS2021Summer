@@ -12,14 +12,14 @@
 #define LINE_SPACING 30		// 行間
 #define SELECT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(DEF_SCREEN_SIZE_X/1.5,0),VECTOR2(DEF_SCREEN_SIZE_X,DEF_SCREEN_SIZE_Y))
 #define TEXT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(0,DEF_SCREEN_SIZE_Y/1.25),VECTOR2(SELECT_UI_POS.first.x-10,DEF_SCREEN_SIZE_Y))
-struct ButtomState {
-	VECTOR2 luPos;		// 左上座標
-	VECTOR2 rdPos;		// 右上座標
-	bool pushFlag;		// 押下フラグ
-	std::wstring name;	// ボタンの名前
-	int CorH;			// ボタンの色または画像ハンドル
-	std::function<void(ButtomState&)> func;	// ボタンが押されたときに呼ばれる関数
-};
+//struct ButtomState {
+//	VECTOR2 luPos;		// 左上座標
+//	VECTOR2 rdPos;		// 右上座標
+//	bool pushFlag;		// 押下フラグ
+//	std::wstring name;	// ボタンの名前
+//	int CorH;			// ボタンの色または画像ハンドル
+//	std::function<void(ButtomState&)> func;	// ボタンが押されたときに呼ばれる関数
+//};
 
 enum class CustomState {
 	SELECT_FILE,		// 既存のファイルから選択する

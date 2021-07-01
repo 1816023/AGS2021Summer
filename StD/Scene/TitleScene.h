@@ -16,10 +16,8 @@ private:
 	void Draw()override;
 	void DrawUI()override;
 
-	bool trapFlag;
+	int logoImage;
+	int pushImage;
 	int cnt;
-	int HP;
-	Vec2Float pos;
-	float speed;
 };
 
