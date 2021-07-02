@@ -3,8 +3,9 @@
 #include "../MouseController.h"
 #include "../StringUtil.h"
 
-StringList::StringList(VECTOR2 pos, VECTOR2 size, ListType type, int fonthande):ScrollList(pos,size,type)
+StringList::StringList(VECTOR2 pos, VECTOR2 size, int fonthande):ScrollList(pos,size)
 {
+    type_ = ListType::STRING;
     fontH_ = fonthande;
 }
 

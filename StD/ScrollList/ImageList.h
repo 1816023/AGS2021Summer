@@ -1,10 +1,14 @@
 #pragma once
 #include "ScrollList.h"
+struct ImageState {
+	int handle;
+	VECTOR2 size;
+};
 class ImageList :
 	public ScrollList
 {
 public:
-	ImageList(VECTOR2 pos, VECTOR2 size, ListType type);
+	ImageList(VECTOR2 pos, VECTOR2 size);
 	~ImageList()override;
 	// ƒŠƒXƒg‚ÌÅŒã‚É—v‘f‚ğ’Ç‰Á‚·‚é
 	bool Add(int handle);
@@ -15,7 +19,7 @@ public:
 	void Draw()override;
 
 private:
-	std::list<int>list_;
+	std::list<ImageState>list_;
 
 };
 

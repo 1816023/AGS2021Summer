@@ -47,7 +47,8 @@ struct MapCustom:public CustomStateBase
 			return true; }, VECTOR2()));
 		button_.back()->SetString("Next", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Next", GetStringLength(L"Next")) / 2, bSize / 4 - GetFontSize() / 2));
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
-			if (errorNum_=scene->SaveCheck() == ErrorCode::NoError)
+			errorNum_ = static_cast<int>(scene->SaveCheck());
+			if (static_cast<ErrorCode>(errorNum_) == ErrorCode::NoError)
 			{
 				CUSTOM->SaveFile(); 
 				return  true; 

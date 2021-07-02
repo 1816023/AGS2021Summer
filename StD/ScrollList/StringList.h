@@ -10,7 +10,7 @@ class StringList :
 	public ScrollList
 {
 public:
-	StringList(VECTOR2 pos, VECTOR2 size, ListType type, int fonthande = -1);
+	StringList(VECTOR2 pos, VECTOR2 size, int fonthande = -1);
 	~StringList()override;
 	// ƒŠƒXƒg‚ÌÅŒã‚É—v‘f‚ğ’Ç‰Á‚·‚é
 	bool Add(StringState state);

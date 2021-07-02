@@ -44,9 +44,9 @@ unique_Base TitleScene::Update(unique_Base own)
 void TitleScene::Draw()
 {
 	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[0], true);
-	DrawRotaGraph(pos.x+200, pos.y, 1, 0, mobImage[1], true);
+	/*DrawRotaGraph(pos.x+200, pos.y, 1, 0, mobImage[1], true);
 	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[2], true);
-	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[3], true);
+	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[3], true);*/
 
 	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, true);
 	if (flag)

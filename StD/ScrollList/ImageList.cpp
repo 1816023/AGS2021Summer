@@ -2,8 +2,9 @@
 #include "ImageList.h"
 #include "../MouseController.h"
 
-ImageList::ImageList(VECTOR2 pos, VECTOR2 size, ListType type):ScrollList(pos,size,type)
+ImageList::ImageList(VECTOR2 pos, VECTOR2 size):ScrollList(pos,size)
 {
+    type_ = ListType::IMAGE;
 }
 
 ImageList::~ImageList()
@@ -16,7 +17,9 @@ bool ImageList::Add(int handle)
     {
         return false;
     }
-    list_.emplace_back(handle);
+    int x, y;
+    GetGraphSize(handle, &x, &y);
+    list_.emplace_back(ImageState{handle,VECTOR2(x,y)});
     return true;
 }
 
@@ -34,8 +37,12 @@ void ImageList::Update()
         //scrollPos_ = 0;
         scrollPos_ += lpMouseController.GetWheel();
         scrollPos_ = (scrollPos_ <= 0.0f ? scrollPos_ : 0.0f);
-        int size = list_.size();
-        scrollPos_ = (scrollPos_ >= -GetFontSize() * size ? scrollPos_ : -GetFontSize() * size);
+        int size = 0;
+        for (auto list : list_)
+        {
+            size += list.size.y;
+        }
+        scrollPos_ = (scrollPos_ >=  -size ? scrollPos_ : -size);
 
     }
 
@@ -47,6 +54,14 @@ void ImageList::Draw()
     SetDrawScreen(screen_);
     ClearDrawScreen();
     // Ç±Ç±Ç…èàóù------------
+    int cnt = 0;
+
+    for (auto list : list_)
+    {
+        DrawGraph(1,1+list.size.y*cnt+scrollPos_ , list.handle, true);
+
+        cnt++;
+    }
 
 
 

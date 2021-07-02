@@ -1,7 +1,11 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
+#include "../ScrollList/ImageList.h"
 #include "../ScrollList/StringList.h"
+#include "../Button/ImageRectButton.h"
+#include "../Mng/ImageMng.h"
+#include "../Mng/ImageMng.h"
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase
@@ -17,6 +21,8 @@ struct EnemyCustom :public CustomStateBase
 		astar_ = std::make_unique<Astar>(*scene->cusMap_);
 		const auto& spawners = scene->cusMap_->GetSpawner();
 		const auto& mainStay = scene->cusMap_->GetMainStay();
+		list_ = std::make_unique<ImageList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2));
+
 		// ボタンの作成
 		if (spawners.size() == 2)
 		{
@@ -25,6 +31,10 @@ struct EnemyCustom :public CustomStateBase
 		
 			button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace * 2), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace * 2), VECTOR2(10, 10), 0xffffff, [&]() {return true; }, VECTOR2()));
 			buttonText_.emplace_back(ButtonText{ "スポナー2", 0xffffff, VECTOR2(basePosX + (bSize + bSpace), bSpace * 2 - GetFontSize()) });
+
+			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(64,64), L"./data/image/circle.png", L"data/image/circle.png", [&]() {list_->Add(IMAGE_ID(L"data/image/circle.png")); return true; }, VECTOR2()));
+			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2)), VECTOR2(64,64), L"./data/image/square.png", L"data/image/square.png", [&]() {list_->Add(IMAGE_ID(L"data/image/square.png")); return true; }, VECTOR2()));
+			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(64,64), L"./data/image/triangle.png", L"data/image/triangle.png", [&]() {list_->Add(IMAGE_ID(L"data/image/triangle.png")); return true; }, VECTOR2()));
 
 		}
 		else if(spawners.size()==1)
@@ -42,9 +52,6 @@ struct EnemyCustom :public CustomStateBase
 			astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
 							   scene->cusMap_->PosFromIndex(spawners[0]));
 		}
-		list_ = std::make_unique<StringList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/1.5), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), (SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50)/2), ListType::STRING);
-		list_->Add(StringState{ "草草草",0xffffff });
-		list_->Add(StringState{ "草草草",0xff0000 });
 		spawner_= spawners;
 		return true;
 	}
@@ -102,6 +109,6 @@ struct EnemyCustom :public CustomStateBase
 	// 最大列数（日本語全角で16文字）
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
-	std::unique_ptr<StringList> list_;
+	std::unique_ptr<ImageList> list_;
 
 };

@@ -10,7 +10,7 @@ class BoxList :
 	public ScrollList
 {
 public:
-	BoxList(VECTOR2 pos, VECTOR2 size, ListType type);
+	BoxList(VECTOR2 pos, VECTOR2 size);
 	~BoxList()override;
 	// ƒŠƒXƒg‚ÌÅŒã‚É—v‘f‚ğ’Ç‰Á‚·‚é
 	bool Add(BoxState state);

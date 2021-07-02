@@ -45,6 +45,7 @@ struct SelectFile:public CustomStateBase
 			buttonList_.back()->SetAuto();
 			//buttomList_.back()->SetReversePush();
 			buttonList_.back()->SetString(list + "F" + std::to_string(data.mapSize.x) + "F" + std::to_string(data.mapSize.y), VECTOR2(5,2));
+			buttonList_.back()->SetReversePush();
 			a++;
 		}
 		VECTOR2 sSize;
@@ -54,6 +55,8 @@ struct SelectFile:public CustomStateBase
 		buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(sSize.x / 1.25, 10), VECTOR2(sSize.x / 1.25 + 100, 30), 0xffffff, [&]() {isNewCreate_ = true; return true; }, VECTOR2(0, 0)));
 		buttonList_.back()->SetString("V‹Kì¬", VECTOR2(12, 2));
 		buttonList_.back()->SetAuto();
+		buttonList_.back()->SetReversePush();
+
 		return true;
 	}
 	void Update(CustomMapScene* scene)override

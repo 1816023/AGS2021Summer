@@ -16,7 +16,7 @@ class ScrollList
 {
 public:
 	
-	ScrollList(VECTOR2 pos,VECTOR2 size,ListType type);
+	ScrollList(VECTOR2 pos,VECTOR2 size);
 	virtual ~ScrollList();
 	virtual bool Del()=0;
 	virtual void Update()=0;
