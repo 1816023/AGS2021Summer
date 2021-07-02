@@ -18,9 +18,9 @@
 #define MID_DIST 20
 #define HIGH_DIST 30
 // ‘¬“x
-#define LOW_SPEED 5
-#define MID_SPEED 10
-#define HIGH_SPEED 15
+#define LOW_SPEED 3
+#define MID_SPEED 6
+#define HIGH_SPEED 10
 
 // ‘å‚«‚³
 #define E_SIZE_X 64

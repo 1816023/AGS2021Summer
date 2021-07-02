@@ -5,7 +5,7 @@
 
 EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng)
 {
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		spawnList_.emplace_back(EnemyType::Circle);
 	}

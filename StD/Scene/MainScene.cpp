@@ -24,7 +24,7 @@ MainScene::MainScene()
 		MainButton(std::wstring p, std::wstring s, std::function<bool()>f, VECTOR2 pos) :path(p), text(s), func(f), pos(pos) {};
 	};
 	// ゲームモード選択画面のボタンリスト
-	std::array<MainButton, 2>gmBList = {
+	std::vector<MainButton>gmBList = {
 		// カスタムへ遷移するボタン
 		MainButton(L"Custom_Botton", L"マップカスタム"
 		,[&]() {customTransition_ = true; return true; }, bPos),
@@ -32,23 +32,48 @@ MainScene::MainScene()
 		MainButton(L"Tutorial_Botton", L"ゲーム"
 		,[&]() {gameTransition_ = true; return true; }, VECTOR2(bPos.x, bPos.y + bSize.y * 2))
 	};
-	
-	for (auto& gmb : gmBList)
+	auto createButton = [&](std::list<std::unique_ptr<Button>>& button, std::vector<MainButton>& mbList  )
+	{
+		for (auto& gmb : mbList)
+		{
+			button.emplace_back(std::make_unique<ImageRectButton>(gmb.pos, bSize,
+				dir + gmb.path + L"1.png", dir + gmb.path + L"2.png", gmb.func, VECTOR2()));
+			auto wordWidth = GetDrawStringWidth(gmb.text.c_str(), GetStringLength(gmb.text.c_str()));
+			button.back()->SetString(_WtS(gmb.text), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 4));
+		}
+		for (auto& b : button)
+		{
+			b->SetAuto();
+		}
+	};
+
+	createButton(gameModeButton_, gmBList);
+	/*for (auto& gmb : gmBList)
 	{
 		gameModeButton_.emplace_back(std::make_unique<ImageRectButton>(gmb.pos, bSize,
 			dir + gmb.path + L"1.png", dir + gmb.path + L"2.png", gmb.func, VECTOR2()));
 		auto wordWidth = GetDrawStringWidth(gmb.text.c_str(), GetStringLength(gmb.text.c_str()));
 		gameModeButton_.back()->SetString(_WtS(gmb.text), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 4));
 	}
-	//// 難易度選択ボタン
-	//bPos = VECTOR2(DEF_SCREEN_SIZE_X / 4 - bSize.x / 2, DEF_SCREEN_SIZE_Y / 4);
-	//std::array<MainButton, 2>difBList = {
-	//	MainButton(L"Tutorial_Botton", L"チュートリアル"
-	//	,[&]() {customTransition_ = true; return true; }, bPos),
+	for (auto& button : gameModeButton_)
+	{
+		button->SetAuto();
+	}*/
+	// 難易度選択ボタン
+	bPos = VECTOR2(DEF_SCREEN_SIZE_X / 4 - bSize.x / 2, DEF_SCREEN_SIZE_Y / 4);
+	std::vector<MainButton>difBList = {
+		MainButton(L"Tutorial_Botton", L"TUTORIAL"
+		,[&]() {customTransition_ = true; return true; }, bPos),
 
-	//	MainButton(L"Tutorial_Botton", L"カスタム"
-	//	,[&]() {gameTransition_ = true; return true; }, {bPos.x, bPos.y + bSize.y * 2})
-	//};
+		MainButton(L"Tutorial_Botton", L"CUSTOM"
+		,[&]() {gameTransition_ = true; return true; }, {bPos.x, bPos.y + bSize.y * 2}),
+
+		MainButton(L"Tutorial_Botton", L"EASY"
+		,[&]() {customTransition_ = true; return true; }, bPos),
+
+		MainButton(L"Tutorial_Botton", L"NORMAL"
+		,[&]() {gameTransition_ = true; return true; }, {bPos.x, bPos.y + bSize.y * 2})
+	};
 	//std::wstring dir = L"data/image/";
 	//for (auto difB : difBList)
 	//{
@@ -58,10 +83,7 @@ MainScene::MainScene()
 	//	gameModeButton_.back()->SetString(_WtS(difB.text), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 4));
 	//}
 
-	for (auto& button : gameModeButton_)
-	{
-		button->SetAuto();
-	}
+
 }
 
 MainScene::~MainScene()

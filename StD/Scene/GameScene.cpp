@@ -19,7 +19,7 @@ GameScene::GameScene()
 	IMAGE_ID(L"data/image/circle.png");
 	IMAGE_ID(L"data/image/triangle.png");
 	IMAGE_ID(L"data/image/pentagon.png");
-	IMAGE_ID(L"data/image/star.png");
+	IMAGE_ID(L"data/image/square.png");
 	IMAGE_ID(L"data/image/Hexagon_Blue.png");
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
@@ -159,7 +159,14 @@ void GameScene::DrawUI()
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
 	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
-	
+	int enemyRemain = 0;
+	for (auto& spawners : enemySpawner_)
+	{
+		enemyRemain += spawners->GetRemainSpawnCnt();
+	}
+	enemyRemain += enemyMng_->GetEnemies().size();
+	DrawFormatString(0, 0, 0xffffff, L"ìGécë∂êî %d", enemyRemain);
+
 	MenuDraw(m_pos);
 }
 
