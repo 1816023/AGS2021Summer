@@ -20,11 +20,15 @@
 </map>
 <Enemy>
   <triangle>
+攻撃力が低いがスピードが速い敵
   </triangle>
   <circle>
+標準的なステータスを持つ敵
   </circle>
   <rect>
+HPが高くスピードが遅い敵
   </rect>
   <star>
+攻撃力が高いがHPが低い敵
   </star>
 </Enemy>

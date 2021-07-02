@@ -9,6 +9,11 @@
 
 ResultScene::ResultScene()
 {
+	winImage = LoadGraph(L"data/image/win.png");
+	loseImage = LoadGraph(L"data/image/lose.png");
+	timeImage = LoadGraph(L"data/image/time.png");
+	bestImage = LoadGraph(L"data/image/best.png");
+	flag = true;
 }
 
 ResultScene::~ResultScene()
@@ -28,9 +33,19 @@ unique_Base ResultScene::Update(unique_Base own)
 
 void ResultScene::Draw()
 {
+	if (flag)
+	{
+		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 100, 1, 0, winImage, false);
+		DrawRotaGraph(DEF_SCREEN_SIZE_X / 3, 180, 1, 0, timeImage, false);
+		DrawRotaGraph(DEF_SCREEN_SIZE_X / 3, 260, 1, 0, bestImage, false);
+	}
+	else
+	{
+		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 100, 1, 0, loseImage, false);
+	}
 }
 
 void ResultScene::DrawUI()
 {
-	DrawString(100, 100, L"ResultScene", 0xffffff);
+	//DrawString(100, 100, L"ResultScene", 0xffffff);
 }
