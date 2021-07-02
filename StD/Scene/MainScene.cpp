@@ -21,7 +21,7 @@ MainScene::MainScene()
 		std::wstring path;	// ファイル場所
 		std::wstring text;	// ボタンのテキスト
 		std::function<bool()>func;
-		MainButton(std::wstring p, std::wstring s, std::function<bool()>f, VECTOR2 pos) :path(p), text(s), func(f) {};
+		MainButton(std::wstring p, std::wstring s, std::function<bool()>f, VECTOR2 pos) :path(p), text(s), func(f), pos(pos) {};
 	};
 	// ゲームモード選択画面のボタンリスト
 	std::array<MainButton, 2>gmBList = {
@@ -30,10 +30,10 @@ MainScene::MainScene()
 		,[&]() {customTransition_ = true; return true; }, bPos),
 		// 難易度選択へ移動するボタン
 		MainButton(L"Tutorial_Botton", L"ゲーム"
-		,[&]() {gameTransition_ = true; return true; }, {bPos.x, bPos.y + bSize.y * 2})
+		,[&]() {gameTransition_ = true; return true; }, VECTOR2(bPos.x, bPos.y + bSize.y * 2))
 	};
 	
-	for (auto gmb : gmBList)
+	for (auto& gmb : gmBList)
 	{
 		gameModeButton_.emplace_back(std::make_unique<ImageRectButton>(gmb.pos, bSize,
 			dir + gmb.path + L"1.png", dir + gmb.path + L"2.png", gmb.func, VECTOR2()));
