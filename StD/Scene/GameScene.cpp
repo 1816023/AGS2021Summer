@@ -39,14 +39,15 @@ unique_Base GameScene::Update(unique_Base own)
 
 	auto delta = Application::Instance().GetDelta();
 
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-	{
-
-	}
-
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y));
+		auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
+		if (map->GetMapChip(mPos) == MapChipName::FIELD)
+		{
+			Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
+			auto offSet = map->GetChipSize() / 2;
+			playerMng_->Spawner(PlayerUnit::PINK,VecFCast(chipPos *map->GetChipSize()+offSet));
+		}
 	}
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
@@ -179,7 +180,28 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0x888888, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0xffffff, false);
-	DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, 10, lpImageMng.GetID(L"data/image/Hexagon_Blue.png"), true);
+
+	for (int data =0;data <=size_t(PlayerUnit::MAX);data++)
+	{
+		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, data*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)], true);
+	}
+	//ボタン
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 15, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 105, menuSize.y - 48, 10, 10, 0x000000, true);
+	//ボタン縁
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0xffffff, true);
+	//ボタン影
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0x000000, false);
+	//ボタンテキスト
+	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 20, menuSize.y - 45, 0x000000, L"ユニット");
+	
+	//ボタン
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 115, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 205, menuSize.y - 48, 10, 10, 0x000000, true);
+	//ボタン縁
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0xffffff, true);
+	//ボタン影
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0x000000, false);
+	//ボタンテキスト
+	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 120, menuSize.y-45, 0x000000, L"トラップ");
 
 	//詳細表示
 	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)

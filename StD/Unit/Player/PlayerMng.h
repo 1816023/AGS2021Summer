@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "PlayerType.h"
 #include <vector>
+#include <map>
 #include <memory>
 
 constexpr int MAX_COST = 16;
@@ -20,12 +21,14 @@ public:
 	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};
 	UnitList GetUnitList(void);	//プレイヤー側のUnitリストの取得
+	std::map<PlayerUnit, int> GetPlayerData(void);
 	int GetCost(void);
 	void SetCost(int cost);
 	float SpeedDelay(void);
 private:
 	void SkillCtl(std::shared_ptr<Unit> shooter);
 	UnitList unitList_;
+	std::map<PlayerUnit,int> playerData;
 	int cost;		//所持コスト保存用
 };
 

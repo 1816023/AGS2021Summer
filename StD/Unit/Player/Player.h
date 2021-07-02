@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <list>
 #include "PlayerType.h"
 #include "../Unit.h"
 
