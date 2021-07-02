@@ -20,6 +20,7 @@ private:
 	int loseImage;
 	int timeImage;
 	int bestImage;
+	int number[11];
 
 	bool flag;
 };

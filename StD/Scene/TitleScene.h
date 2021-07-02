@@ -19,5 +19,6 @@ private:
 	int logoImage;
 	int pushImage;
 	int cnt;
+	bool flag;
 };
 

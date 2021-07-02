@@ -13,6 +13,7 @@ TitleScene::TitleScene()
 	logoImage = LoadGraph(L"data/image/Title_logo.png");
 	pushImage = LoadGraph(L"data/image/Title_push.png");
 	cnt = 255;
+	flag = true;
 	lpApplication.GetCamera().SetScale(1.0f);
 	lpApplication.GetCamera().ScaleLock(true);
 }
@@ -36,17 +37,32 @@ unique_Base TitleScene::Update(unique_Base own)
 void TitleScene::Draw()
 {
 	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, false);
-	if (cnt >= 50)
+	if (flag)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
+		cnt -= 2;
+		if (cnt >= 100)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
+		}
+		else
+		{
+			flag = false;
+		}
 	}
-	else
+	if(!flag)
 	{
-		cnt = 255;
+		cnt += 2;
+		if (cnt <= 255)
+		{
+			SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
+		}
+		else
+		{
+			flag = true;
+		}
 	}
 	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 400, 1, 0, pushImage, false);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	cnt -= 2;
 }
 
 void TitleScene::DrawUI()
