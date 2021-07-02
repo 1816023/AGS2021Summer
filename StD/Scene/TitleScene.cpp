@@ -1,6 +1,7 @@
 #include "TitleScene.h"
 #include <DxLib.h>
 #include "MainScene.h"
+#include "ResultScene.h"
 #include "../Application.h"
 #include "../Unit/Enemy/Mob/ECircle.h"
 #include "../Unit/Player/PlayerMng.h"
@@ -27,7 +28,7 @@ unique_Base TitleScene::Update(unique_Base own)
 
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
-		return std::make_unique<MainScene>();
+		return std::make_unique<ResultScene>();
 	}
 	return std::move(own);
 }
