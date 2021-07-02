@@ -1,7 +1,7 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
-#include "../ScrollList.h"
+#include "../ScrollList/StringList.h"
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase
@@ -42,7 +42,7 @@ struct EnemyCustom :public CustomStateBase
 			astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
 							   scene->cusMap_->PosFromIndex(spawners[0]));
 		}
-		list_ = std::make_unique<ScrollList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/1.5), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), (SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50)/2), ListType::STRING);
+		list_ = std::make_unique<StringList>(VECTOR2(SELECT_UI_POS.first.x+5,SELECT_UI_POS.second.y/1.5), VECTOR2((SELECT_UI_POS.second.x-SELECT_UI_POS.first.x-10), (SELECT_UI_POS.second.y- SELECT_UI_POS.second.y /3-50)/2), ListType::STRING);
 		list_->Add(StringState{ "草草草",0xffffff });
 		list_->Add(StringState{ "草草草",0xff0000 });
 		spawner_= spawners;
@@ -102,6 +102,6 @@ struct EnemyCustom :public CustomStateBase
 	// 最大列数（日本語全角で16文字）
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
-	std::unique_ptr<ScrollList> list_;
+	std::unique_ptr<StringList> list_;
 
 };
