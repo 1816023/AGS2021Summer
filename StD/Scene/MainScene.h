@@ -37,6 +37,7 @@ private:
 	void DrawUI()override;
 	std::list<std::unique_ptr<Button>>gameModeButton_;
 	std::list<std::unique_ptr<Button>>difSelectButton_;
+	std::unique_ptr<Button>backButton_;
 	bool gameTransition_;
 	bool customTransition_;
 	bool mapSelectTransition_;

@@ -50,7 +50,7 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 		for (auto map : mapData_)
 		{
 			// 再起
-			FindMainStay(map, y, map.begin());
+			FindMapObj(map, y, map.begin());
 			y++;
 		}
 		// セーブされたスポナーを読み込み
@@ -271,26 +271,41 @@ bool Custom::SaveFile()
 	return true;
 }
 
-void Custom::FindMainStay(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
+void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
 {
 	auto find = std::find_if(fStart, map.end(), [](const MapChipName& data)
 		{
-			return data == MapChipName::MAINSTAY;
+			return data == MapChipName::MAINSTAY || data == MapChipName::SPAWNER;
 		});
 
 	if (find != map.end())
 	{
-		// 拠点限界以上のデータだった場合
-		// ※マップデータ外部でいじる時注意
-		if (mainStay_.size() > 2)
+		if (*find == MapChipName::MAINSTAY)
 		{
-			assert(false);
-		}
-		auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-		mainStay_.emplace_back(point.x + point.y * state_.mapSize_.x);
+			// 拠点限界以上のデータだった場合
+			// ※マップデータ外部でいじる時注意
+			if (mainStay_.size() > 2)
+			{
+				assert(false);
+			}
+			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
+			mainStay_.emplace_back(point.x + point.y * state_.mapSize_.x);
 
+			
+		}
+		if (*find == MapChipName::SPAWNER)
+		{
+			// 拠点限界以上のデータだった場合
+			// ※スポナーデータ外部でいじる時注意
+			if (spawners_.size() > 2)
+			{
+				assert(false);
+			}
+			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
+			spawners_.emplace_back(point.x + point.y * state_.mapSize_.x);
+		}
 		// 再帰的に次を返す
-		FindMainStay(map, y, find + 1);
+		FindMapObj(map, y, find + 1);
 	}
 }
 

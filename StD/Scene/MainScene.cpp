@@ -31,14 +31,13 @@ MainScene::MainScene()
 		, [&]() {customTransition_ = true; return true; }, bPos));
 		// 難易度選択へ移動するボタン
 	gmBList.emplace_back(MainButton(L"Tutorial_Botton", L"ゲーム"
-		, [&]()
-		{
+		, [&]() {
 			updater_ = &MainScene::DifficuritySelectUpdate;
 			drawer_ = &MainScene::DifficuritySelectDraw;
 			return true;
 		}, VECTOR2(bPos.x, bPos.y + bSize.y * 2)));
 	
-	auto createButton = [&](std::list<std::unique_ptr<Button>>& button, std::vector<MainButton>& mbList  )
+	auto createButton = [&](std::list<std::unique_ptr<Button>>& button, std::vector<MainButton>& mbList)
  	{
 		for (auto& gmb : mbList)
 		{
@@ -55,17 +54,6 @@ MainScene::MainScene()
 	};
 
 	createButton(gameModeButton_, gmBList);
-	/*for (auto& gmb : gmBList)
-	{
-		gameModeButton_.emplace_back(std::make_unique<ImageRectButton>(gmb.pos, bSize,
-			dir + gmb.path + L"1.png", dir + gmb.path + L"2.png", gmb.func, VECTOR2()));
-		auto wordWidth = GetDrawStringWidth(gmb.text.c_str(), GetStringLength(gmb.text.c_str()));
-		gameModeButton_.back()->SetString(_WtS(gmb.text), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 4));
-	}
-	for (auto& button : gameModeButton_)
-	{
-		button->SetAuto();
-	}*/
 	// 難易度選択ボタン
 	bPos = VECTOR2(DEF_SCREEN_SIZE_X / 4 - bSize.x / 2, DEF_SCREEN_SIZE_Y / 4);
 	std::vector<MainButton>difBList;
@@ -84,19 +72,21 @@ MainScene::MainScene()
 
 	difBList.emplace_back(MainButton(L"Hard_Botton", L"HARD"
 		, [&]() {gameTransition_ = true; return true; }, { bPos.x, bPos.y + bSize.y * 2 }));
-
-	//bPos.x += DEF_SCREEN_SIZE_X / 4;
-	//difBList.emplace_back(MainButton(L"Hard_Botton", L"HARD"
-	//	, [&]() {gameTransition_ = true; return true; }, { bPos.x, bPos.y + bSize.y * 2 }));
-	
+	bPos.x += DEF_SCREEN_SIZE_X / 4;
 	createButton(difSelectButton_, difBList);
-	//for (auto difB : difBList)
-	//{
-	//	gameModeButton_.emplace_back(std::make_unique<ImageRectButton>(difB.pos, bSize,
-	//		dir + difB.path + L"1.png", dir + difB.path + L"2.png", difB.func, VECTOR2()));
-	//	auto wordWidth = GetDrawStringWidth(difB.text.c_str(), GetStringLength(difB.text.c_str()));
-	//	gameModeButton_.back()->SetString(_WtS(difB.text), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 4));
-	//}
+
+	// 戻るボタン
+	bSize = { 100, 67 };
+	backButton_ = std::make_unique<ImageRectButton>(VECTOR2( bPos.x, bPos.y), bSize,
+		dir + L"Back_Button1.png", dir + L"Back_Button2.png", 
+		[&](){	
+			updater_ = &MainScene::GameModeSelectUpdate;
+			drawer_ = &MainScene::GameModeSelectDraw; return true;
+		});
+	auto wordWidth = GetDrawStringWidth(L"BACK", GetStringLength(L"BACK"));
+	backButton_->SetString(_WtS(L"BACK"), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 2 - GetFontSize()/2));
+	backButton_->SetAuto();
+
 
 }
 
@@ -138,6 +128,7 @@ void MainScene::DifficuritySelectUpdate()
 	{
 		button->Update();
 	}
+	backButton_->Update();
 }
 
 void MainScene::GameModeSelectDraw()
@@ -154,6 +145,7 @@ void MainScene::DifficuritySelectDraw()
 	{
 		button->Draw();
 	}
+	backButton_->Draw();
 }
 
 void MainScene::Draw()
@@ -167,7 +159,7 @@ void MainScene::DrawUI()
 	VECTOR2 sSize;
 	int bit;
 	GetScreenState(&sSize.x, &sSize.y, &bit);
-	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 128);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 64);
 	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0xffffff, true);
 	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0x000000, false);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
