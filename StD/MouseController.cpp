@@ -36,7 +36,7 @@ void MouseController::Update(Vec2Float offset, float scale)
 	GetMousePoint(&pos.x, &pos.y);
 	dataOld = data;
 	data = GetMouseInput();
-	wheel += GetMouseWheelRotVol();
+	wheel = GetMouseWheelRotVol();
 	offset_ = offset;
 	scale_ = scale;
 }

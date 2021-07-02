@@ -29,7 +29,7 @@ unique_Base TitleScene::Update(unique_Base own)
 
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
-		return std::make_unique<ResultScene>();
+		return std::make_unique<MainScene>();
 	}
 	return std::move(own);
 }

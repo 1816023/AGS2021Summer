@@ -17,11 +17,14 @@ GameScene::GameScene()
 	map->SetUp("defalt_map");
 
 	IMAGE_ID(L"data/image/circle.png");
+	IMAGE_ID(L"data/image/triangle.png");
+	IMAGE_ID(L"data/image/pentagon.png");
+	IMAGE_ID(L"data/image/star.png");
 	IMAGE_ID(L"data/image/Hexagon_Blue.png");
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
-	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(32, 224), *enemyMng_));
+	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_));
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
 }
 

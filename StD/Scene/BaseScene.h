@@ -6,6 +6,7 @@ enum class SCENE_ID
 {
 	TITLE,
 	MAIN,
+	CUSTOM,
 	GAME,
 	RESULT,
 	MAX
