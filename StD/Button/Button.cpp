@@ -40,12 +40,15 @@ bool Button::Update()
 		{
 			if (lpMouseController.GetClickUp(clickType_))
 			{
-				if (soundHandle_ != -1)
+				if (IsHit())
 				{
-					PlaySoundMem(soundHandle_, DX_PLAYTYPE_BACK);
+					if (soundHandle_ != -1)
+					{
+						PlaySoundMem(soundHandle_, DX_PLAYTYPE_BACK);
+					}
+					PushFunction();
+					return true;
 				}
-				PushFunction();
-				return true;
 			}
 		}
 		else

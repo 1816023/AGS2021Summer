@@ -15,6 +15,7 @@ GameScene::GameScene()
 {
 	map = std::make_unique<Map>();
 	map->SetUp("defalt_map");
+	cnt = 0;
 
 	IMAGE_ID(L"data/image/circle.png");
 	IMAGE_ID(L"data/image/triangle.png");
@@ -34,6 +35,10 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Update(unique_Base own)
 {
+	if (cnt++ < 60)
+	{
+		return std::move(own);
+	}
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
@@ -146,10 +151,15 @@ void GameScene::BulletControler(void)
 
 void GameScene::Draw()
 {
+	if (cnt < 60)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA,cnt*4 );
+	}
 	map->Draw();
 	shotMng_->Draw();
 	playerMng_->Draw();
 	enemyMng_->Draw();
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void GameScene::DrawUI()
