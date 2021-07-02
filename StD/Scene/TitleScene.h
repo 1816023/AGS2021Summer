@@ -18,7 +18,11 @@ private:
 
 	int logoImage;
 	int pushImage;
+	int mobImage[4];
 	int cnt;
 	bool flag;
+	bool moveFlag;
+	Vec2Int pos;
+	Vec2Int speed;
 };
 

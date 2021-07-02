@@ -36,5 +36,6 @@ private:
 	std::vector<std::shared_ptr<EnemySpawner>>enemySpawner_;	// 敵生成クラス
 
 	std::unique_ptr<ShotMng> shotMng_;	//弾管理クラス
+	int cnt;
 };
 
