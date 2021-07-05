@@ -18,7 +18,7 @@ public:
 	bool SetChip(VECTOR2 pos, MapChipName chip);
 	bool CreateMapFile(VECTOR2 mapSize, std::wstring name);
 	bool SaveFile();
-	void FindMainStay(mapChipVec& map, const int& y, mapChipVec::iterator fStart);
+	void FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart);
 	const std::vector<int>& GetMainStay();
 	const std::vector<int>& GetSpawner();
 	VECTOR2 PosFromIndex(int index);

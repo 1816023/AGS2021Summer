@@ -39,7 +39,7 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
         ptr = std::make_shared<Blue>(pos, AttackType::SHOT);
         break;
     case PlayerUnit::PINK:
-        ptr = std::make_shared<Pink>(pos, AttackType::NON,this);
+        ptr = std::make_shared<Pink>(pos, AttackType::SHOT,this);
         break;
     case PlayerUnit::MAX:
         break;
@@ -59,6 +59,11 @@ bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)
 UnitList PlayerMng::GetUnitList(void)
 {
     return unitList_;
+}
+
+std::map<PlayerUnit, int> PlayerMng::GetPlayerData(void)
+{
+    return playerData;
 }
 
 int PlayerMng::GetCost(void)
@@ -119,4 +124,8 @@ PlayerMng::~PlayerMng()
 void PlayerMng::Init()
 {
     cost = MAX_COST;
+    playerData.try_emplace(PlayerUnit::BLUE, LoadGraph(L"data/image/Hexagon_Blue.png"));
+    playerData.try_emplace(PlayerUnit::GREEN, LoadGraph(L"data/image/Hexagon_Green.png"));
+    playerData.try_emplace(PlayerUnit::PINK, LoadGraph(L"data/image/Hexagon_Pink.png"));
+    playerData.try_emplace(PlayerUnit::YELLOW, LoadGraph(L"data/image/Hexagon_Yellow.png"));
 }

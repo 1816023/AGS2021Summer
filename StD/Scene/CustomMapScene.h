@@ -52,7 +52,7 @@ public:
 	~CustomMapScene();
 
 	unique_Base Update(unique_Base own) override;
-	SCENE_ID GetScnID(void) override { return SCENE_ID::MAIN; }
+	SCENE_ID GetScnID(void) override { return SCENE_ID::CUSTOM; }
 private:
 	// ‰Šú‰»—p
 	bool Init();

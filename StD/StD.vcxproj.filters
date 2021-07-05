@@ -45,13 +45,16 @@
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
-    <ClCompile Include="ScrollList.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ECircle.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="CustumErrorText.cpp" />
+    <ClCompile Include="ScrollList\ScrollList.cpp" />
+    <ClCompile Include="ScrollList\StringList.cpp" />
+    <ClCompile Include="ScrollList\BoxList.cpp" />
+    <ClCompile Include="ScrollList\ImageList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -110,7 +113,6 @@
     <ClInclude Include="CustomState\SetState.h" />
     <ClInclude Include="CustomState\SelectFile.h" />
     <ClInclude Include="Mng\SoundMng.h" />
-    <ClInclude Include="ScrollList.h" />
     <ClInclude Include="Unit\Enemy\Mob\ECircle.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
@@ -118,5 +120,9 @@
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="CustumErrorText.h" />
+    <ClInclude Include="ScrollList\StringList.h" />
+    <ClInclude Include="ScrollList\ScrollList.h" />
+    <ClInclude Include="ScrollList\BoxList.h" />
+    <ClInclude Include="ScrollList\ImageList.h" />
   </ItemGroup>
 </Project>

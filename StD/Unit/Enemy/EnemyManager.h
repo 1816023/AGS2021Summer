@@ -27,6 +27,7 @@ public:
 	void Killer(std::shared_ptr<Enemy> enemy);
 	// ‚¢‚¸‚ê‚©‚Ì“G‚ªƒS[ƒ‹‚µ‚½‚©
 	bool IsGoal();
+
 private:
 	// “G‚ğì¬‚·‚é
 	Enemy& CreateEnemy(EnemyType type);

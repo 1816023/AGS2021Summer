@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ScrollList\BoxList.cpp" />
     <ClCompile Include="Button\Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Button\CircleButton.cpp" />
@@ -158,13 +159,15 @@
     <ClCompile Include="Button\RectButton.cpp" />
     <ClCompile Include="Button\RoundRectButton.cpp" />
     <ClCompile Include="CustumErrorText.cpp" />
+    <ClCompile Include="ScrollList\ImageList.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
+    <ClCompile Include="ScrollList\StringList.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
     <ClCompile Include="Map\Astar.cpp" />
     <ClCompile Include="Mng\SoundMng.cpp" />
-    <ClCompile Include="ScrollList.cpp" />
+    <ClCompile Include="ScrollList\ScrollList.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\Interference.cpp" />
@@ -202,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ScrollList\BoxList.h" />
     <ClInclude Include="Button\Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Button\CircleButton.h" />
@@ -211,8 +215,10 @@
     <ClInclude Include="Button\RectButton.h" />
     <ClInclude Include="Button\RoundRectButton.h" />
     <ClInclude Include="CustumErrorText.h" />
+    <ClInclude Include="ScrollList\ImageList.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
+    <ClInclude Include="ScrollList\StringList.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />
@@ -225,7 +231,7 @@
     <ClInclude Include="CustomState\SetState.h" />
     <ClInclude Include="File\FileSystem.h" />
     <ClInclude Include="Mng\SoundMng.h" />
-    <ClInclude Include="ScrollList.h" />
+    <ClInclude Include="ScrollList\ScrollList.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\Trap.h" />

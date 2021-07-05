@@ -15,13 +15,17 @@ GameScene::GameScene()
 {
 	map = std::make_unique<Map>();
 	map->SetUp("defalt_map");
+	cnt = 0;
 
 	IMAGE_ID(L"data/image/circle.png");
+	IMAGE_ID(L"data/image/triangle.png");
+	IMAGE_ID(L"data/image/pentagon.png");
+	IMAGE_ID(L"data/image/square.png");
 	IMAGE_ID(L"data/image/Hexagon_Blue.png");
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
-	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(32, 224), *enemyMng_));
+	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_));
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
 }
 
@@ -31,19 +35,24 @@ GameScene::~GameScene()
 
 unique_Base GameScene::Update(unique_Base own)
 {
+	if (cnt++ < 60)
+	{
+		return std::move(own);
+	}
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
 	auto delta = Application::Instance().GetDelta();
 
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-	{
-
-	}
-
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		playerMng_->Spawner(PlayerUnit::BLUE, Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y));
+		auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
+		if (map->GetMapChip(mPos) == MapChipName::FIELD)
+		{
+			Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
+			auto offSet = map->GetChipSize() / 2;
+			playerMng_->Spawner(PlayerUnit::PINK,VecFCast(chipPos *map->GetChipSize()+offSet));
+		}
 	}
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
@@ -143,10 +152,15 @@ void GameScene::BulletControler(void)
 
 void GameScene::Draw()
 {
+	if (cnt < 60)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA,cnt*4 );
+	}
 	map->Draw();
 	shotMng_->Draw();
 	playerMng_->Draw();
 	enemyMng_->Draw();
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 void GameScene::DrawUI()
@@ -156,7 +170,14 @@ void GameScene::DrawUI()
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
 	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
-	
+	int enemyRemain = 0;
+	for (auto& spawners : enemySpawner_)
+	{
+		enemyRemain += spawners->GetRemainSpawnCnt();
+	}
+	enemyRemain += enemyMng_->GetEnemies().size();
+	DrawFormatString(0, 0, 0xffffff, L"敵残存数 %d", enemyRemain);
+
 	MenuDraw(m_pos);
 }
 
@@ -165,16 +186,41 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 	auto menuSize = Vec2Int(DEF_SCREEN_SIZE_X / 4, DEF_SCREEN_SIZE_Y);
 
 	//menu画面
-	DrawBox(DEF_SCREEN_SIZE_X - menuSize.x, menuSize.y, DEF_SCREEN_SIZE_X, 0, 0x000000, true);
-	DrawLine(DEF_SCREEN_SIZE_X - menuSize.x, menuSize.y, DEF_SCREEN_SIZE_X - menuSize.x, 0, 0xffffff);
-	DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, 0, lpImageMng.GetID(L"data/image/Hexagon_Blue.png"), true);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0x888888, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0xffffff, false);
+
+	for (int data =0;data <=size_t(PlayerUnit::MAX);data++)
+	{
+		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, data*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)], true);
+	}
+	//ボタン
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 15, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 105, menuSize.y - 48, 10, 10, 0x000000, true);
+	//ボタン縁
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0xffffff, true);
+	//ボタン影
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0x000000, false);
+	//ボタンテキスト
+	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 20, menuSize.y - 45, 0x000000, L"ユニット");
+	
+	//ボタン
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 115, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 205, menuSize.y - 48, 10, 10, 0x000000, true);
+	//ボタン縁
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0xffffff, true);
+	//ボタン影
+	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0x000000, false);
+	//ボタンテキスト
+	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 120, menuSize.y-45, 0x000000, L"トラップ");
 
 	//詳細表示
 	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)
 	{
 		auto size_x = (m_pos.x + 200 <= DEF_SCREEN_SIZE_X ? 200 : -200);
 		auto size_y = (m_pos.y <= DEF_SCREEN_SIZE_Y / 2 ? 100 : -100);
-		DrawBox(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 0x000000, true);
-		DrawBox(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 0xffffff, false);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0x888888, true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0xffffff, false);
 	}
 }

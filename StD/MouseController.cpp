@@ -6,7 +6,7 @@ std::unique_ptr<MouseController, MouseController::MouseDelete> MouseController::
 
 bool MouseController::GetClickTrg(int mouseType)
 {
-	if (data && !dataOld && (data & mouseType))
+	if((data & mouseType) && !(dataOld & mouseType))
 	{
 		return true;
 	}
@@ -15,7 +15,7 @@ bool MouseController::GetClickTrg(int mouseType)
 
 bool MouseController::GetClicking(int mouseType)
 {
-	if (data && dataOld && (data & mouseType))
+	if((data & mouseType) && (dataOld & mouseType))
 	{
 		return true;
 	}
@@ -24,7 +24,7 @@ bool MouseController::GetClicking(int mouseType)
 
 bool MouseController::GetClickUp(int mouseType)
 {
-	if (!data && dataOld && (dataOld & mouseType))
+	if(!(data & mouseType)&&(dataOld & mouseType))
 	{		
 		return true;
 	}
@@ -36,7 +36,7 @@ void MouseController::Update(Vec2Float offset, float scale)
 	GetMousePoint(&pos.x, &pos.y);
 	dataOld = data;
 	data = GetMouseInput();
-	wheel += GetMouseWheelRotVol();
+	wheel = GetMouseWheelRotVol();
 	offset_ = offset;
 	scale_ = scale;
 }

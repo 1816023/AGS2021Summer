@@ -3,15 +3,17 @@
 #include "Mob/ECircle.h"
 #include "../../Map/Map.h"
 
-EnemySpawner::EnemySpawner(Vec2Float pos,
-	EnemyManager& enemyMng)
+EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng)
 {
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		spawnList_.emplace_back(EnemyType::Circle);
 	}
-
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 9; i++)
+	{
+		root_.emplace_back(RootDir::LEFT);
+	}
+	/*for (int i = 0; i < 6; i++)
 	{
 		root_.emplace_back(RootDir::DOWN);
 	}
@@ -30,7 +32,7 @@ EnemySpawner::EnemySpawner(Vec2Float pos,
 	for (int i = 0; i < 3; i++)
 	{
 		root_.emplace_back(RootDir::DOWN);
-	}
+	}*/
 	pos_ = pos;
 	enemyMng_ = &enemyMng;
 	cnt_ = 0.0f;
