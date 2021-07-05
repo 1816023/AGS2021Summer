@@ -21,11 +21,12 @@ GameScene::GameScene()
 	IMAGE_ID(L"data/image/triangle.png");
 	IMAGE_ID(L"data/image/pentagon.png");
 	IMAGE_ID(L"data/image/square.png");
-	IMAGE_ID(L"data/image/Hexagon_Blue.png");
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
 	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_));
+
+	selectUnitId = PlayerUnit::YELLOW;
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
 }
 
@@ -42,16 +43,27 @@ unique_Base GameScene::Update(unique_Base own)
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
-	auto delta = Application::Instance().GetDelta();
+	auto delta = Application::Instance().GetDelta(); 
+	Vec2Int gSize;
+	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::BLUE],&gSize.x,&gSize.y);
+
+	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
+
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	{
+		if (mPos.x >= DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 4)
+		{
+			selectUnitId = static_cast<PlayerUnit>((mPos.y + 10) / gSize.y);
+		}
+	}
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
 		if (map->GetMapChip(mPos) == MapChipName::FIELD)
 		{
 			Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
 			auto offSet = map->GetChipSize() / 2;
-			playerMng_->Spawner(PlayerUnit::PINK,VecFCast(chipPos *map->GetChipSize()+offSet));
+			playerMng_->Spawner(selectUnitId,VecFCast(chipPos *map->GetChipSize()+offSet));
 		}
 	}
 
@@ -170,6 +182,7 @@ void GameScene::DrawUI()
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
 	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
+	DrawRotaGraph(m_pos.x, m_pos.y, 1, 0, playerMng_->GetPlayerData()[selectUnitId], true);
 	int enemyRemain = 0;
 	for (auto& spawners : enemySpawner_)
 	{
