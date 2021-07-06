@@ -4,13 +4,15 @@
 #include "MouseController.h"
 #include "Camera.h"
 #include <cassert>
+#define MAP_MAX_SIZE 30
 
 using namespace std::chrono;
+
 
 namespace
 {
 	int chipSize = 64;
-	int mapSize = 30;
+	int mapSize = MAP_MAX_SIZE;
 }
 
 bool Application::Init()
@@ -77,15 +79,17 @@ void Application::Draw()
 	SetDrawScreen(DX_SCREEN_BACK);
 	auto pos = camera_->GetPos();
 	auto scale = camera_->GetScale();
-	auto halfScreen = Vec2Int(DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2);
-
-	DrawRotaGraph2(halfScreen.x - pos.x , halfScreen.y - pos.y, 
+	auto halfScreen = VECTOR2(DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2);
+	DrawRotaGraph2(halfScreen.x , halfScreen.y, 
 				   halfScreen.x + pos.x, halfScreen.y + pos.y, scale, 0,
 				   gameScreen_, false);
+	int x, y;
+	GetGraphSize(gameScreen_, &x, &y);
+	//DrawRotaGraph(x / 2  - pos.x, y / 2 - pos.y, scale, 0, gameScreen_, false);
 	// ui•`‰æ
 	sceneController_->DrawUI();
 	//DrawFormatString(0, 32, 0xffffff, L"%f", delta_);
-	//DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", -pos.x, pos.y, scale);
+	DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", -pos.x, pos.y, scale);
 	camera_->DebugDraw();
 	//_dbgAddDraw();
 	ScreenFlip();

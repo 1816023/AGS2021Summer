@@ -47,13 +47,14 @@ bool CustomMapScene::Init()
 	custom_.try_emplace(CustomState::ENEMY_CUSTOM, std::make_unique<EnemyCustom>());
 	custom_.try_emplace(CustomState::END_CUSTOM, std::make_unique<EndCustom>());
 	custom_[nowState_]->Init(this);
+	lpApplication.GetCamera().ScaleLock(false);
 	return true;
 }
 
 void CustomMapScene::Draw()
 {
 	Vec2Float cPos = Application::Instance().GetCamera().GetPos();
-	cPos *= 2.0f;
+	//cPos *= 2.0f;
 	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
 

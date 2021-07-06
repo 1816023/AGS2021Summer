@@ -33,10 +33,28 @@ void Camera::Control()
 	{
 		pos_.y--;
 	}*/
+	if (CheckHitKey(KEY_INPUT_ADD))
+	{
+		pos_.x += 32;
+	}
+	if (CheckHitKey(KEY_INPUT_SUBTRACT))
+	{
+		pos_.x += 64;
+	}
+	if (CheckHitKey(KEY_INPUT_MULTIPLY))
+	{
+		pos_.x += 128;
+	}
 	if (!scaleLock_)
 	{
 		auto wheel = static_cast<float>(lpMouseController.GetWheel());
-		scale_ += wheel * 0.01f;
+		if (wheel != 0)
+		{
+			scale_ += wheel * 0.01f;
+			scale_ = scale_ * pow(10, 3 - 1);	//四捨五入したい値を10の(3-1)乗倍する。
+			scale_ = round(scale_);				//小数点第三位以下を四捨五入する。
+			scale_ /= pow(10, 3 - 1);			//10の(3-1)乗で割る。
+		}
 	}
 	
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_RIGHT))
@@ -53,17 +71,18 @@ void Camera::Control()
 	if (lpMouseController.GetClicking(MOUSE_INPUT_RIGHT))
 	{
 		auto dist = lpMouseController.GetPos() - clickPos_;
-		if (dist != VECTOR2(0.0f, 0.0f))
+		if (dist != VECTOR2(0, 0))
 		{
 			auto distF = VecFCast(dist);
 			// 1.0fは定数
 			// scale_が1の時2になる
-			pos_ = beforePos_ - distF /** (1.0f / (1.0f + scale_))*/;
+			pos_ = beforePos_ - distF * (1.0f / scale_);
 		}
 	}
 	if (CheckHitKey(KEY_INPUT_R))
 	{
 		pos_ = Vec2Float(0.0f, 0.0f);
+		scale_ = 1.0f;
 	}
 }
 
@@ -90,5 +109,5 @@ void Camera::ScaleLock(bool lock)
 void Camera::DebugDraw()
 {
 	auto dist = lpMouseController.GetPos() - clickPos_;
-	//DrawFormatString(0, 0, 0xffffff, L"dist %d, %d", dist.x, dist.y);
+	DrawFormatString(0, 0, 0xffffff, L"dist %d, %d", dist.x, dist.y);
 }

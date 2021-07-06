@@ -155,13 +155,18 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 		mapElm->SetAttribute("hight", mapSize.x);
 		mapElm->SetAttribute("width", mapSize.y);
 		std::string mapData = "\n";
+		int idx = 0;
 		for (auto& y : mapData_)
 		{
+			
 			for (auto& data : y)
 			{
 				mapData += std::to_string(static_cast<char>(data));
-				mapData += ",";
-
+				idx++;
+				if (idx < mapSize.x * mapSize.y)
+				{
+					mapData += ",";
+				}
 			}
 			mapData += "\n";
 		}
