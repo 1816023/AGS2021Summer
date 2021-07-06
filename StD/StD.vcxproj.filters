@@ -57,6 +57,8 @@
     <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
     <ClCompile Include="GUI\ScrollList\ScrollList.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
+    <ClCompile Include="GUI\PullDown\PullDown.cpp" />
+    <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -128,5 +130,7 @@
     <ClInclude Include="GUI\ScrollList\ImageList.h" />
     <ClInclude Include="GUI\ScrollList\ScrollList.h" />
     <ClInclude Include="GUI\ScrollList\StringList.h" />
+    <ClInclude Include="GUI\PullDown\PullDown.h" />
+    <ClInclude Include="GUI\ScrollList\ButtonList.h" />
   </ItemGroup>
 </Project>
