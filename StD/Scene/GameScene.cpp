@@ -57,6 +57,7 @@ unique_Base GameScene::Update(unique_Base own)
 	UnitCreateFunc();
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
+
 	BulletControler(delta);
 
 	int spawnRemain = 0;
@@ -108,12 +109,24 @@ void GameScene::UnitCreateFunc()
 		}
 	}
 
+	Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
+	auto offSet = map->GetChipSize() / 2;
+
+	if (lpMouseController.GetClickUp(MOUSE_INPUT_RIGHT))
+	{
+		//右クリックしたマスに配置されているユニットの取得
+		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
+		if (unitData != nullptr)
+		{
+
+		}
+	}
+
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		if (map->GetMapChip(mPos) == MapChipName::FIELD)
+		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
+		if (map->GetMapChip(mPos) == MapChipName::FIELD && unitData != nullptr)
 		{
-			Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
-			auto offSet = map->GetChipSize() / 2;
 			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map->GetChipSize() + offSet));
 		}
 	}

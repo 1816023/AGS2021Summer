@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
     <ClCompile Include="GUI\Canvas.cpp" />
     <ClCompile Include="GUI\ScrollList\BoxList.cpp" />
     <ClCompile Include="GUI\Button\Button.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="GUI\Button\RoundRectButton.cpp" />
     <ClCompile Include="CustumErrorText.cpp" />
     <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
+    <ClCompile Include="GUI\PullDown\PullDown.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
@@ -208,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />
     <ClInclude Include="GUI\ScrollList\BoxList.h" />
     <ClInclude Include="GUI\Button\Button.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="CustumErrorText.h" />
     <ClInclude Include="GUI\ScrollList\ImageList.h" />
     <ClInclude Include="MapEnum.h" />
+    <ClInclude Include="GUI\PullDown\PullDown.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="GUI\ScrollList\StringList.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />

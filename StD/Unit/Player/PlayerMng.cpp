@@ -90,6 +90,13 @@ float PlayerMng::SpeedDelay(void)
     return delay;
 }
 
+std::shared_ptr<Player> PlayerMng::GetUnitData(Vec2Float pos)
+{
+    UnitList::iterator result = unitList_.end();
+    result = std::find_if(unitList_.begin(), unitList_.end(), [&](std::shared_ptr<Player> player) {return player->GetPos() == pos; });
+    return (result != unitList_.end() ? (*result):nullptr);
+}
+
 PlayerMng::PlayerMng()
 {
     Init();
