@@ -2,7 +2,7 @@
 #include <DxLib.h>
 #include "GameScene.h"
 #include "CustomMapScene.h"
-#include "../Button/ImageRectButton.h"
+#include "../GUI/Button/ImageRectButton.h"
 #include "../Application.h"
 #include "../StringUtil.h"
 

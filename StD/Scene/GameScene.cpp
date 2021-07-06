@@ -45,10 +45,15 @@ unique_Base GameScene::Update(unique_Base own)
 
 	float delta = Application::Instance().GetDelta(); 
 
-	if (now[KEY_INPUT_TAB])
+	/*if (now[KEY_INPUT_TAB])
 	{
+
+		if (mPos.x >= DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 4)
+		{
+			selectUnitId = static_cast<PlayerUnit>((VecICast(mPos).y + 10) / gSize.y);
+		}
 		delta = Application::Instance().GetDelta() / 2;
-	}
+	}*/
 	UnitCreateFunc();
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());

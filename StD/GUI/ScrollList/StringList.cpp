@@ -1,7 +1,7 @@
 #include <DxLib.h>
 #include "StringList.h"
-#include "../MouseController.h"
-#include "../StringUtil.h"
+#include "../../MouseController.h"
+#include "../../StringUtil.h"
 
 StringList::StringList(VECTOR2 pos, VECTOR2 size, int fonthande):ScrollList(pos,size)
 {

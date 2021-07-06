@@ -1,6 +1,6 @@
 #include <DxLib.h>
-#include "../Mng/ImageMng.h"
-#include "../StringUtil.h"
+#include "../../Mng/ImageMng.h"
+#include "../../StringUtil.h"
 #include "RoundRectButton.h"
 
 RoundRectButton::RoundRectButton(VECTOR2 lu, VECTOR2 rd, VECTOR2 radius, int color, std::function<bool()> func, VECTOR2 offset)

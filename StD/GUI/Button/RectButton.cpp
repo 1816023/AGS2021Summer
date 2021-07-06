@@ -1,6 +1,6 @@
 #include <DxLib.h>
-#include "../Mng/ImageMng.h"
-#include "../StringUtil.h"
+#include "../../Mng/ImageMng.h"
+#include "../../StringUtil.h"
 #include "RectButton.h"
 
 RectButton::RectButton(VECTOR2 lu, VECTOR2 rd, int color, std::function<bool()> func, VECTOR2 offset)

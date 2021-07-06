@@ -69,6 +69,10 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		return false;
 	}
 	VECTOR2 mapPos = pos / VECTOR2(state_.chipSize_.x, state_.chipSize_.y);
+	if (mapPos.x > GetMapSize().x || mapPos.y > GetMapSize().y)
+	{
+		return false;
+	}
 	int id = mapPos.x + mapPos.y * state_.mapSize_.x;
 	if (mapData_.size() <= mapPos.y && mapData_[mapPos.y].size() <= mapPos.x)
 	{
@@ -151,13 +155,18 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 		mapElm->SetAttribute("hight", mapSize.x);
 		mapElm->SetAttribute("width", mapSize.y);
 		std::string mapData = "\n";
+		int idx = 0;
 		for (auto& y : mapData_)
 		{
+			
 			for (auto& data : y)
 			{
 				mapData += std::to_string(static_cast<char>(data));
-				mapData += ",";
-
+				idx++;
+				if (idx < mapSize.x * mapSize.y)
+				{
+					mapData += ",";
+				}
 			}
 			mapData += "\n";
 		}

@@ -1,9 +1,9 @@
 #include <DxLib.h>
 #include <math.h>
-#include "../Mng/ImageMng.h"
-#include "../StringUtil.h"
-#include "../MouseController.h"
-#include "../Mng/SoundMng.h"
+#include "../../Mng/ImageMng.h"
+#include "../../StringUtil.h"
+#include "../../MouseController.h"
+#include "../../Mng/SoundMng.h"
 #include "Button.h"
 
 

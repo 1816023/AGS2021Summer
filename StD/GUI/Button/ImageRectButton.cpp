@@ -1,7 +1,7 @@
 #include <DxLib.h>
-#include "../Mng/ImageMng.h"
+#include "../../Mng/ImageMng.h"
 #include "ImageRectButton.h"
-#include "../StringUtil.h"
+#include "../../StringUtil.h"
 
 ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset)
 	:Button(offset)
