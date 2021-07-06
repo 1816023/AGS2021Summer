@@ -23,7 +23,6 @@ bool Application::Init()
 	{
 		return false;
 	}
-	
 	SetDrawScreen(DX_SCREEN_BACK);
 	int x, y, col;
 	GetScreenState(&x, &y, &col);
@@ -31,6 +30,7 @@ bool Application::Init()
 	camera_ = std::make_unique<Camera>();
 	sceneController_ = std::make_unique<TitleScene>();
 	oldTime_ = system_clock::now();
+
 	return true;
 }
 
@@ -50,6 +50,7 @@ void Application::Run()
 	int cnt = 0;
 	while (CheckHitKey(KEY_INPUT_ESCAPE) == 0 && ProcessMessage() == 0)
 	{
+		//_dbgStartDraw();
 		sceneController_ = (*sceneController_).Update(std::move(sceneController_));
 		camera_->Control();
 		lpKeyController.Update();
@@ -72,12 +73,12 @@ void Application::Draw()
 	SetDrawScreen(gameScreen_);
 	ClsDrawScreen();
 	sceneController_->Draw();
-
 	// ƒXƒNƒŠ[ƒ“‚ð— ‚É•`‰æ
 	SetDrawScreen(DX_SCREEN_BACK);
 	auto pos = camera_->GetPos();
 	auto scale = camera_->GetScale();
 	auto halfScreen = Vec2Int(DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2);
+
 	DrawRotaGraph2(halfScreen.x - pos.x , halfScreen.y - pos.y, 
 				   halfScreen.x + pos.x, halfScreen.y + pos.y, scale, 0,
 				   gameScreen_, false);
@@ -86,6 +87,7 @@ void Application::Draw()
 	//DrawFormatString(0, 32, 0xffffff, L"%f", delta_);
 	//DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", -pos.x, pos.y, scale);
 	camera_->DebugDraw();
+	//_dbgAddDraw();
 	ScreenFlip();
 }
 
@@ -97,6 +99,13 @@ float Application::GetDelta()
 Camera& Application::GetCamera()
 {
 	return *camera_;
+}
+
+const VECTOR2 Application::GetGameScreenSize()
+{
+	VECTOR2 vec;
+	GetGraphSize(gameScreen_, &vec.x, &vec.y);
+	return vec;
 }
 
 void Application::Terminate()

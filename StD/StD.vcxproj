@@ -202,6 +202,8 @@
     <ClCompile Include="Unit\Player\PlayerMng.cpp" />
     <ClCompile Include="Unit\Player\Yellow.cpp" />
     <ClCompile Include="Unit\Unit.cpp" />
+    <ClCompile Include="_debug\_DebugConOut.cpp" />
+    <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -271,6 +273,8 @@
     <ClInclude Include="Unit\Player\Yellow.h" />
     <ClInclude Include="Unit\Unit.h" />
     <ClInclude Include="VECTOR2.h" />
+    <ClInclude Include="_debug\_DebugConOut.h" />
+    <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
