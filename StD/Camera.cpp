@@ -33,10 +33,22 @@ void Camera::Control()
 	{
 		pos_.y--;
 	}*/
+	if (CheckHitKey(KEY_INPUT_ADD))
+	{
+		pos_.x += 32;
+	}
+	if (CheckHitKey(KEY_INPUT_SUBTRACT))
+	{
+		pos_.x += 64;
+	}
+	if (CheckHitKey(KEY_INPUT_MULTIPLY))
+	{
+		pos_.x += 128;
+	}
 	if (!scaleLock_)
 	{
 		auto wheel = static_cast<float>(lpMouseController.GetWheel());
-		scale_ += wheel * 0.01f;
+		scale_ += roundf(wheel * 0.01f);
 	}
 	
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_RIGHT))
@@ -53,12 +65,12 @@ void Camera::Control()
 	if (lpMouseController.GetClicking(MOUSE_INPUT_RIGHT))
 	{
 		auto dist = lpMouseController.GetPos() - clickPos_;
-		if (dist != VECTOR2(0.0f, 0.0f))
+		if (dist != VECTOR2(0, 0))
 		{
 			auto distF = VecFCast(dist);
 			// 1.0fÇÕíËêî
 			// scale_Ç™1ÇÃéû2Ç…Ç»ÇÈ
-			pos_ = beforePos_ - distF /** (1.0f / (1.0f + scale_))*/;
+			pos_ = beforePos_ - distF * scale_;
 		}
 	}
 	if (CheckHitKey(KEY_INPUT_R))
@@ -90,5 +102,5 @@ void Camera::ScaleLock(bool lock)
 void Camera::DebugDraw()
 {
 	auto dist = lpMouseController.GetPos() - clickPos_;
-	//DrawFormatString(0, 0, 0xffffff, L"dist %d, %d", dist.x, dist.y);
+	DrawFormatString(0, 0, 0xffffff, L"dist %d, %d", dist.x, dist.y);
 }
