@@ -47,12 +47,13 @@ const VECTOR2& MouseController::GetOffsetPos()
 	auto fPos = VecFCast(pos);
 	VECTOR2 set = {};
 	// 座標オフセット
-	set += VecICast(offset_ * scale_);
+	
 	if (scale_ != 1.0f)
 	{
 		// 拡縮のみ
 		set = VecICast(screenS / ((1.0f / (scale_ - 1.0f)) + 1.0f));
 	}
+	set += VecICast(offset_);
 	auto a = fPos * (1.0f / scale_);	// 正解
 	return VecICast(a + set);
 }

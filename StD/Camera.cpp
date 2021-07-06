@@ -48,7 +48,13 @@ void Camera::Control()
 	if (!scaleLock_)
 	{
 		auto wheel = static_cast<float>(lpMouseController.GetWheel());
-		scale_ += roundf(wheel * 0.01f);
+		if (wheel != 0)
+		{
+			scale_ += wheel * 0.01f;
+			scale_ = scale_ * pow(10, 3 - 1);	//四捨五入したい値を10の(3-1)乗倍する。
+			scale_ = round(scale_);				//小数点第三位以下を四捨五入する。
+			scale_ /= pow(10, 3 - 1);			//10の(3-1)乗で割る。
+		}
 	}
 	
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_RIGHT))
@@ -70,12 +76,13 @@ void Camera::Control()
 			auto distF = VecFCast(dist);
 			// 1.0fは定数
 			// scale_が1の時2になる
-			pos_ = beforePos_ - distF * scale_;
+			pos_ = beforePos_ - distF * (1.0f / scale_);
 		}
 	}
 	if (CheckHitKey(KEY_INPUT_R))
 	{
 		pos_ = Vec2Float(0.0f, 0.0f);
+		scale_ = 1.0f;
 	}
 }
 
