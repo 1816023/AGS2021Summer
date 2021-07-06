@@ -27,16 +27,14 @@ void Green::Init()
 
 void Green::Update(float deltaTime)
 {
-	if (coolTime_ <= 0)
+	if (!executable)
 	{
-		if (!executable)
-		{
-
-		}
+		coolTime_-= deltaTime;
+		executable = (coolTime_ <= 0 ? true : false);
 	}
 	else
 	{
-		coolTime_--;
+		coolTime_++;
 	}
 }
 

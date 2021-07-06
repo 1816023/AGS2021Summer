@@ -43,12 +43,16 @@ unique_Base GameScene::Update(unique_Base own)
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
-	auto delta = Application::Instance().GetDelta(); 
+	float delta = Application::Instance().GetDelta(); 
 
+	if (now[KEY_INPUT_TAB])
+	{
+		delta = Application::Instance().GetDelta() / 2;
+	}
 	UnitCreateFunc();
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
-	BulletControler();
+	BulletControler(delta);
 
 	int spawnRemain = 0;
 	for (auto& spawners : enemySpawner_)
@@ -110,7 +114,7 @@ void GameScene::UnitCreateFunc()
 	}
 }
 
-void GameScene::BulletControler(void)
+void GameScene::BulletControler(float deltaTime)
 {
 	auto unitList = playerMng_->GetUnitList();
 	auto enemyList = enemyMng_->GetEnemies();
@@ -132,8 +136,8 @@ void GameScene::BulletControler(void)
 			{
 				if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
 				{
-					shotMng_->AddBullet(unit, enemy);
-					auto shooter = shotMng_->BulletMove(unit, enemy);
+					shotMng_->AddBullet(unit, enemy,deltaTime);
+					auto shooter = shotMng_->BulletMove(unit, enemy,deltaTime);
 					if (shooter != nullptr)
 					{
 						enemy->SetHP(shooter->GetAttackPower());
@@ -146,7 +150,7 @@ void GameScene::BulletControler(void)
 		if (type == AttackType::AREA)
 		{
 			//クールタイムを設定することで解決？
-			if (shotMng_->isCoolTime(unit))
+			if (shotMng_->isCoolTime(unit,deltaTime))
 			{
 				for (auto enemy : enemyList)
 				{
