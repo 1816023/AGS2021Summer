@@ -25,6 +25,7 @@ public:
 	int GetCost(void);
 	void SetCost(int cost);
 	float SpeedDelay(void);
+	std::shared_ptr<Player> GetUnitData(Vec2Float pos);
 private:
 	void SkillCtl(std::shared_ptr<Unit> shooter);
 	UnitList unitList_;

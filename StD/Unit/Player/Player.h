@@ -27,6 +27,10 @@ public:
 	{
 		return executable;
 	}
+	int GetCoolTime()
+	{
+		return coolTime_;
+	}
 protected:
 	PlayerMng* player_;
 	PlayerUnit id;
