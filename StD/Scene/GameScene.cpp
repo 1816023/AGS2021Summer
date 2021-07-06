@@ -26,7 +26,7 @@ GameScene::GameScene()
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
 	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_));
 
-	selectUnitId = PlayerUnit::YELLOW;
+	selectUnitId = PlayerUnit::NON;
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
 }
 
@@ -44,28 +44,8 @@ unique_Base GameScene::Update(unique_Base own)
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
 	auto delta = Application::Instance().GetDelta(); 
-	Vec2Int gSize;
-	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::BLUE],&gSize.x,&gSize.y);
 
-	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
-
-	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
-	{
-		if (mPos.x >= DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 4)
-		{
-			selectUnitId = static_cast<PlayerUnit>((mPos.y + 10) / gSize.y);
-		}
-	}
-
-	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
-	{
-		if (map->GetMapChip(mPos) == MapChipName::FIELD)
-		{
-			Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
-			auto offSet = map->GetChipSize() / 2;
-			playerMng_->Spawner(selectUnitId,VecFCast(chipPos *map->GetChipSize()+offSet));
-		}
-	}
+	UnitCreateFunc();
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
 	BulletControler();
@@ -101,6 +81,33 @@ unique_Base GameScene::Update(unique_Base own)
 		return std::make_unique<GameOverScene>();
 	}
 	return std::move(own);
+}
+
+void GameScene::UnitCreateFunc()
+{
+	Vec2Int gSize;
+	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW], &gSize.x, &gSize.y);
+
+	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
+
+	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
+	{
+		if (mPos.x >= DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 4)
+		{
+			auto tmpId = static_cast<PlayerUnit>(int((mPos.y + 10) / gSize.y) + 1);
+			selectUnitId = (tmpId < PlayerUnit::MAX ? tmpId : selectUnitId);
+		}
+	}
+
+	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
+	{
+		if (map->GetMapChip(mPos) == MapChipName::FIELD)
+		{
+			Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
+			auto offSet = map->GetChipSize() / 2;
+			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map->GetChipSize() + offSet));
+		}
+	}
 }
 
 void GameScene::BulletControler(void)
@@ -204,9 +211,9 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0xffffff, false);
 
-	for (int data =0;data <=size_t(PlayerUnit::MAX);data++)
+	for (int data =1;data <=size_t(PlayerUnit::MAX);data++)
 	{
-		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, data*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)], true);
+		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, (data-1)*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)], true);
 	}
 	//ƒ{ƒ^ƒ“
 	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 15, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 105, menuSize.y - 48, 10, 10, 0x000000, true);
