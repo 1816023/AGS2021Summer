@@ -4,6 +4,10 @@
 #include "Scene/BaseScene.h"
 #include "Camera.h"
 #include <chrono>
+#if _DEBUG
+#include "./_debug/_DebugConOut.h"
+#include "./_debug/_DebugDispOut.h"
+#endif // _DEBUG
 
 #define DEF_SCREEN_SIZE_X 854
 #define DEF_SCREEN_SIZE_Y 480
@@ -27,7 +31,7 @@ public:
 	void Terminate();		// 後処理
 	float GetDelta();		// デルタタイム
 	Camera& GetCamera();	// カメラ
-
+	const VECTOR2 GetGameScreenSize();	// ゲームスクリーンのサイズ取得
 private:
 	Application() = default;
 	Application(const Application&) = delete;

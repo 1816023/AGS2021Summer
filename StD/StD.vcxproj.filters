@@ -55,6 +55,8 @@
     <ClCompile Include="ScrollList\StringList.cpp" />
     <ClCompile Include="ScrollList\BoxList.cpp" />
     <ClCompile Include="ScrollList\ImageList.cpp" />
+    <ClCompile Include="_debug\_DebugConOut.cpp" />
+    <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -124,5 +126,7 @@
     <ClInclude Include="ScrollList\ScrollList.h" />
     <ClInclude Include="ScrollList\BoxList.h" />
     <ClInclude Include="ScrollList\ImageList.h" />
+    <ClInclude Include="_debug\_DebugConOut.h" />
+    <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>
 </Project>
