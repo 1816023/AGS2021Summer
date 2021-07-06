@@ -28,6 +28,7 @@ private:
 	void Draw()override;
 	void DrawUI()override;
 	void MenuDraw(VECTOR2& m_pos);
+	void UnitCreateFunc(void);
 	void BulletControler(void);
 	//デバッグ
 	std::unique_ptr<Map> map;
@@ -41,4 +42,3 @@ private:
 	PlayerUnit selectUnitId;
 	int cnt;
 };
-

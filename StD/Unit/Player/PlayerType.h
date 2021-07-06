@@ -2,6 +2,7 @@
 
 enum class PlayerUnit
 {
+	NON,
 	YELLOW,
 	GREEN,
 	BLUE,
