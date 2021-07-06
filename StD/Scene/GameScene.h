@@ -29,7 +29,7 @@ private:
 	void DrawUI()override;
 	void MenuDraw(VECTOR2& m_pos);
 	void UnitCreateFunc(void);
-	void BulletControler(void);
+	void BulletControler(float deltaTime);
 	//デバッグ
 	std::unique_ptr<Map> map;
 	std::unique_ptr<PlayerMng> playerMng_;

@@ -27,16 +27,16 @@ void ShotMng::Draw(void)
 	}
 }
 
-void ShotMng::AddBullet(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target)
+void ShotMng::AddBullet(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target, float deltaTime)
 {
-	if (isCoolTime(ptr))
+	if (isCoolTime(ptr,deltaTime))
 	{
 		shotSpan_[ptr] = BASE_SPAN*ptr->GetAttackSpan();
 		shotList_[ptr].push_back(std::make_pair(ptr->GetPos(),target));
 	}
 }
 
-std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target)
+std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared_ptr<Unit> target, float deltaTime)
 {
 	//UŒ‚”ÍˆÍ“à‚Ì“G‚ğ’Tõ‚·‚éH
 	if (!shotList_[ptr].empty())
@@ -48,7 +48,7 @@ std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared
 			auto n = ab.Normarize();
 
 			//Ë’ö”ÍˆÍ“à(’e‚ğˆÚ“®‚³‚¹‚é)
-			itr->first += Vec2Float(n.x * 15, n.y*15);
+			itr->first += Vec2Float(n.x * 15, n.y*15)* deltaTime;
 
 			if (!isRange(itr->first, ptr->GetPos(), BASE_SIZE, 150))
 			{
@@ -89,9 +89,9 @@ bool ShotMng::isRange(Vec2Float unitPos, Vec2Float shooterPos, float unitSize, f
 	return false;
 }
 
-bool ShotMng::isCoolTime(std::shared_ptr<Unit> ptr)
+bool ShotMng::isCoolTime(std::shared_ptr<Unit> ptr, float deltaTime)
 {
-	shotSpan_[ptr]--;
+	shotSpan_[ptr]-=deltaTime;
 	if (shotSpan_[ptr] <= 0)
 	{
 		shotSpan_[ptr] = BASE_SPAN * ptr->GetAttackSpan();
