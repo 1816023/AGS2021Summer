@@ -58,7 +58,7 @@ void Camera::Control()
 			auto distF = VecFCast(dist);
 			// 1.0f‚Í’è”
 			// scale_‚ª1‚Ì2‚É‚È‚é
-			pos_ = beforePos_ - distF * (1.0f / (1.0f + scale_));
+			pos_ = beforePos_ - distF /** (1.0f / (1.0f + scale_))*/;
 		}
 	}
 	if (CheckHitKey(KEY_INPUT_R))

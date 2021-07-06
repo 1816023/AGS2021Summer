@@ -1,6 +1,6 @@
 #include <DxLib.h>
 #include "BoxList.h"
-#include "../MouseController.h"
+#include "../../MouseController.h"
 BoxList::BoxList(VECTOR2 pos, VECTOR2 size):ScrollList(pos,size)
 {
     type_ = ListType::COLOR_BOX;

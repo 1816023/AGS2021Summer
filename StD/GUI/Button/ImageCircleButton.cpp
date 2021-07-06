@@ -1,5 +1,5 @@
 #include <DxLib.h>
-#include "../Mng/ImageMng.h"
+#include "../../Mng/ImageMng.h"
 #include "ImageCircleButton.h"
 
 ImageCircleButton::ImageCircleButton(VECTOR2 pos, int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset)

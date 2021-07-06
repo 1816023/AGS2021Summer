@@ -35,12 +35,6 @@
     <ClCompile Include="Unit\Player\Pink.cpp" />
     <ClCompile Include="Unit\Player\Blue.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Button\Button.cpp" />
-    <ClCompile Include="Button\ImageCircleButton.cpp" />
-    <ClCompile Include="Button\RectButton.cpp" />
-    <ClCompile Include="Button\RoundRectButton.cpp" />
-    <ClCompile Include="Button\CircleButton.cpp" />
-    <ClCompile Include="Button\ImageRectButton.cpp" />
     <ClCompile Include="Map\Astar.cpp" />
     <ClCompile Include="Trap\PowerDown.cpp" />
     <ClCompile Include="Trap\DefenseDown.cpp" />
@@ -51,12 +45,18 @@
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="CustumErrorText.cpp" />
-    <ClCompile Include="ScrollList\ScrollList.cpp" />
-    <ClCompile Include="ScrollList\StringList.cpp" />
-    <ClCompile Include="ScrollList\BoxList.cpp" />
-    <ClCompile Include="ScrollList\ImageList.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
+    <ClCompile Include="GUI\Button\Button.cpp" />
+    <ClCompile Include="GUI\Button\CircleButton.cpp" />
+    <ClCompile Include="GUI\Button\ImageCircleButton.cpp" />
+    <ClCompile Include="GUI\Button\ImageRectButton.cpp" />
+    <ClCompile Include="GUI\Button\RectButton.cpp" />
+    <ClCompile Include="GUI\Button\RoundRectButton.cpp" />
+    <ClCompile Include="GUI\ScrollList\BoxList.cpp" />
+    <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
+    <ClCompile Include="GUI\ScrollList\ScrollList.cpp" />
+    <ClCompile Include="GUI\ScrollList\StringList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -98,12 +98,6 @@
     <ClInclude Include="Unit\Player\Blue.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Trap\Trap.h" />
-    <ClInclude Include="Button\Button.h" />
-    <ClInclude Include="Button\ImageCircleButton.h" />
-    <ClInclude Include="Button\RectButton.h" />
-    <ClInclude Include="Button\RoundRectButton.h" />
-    <ClInclude Include="Button\CircleButton.h" />
-    <ClInclude Include="Button\ImageRectButton.h" />
     <ClInclude Include="Map\Astar.h" />
     <ClInclude Include="Trap\PowerDown.h" />
     <ClInclude Include="Trap\DefenseDown.h" />
@@ -122,11 +116,17 @@
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="CustumErrorText.h" />
-    <ClInclude Include="ScrollList\StringList.h" />
-    <ClInclude Include="ScrollList\ScrollList.h" />
-    <ClInclude Include="ScrollList\BoxList.h" />
-    <ClInclude Include="ScrollList\ImageList.h" />
     <ClInclude Include="_debug\_DebugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />
+    <ClInclude Include="GUI\Button\Button.h" />
+    <ClInclude Include="GUI\Button\CircleButton.h" />
+    <ClInclude Include="GUI\Button\ImageCircleButton.h" />
+    <ClInclude Include="GUI\Button\ImageRectButton.h" />
+    <ClInclude Include="GUI\Button\RectButton.h" />
+    <ClInclude Include="GUI\Button\RoundRectButton.h" />
+    <ClInclude Include="GUI\ScrollList\BoxList.h" />
+    <ClInclude Include="GUI\ScrollList\ImageList.h" />
+    <ClInclude Include="GUI\ScrollList\ScrollList.h" />
+    <ClInclude Include="GUI\ScrollList\StringList.h" />
   </ItemGroup>
 </Project>
