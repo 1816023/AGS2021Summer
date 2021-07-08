@@ -125,7 +125,7 @@ void GameScene::UnitCreateFunc()
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
 		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
-		if (map->GetMapChip(mPos) == MapChipName::FIELD && unitData != nullptr)
+		if (map->GetMapChip(mPos) == MapChipName::FIELD && unitData == nullptr)
 		{
 			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map->GetChipSize() + offSet));
 		}
