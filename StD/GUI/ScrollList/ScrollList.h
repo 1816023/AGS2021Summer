@@ -9,6 +9,7 @@ enum class ListType
 	STRING,
 	IMAGE,
 	COLOR_BOX,
+	BUTTON,
 	Max
 };
 

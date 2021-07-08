@@ -11,6 +11,7 @@ ScrollList::ScrollList(VECTOR2 pos,VECTOR2 size)
 
 ScrollList::~ScrollList()
 {
+    DeleteGraph(screen_);
 }
 
 
