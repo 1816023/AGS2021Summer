@@ -12,7 +12,7 @@ Blue::Blue(Vec2Float pos, AttackType type)
 	isSkill_ = false;
 	this->type = type;
 	executable = false;
-	coolTime_ = 600;
+	coolTime_ = 300;
 }
 
 Blue::~Blue()
@@ -21,19 +21,6 @@ Blue::~Blue()
 
 void Blue::Init()
 {
-}
-
-void Blue::Update(float deltaTime)
-{
-	if (!executable)
-	{
-		coolTime_--;
-		executable = (coolTime_ <= 0 ? true : false);
-	}
-	else
-	{
-		coolTime_++;
-	}
 }
 
 void Blue::Draw()

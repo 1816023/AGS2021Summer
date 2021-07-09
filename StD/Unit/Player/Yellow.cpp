@@ -23,15 +23,6 @@ void Yellow::Init()
 {
 }
 
-void Yellow::Update(float deltaTime)
-{
-	if (!executable)
-	{
-		coolTime_--;
-		executable = (coolTime_ <= 0 ? true : false);
-	}
-}
-
 void Yellow::Draw()
 {
 	Vec2Int gSize;

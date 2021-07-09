@@ -25,19 +25,6 @@ void Green::Init()
 {
 }
 
-void Green::Update(float deltaTime)
-{
-	if (!executable)
-	{
-		coolTime_-= deltaTime;
-		executable = (coolTime_ <= 0 ? true : false);
-	}
-	else
-	{
-		coolTime_++;
-	}
-}
-
 void Green::Draw()
 {
 	Vec2Int gSize;

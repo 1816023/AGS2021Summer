@@ -10,7 +10,6 @@ public:
 	Pink(Vec2Float pos, AttackType type,PlayerMng* mng_);
 	~Pink();
 	void Init();
-	void Update(float deltaTime);
 	void Draw();
 	int GetSpawnCost(void);
 	void Skill(void)override;	//Skillä«óù
