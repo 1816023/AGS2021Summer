@@ -34,6 +34,11 @@ unique_Base TitleScene::Update(unique_Base own)
 	now = lpKeyController.GetCtl(KEY_TYPE::NOW);
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 
+	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
+	{
+		return std::make_unique<MainScene>();
+	}
+
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE]))
 	{
 		return std::make_unique<MainScene>();
@@ -44,9 +49,6 @@ unique_Base TitleScene::Update(unique_Base own)
 void TitleScene::Draw()
 {
 	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[0], true);
-	/*DrawRotaGraph(pos.x+200, pos.y, 1, 0, mobImage[1], true);
-	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[2], true);
-	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[3], true);*/
 
 	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, true);
 	if (flag)
