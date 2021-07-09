@@ -23,5 +23,8 @@ private:
 	int number[11];
 
 	bool flag;
+	int time;
+	int second;
+	int minute;
 };
 
