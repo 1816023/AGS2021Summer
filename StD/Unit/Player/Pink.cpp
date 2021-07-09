@@ -24,10 +24,6 @@ void Pink::Init()
 {
 }
 
-void Pink::Update(float deltaTime)
-{
-}
-
 void Pink::Draw()
 {
 	Vec2Int gSize;

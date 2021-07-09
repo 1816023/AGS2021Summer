@@ -12,6 +12,7 @@ struct MenuState
 };
 
 class ShotMng;
+class Player;
 class PlayerMng;
 class EnemyManager;
 class EnemySpawner;
@@ -29,6 +30,7 @@ private:
 	void DrawUI()override;
 	void MenuDraw(VECTOR2& m_pos);
 	void UnitCreateFunc(void);
+	void UnitAccessFunc(void);
 	void BulletControler(float deltaTime);
 	//デバッグ
 	std::unique_ptr<Map> map;
@@ -40,5 +42,7 @@ private:
 	std::unique_ptr<ShotMng> shotMng_;	//弾管理クラス
 
 	PlayerUnit selectUnitId;
-	int cnt;
+	int cnt;	
+	std::shared_ptr<Player> accessData;	//クリック時に取得したユニットのデータ
+	bool waitFlag;	
 };

@@ -5,6 +5,7 @@
 #include "../Application.h"
 #include "../MouseController.h"
 #include "../Object/Shot/ShotMng.h"
+#include "../Unit/Player/Player.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../Unit/Enemy/EnemyManager.h"
 #include "../Unit/Enemy/EnemySpawner.h"
@@ -16,6 +17,8 @@ GameScene::GameScene()
 	map = std::make_unique<Map>();
 	map->SetUp("defalt_map");
 	cnt = 0;
+	waitFlag = false;
+	accessData = nullptr;
 
 	IMAGE_ID(L"data/image/circle.png");
 	IMAGE_ID(L"data/image/triangle.png");
@@ -45,20 +48,21 @@ unique_Base GameScene::Update(unique_Base own)
 
 	float delta = Application::Instance().GetDelta(); 
 
-	/*if (now[KEY_INPUT_TAB])
-	{
 
-		if (mPos.x >= DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 4)
-		{
-			selectUnitId = static_cast<PlayerUnit>((VecICast(mPos).y + 10) / gSize.y);
-		}
-		delta = Application::Instance().GetDelta() / 2;
-	}*/
 	UnitCreateFunc();
+	UnitAccessFunc();
+
+	//待機状態なら以後の処理を行わず戻す
+	if (waitFlag)
+	{
+		return std::move(own);
+	}
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
 
 	BulletControler(delta);
+
+
 
 	int spawnRemain = 0;
 	for (auto& spawners : enemySpawner_)
@@ -115,10 +119,10 @@ void GameScene::UnitCreateFunc()
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_RIGHT))
 	{
 		//右クリックしたマスに配置されているユニットの取得
-		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
-		if (unitData != nullptr)
+		accessData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
+		if (accessData != nullptr)
 		{
-
+			waitFlag = true;
 		}
 	}
 
@@ -129,6 +133,20 @@ void GameScene::UnitCreateFunc()
 		{
 			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map->GetChipSize() + offSet));
 		}
+	}
+}
+
+void GameScene::UnitAccessFunc(void)
+{
+	if (accessData == nullptr)
+	{
+		return;
+	}
+
+	if (accessData->GetCoolTime() <= 0)
+	{
+		accessData->SetExecutable(true);
+		waitFlag = false;
 	}
 }
 
@@ -218,7 +236,7 @@ void GameScene::DrawUI()
 		enemyRemain += spawners->GetRemainSpawnCnt();
 	}
 	enemyRemain += enemyMng_->GetEnemies().size();
-	DrawFormatString(0, 0, 0xffffff, L"敵残存数 %d", enemyRemain);
+	DrawFormatString(0, 32, 0xffffff, L"敵残存数 %d", enemyRemain);
 
 	MenuDraw(m_pos);
 }
