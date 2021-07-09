@@ -50,19 +50,17 @@ unique_Base GameScene::Update(unique_Base own)
 
 
 	UnitCreateFunc();
-	UnitAccessFunc();
 
-	//待機状態なら以後の処理を行わず戻す
-	if (waitFlag)
-	{
-		return std::move(own);
-	}
+	////待機状態なら以後の処理を行わず戻す
+	//if (waitFlag)
+	//{
+	//	//UnitAccessFunc();
+	//	return std::move(own);
+	//}
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
 
 	BulletControler(delta);
-
-
 
 	int spawnRemain = 0;
 	for (auto& spawners : enemySpawner_)
@@ -100,7 +98,7 @@ unique_Base GameScene::Update(unique_Base own)
 void GameScene::UnitCreateFunc()
 {
 	Vec2Int gSize;
-	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW], &gSize.x, &gSize.y);
+	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW].imageId, &gSize.x, &gSize.y);
 
 	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
 
@@ -143,11 +141,13 @@ void GameScene::UnitAccessFunc(void)
 		return;
 	}
 
-	if (accessData->GetCoolTime() <= 0)
-	{
-		accessData->SetExecutable(true);
-		waitFlag = false;
-	}
+	accessData->LevelShift(1);
+	waitFlag = false;
+	//if (accessData->GetCoolTime() <= 0)
+	//{
+	//	//accessData->SetExecutable(true);
+	//	waitFlag = false;
+	//}
 }
 
 void GameScene::BulletControler(float deltaTime)
@@ -229,7 +229,7 @@ void GameScene::DrawUI()
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
 	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
-	DrawRotaGraph(m_pos.x, m_pos.y, 1, 0, playerMng_->GetPlayerData()[selectUnitId], true);
+	DrawRotaGraph(m_pos.x, m_pos.y, 1, 0, playerMng_->GetPlayerData()[selectUnitId].imageId, true);
 	int enemyRemain = 0;
 	for (auto& spawners : enemySpawner_)
 	{
@@ -253,26 +253,30 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 
 	for (int data =1;data <=size_t(PlayerUnit::MAX);data++)
 	{
-		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, (data-1)*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)], true);
+		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, (data-1)*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)].imageId, true);
+		if (data != size_t(PlayerUnit::MAX))
+		{
+			DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 64, (data - 1) * 64 + 10, 0xffffff, playerMng_->GetPlayerData()[PlayerUnit(data)].name);
+			DrawCircle(DEF_SCREEN_SIZE_X - menuSize.x, (data - 1) * 64 + 10, 10, 0xffffff);
+		}
 	}
 	//ボタン
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 15, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 105, menuSize.y - 48, 10, 10, 0x000000, true);
+	DrawRoundRect(m_pos.x + 15, menuSize.y - 18, m_pos.x + 105, menuSize.y - 48, 10, 10, 0x000000, true);
 	//ボタン縁
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0xffffff, true);
+	DrawRoundRect(m_pos.x + 10, menuSize.y - 20, m_pos.x + 100, menuSize.y - 50, 10, 10, 0xffffff, true);
 	//ボタン影
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0x000000, false);
+	DrawRoundRect(m_pos.x + 10, menuSize.y - 20, m_pos.x + 100, menuSize.y - 50, 10, 10, 0x000000, false);
 	//ボタンテキスト
-	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 20, menuSize.y - 45, 0x000000, L"ユニット");
+	DrawFormatString(m_pos.x + 20, menuSize.y - 45, 0x000000, L"ユニット");
 	
 	//ボタン
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 115, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 205, menuSize.y - 48, 10, 10, 0x000000, true);
+	DrawRoundRect(m_pos.x + 115, menuSize.y - 18, m_pos.x + 205, menuSize.y - 48, 10, 10, 0x000000, true);
 	//ボタン縁
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0xffffff, true);
+	DrawRoundRect(m_pos.x + 110, menuSize.y - 20, m_pos.x + 200, menuSize.y - 50, 10, 10, 0xffffff, true);
 	//ボタン影
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0x000000, false);
+	DrawRoundRect(m_pos.x + 110, menuSize.y - 20, m_pos.x + 200, menuSize.y - 50, 10, 10, 0x000000, false);
 	//ボタンテキスト
-	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 120, menuSize.y-45, 0x000000, L"トラップ");
-
+	DrawFormatString(m_pos.x + 120, menuSize.y-45, 0x000000, L"トラップ");
 	//詳細表示
 	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)
 	{
@@ -282,5 +286,12 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0x888888, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0xffffff, false);
+
+		for (int data = 1; data < size_t(PlayerUnit::MAX); data++)
+		{
+			DrawFormatString(m_pos.x+size_x,m_pos.y, 0xffffff, L"初期Lv：%d", playerMng_->GetPlayerData()[PlayerUnit(data)].lv);
+			DrawFormatString(m_pos.x,m_pos.y + 16, 0xffffff, L"HP：%d", playerMng_->GetPlayerData()[PlayerUnit(data)].stat.life);
+			DrawFormatString(m_pos.x + 64 + 54, (data - 1) * 64 + 10 + 32, 0xffffff, L"攻撃力：%d", playerMng_->GetPlayerData()[PlayerUnit(data)].stat.power);
+		}
 	}
 }
