@@ -12,6 +12,7 @@ enum class Difficulity
 };
 
 class Button;
+class Canvas;
 class MainScene :
 	public BaseScene
 {
@@ -35,6 +36,7 @@ private:
 	DrawFunc_t drawer_;
 	void Draw()override;
 	void DrawUI()override;
+	std::unique_ptr<Canvas> canvas_;
 	std::list<std::unique_ptr<Button>>gameModeButton_;
 	std::list<std::unique_ptr<Button>>difSelectButton_;
 	std::unique_ptr<Button>backButton_;

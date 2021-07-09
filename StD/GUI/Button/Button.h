@@ -2,6 +2,7 @@
 #include <functional>
 #include <string>
 #include "../../VECTOR2.h"
+#include "../UI.h"
 enum class ButtonType
 {
 	Rect,
@@ -11,7 +12,7 @@ enum class ButtonType
 	CircleImage
 };
 
-class Button
+class Button : public UI
 {
 public:
 	Button(VECTOR2 offset);
@@ -81,8 +82,8 @@ protected:
 	VECTOR2 rd_;
 	// 色
 	int color_;
-	// 座標
-	VECTOR2 pos_;
+	//// 座標
+	//VECTOR2 pos_;
 	// 半径
 	int radius_;
 	// 角丸用の半径
@@ -91,8 +92,8 @@ protected:
 	std::wstring imagePath_;
 	// 押下状態の時の画像パス
 	std::wstring pushImagePath_;
-	// 画像のサイズ
-	VECTOR2 size_;
+	//// 画像のサイズ
+	//VECTOR2 size_;
 	// 描画文字
 	std::string str_;
 	// 文字描画位置

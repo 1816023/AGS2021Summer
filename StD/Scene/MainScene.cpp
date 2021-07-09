@@ -5,6 +5,7 @@
 #include "../GUI/Button/ImageRectButton.h"
 #include "../Application.h"
 #include "../StringUtil.h"
+#include "../GUI/Canvas.h"
 
 MainScene::MainScene()
 {
@@ -12,9 +13,15 @@ MainScene::MainScene()
 	gameTransition_ = false;
 	updater_ = &MainScene::GameModeSelectUpdate;
 	drawer_ = &MainScene::GameModeSelectDraw;
+
+	canvas_ = std::make_unique<Canvas>(VECTOR2(0, 0), VECTOR2(856, 480));
 	auto bSize = VECTOR2(150, 80);
 	auto bPos = VECTOR2(DEF_SCREEN_SIZE_X / 2 - bSize.x / 2, DEF_SCREEN_SIZE_Y / 4);
 	std::wstring dir = L"data/image/";
+
+	UI* b = new ImageRectButton(bSize,
+		dir + L"Custom_Botton1.png", dir + L"Custom_Botton2.png", [&]() {customTransition_ = true; return true; }, VECTOR2());
+	canvas_->AddUIByID(b, Justified::RIGHT_UP);
 
 	struct MainButton
 	{
@@ -110,6 +117,7 @@ unique_Base MainScene::Update(unique_Base own)
 	{
 		// マップセレクトへ遷移予定
 	}
+	canvas_->Update();
 	(this->*updater_)();
 	return std::move(own);
 }
@@ -150,6 +158,7 @@ void MainScene::DifficuritySelectDraw()
 
 void MainScene::Draw()
 {
+
 	
 }
 
@@ -163,5 +172,6 @@ void MainScene::DrawUI()
 	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0xffffff, true);
 	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0x000000, false);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+	canvas_->Draw();
 	(this->*drawer_)();
 }

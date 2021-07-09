@@ -14,6 +14,14 @@ CircleButton::CircleButton(VECTOR2 pos, int radius, int color, std::function<boo
 
 }
 
+CircleButton::CircleButton(int radius, int color, std::function<bool()> func, VECTOR2 offset) : Button(offset)
+{
+	radius_ = radius;
+	color_ = color;
+	func_ = func;
+	type_ = ButtonType::Circle;
+}
+
 CircleButton::~CircleButton()
 {
 }

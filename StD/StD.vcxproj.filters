@@ -60,6 +60,7 @@
     <ClCompile Include="GUI\PullDown\PullDown.cpp" />
     <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
     <ClCompile Include="GUI\Canvas.cpp" />
+    <ClCompile Include="GUI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -134,5 +135,6 @@
     <ClInclude Include="GUI\PullDown\PullDown.h" />
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />
+    <ClInclude Include="GUI\UI.h" />
   </ItemGroup>
 </Project>

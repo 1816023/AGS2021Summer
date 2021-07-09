@@ -15,6 +15,15 @@ ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePa
 
 }
 
+ImageRectButton::ImageRectButton(VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset): Button(offset)
+{
+	size_ = size;
+	imagePath_ = imagePath;
+	pushImagePath_ = pushImagePath;
+	func_ = func;
+	type_ = ButtonType::BoxImage;
+}
+
 ImageRectButton::~ImageRectButton()
 {
 }

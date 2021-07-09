@@ -165,6 +165,7 @@
     <ClCompile Include="GUI\PullDown\PullDown.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
+    <ClCompile Include="GUI\UI.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="GUI\PullDown\PullDown.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="GUI\ScrollList\StringList.h" />
+    <ClInclude Include="GUI\UI.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />
