@@ -257,7 +257,6 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 		if (data != size_t(PlayerUnit::MAX))
 		{
 			DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 64, (data - 1) * 64 + 10, 0xffffff, playerMng_->GetPlayerData()[PlayerUnit(data)].name);
-			DrawCircle(DEF_SCREEN_SIZE_X - menuSize.x, (data - 1) * 64 + 10, 10, 0xffffff);
 		}
 	}
 	//ボタン
@@ -280,18 +279,19 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 	//詳細表示
 	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)
 	{
-		auto size_x = (m_pos.x + 200 <= DEF_SCREEN_SIZE_X ? 200 : -200);
-		auto size_y = (m_pos.y <= DEF_SCREEN_SIZE_Y / 2 ? 100 : -100);
+		auto size_x = -200;
+		auto size_y = 100;
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0x888888, true);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0xffffff, false);
 
-		for (int data = 1; data < size_t(PlayerUnit::MAX); data++)
+		PlayerUnit id = PlayerUnit(((m_pos.y-10) / 64)+1);
+		if (id != PlayerUnit::NON && id != PlayerUnit::MAX)
 		{
-			DrawFormatString(m_pos.x+size_x,m_pos.y, 0xffffff, L"初期Lv：%d", playerMng_->GetPlayerData()[PlayerUnit(data)].lv);
-			DrawFormatString(m_pos.x,m_pos.y + 16, 0xffffff, L"HP：%d", playerMng_->GetPlayerData()[PlayerUnit(data)].stat.life);
-			DrawFormatString(m_pos.x + 64 + 54, (data - 1) * 64 + 10 + 32, 0xffffff, L"攻撃力：%d", playerMng_->GetPlayerData()[PlayerUnit(data)].stat.power);
+			DrawFormatString(m_pos.x + size_x + 4, m_pos.y + 4, 0xffffff, L"初期Lv：%d", playerMng_->GetPlayerData()[id].lv);
+			DrawFormatString(m_pos.x + size_x + 4, m_pos.y + 4 + 16, 0xffffff, L"HP：%d", playerMng_->GetPlayerData()[id].stat.life);
+			DrawFormatString(m_pos.x + size_x + 4 + 96, m_pos.y + 4 + 16, 0xffffff, L"攻撃力：%d", playerMng_->GetPlayerData()[id].stat.power);
 		}
 	}
 }
