@@ -27,5 +27,8 @@ protected:
 	std::pair<std::unique_ptr<ImageRectButton>, std::unique_ptr<ImageRectButton>>button_;
 	int selKey_;
 	int nowSize_;
+	int buttonScreen_;
+
+	int ButtonDraw();
 };
 

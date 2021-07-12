@@ -163,6 +163,11 @@
     <ClCompile Include="CustumErrorText.cpp" />
     <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
     <ClCompile Include="GUI\PullDown\PullDown.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBox.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForBool.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForFloat.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForInt.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForString.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
     <ClCompile Include="GUI\UI.cpp" />
@@ -224,6 +229,11 @@
     <ClInclude Include="GUI\Button\RoundRectButton.h" />
     <ClInclude Include="CustumErrorText.h" />
     <ClInclude Include="GUI\ScrollList\ImageList.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBox.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForBool.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForFloat.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForInt.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForString.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="GUI\PullDown\PullDown.h" />
     <ClInclude Include="Scene\GameOverScene.h" />

@@ -6,6 +6,7 @@
 #include "../GUI/Button/ImageRectButton.h"
 #include "../Mng/ImageMng.h"
 #include "../Mng/ImageMng.h"
+#include "../GUI/SpinBox/SpinBoxForString.h"
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase
@@ -21,6 +22,10 @@ struct EnemyCustom :public CustomStateBase
 		astar_ = std::make_unique<Astar>(*scene->cusMap_);
 		const auto& spawners = scene->cusMap_->GetSpawner();
 		const auto& mainStay = scene->cusMap_->GetMainStay();
+
+		spinBoxS_ = std::make_unique<SpinBoxForString>(VECTOR2(basePosX + (bSize + bSpace)*2, bSpace * 3), 100,CreateFontToHandle(NULL,30,1));
+		spinBoxS_->AddData("aaa");
+		spinBoxS_->AddData("bbb");
 		list_.resize(3);
 		// スポナーの数表示用リストを作成
 		for (int w = 0; w < 3; w++)
@@ -87,6 +92,7 @@ struct EnemyCustom :public CustomStateBase
 				break;
 			}
 		}
+		spinBoxS_->Update();
 	};
 
 	void Draw(CustomMapScene* scene)
@@ -109,6 +115,7 @@ struct EnemyCustom :public CustomStateBase
 			DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
 		}
 		list_[selWave_][selSpawner_]->Draw();
+		spinBoxS_->Draw();
 	}
 	void Delete() {
 	}
@@ -130,4 +137,5 @@ struct EnemyCustom :public CustomStateBase
 	int selSpawner_;
 	int selWave_;
 	
+	std::unique_ptr<SpinBoxForString>spinBoxS_;
 };

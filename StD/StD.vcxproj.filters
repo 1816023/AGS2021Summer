@@ -61,6 +61,11 @@
     <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
     <ClCompile Include="GUI\Canvas.cpp" />
     <ClCompile Include="GUI\UI.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBox.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForBool.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForFloat.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForInt.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForString.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -136,5 +141,10 @@
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />
     <ClInclude Include="GUI\UI.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBox.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForBool.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForFloat.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForInt.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForString.h" />
   </ItemGroup>
 </Project>

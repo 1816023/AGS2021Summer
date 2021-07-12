@@ -18,13 +18,16 @@ void SpinBoxForInt::Draw()
 {
 	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0x000000, true);
 	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xffffff, false);
-	if (fontHandle_ == -1)
+	if (vec_.size() != 0)
 	{
-		DrawFormatString(pos_.x, pos_.y, 0xffffff, L"%d", vec_[selKey_]);
-	}
-	else
-	{
-		DrawFormatStringToHandle(pos_.x, pos_.y, 0xffffff,fontHandle_, L"%d", vec_[selKey_]);
+		if (fontHandle_ == -1)
+		{
+			DrawFormatString(pos_.x, pos_.y, 0xffffff, L"%d", vec_[selKey_]);
+		}
+		else
+		{
+			DrawFormatStringToHandle(pos_.x, pos_.y, 0xffffff, fontHandle_, L"%d", vec_[selKey_]);
+		}
 	}
 }
 
