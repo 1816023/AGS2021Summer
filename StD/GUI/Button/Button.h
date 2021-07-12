@@ -47,6 +47,8 @@ public:
 	// 押したときのサウンドハンドル設定
 	// -2,指定なしでデフォルトのSEを設定
 	void SetSound(int handle=-2);
+	// strの取得
+	const std::string GetStr()const { return str_; }
 protected:
 	// 座標補正
 	const VECTOR2 offset_;
