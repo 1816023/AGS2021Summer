@@ -15,7 +15,6 @@ struct EnemyCustom :public CustomStateBase
 {
 	EnemyCustom(){};
 	~EnemyCustom() {};
-	~EnemyCustom() { };
 	bool Init(CustomMapScene* scene)
 	{
 		const int bSize = 64;
@@ -40,9 +39,6 @@ struct EnemyCustom :public CustomStateBase
 		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Circle]);
 		
 
-		spinBoxS_ = std::make_unique<SpinBoxForString>(VECTOR2(basePosX + (bSize + bSpace)*2, bSpace * 3), 100,CreateFontToHandle(NULL,30,1));
-		spinBoxS_->AddData("aaa");
-		spinBoxS_->AddData("bbb");
 		list_.resize(3);
 		// スポナーの数表示用リストを作成
 		for (int w = 0; w < 3; w++)
@@ -57,24 +53,12 @@ struct EnemyCustom :public CustomStateBase
 		// ボタンの作成
 		if (spawners.size() == 2)
 		{
-			button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace * 2), VECTOR2(basePosY, bSize + bSpace * 2), VECTOR2(10, 10), 0xff0000, [&]() {selSpawner_ = 0; return true; }, VECTOR2()));
-			buttonText_.emplace_back(ButtonText{ "スポナー1",0xffffff,VECTOR2(basePosX,  bSpace * 2 - GetFontSize()) });
-		
-			button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace * 2), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace * 2), VECTOR2(10, 10), 0xffffff, [&]() {selSpawner_ = 1; return true; }, VECTOR2()));
-			buttonText_.emplace_back(ButtonText{ "スポナー2", 0xffffff, VECTOR2(basePosX + (bSize + bSpace), bSpace * 2 - GetFontSize()) });
-
-			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(64,64), L"./data/image/circle.png", L"data/image/circle.png", [&]() {list_[selWave_][selSpawner_]->Add(IMAGE_ID(L"data/image/circle.png")); return true; }, VECTOR2()));
-			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2)), VECTOR2(64,64), L"./data/image/square.png", L"data/image/square.png", [&]() {list_[selWave_][selSpawner_]->Add(IMAGE_ID(L"data/image/square.png")); return true; }, VECTOR2()));
-			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(64,64), L"./data/image/triangle.png", L"data/image/triangle.png", [&]() {list_[selWave_][selSpawner_]->Add(IMAGE_ID(L"data/image/triangle.png")); return true; }, VECTOR2()));
 
 			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(2);
 			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(1);
 		}
 		else if(spawners.size()==1)
 		{
-			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(64, 64), L"./data/image/circle.png", L"data/image/circle.png", [&]() {list_[selWave_][selSpawner_]->Add(IMAGE_ID(L"data/image/circle.png")); return true; }, VECTOR2()));
-			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2)), VECTOR2(64, 64), L"./data/image/square.png", L"data/image/square.png", [&]() {list_[selWave_][selSpawner_]->Add(IMAGE_ID(L"data/image/square.png")); return true; }, VECTOR2()));
-			button_.emplace_back(std::make_unique<ImageRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(64, 64), L"./data/image/triangle.png", L"data/image/triangle.png", [&]() {list_[selWave_][selSpawner_]->Add(IMAGE_ID(L"data/image/triangle.png")); return true; }, VECTOR2()));
 			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(1);
 
 		}
@@ -131,7 +115,6 @@ struct EnemyCustom :public CustomStateBase
 				break;
 			}
 		}
-		spinBoxS_->Update();
 		for (auto&& map : spinBoxS_)
 		{
 			map.second->Update();
@@ -158,7 +141,6 @@ struct EnemyCustom :public CustomStateBase
 			DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
 		}
 		list_[selWave_][selSpawner_]->Draw();
-		spinBoxS_->Draw();
 		const int bSize = 64;
 		const int bSpace = 10;
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
@@ -201,7 +183,6 @@ private:
 	int selSpawner_;
 	int selWave_;
 	
-	std::unique_ptr<SpinBoxForString>spinBoxS_;
 	std::map<EnemyType, int>enemyH_;
 	std::map<std::string,std::unique_ptr<SpinBox>>spinBoxS_;
 	int fontHandle_;
