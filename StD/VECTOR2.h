@@ -132,8 +132,8 @@ static VECTOR2_TEMPLE<float> operator*(const VECTOR2_TEMPLE<float>& u, const VEC
 //Vec2Float / VECTOR2----------------------------
 static VECTOR2_TEMPLE<float> operator/(const VECTOR2_TEMPLE<float>& u, const VECTOR2_TEMPLE<int>& v);
 
-static VECTOR2_TEMPLE<float>& VecFCast(const VECTOR2_TEMPLE<int>& u);
-static VECTOR2_TEMPLE<int>& VecICast(const VECTOR2_TEMPLE<float>& u);
+static VECTOR2_TEMPLE<float> VecFCast(const VECTOR2_TEMPLE<int>& u);
+static VECTOR2_TEMPLE<int> VecICast(const VECTOR2_TEMPLE<float>& u);
 
 using VECTOR2 = VECTOR2_TEMPLE<int>;
 using Vec2Int = VECTOR2_TEMPLE<int>;

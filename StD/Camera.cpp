@@ -51,9 +51,9 @@ void Camera::Control()
 		if (wheel != 0)
 		{
 			scale_ += wheel * 0.01f;
-			scale_ = scale_ * pow(10, 3 - 1);	//四捨五入したい値を10の(3-1)乗倍する。
+			scale_ = scale_ * powf(10, 3 - 1);	//四捨五入したい値を10の(3-1)乗倍する。
 			scale_ = round(scale_);				//小数点第三位以下を四捨五入する。
-			scale_ /= pow(10, 3 - 1);			//10の(3-1)乗で割る。
+			scale_ /= powf(10, 3 - 1);			//10の(3-1)乗で割る。
 		}
 	}
 	

@@ -3,7 +3,7 @@
 #include "ImageRectButton.h"
 #include "../../StringUtil.h"
 
-ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset)
+ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func,VECTOR2 offset)
 	:Button(offset)
 {
 	pos_ = pos;
@@ -12,7 +12,6 @@ ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePa
 	pushImagePath_ = pushImagePath;
 	func_ = func;
 	type_ = ButtonType::BoxImage;
-
 }
 
 ImageRectButton::ImageRectButton(VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset): Button(offset)

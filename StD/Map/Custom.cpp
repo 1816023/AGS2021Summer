@@ -60,24 +60,25 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 
 bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 {
-	if (0 > pos.x || pos.x > state_.mapSize_.x * state_.chipSize_.x)
+	VECTOR2 mapPos = pos / state_.chipSize_;
+	return SetChipByIdx(mapPos, chip);
+}
+
+bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
+{
+	if (0 > idx.x || idx.x > state_.mapSize_.x)
 	{
 		return false;
 	}
-	if (0 > pos.y || pos.y > state_.mapSize_.y * state_.chipSize_.y)
+	if (0 > idx.y || idx.y > state_.mapSize_.y)
 	{
 		return false;
 	}
-	VECTOR2 mapPos = pos / VECTOR2(state_.chipSize_.x, state_.chipSize_.y);
-	if (mapPos.x > GetMapSize().x || mapPos.y > GetMapSize().y)
+	if (idx.x > state_.mapSize_.x || idx.y > state_.mapSize_.y)
 	{
 		return false;
 	}
-	int id = mapPos.x + mapPos.y * state_.mapSize_.x;
-	if (mapData_.size() <= mapPos.y && mapData_[mapPos.y].size() <= mapPos.x)
-	{
-		return false;
-	}
+	int id = idx.x + idx.y * state_.mapSize_.x;
 	auto msFind = std::find(mainStay_.begin(), mainStay_.end(), id);
 	auto spFind = std::find(spawners_.begin(), spawners_.end(), id);
 	if (chip == MapChipName::MAINSTAY)
@@ -85,7 +86,7 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		if (mainStay_.size() < 2 && msFind == mainStay_.end())
 		{
 			mainStay_.emplace_back(id);
-			mapData_[mapPos.y][mapPos.x] = chip;
+			mapData_[idx.y][idx.x] = chip;
 		}
 	}
 	else if (chip == MapChipName::SPAWNER)
@@ -93,7 +94,7 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		if (spFind == spawners_.end() && spawners_.size() < 2)
 		{
 			spawners_.emplace_back(id);
-			mapData_[mapPos.y][mapPos.x] = chip;
+			mapData_[idx.y][idx.x] = chip;
 			return true;
 		}
 	}
@@ -107,7 +108,7 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		{
 			spawners_.erase(spFind);
 		}
-		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
+		mapData_[idx.y][idx.x] = chip != MapChipName::MAX ? chip : mapData_[idx.y][idx.x];
 	}
 	return true;
 }
@@ -272,6 +273,8 @@ bool Custom::SaveFile()
 	elm->SetText(mapData.c_str());
 	elm->SetAttribute("hight", mapData_.size());
 	elm->SetAttribute("width", mapData_[0].size());
+	// スポナー登録
+	//auto sElm = document_.FirstChildElement("spawn");
 	error = document_.SaveFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{
@@ -291,7 +294,7 @@ void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fSta
 	{
 		if (*find == MapChipName::MAINSTAY)
 		{
-			// 拠点限界以上のデータだった場合
+			// 拠点数限界以上のデータだった場合
 			// ※マップデータ外部でいじる時注意
 			if (mainStay_.size() > 2)
 			{
@@ -304,7 +307,7 @@ void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fSta
 		}
 		if (*find == MapChipName::SPAWNER)
 		{
-			// 拠点限界以上のデータだった場合
+			// スポナー数限界以上のデータだった場合
 			// ※スポナーデータ外部でいじる時注意
 			if (spawners_.size() > 2)
 			{

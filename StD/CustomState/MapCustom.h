@@ -5,7 +5,7 @@
 #include "../Map/Astar.h"
 #include "../MapEnum.h"
 #include "../CustumErrorText.h"
-#define CUSTOM dynamic_cast<Custom*>(scene->cusMap_.get())
+
 
 struct MapCustom:public CustomStateBase
 {
@@ -50,7 +50,7 @@ struct MapCustom:public CustomStateBase
 			errorNum_ = static_cast<int>(scene->SaveCheck());
 			if (static_cast<ErrorCode>(errorNum_) == ErrorCode::NoError)
 			{
-				CUSTOM->SaveFile(); 
+				scene->cusMap_->SaveFile(); 
 				return  true; 
 			}
 			else
@@ -100,7 +100,6 @@ struct MapCustom:public CustomStateBase
 		}
 		VECTOR2 mPos = lpMouseController.GetPos();
 		VECTOR2 mcPos = lpMouseController.GetOffsetPos();
-		//auto cPos = lpApplication.GetCamera().GetPos()* 3.0f;
 		if (lpMouseController.GetClicking(MOUSE_INPUT_LEFT))
 		{
 			if (mPos.x > SELECT_UI_POS.first.x)
@@ -108,7 +107,7 @@ struct MapCustom:public CustomStateBase
 			}
 			else
 			{
-				scene->cusMap_->SetChip(/*VecICast(*//*cPos + */mcPos/*)*/, selChip_);
+				scene->cusMap_->SetChip(mcPos, selChip_);
 			}
 
 		}
