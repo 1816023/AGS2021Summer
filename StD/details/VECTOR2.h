@@ -354,13 +354,13 @@ static VECTOR2_TEMPLE<float> operator/(const VECTOR2_TEMPLE<float>& u, const VEC
 	return vec;
 }
 
-static VECTOR2_TEMPLE<float>& VecFCast(const VECTOR2_TEMPLE<int>& u)
+static VECTOR2_TEMPLE<float> VecFCast(const VECTOR2_TEMPLE<int>& u)
 {
 	VECTOR2_TEMPLE<float> tmp = { static_cast<float>(u.x), static_cast<float>(u.y) };
 	return tmp;
 }
 
-static VECTOR2_TEMPLE<int>& VecICast(const VECTOR2_TEMPLE<float>& u)
+static VECTOR2_TEMPLE<int> VecICast(const VECTOR2_TEMPLE<float>& u)
 {
 	VECTOR2_TEMPLE<int> tmp = { static_cast<int>(u.x), static_cast<int>(u.y) };
 	return tmp;

@@ -113,6 +113,11 @@ MapChipName Map::GetMapChip(VECTOR2 pos)
 	return mapData_[vec.y][vec.x];
 }
 
+MapChipName Map::GetMapChipByIndex(VECTOR2 idx)
+{
+	return mapData_[idx.y][idx.x];
+}
+
 VECTOR2 Map::GetMapSize()
 {
 	return state_.mapSize_;

@@ -77,7 +77,7 @@ void Application::Draw()
 	sceneController_->Draw();
 	// ƒXƒNƒŠ[ƒ“‚ð— ‚É•`‰æ
 	SetDrawScreen(DX_SCREEN_BACK);
-	auto pos = camera_->GetPos();
+	auto pos = VecICast(camera_->GetPos());
 	auto scale = camera_->GetScale();
 	auto halfScreen = VECTOR2(DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2);
 	DrawRotaGraph2(halfScreen.x , halfScreen.y, 

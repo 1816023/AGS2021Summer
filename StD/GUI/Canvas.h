@@ -30,6 +30,7 @@ public:
 
 	UI* GetUIByName(std::wstring name);
 	UI* GetUIByName(int id);
+	void SetColor(int color);
 
 	void Draw();
 	void Update();
@@ -48,5 +49,6 @@ private:
 	VECTOR2 pos_;	// ç∂è„ç¿ïW
 	VECTOR2 size_;	// ëÂÇ´Ç≥
 	std::vector<UIStat>UIList_;
+	int color_;		// êF
 };
 
