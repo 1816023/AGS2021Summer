@@ -1,29 +1,29 @@
+#include "ImgeAndStringList.h"
 #include <DxLib.h>
-#include "ImageList.h"
 #include "../../MouseController.h"
-
-ImageList::ImageList(VECTOR2 pos, VECTOR2 size):ScrollList(pos,size)
+#include "../../StringUtil.h"
+ImgeAndStringList::ImgeAndStringList(VECTOR2 pos, VECTOR2 size):ScrollList(pos,size)
 {
-    type_ = ListType::IMAGE;
+	type_ = ListType::ImageAndString;
 }
 
-ImageList::~ImageList()
+ImgeAndStringList::~ImgeAndStringList()
 {
 }
 
-bool ImageList::Add(int handle)
+bool ImgeAndStringList::Add(int handle,std::string str)
 {
-    if (type_ != ListType::IMAGE)
+    if (type_ != ListType::ImageAndString)
     {
         return false;
     }
     int x, y;
     GetGraphSize(handle, &x, &y);
-    list_.emplace_back(ImageState{handle,VECTOR2(x,y)});
+    list_.emplace_back(IandSState{ handle,VECTOR2(x,y),str });
     return true;
 }
 
-bool ImageList::Del()
+bool ImgeAndStringList::Del()
 {
     if (list_.size() != 0)
     {
@@ -31,10 +31,9 @@ bool ImageList::Del()
         return true;
     }
     return false;
-
 }
 
-void ImageList::Update()
+void ImgeAndStringList::Update()
 {
     lpMouseController.GetWheel();
     if (lpMouseController.IsHitBoxToMouse(pos_, pos_ + size_))
@@ -47,13 +46,13 @@ void ImageList::Update()
         {
             size += list.size.y;
         }
-        scrollPos_ = (scrollPos_ >=  -size ? scrollPos_ : -size);
+        scrollPos_ = (scrollPos_ >= -size ? scrollPos_ : -size);
 
     }
 
 }
 
-void ImageList::Draw()
+void ImgeAndStringList::Draw()
 {
     auto defScreen = GetDrawScreen();
     SetDrawScreen(screen_);
@@ -64,8 +63,8 @@ void ImageList::Draw()
     {
         for (auto list : list_)
         {
-            DrawGraph(1,1+list.size.y*cnt+scrollPos_ , list.handle, true);
-
+            DrawGraph(1, 1 + list.size.y * cnt + scrollPos_, list.handle, true);
+            DrawString(list.size.x + 5, 1 + list.size.y * cnt + scrollPos_, _StW(list.str).c_str(), 0xffffff);
             cnt++;
         }
 

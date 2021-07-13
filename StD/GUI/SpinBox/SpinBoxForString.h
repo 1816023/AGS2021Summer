@@ -13,7 +13,7 @@ public:
 	// データを挿入する
 	void AddData(std::string data);
 	// データを削除する
-	bool DeleteData();
+	void DeleteData();
 	// 指定したデータを削除する
 	bool DeleteData(std::string data);
 private:

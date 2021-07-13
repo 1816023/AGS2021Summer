@@ -26,6 +26,8 @@ void SpinBoxForFloat::Draw()
 			DrawFormatStringToHandle(pos_.x, pos_.y, 0xffffff, fontHandle_, str.c_str(), vec_[selKey_]);
 		}
 	}
+	button_.first->Draw();
+	button_.second->Draw();
 }
 
 const float SpinBoxForFloat::GetSelData() const
@@ -39,11 +41,10 @@ void SpinBoxForFloat::AddData(float data)
 	vec_.push_back(data);
 }
 
-bool SpinBoxForFloat::DeleteData()
+void SpinBoxForFloat::DeleteData()
 {
-	auto itr=vec_.erase(--vec_.end());
+	vec_.pop_back();
 	nowSize_ = vec_.size();
-	return itr!=vec_.end();
 }
 
 bool SpinBoxForFloat::DeleteData(float data)

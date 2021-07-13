@@ -169,9 +169,11 @@
     <ClCompile Include="GUI\SpinBox\SpinBoxForFloat.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBoxForInt.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBoxForString.cpp" />
+    <ClCompile Include="GUI\ScrollList\ImgeAndStringList.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
     <ClCompile Include="GUI\UI.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForImage.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
@@ -236,11 +238,13 @@
     <ClInclude Include="GUI\SpinBox\SpinBoxForFloat.h" />
     <ClInclude Include="GUI\SpinBox\SpinBoxForInt.h" />
     <ClInclude Include="GUI\SpinBox\SpinBoxForString.h" />
+    <ClInclude Include="GUI\ScrollList\ImgeAndStringList.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="GUI\PullDown\PullDown.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="GUI\ScrollList\StringList.h" />
     <ClInclude Include="GUI\UI.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForImage.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />

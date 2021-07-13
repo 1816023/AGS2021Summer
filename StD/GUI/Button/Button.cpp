@@ -16,6 +16,7 @@ Button::Button(VECTOR2 offset) :offset_(offset)
 	fontHandle_ = -1;
 	clickType_ = MOUSE_INPUT_LEFT;
 	tag_ = -1;
+	scale_ = 1.0f;
 }
 
 Button::~Button()
@@ -118,5 +119,10 @@ void Button::SetTag(int tag)
 void Button::SetSound(int handle)
 {
 	soundHandle_ = (handle==-2?lpSoundMng.GetID("data/Sound/SE/DefaultButton.mp3"):handle);
+}
+
+void Button::SetScale(float scale)
+{
+	scale_ = scale;
 }
 

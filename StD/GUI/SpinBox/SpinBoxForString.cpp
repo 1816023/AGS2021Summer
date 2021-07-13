@@ -47,11 +47,9 @@ void SpinBoxForString::AddData(std::string data)
 
 }
 
-bool SpinBoxForString::DeleteData()
+void SpinBoxForString::DeleteData()
 {
-	auto itr = vec_.erase(--vec_.end());
-	nowSize_ = vec_.size();
-	return itr != vec_.end();
+	vec_.pop_back();
 }
 
 bool SpinBoxForString::DeleteData(std::string data)
