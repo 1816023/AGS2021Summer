@@ -93,7 +93,8 @@ float PlayerMng::SpeedDelay(void)
 std::shared_ptr<Player> PlayerMng::GetUnitData(Vec2Float pos)
 {
     UnitList::iterator result = unitList_.end();
-    result = std::find_if(unitList_.begin(), unitList_.end(), [&](std::shared_ptr<Player> player) {return player->GetPos() == pos; });
+    result = std::find_if(unitList_.begin(), unitList_.end(),
+        [&](std::shared_ptr<Player> player) {return player->GetPos() == pos; });
     return (result != unitList_.end() ? (*result):nullptr);
 }
 
@@ -104,21 +105,20 @@ PlayerMng::PlayerMng()
 
 void PlayerMng::SkillCtl(std::shared_ptr<Unit> shooter)
 {
-    auto result = std::find(unitList_.begin(), unitList_.end(), shooter);
-    if (result != unitList_.end())
+    for (auto data : unitList_)
     {
-        if ((*result)->GetID() == PlayerUnit::PINK)
+        if (data->GetID() == PlayerUnit::PINK)
         {
-            (*result)->Skill();
-        }
-    }
-    for (auto& unit : unitList_)
-    {
-        if (unit->GetID() != PlayerUnit::PINK)
-        {
-            if (unit->isExecutable())
+            if (data == shooter)
             {
-                unit->Skill();
+                data->Skill();
+            }
+        }
+        else
+        {
+            if (data->isExecutable())
+            {
+                data->Skill();
             }
         }
     }
