@@ -21,32 +21,32 @@ struct MapCustom:public CustomStateBase
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
 		const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
 		// ボタンの作成
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace * 2), VECTOR2(basePosY, bSize + bSpace * 2), VECTOR2(10, 10), 0x007fff, [&]() {selChip_ = MapChipName::MAINSTAY; return true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace * 2), VECTOR2(bSize, bSize), VECTOR2(10, 10), 0x007fff, [&]() {selChip_ = MapChipName::MAINSTAY; return true; }, VECTOR2()));
 		buttonText_.emplace_back(ButtonText{ "自拠点",0xffffff,VECTOR2(basePosX,  bSpace * 2 - GetFontSize()) });
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace * 2), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace * 2), VECTOR2(10, 10), 0xff0f0f, [&]() {selChip_ = MapChipName::SPAWNER; return true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace * 2), VECTOR2(bSize, bSize), VECTOR2(10, 10), 0xff0f0f, [&]() {selChip_ = MapChipName::SPAWNER; return true; }, VECTOR2()));
 		buttonText_.emplace_back(ButtonText{ "敵出現", 0xffffff, VECTOR2(basePosX + (bSize + bSpace), bSpace * 2 - GetFontSize()) });
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace * 2), VECTOR2(10, 10), 0xfff00, [&]() {selChip_ = MapChipName::ROOT; return true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2), VECTOR2(bSize, bSize), VECTOR2(10, 10), 0xfff00, [&]() {selChip_ = MapChipName::ROOT; return true; }, VECTOR2()));
 		buttonText_.emplace_back(ButtonText{ "敵侵攻",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace * 2 - GetFontSize()) });
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY, bSize + bSpace + (bSize + bSpace * 2)), VECTOR2(10, 10), 0xe3e3e3, [&]() {selChip_ = MapChipName::FIELD; return true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, bSpace + (bSize + bSpace * 2)), VECTOR2(bSize, bSize), VECTOR2(10, 10), 0xe3e3e3, [&]() {selChip_ = MapChipName::FIELD; return true; }, VECTOR2()));
 		buttonText_.emplace_back(ButtonText{ "自機配置",0xffffff,VECTOR2(basePosX, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace), bSize + bSpace + (bSize + bSpace * 2)), VECTOR2(10, 10), 0x333333, [&]() {selChip_ = MapChipName::WALL; return true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2)), VECTOR2(bSize, bSize), VECTOR2(10, 10), 0x333333, [&]() {selChip_ = MapChipName::WALL; return true; }, VECTOR2()));
 		buttonText_.emplace_back(ButtonText{ "設置不可",0xffffff,VECTOR2(basePosX + (bSize + bSpace), bSpace + (bSize + bSpace * 2) - GetFontSize()) });
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(basePosY + (bSize + bSpace) * 2, bSize + bSpace + (bSize + bSpace * 2)), VECTOR2(10, 10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return true; }, VECTOR2()));
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2)), VECTOR2(bSize, bSize), VECTOR2(10, 10), 0xffffff, [&]() {selChip_ = MapChipName::MAX; return true; }, VECTOR2()));
 		buttonText_.emplace_back(ButtonText{ "選択解除",0xffffff,VECTOR2(basePosX + (bSize + bSpace) * 2, bSpace + (bSize + bSpace * 2) - GetFontSize()) });
 		// システム系のボタン
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(basePosX + bSize, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(bSize, bSize/2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
 			scene->nowState_ = CustomState::SELECT_FILE;
 			scene->custom_[scene->nowState_]->Init(scene);
 			Delete();
 			return false; }, VECTOR2()));
 		button_.back()->SetString("Back", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Back", GetStringLength(L"Back")) / 2, bSize / 4 - GetFontSize() / 2));
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX+bSize+bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(basePosX + bSize*2+bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX+bSize+bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(bSize, bSize/2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
 			scene->nowState_ = CustomState::ENEMY_CUSTOM;
 			scene->custom_[scene->nowState_]->Init(scene);
 			Delete();
 			return true; }, VECTOR2()));
 		button_.back()->SetString("Next", VECTOR2(bSize / 2 - GetDrawStringWidth(L"Next", GetStringLength(L"Next")) / 2, bSize / 4 - GetFontSize() / 2));
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(SELECT_UI_POS.second.x - bSpace, SELECT_UI_POS.second.y - bSpace), VECTOR2(10, 10), 0xffffff, [&,scene]() {
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(SELECT_UI_POS.second.x - bSize - bSpace, SELECT_UI_POS.second.y - bSize / 2 - bSpace), VECTOR2(bSize, bSize/2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
 			errorNum_ = static_cast<int>(scene->SaveCheck());
 			if (static_cast<ErrorCode>(errorNum_) == ErrorCode::NoError)
 			{

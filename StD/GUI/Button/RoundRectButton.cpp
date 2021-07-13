@@ -3,11 +3,11 @@
 #include "../../StringUtil.h"
 #include "RoundRectButton.h"
 
-RoundRectButton::RoundRectButton(VECTOR2 lu, VECTOR2 rd, VECTOR2 radius, int color, std::function<bool()> func, VECTOR2 offset)
+RoundRectButton::RoundRectButton(VECTOR2 lu, VECTOR2 size, VECTOR2 radius, int color, std::function<bool()> func, VECTOR2 offset)
 	:Button(offset)
 {
 	pos_ = lu;
-	size_ = rd -lu;
+	size_ = size;
 	radius2_ = radius;
 	color_ = color;
 	func_ = func;

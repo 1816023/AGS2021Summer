@@ -10,6 +10,7 @@ enum class ListType
 	IMAGE,
 	COLOR_BOX,
 	BUTTON,
+	ImageAndString,
 	Max
 };
 

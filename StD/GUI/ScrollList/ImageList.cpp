@@ -25,8 +25,13 @@ bool ImageList::Add(int handle)
 
 bool ImageList::Del()
 {
-    auto error = list_.erase(list_.end());
-    return error != list_.end();
+    if (list_.size() != 0)
+    {
+        list_.pop_back();
+        return true;
+    }
+    return false;
+
 }
 
 void ImageList::Update()
@@ -55,12 +60,15 @@ void ImageList::Draw()
     ClearDrawScreen();
     // Ç±Ç±Ç…èàóù------------
     int cnt = 0;
-
-    for (auto list : list_)
+    if (list_.size() != 0)
     {
-        DrawGraph(1,1+list.size.y*cnt+scrollPos_ , list.handle, true);
+        for (auto list : list_)
+        {
+            DrawGraph(1,1+list.size.y*cnt+scrollPos_ , list.handle, true);
 
-        cnt++;
+            cnt++;
+        }
+
     }
 
 
