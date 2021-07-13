@@ -15,6 +15,7 @@ Canvas::Canvas(VECTOR2 pos, VECTOR2 size)
 {
 	pos_ = pos;
 	size_ = size;
+	color_ = 0xffffff;
 }
 
 Canvas::~Canvas()
@@ -28,7 +29,7 @@ void Canvas::AddUIByID(UI* ui, Justified just, int id)
 	uiStat.ui->SetPos(PosToJustified(just, ui->GetSize()));
 	uiStat.id = id;
 	uiStat.name = L"";
-	UIList_.push_back(uiStat);
+	UIList_.emplace_back(uiStat);
 }
 
 void Canvas::AddUIByID(UI* ui, VECTOR2& pos, int id)
@@ -38,7 +39,7 @@ void Canvas::AddUIByID(UI* ui, VECTOR2& pos, int id)
 	uiStat.ui->SetPos(pos);
 	uiStat.id = id;
 	uiStat.name = L"";
-	UIList_.push_back(uiStat);
+	UIList_.emplace_back(uiStat);
 }
 
 void Canvas::AddUIByName(UI* ui, Justified just, std::wstring name)
@@ -48,7 +49,7 @@ void Canvas::AddUIByName(UI* ui, Justified just, std::wstring name)
 	uiStat.ui->SetPos(PosToJustified(just, ui->GetSize()));
 	uiStat.id = -1;
 	uiStat.name = name;
-	UIList_.push_back(uiStat);
+	UIList_.emplace_back(uiStat);
 }
 
 void Canvas::AddUIByName(UI* ui, VECTOR2& pos, std::wstring name)
@@ -58,7 +59,7 @@ void Canvas::AddUIByName(UI* ui, VECTOR2& pos, std::wstring name)
 	uiStat.ui->SetPos(pos);
 	uiStat.id = -1;
 	uiStat.name = name;
-	UIList_.push_back(uiStat);
+	UIList_.emplace_back(uiStat);
 }
 
 UI* Canvas::GetUIByName(std::wstring name)
@@ -81,9 +82,14 @@ UI* Canvas::GetUIByName(int id)
 	return nullptr;
 }
 
+void Canvas::SetColor(int color)
+{
+	color_ = color;
+}
+
 void Canvas::Draw()
 {
-	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xff0000, true);
+	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, color_, true);
 	for (auto ui : UIList_)
 	{
 		ui.ui->Draw();

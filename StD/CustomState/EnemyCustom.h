@@ -7,7 +7,6 @@
 #include "../Mng/ImageMng.h"
 #include "../Mng/ImageMng.h"
 #include "../GUI/SpinBox/SpinBoxForString.h"
-#define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase
 {
@@ -66,9 +65,10 @@ struct EnemyCustom :public CustomStateBase
 		{
 			list->SetAuto();
 		}
+		std::vector<RootDir> root;
 		if (mainStay.size() != 0 && spawners.size() != 0)
 		{
-			astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
+			root = astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
 							   scene->cusMap_->PosFromIndex(spawners[0]));
 		}
 		spawner_= spawners;

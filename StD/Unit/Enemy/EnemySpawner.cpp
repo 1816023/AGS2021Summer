@@ -62,5 +62,5 @@ void EnemySpawner::Update(float deltaTime)
 
 int EnemySpawner::GetRemainSpawnCnt()
 {
-	return spawnList_.size();
+	return static_cast<int>(spawnList_.size());
 }

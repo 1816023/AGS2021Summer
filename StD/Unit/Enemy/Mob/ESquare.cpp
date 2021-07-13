@@ -27,9 +27,9 @@ void ESquare::Update(float deltaTime)
 
 void ESquare::Draw()
 {
-	DrawRotaGraph(state_.pos.x, state_.pos.y, enemyInfo_.scale, 0.0f, IMAGE_ID(L"data/image/square.png"), true);
-	DrawFormatString(state_.pos.x, state_.pos.y + 8, 0xffffff, L"HP:%d", state_.life);
-	DrawCircle(state_.pos.x, state_.pos.y, 5, 0xffffff, true);
+	DrawRotaGraphF(state_.pos.x, state_.pos.y, enemyInfo_.scale, 0.0f, IMAGE_ID(L"data/image/square.png"), true);
+	DrawFormatStringF(state_.pos.x, state_.pos.y + 8, 0xffffff, L"HP:%d", state_.life);
+	DrawCircle(static_cast<int>(state_.pos.x), static_cast<int>(state_.pos.y), 5, 0xffffff, true);
 }
 
 Enemy* ESquare::CreateClone()
