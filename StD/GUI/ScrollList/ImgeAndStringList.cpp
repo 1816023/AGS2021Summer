@@ -39,7 +39,7 @@ void ImgeAndStringList::Update()
     if (lpMouseController.IsHitBoxToMouse(pos_, pos_ + size_))
     {
         //scrollPos_ = 0;
-        scrollPos_ += lpMouseController.GetWheel();
+        scrollPos_ += lpMouseController.GetWheel()*3;
         scrollPos_ = (scrollPos_ <= 0.0f ? scrollPos_ : 0.0f);
         int size = 0;
         for (auto list : list_)
@@ -64,7 +64,7 @@ void ImgeAndStringList::Draw()
         for (auto list : list_)
         {
             DrawGraph(1, 1 + list.size.y * cnt + scrollPos_, list.handle, true);
-            DrawString(list.size.x + 5, 1 + list.size.y * cnt + scrollPos_, _StW(list.str).c_str(), 0xffffff);
+            DrawString(list.size.x + 5, (list.size.y/2-GetFontSize()/2)+ list.size.y * cnt + scrollPos_, _StW(list.str).c_str(), 0xffffff);
             cnt++;
         }
 

@@ -1,14 +1,14 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
-#include "../GUI/ScrollList/ImageList.h"
-#include "../GUI/ScrollList/StringList.h"
+#include "../GUI/ScrollList/ImgeAndStringList.h"
 #include "../GUI/Button/ImageRectButton.h"
 #include "../Mng/ImageMng.h"
 #include "../Mng/ImageMng.h"
 #include "../GUI/SpinBox/SpinBoxForString.h"
 #include "../GUI/SpinBox/SpinBoxForInt.h"
 #include "../GUI/SpinBox/SpinBoxForImage.h"
+
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
 struct EnemyCustom :public CustomStateBase
@@ -45,7 +45,7 @@ struct EnemyCustom :public CustomStateBase
 		{
 			for (int a = 0; a < spawners.size(); a++)
 			{
-				list_[w].emplace_back(std::make_unique<ImageList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2)));
+				list_[w].emplace_back(std::make_unique<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2)));
 			}
 		}
 		selSpawner_ = 0;
@@ -68,7 +68,7 @@ struct EnemyCustom :public CustomStateBase
 		}
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&]() {
 			list_[selWave_][selSpawner_]
-				->Add(dynamic_cast<SpinBoxForImage*>(spinBoxS_["ìGéÌóﬁ"].get())->GetSelData());
+				->Add(dynamic_cast<SpinBoxForImage*>(spinBoxS_["ìGéÌóﬁ"].get())->GetSelData(),std::to_string(GetKeyInputNumberToFloat(keyInputHandleForSpawnTime)));
 			spawnTime = GetKeyInputNumberToFloat(keyInputHandleForSpawnTime);
 			return true; }, VECTOR2()));
 		button_.back()->SetString("ìoò^",VECTOR2(15,10));
@@ -179,7 +179,7 @@ private:
 	// ç≈ëÂóÒêîÅiì˙ñ{åÍëSäpÇ≈16ï∂éöÅj
 	// ç≈ëÂçsêîÅi6çsÅj
 	std::vector<std::string> errorText_;
-	std::vector<std::vector<std::unique_ptr<ImageList>>>list_;
+	std::vector<std::vector<std::unique_ptr<ImgeAndStringList>>>list_;
 	int selSpawner_;
 	int selWave_;
 	
