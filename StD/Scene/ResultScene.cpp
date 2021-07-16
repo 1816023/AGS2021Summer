@@ -4,7 +4,9 @@
 #include "../MouseController.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../VECTOR2.h"
+#include "../NumberUI.h"
 #include "TitleScene.h"
+
 
 ResultScene::ResultScene(bool flag)
 {
@@ -56,7 +58,9 @@ void ResultScene::DrawUI()
 		/*DrawRotaGraph(DEF_SCREEN_SIZE_X / 3, 180, 1, 0, timeImage, false);
 		DrawRotaGraph(DEF_SCREEN_SIZE_X / 3, 260, 1, 0, bestImage, false);
 
-		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 0, 180, 1, 0, number[minute / 10], false);
+		VECTOR2 pos = { DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 , 180 };
+		NumberUI::TimeDraw(pos, { 20, 1}, minute, second);
+		/*DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 0, 180, 1, 0, number[minute / 10], false);
 		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 1, 180, 1, 0, number[minute % 10], false);
 		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 2, 180, 1, 0, number[10], false);
 		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 3, 180, 1, 0, number[second / 10], false);

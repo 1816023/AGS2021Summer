@@ -104,7 +104,7 @@ void GameScene::UnitCreateFunc()
 	Vec2Int gSize;
 	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW].imageId, &gSize.x, &gSize.y);
 
-	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
+	auto mPos = VecFCast(lpMouseController.GetOffsetPos());
 
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 	{

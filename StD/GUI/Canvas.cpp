@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <DxLib.h>
 #include "UI.h"
+#include "../Mng/ImageMng.h"
 
 struct UIStat
 {
@@ -11,11 +12,28 @@ struct UIStat
 };
 
 
-Canvas::Canvas(VECTOR2 pos, VECTOR2 size)
+Canvas::Canvas(VECTOR2 pos, VECTOR2 size, int color)
 {
+	Init();
 	pos_ = pos;
 	size_ = size;
-	color_ = 0xffffff;
+	color_ = color;
+}
+
+Canvas::Canvas(VECTOR2 pos, VECTOR2 size, std::wstring path)
+{
+	Init();
+	pos_ = pos;
+	size_ = size;
+	gHandle_ = IMAGE_ID(path);
+}
+
+Canvas::Canvas(VECTOR2 pos, VECTOR2 size, std::function<void(VECTOR2)> drawFunc)
+{
+	Init();
+	pos_ = pos;
+	size_ = size;
+	drawFunc_ = drawFunc;
 }
 
 Canvas::~Canvas()
@@ -87,12 +105,37 @@ void Canvas::SetColor(int color)
 	color_ = color;
 }
 
+void Canvas::Init()
+{
+	pos_ = { 0,0 };
+	size_ = { 0,0 };
+	color_ = 0x000000;
+	gHandle_ = -1;
+	drawFunc_ = nullptr;
+}
+
 void Canvas::Draw()
 {
-	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, color_, true);
 	for (auto ui : UIList_)
 	{
 		ui.ui->Draw();
+	}
+}
+
+void Canvas::BackDraw()
+{
+	if (drawFunc_ != nullptr)
+	{
+		drawFunc_(pos_);
+		return;
+	}
+	if (gHandle_ == -1)
+	{
+		DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, color_, true);
+	}
+	else
+	{
+		DrawRotaGraph(pos_.x - size_.x / 2, pos_.y - size_.y / 2, 1.0, 0.0, gHandle_, true);
 	}
 }
 
@@ -103,6 +146,7 @@ void Canvas::Update()
 		ui.ui->Update();
 	}
 }
+
 
 VECTOR2 Canvas::PosToJustified(const Justified& just, const VECTOR2& size)
 {

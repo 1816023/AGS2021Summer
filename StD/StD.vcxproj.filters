@@ -68,6 +68,8 @@
     <ClCompile Include="GUI\SpinBox\SpinBoxForString.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBoxForImage.cpp" />
     <ClCompile Include="GUI\ScrollList\ImgeAndStringList.cpp" />
+    <ClCompile Include="CustomDraw.cpp" />
+    <ClCompile Include="NumberUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -150,5 +152,7 @@
     <ClInclude Include="GUI\SpinBox\SpinBoxForString.h" />
     <ClInclude Include="GUI\SpinBox\SpinBoxForImage.h" />
     <ClInclude Include="GUI\ScrollList\ImgeAndStringList.h" />
+    <ClInclude Include="CustomDraw.h" />
+    <ClInclude Include="NumberUI.h" />
   </ItemGroup>
 </Project>

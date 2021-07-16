@@ -2,8 +2,7 @@
 #include "Map.h"
 #include <map>
 #include <memory>
-#define MAX_MAP_SIZE 20
-#define MIN_MAP_SIZE 10
+#include <functional>
 using mapChipVec = std::vector<MapChipName>;
 
 // マップ情報の編集用クラス
@@ -28,6 +27,7 @@ public:
 private:
 	// インデックスを格納
 	// ※インデックスはx+y*xの最大
+	// 拠点座標
 	std::vector<int> mainStay_;
 	// 敵出現位置の座標
 	std::vector<int>spawners_;

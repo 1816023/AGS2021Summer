@@ -18,7 +18,7 @@ public:
 	bool GetClickUp(int mouseType);			// クリックをやめた場合、true
 	void Update(Vec2Float offset, float scale);		// マウスの状態更新
 	const VECTOR2& GetPos() { return pos; }	// マウスの位置の取得
-	const VECTOR2& GetOffsetPos(); 	// マウスの位置の取得カメラオフセット込み
+	const VECTOR2 GetOffsetPos(); 	// マウスの位置の取得カメラオフセット込み
 	const int& GetWheel() { return wheel; }	// ホイールの取得
 	const bool IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd);
 private:
