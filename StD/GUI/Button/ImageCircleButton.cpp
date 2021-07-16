@@ -13,6 +13,15 @@ ImageCircleButton::ImageCircleButton(VECTOR2 pos, int radius, std::wstring image
 	type_ = ButtonType::CircleImage;
 }
 
+ImageCircleButton::ImageCircleButton(int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset) : Button(offset)
+{
+	radius_ = radius;
+	imagePath_ = imagePath;
+	pushImagePath_ = pushImagePath;
+	func_ = func;
+	type_ = ButtonType::CircleImage;
+}
+
 ImageCircleButton::~ImageCircleButton()
 {
 }

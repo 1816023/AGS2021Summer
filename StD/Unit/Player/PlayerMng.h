@@ -21,7 +21,7 @@ public:
 	bool Spawner(PlayerUnit id,Vec2Float pos);
 	void Skill(void) {};
 	UnitList GetUnitList(void);	//プレイヤー側のUnitリストの取得
-	std::map<PlayerUnit, int> GetPlayerData(void);
+	std::map<PlayerUnit, UnitData> GetPlayerData(void);
 	int GetCost(void);
 	void SetCost(int cost);
 	float SpeedDelay(void);
@@ -29,7 +29,7 @@ public:
 private:
 	void SkillCtl(std::shared_ptr<Unit> shooter);
 	UnitList unitList_;
-	std::map<PlayerUnit,int> playerData;
+	std::map<PlayerUnit,UnitData> playerData;
 	int cost;		//所持コスト保存用
 };
 

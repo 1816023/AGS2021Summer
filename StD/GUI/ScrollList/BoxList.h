@@ -6,8 +6,7 @@ struct BoxState
 	int color;
 };
 
-class BoxList :
-	public ScrollList
+class BoxList : public ScrollList
 {
 public:
 	BoxList(VECTOR2 pos, VECTOR2 size);

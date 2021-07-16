@@ -14,11 +14,11 @@
 5,5,5,5,5,5,5,5,5,5
 </map>
 
-<spwan>
+<spawn>
     <spawner id="1">
         <root>
 			0,1,2,3
 		</root>
     </spawner>
     <spawner id="0"/>
-</spwan>
+</spawn>

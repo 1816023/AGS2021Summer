@@ -5,6 +5,8 @@ class CircleButton :
 {
 public:
     CircleButton(VECTOR2 pos, int radius, int color, std::function<bool()>func, VECTOR2 offset);
+	// 座標を決めないで作成(キャンパス追加用)
+	CircleButton(int radius, int color, std::function<bool()>func, VECTOR2 offset);
     ~CircleButton()override;
 	// カーソルがある位置との当たり判定(マウスポジション指定)
 	bool IsHit(VECTOR2 mPos)override;

@@ -39,7 +39,9 @@ public:
 	// チップ情報の取得、ほしい場所のポジションを指定(float)	
 	MapChipName GetMapChip(Vec2Float pos);			
 	// チップ情報の取得、ほしい場所のポジションを指定(int)
-	MapChipName GetMapChip(VECTOR2 pos);			
+	MapChipName GetMapChip(VECTOR2 pos);		
+	// チップ情報の取得、ほしい場所のインデックスを指定(int)
+	MapChipName GetMapChipByIndex(VECTOR2 idx);
 	// マップサイズ取得
 	VECTOR2 GetMapSize();							
 	// チップサイズ取得	

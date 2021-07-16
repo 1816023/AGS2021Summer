@@ -3,7 +3,7 @@
 #include "ImageRectButton.h"
 #include "../../StringUtil.h"
 
-ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset)
+ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func,VECTOR2 offset)
 	:Button(offset)
 {
 	pos_ = pos;
@@ -12,7 +12,15 @@ ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePa
 	pushImagePath_ = pushImagePath;
 	func_ = func;
 	type_ = ButtonType::BoxImage;
+}
 
+ImageRectButton::ImageRectButton(VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset): Button(offset)
+{
+	size_ = size;
+	imagePath_ = imagePath;
+	pushImagePath_ = pushImagePath;
+	func_ = func;
+	type_ = ButtonType::BoxImage;
 }
 
 ImageRectButton::~ImageRectButton()
@@ -40,7 +48,8 @@ void ImageRectButton::Draw()
 	const int push = size_.y / 5;
 	if (isPush_)
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);
+		//DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);
+		DrawRotaGraph(pos_.x + (size_.x*scale_) / 2, pos_.y + (size_.y*scale_)/2, scale_, 0, IMAGE_ID(pushImagePath_.c_str()), true);
 		if (fontHandle_ != -1)
 		{
 			DrawStringToHandle(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y + push, _StW(str_).c_str(), ~color_, fontHandle_);
@@ -52,7 +61,9 @@ void ImageRectButton::Draw()
 	}
 	else
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(imagePath_.c_str()), true);
+		//DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(imagePath_.c_str()), true);
+		DrawRotaGraph(pos_.x + (size_.x*scale_) / 2, pos_.y + (size_.y*scale_)/2, scale_, 0, IMAGE_ID(imagePath_.c_str()), true);
+
 		if (fontHandle_ != -1)
 		{
 			DrawStringToHandle(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
@@ -63,3 +74,4 @@ void ImageRectButton::Draw()
 		}
 	}
 }
+

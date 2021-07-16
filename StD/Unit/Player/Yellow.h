@@ -8,7 +8,6 @@ public:
 	Yellow(Vec2Float pos, AttackType type);
 	~Yellow();
 	void Init();
-	void Update(float deltaTime);
 	void Draw();
 	void Skill(void);
 	int GetSpawnCost(void);

@@ -2,9 +2,11 @@
 #include <DxLib.h>
 #include "ResultScene.h"
 #include "GameOverScene.h"
+#include "../CustomDraw.h"
 #include "../Application.h"
 #include "../MouseController.h"
 #include "../Object/Shot/ShotMng.h"
+#include "../Unit/Player/Player.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../Unit/Enemy/EnemyManager.h"
 #include "../Unit/Enemy/EnemySpawner.h"
@@ -16,6 +18,9 @@ GameScene::GameScene()
 	map = std::make_unique<Map>();
 	map->SetUp("defalt_map");
 	cnt = 0;
+	waitFlag = false;
+	resultFlag = true;
+	accessData = nullptr;
 
 	IMAGE_ID(L"data/image/circle.png");
 	IMAGE_ID(L"data/image/triangle.png");
@@ -45,16 +50,15 @@ unique_Base GameScene::Update(unique_Base own)
 
 	float delta = Application::Instance().GetDelta(); 
 
-	/*if (now[KEY_INPUT_TAB])
-	{
 
-		if (mPos.x >= DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 4)
-		{
-			selectUnitId = static_cast<PlayerUnit>((VecICast(mPos).y + 10) / gSize.y);
-		}
-		delta = Application::Instance().GetDelta() / 2;
-	}*/
 	UnitCreateFunc();
+
+	//待機状態なら以後の処理を行わず戻す
+	if (waitFlag)
+	{
+		//UnitAccessFunc();
+		return std::move(own);
+	}
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
 
@@ -84,11 +88,13 @@ unique_Base GameScene::Update(unique_Base own)
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE])
 		|| spawnRemain == 0 && enemyMng_->GetEnemies().size() == 0)
 	{
-		return std::make_unique<ResultScene>();
+		resultFlag = true;
+		return std::make_unique<ResultScene>(resultFlag);
 	}
 	if (enemyMng_->IsGoal() == true)
 	{
-		return std::make_unique<GameOverScene>();
+		resultFlag = false;
+		return std::make_unique<ResultScene>(resultFlag);
 	}
 	return std::move(own);
 }
@@ -96,7 +102,7 @@ unique_Base GameScene::Update(unique_Base own)
 void GameScene::UnitCreateFunc()
 {
 	Vec2Int gSize;
-	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW], &gSize.x, &gSize.y);
+	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW].imageId, &gSize.x, &gSize.y);
 
 	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
 
@@ -114,22 +120,49 @@ void GameScene::UnitCreateFunc()
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_RIGHT))
 	{
-		//右クリックしたマスに配置されているユニットの取得
-		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
-		if (unitData != nullptr)
+		for (auto data : playerMng_->GetUnitList())
 		{
+			data->SetStatusOpen(false);
+		}
 
+		//右クリックしたマスに配置されているユニットの取得
+		accessData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
+		if (accessData != nullptr)
+		{
+			waitFlag = true;
+			accessData->SetStatusOpen(true);
 		}
 	}
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
+		for (auto data : playerMng_->GetUnitList())
+		{
+			data->SetStatusOpen(false);
+		}
+
 		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
 		if (map->GetMapChip(mPos) == MapChipName::FIELD && unitData == nullptr)
 		{
 			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map->GetChipSize() + offSet));
 		}
 	}
+}
+
+void GameScene::UnitAccessFunc(void)
+{
+	if (accessData == nullptr)
+	{
+		return;
+	}
+
+	accessData->LevelShift(1);
+	waitFlag = false;
+	//if (accessData->GetCoolTime() <= 0)
+	//{
+	//	//accessData->SetExecutable(true);
+	//	waitFlag = false;
+	//}
 }
 
 void GameScene::BulletControler(float deltaTime)
@@ -211,58 +244,71 @@ void GameScene::DrawUI()
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
 	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
-	DrawRotaGraph(m_pos.x, m_pos.y, 1, 0, playerMng_->GetPlayerData()[selectUnitId], true);
+	DrawRotaGraph(m_pos.x, m_pos.y, 1, 0, playerMng_->GetPlayerData()[selectUnitId].imageId, true);
 	int enemyRemain = 0;
 	for (auto& spawners : enemySpawner_)
 	{
 		enemyRemain += spawners->GetRemainSpawnCnt();
 	}
 	enemyRemain += enemyMng_->GetEnemies().size();
-	DrawFormatString(0, 0, 0xffffff, L"敵残存数 %d", enemyRemain);
+	DrawFormatString(0, 32, 0xffffff, L"敵残存数 %d", enemyRemain);
 
 	MenuDraw(m_pos);
 }
 
 void GameScene::MenuDraw(VECTOR2& m_pos)
 {
-	auto menuSize = Vec2Int(DEF_SCREEN_SIZE_X / 4, DEF_SCREEN_SIZE_Y);
+	auto menuSize = Vec2Int(-DEF_SCREEN_SIZE_X / 4, DEF_SCREEN_SIZE_Y);
 
 	//menu画面
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0x888888, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x-5, menuSize.y-5, DEF_SCREEN_SIZE_X-5, 5, 10, 10, 0xffffff, false);
+	lpCustomDraw.MakeRoundRect(Vec2Float(DEF_SCREEN_SIZE_X,0), menuSize, Vec2Float(0, 0), 0x555555, 200, true);
 
 	for (int data =1;data <=size_t(PlayerUnit::MAX);data++)
 	{
-		DrawGraph(DEF_SCREEN_SIZE_X - menuSize.x, (data-1)*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)], true);
+		DrawGraph(DEF_SCREEN_SIZE_X + menuSize.x, (data-1)*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)].imageId, true);
+		if (data != size_t(PlayerUnit::MAX))
+		{
+			DrawFormatString(DEF_SCREEN_SIZE_X + menuSize.x + 64, (data - 1) * 64 + 10, 0xffffff, playerMng_->GetPlayerData()[PlayerUnit(data)].name);
+		}
 	}
-	//ボタン
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 15, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 105, menuSize.y - 48, 10, 10, 0x000000, true);
-	//ボタン縁
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0xffffff, true);
-	//ボタン影
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 10, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 100, menuSize.y - 50, 10, 10, 0x000000, false);
-	//ボタンテキスト
-	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 20, menuSize.y - 45, 0x000000, L"ユニット");
-	
-	//ボタン
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 115, menuSize.y - 18, DEF_SCREEN_SIZE_X - menuSize.x + 205, menuSize.y - 48, 10, 10, 0x000000, true);
-	//ボタン縁
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0xffffff, true);
-	//ボタン影
-	DrawRoundRect(DEF_SCREEN_SIZE_X - menuSize.x + 110, menuSize.y - 20, DEF_SCREEN_SIZE_X - menuSize.x + 200, menuSize.y - 50, 10, 10, 0x000000, false);
-	//ボタンテキスト
-	DrawFormatString(DEF_SCREEN_SIZE_X - menuSize.x + 120, menuSize.y-45, 0x000000, L"トラップ");
 
-	//詳細表示
-	if (m_pos.x >= DEF_SCREEN_SIZE_X - menuSize.x)
+	for (auto data : playerMng_->GetUnitList())
 	{
-		auto size_x = (m_pos.x + 200 <= DEF_SCREEN_SIZE_X ? 200 : -200);
-		auto size_y = (m_pos.y <= DEF_SCREEN_SIZE_Y / 2 ? 100 : -100);
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0x888888, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-		DrawRoundRect(m_pos.x, m_pos.y, m_pos.x + size_x, m_pos.y + size_y, 10, 10, 0xffffff, false);
+		Vec2Float localPos = data->GetPos();
+		if (data->isStatusOpen())
+		{
+			lpCustomDraw.MakeRoundRect(localPos, Vec2Int(192,-128), Vec2Float(-32,-32), 0x555555, 200, true);
+			/*DrawRoundRect(localPos.x - 32, localPos.y-128-32, localPos.x + 192 - 32, localPos.y-32, 10, 10, 0x333333, true);
+			DrawRoundRect(localPos.x - 32, localPos.y-128-32, localPos.x + 192 - 32, localPos.y-32, 10, 10, 0xffffff, false);*/
+
+			data->StatusDraw(Vec2Float(localPos.x-32, localPos.y-128-32));
+		}
+	}
+	lpCustomDraw.MakeRoundButton(Vec2Float(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y),Vec2Int(100,-16),Vec2Float(-DEF_SCREEN_SIZE_X / 4,-30),0xffffff,0x000000,L"ユニット");
+	//
+	////ボタン
+	//DrawRoundRect(DEF_SCREEN_SIZE_X +menuSize.x + 110, menuSize.y - 18, DEF_SCREEN_SIZE_X +menuSize.x + 200, menuSize.y - 48, 10, 10, 0x000000, true);
+	////ボタン縁
+	//DrawRoundRect(DEF_SCREEN_SIZE_X +menuSize.x + 105, menuSize.y - 20, DEF_SCREEN_SIZE_X +menuSize.x + 195, menuSize.y - 50, 10, 10, 0xffffff, true);
+	////ボタン影
+	//DrawRoundRect(DEF_SCREEN_SIZE_X +menuSize.x + 105, menuSize.y - 20, DEF_SCREEN_SIZE_X +menuSize.x + 195, menuSize.y - 50, 10, 10, 0x000000, false);
+	////ボタンテキスト
+	//DrawFormatString(DEF_SCREEN_SIZE_X +menuSize.x + 115, menuSize.y-45, 0x000000, L"トラップ");
+
+	PlayerUnit id = PlayerUnit(((m_pos.y-10) / 64)+1);
+	//詳細表示
+	if (m_pos.x >= DEF_SCREEN_SIZE_X +menuSize.x && id != PlayerUnit::MAX)
+	{
+		lpCustomDraw.MakeRoundRect(VecFCast(m_pos), Vec2Int(-200,100), Vec2Float(0,0), 0x555555, 200, true);
+
+		auto size_x = -200;
+		auto size_y = 100;
+
+		if (id != PlayerUnit::NON)
+		{
+			DrawFormatString(m_pos.x + size_x + 4, m_pos.y + 4, 0xffffff, L"初期Lv：%d", playerMng_->GetPlayerData()[id].lv);
+			DrawFormatString(m_pos.x + size_x + 4, m_pos.y + 4 + 16, 0xffffff, L"HP：%d", playerMng_->GetPlayerData()[id].stat.life);
+			DrawFormatString(m_pos.x + size_x + 4 + 96, m_pos.y + 4 + 16, 0xffffff, L"攻撃力：%d", playerMng_->GetPlayerData()[id].stat.power);
+		}
 	}
 }

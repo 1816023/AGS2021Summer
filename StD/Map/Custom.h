@@ -16,6 +16,7 @@ public:
 	~Custom()override;
 	void SetUp(std::wstring fileName, VECTOR2 fileSize);
 	bool SetChip(VECTOR2 pos, MapChipName chip);
+	bool SetChipByIdx(VECTOR2 idx, MapChipName chip);
 	bool CreateMapFile(VECTOR2 mapSize, std::wstring name);
 	bool SaveFile();
 	void FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart);

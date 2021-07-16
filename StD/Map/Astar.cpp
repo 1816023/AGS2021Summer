@@ -57,7 +57,7 @@ std::vector<RootDir> Astar::AstarStart(VECTOR2 start, VECTOR2 goal)
 			RecursiveCreateRoot(openList_.front());
 			break;
 		}
-		auto& node = openList_.front();
+		auto node = openList_.front();
 		OpenAround(node);
 		openList_.erase(openList_.begin());
 		std::sort(openList_.begin(), openList_.end(), sort);
@@ -72,6 +72,7 @@ std::vector<RootDir> Astar::AstarStart(VECTOR2 start, VECTOR2 goal)
 			break;
 		}
 	}
+	std::reverse(root_.begin(), root_.end());
 	return root_;
 }
 
@@ -107,7 +108,7 @@ void Astar::Draw()
 	//}
 }
 
-void Astar::OpenAround(Node& node)
+void Astar::OpenAround(const Node& node)
 {
 	VECTOR2 openTable[] =
 	{
@@ -124,7 +125,7 @@ void Astar::OpenAround(Node& node)
 	CloseNode(node.pos);
 }
 
-Node* Astar::OpenNode(VECTOR2 pos, Node& node)
+void Astar::OpenNode(VECTOR2 pos, const Node& node)
 {
 	auto cost = node.cost;
 	// コスト増加(今は1しか増加量が無いので+1)
@@ -132,25 +133,25 @@ Node* Astar::OpenNode(VECTOR2 pos, Node& node)
 	// 範囲外チェック
 	if (!IsOutOfRange(pos))
 	{
-		return nullptr;
+		return;
 	}
 	// 通れるかどうか
-	if (cusMap_.GetMapChip(pos) == MapChipName::WALL)
+	if (cusMap_.GetMapChipByIndex(pos) == MapChipName::FIELD)
 	{
-		return nullptr;
+		return;
 	}
 	auto& tmp = GetNode(pos);
 	// tmpのstateがなにもされていないか
 	if (tmp.state != NodeState::None)
 	{
-		return nullptr;
+		return;
 	}
 	tmp.state = NodeState::Open;
 	tmp.cost = cost;
 	tmp.parent = &nodePool_[GetIdx(node.pos)];
 	openList_.push_back(tmp);
 
-	return &openList_.back();
+	return;
 }
 
 bool Astar::IsOutOfRange(const VECTOR2& pos)
@@ -162,7 +163,7 @@ bool Astar::IsOutOfRange(const VECTOR2& pos)
 	return false;
 }
 
-Node& Astar::GetNode(VECTOR2 pos)
+Astar::Node& Astar::GetNode(VECTOR2 pos)
 {
 	int idx = GetIdx(pos);
 	if (nodePool_.find(idx) != nodePool_.end())
@@ -183,10 +184,10 @@ void Astar::CloseNode(VECTOR2 pos)
 
 void Astar::RecursiveCreateRoot(Node& node)
 {	
-	auto chip = cusMap_.GetMapChip(node.pos);
+	auto chip = cusMap_.GetMapChipByIndex(node.pos);
 	if (chip != MapChipName::MAINSTAY && chip != MapChipName::SPAWNER)
 	{
-		cusMap_.SetChip(node.pos, MapChipName::ROOT);
+		cusMap_.SetChipByIdx(node.pos, MapChipName::ROOT);
 	}
 	if (node.parent != nullptr)
 	{
@@ -207,6 +208,6 @@ void Astar::RecursiveCreateRoot(Node& node)
 
 int Astar::GetIdx(const VECTOR2 pos)
 {
-	return pos.x + (pos.y * MAP_SIZE);
+	return pos.x + (pos.y * cusMap_.GetMapSize().x);
 }
 

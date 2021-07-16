@@ -21,15 +21,15 @@ public:
 	virtual ~Unit() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw() = 0;
-	const float GetAttackSpan(void);
-	const float GetAtkRange(void);
-	const Vec2Float GetPos();
-	void SetPosition(Vec2Float pos);
-	const int GetHP();
-	void SetHP(int power);
-	unsigned int GetAttackPower(void);	
+	virtual const float GetAttackSpan(void);
+	virtual const float GetAtkRange(void);
+	virtual const Vec2Float GetPos();
+	virtual void SetPosition(Vec2Float pos);
+	virtual const int GetHP();
+	virtual void SetHP(int power);
+	virtual unsigned int GetAttackPower(void);
 	//void SetDeath(bool flag);
-	const bool IsDeath();
+	virtual const bool IsDeath();
 protected:
 	UnitStat state_;
 };

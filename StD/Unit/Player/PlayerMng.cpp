@@ -61,7 +61,7 @@ UnitList PlayerMng::GetUnitList(void)
     return unitList_;
 }
 
-std::map<PlayerUnit, int> PlayerMng::GetPlayerData(void)
+std::map<PlayerUnit, UnitData> PlayerMng::GetPlayerData(void)
 {
     return playerData;
 }
@@ -93,7 +93,8 @@ float PlayerMng::SpeedDelay(void)
 std::shared_ptr<Player> PlayerMng::GetUnitData(Vec2Float pos)
 {
     UnitList::iterator result = unitList_.end();
-    result = std::find_if(unitList_.begin(), unitList_.end(), [&](std::shared_ptr<Player> player) {return player->GetPos() == pos; });
+    result = std::find_if(unitList_.begin(), unitList_.end(),
+        [&](std::shared_ptr<Player> player) {return player->GetPos() == pos; });
     return (result != unitList_.end() ? (*result):nullptr);
 }
 
@@ -104,21 +105,20 @@ PlayerMng::PlayerMng()
 
 void PlayerMng::SkillCtl(std::shared_ptr<Unit> shooter)
 {
-    auto result = std::find(unitList_.begin(), unitList_.end(), shooter);
-    if (result != unitList_.end())
+    for (auto data : unitList_)
     {
-        if ((*result)->GetID() == PlayerUnit::PINK)
+        if (data->GetID() == PlayerUnit::PINK)
         {
-            (*result)->Skill();
-        }
-    }
-    for (auto& unit : unitList_)
-    {
-        if (unit->GetID() != PlayerUnit::PINK)
-        {
-            if (unit->isExecutable())
+            if (data == shooter)
             {
-                unit->Skill();
+                data->Skill();
+            }
+        }
+        else
+        {
+            if (data->isExecutable())
+            {
+                data->Skill();
             }
         }
     }
@@ -131,8 +131,8 @@ PlayerMng::~PlayerMng()
 void PlayerMng::Init()
 {
     cost = MAX_COST;
-    playerData.try_emplace(PlayerUnit::BLUE, LoadGraph(L"data/image/Hexagon_Blue.png"));
-    playerData.try_emplace(PlayerUnit::GREEN, LoadGraph(L"data/image/Hexagon_Green.png"));
-    playerData.try_emplace(PlayerUnit::PINK, LoadGraph(L"data/image/Hexagon_Pink.png"));
-    playerData.try_emplace(PlayerUnit::YELLOW, LoadGraph(L"data/image/Hexagon_Yellow.png"));
+    playerData.try_emplace(PlayerUnit::BLUE, UnitData{ L"Blue", LoadGraph(L"data/image/Hexagon_Blue.png") ,1,UnitStat{ Vec2Float(0.0f,0.0f),2,0.8f,20,20,false }});
+    playerData.try_emplace(PlayerUnit::GREEN, UnitData{ L"Green", LoadGraph(L"data/image/Hexagon_Green.png"),1,UnitStat{ Vec2Float(0.0f,0.0f),15.0f,2.0f,6,10,false } });
+    playerData.try_emplace(PlayerUnit::PINK, UnitData{ L"Pink", LoadGraph(L"data/image/Hexagon_Pink.png") ,1,UnitStat{ Vec2Float(0.0f,0.0f),1.0f,2.0f,6,10,false }});
+    playerData.try_emplace(PlayerUnit::YELLOW, UnitData{ L"Yellow", LoadGraph(L"data/image/Hexagon_Yellow.png") ,1,UnitStat{ Vec2Float(0.0f,0.0f),2,0.8f,10,20,false }});
 }
