@@ -8,6 +8,7 @@ using mapChipVec = std::vector<MapChipName>;
 
 // マップ情報の編集用クラス
 enum class ErrorCode : int;
+class ImgeAndStringList;
 class Custom :
 	public Map
 {
@@ -19,6 +20,7 @@ public:
 	bool SetChipByIdx(VECTOR2 idx, MapChipName chip);
 	bool CreateMapFile(VECTOR2 mapSize, std::wstring name);
 	bool SaveFile();
+	bool SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>, std::vector<int>>>>&list);
 	void FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart);
 	const std::vector<int>& GetMainStay();
 	const std::vector<int>& GetSpawner();

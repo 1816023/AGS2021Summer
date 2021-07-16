@@ -15,7 +15,12 @@
 </map>
 
 <spawn>
-    <spawner id="">
-        <root/>
-    </spawner>
+
 </spawn>
+<root>
+	<id="">
+	</id>
+	<id="">
+	</id>
+	
+</root>

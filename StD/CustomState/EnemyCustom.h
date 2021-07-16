@@ -22,21 +22,54 @@ struct EnemyCustom :public CustomStateBase
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
 		const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
 		enemyH_.try_emplace(EnemyType::Circle, IMAGE_ID(L"./data/image/circle.png"));
-
+		enemyH_.try_emplace(EnemyType::Pentagon, IMAGE_ID(L"./data/image/pentagon.png"));
+		enemyH_.try_emplace(EnemyType::Square, IMAGE_ID(L"./data/image/square.png"));
+		enemyH_.try_emplace(EnemyType::Triangle, IMAGE_ID(L"./data/image/triangle.png"));
 		astar_ = std::make_unique<Astar>(*scene->cusMap_);
 		const auto& spawners = scene->cusMap_->GetSpawner();
 		const auto& mainStay = scene->cusMap_->GetMainStay();
+		// rootの設定
+		std::vector<std::vector<RootDir>> root;
+		if (mainStay.size() != 0 && spawners.size() != 0)
+		{
+			for (int s = 0; s < spawners.size(); s++)
+			{
+				for (int m = 0; m < mainStay.size(); m++)
+				{
+					root.push_back(astar_->AstarStart(scene->cusMap_->PosFromIndex(spawners[s]),
+						scene->cusMap_->PosFromIndex(mainStay[m])));
+
+				}
+			}
+		}
+		spawner_ = spawners;
+
 		fontHandle_ = CreateFontToHandle(NULL, 30, 1);
+		// UIの初期化
 		auto strSize=VECTOR2(GetDrawStringWidthToHandle(L"スポナー ",GetStringLength(L"スポナー "), fontHandle_),GetFontSizeToHandle(fontHandle_));
+		// スポナースピンボックスの設定
 		spinBoxS_.try_emplace("スポナー", std::make_unique<SpinBoxForInt>(VECTOR2(basePosX,0 )+strSize, 100, fontHandle_));
+		for (int s = spawners.size(); s > 0; s--)
+		{
+			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(s);
+		}
+		// ウェーブのスピンボックスの設定
 		spinBoxS_.try_emplace("Wave", std::make_unique<SpinBoxForInt>(VECTOR2(basePosX, strSize.y+bSpace) + strSize, 100, fontHandle_));
 		dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->AddData(3);
 		dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->AddData(2);
 		dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->AddData(1);
+		// ルートのスピンボックスの設定
 		spinBoxS_.try_emplace("ルート", std::make_unique<SpinBoxForInt>(VECTOR2(basePosX, (strSize.y + bSpace)*2) + strSize, 100, fontHandle_));
-		dynamic_cast<SpinBoxForInt*>(spinBoxS_["ルート"].get())->AddData(1);
+		for (int r = root.size()-1; r > -1; r--)
+		{
+			dynamic_cast<SpinBoxForInt*>(spinBoxS_["ルート"].get())->AddData(r);
+		}
+		// 敵種類のスピンボックスの設定
 		spinBoxS_.try_emplace("敵種類", std::make_unique<SpinBoxForImage>(VECTOR2(basePosX, (strSize.y + bSpace) * 3) + strSize, VECTOR2(100, 64)));
 		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Circle]);
+		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Pentagon]);
+		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Square]);
+		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Triangle]);
 		
 
 		list_.resize(3);
@@ -45,49 +78,47 @@ struct EnemyCustom :public CustomStateBase
 		{
 			for (int a = 0; a < spawners.size(); a++)
 			{
-				list_[w].emplace_back(std::make_unique<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2)));
+				list_[w].emplace_back(
+					std::make_pair(
+						std::make_unique<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2))
+						, std::vector<int>(0)
+					)
+				);
 			}
 		}
 		selSpawner_ = 0;
 		selWave_ = 0;
 		// ボタンの作成
-		if (spawners.size() == 2)
-		{
-
-			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(2);
-			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(1);
-		}
-		else if(spawners.size()==1)
-		{
-			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(1);
-
-		}
-		else
-		{
-			// エラー
-		}
+		// 登録ボタン
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&]() {
-			list_[selWave_][selSpawner_]
+			list_[selWave_][selSpawner_].first
 				->Add(dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->GetSelData(),std::to_string(GetKeyInputNumberToFloat(keyInputHandleForSpawnTime)));
-			spawnTime = GetKeyInputNumberToFloat(keyInputHandleForSpawnTime);
+			list_[selWave_][selSpawner_].second.push_back(dynamic_cast<SpinBoxForInt*>(spinBoxS_["ルート"].get())->GetSelData());
+				spawnTime = GetKeyInputNumberToFloat(keyInputHandleForSpawnTime);
 			return true; }, VECTOR2()));
 		button_.back()->SetString("登録",VECTOR2(15,10));
+		// 戻すボタン
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX-strSize.x/2, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&]() {
-			list_[selWave_][selSpawner_]->Del();
+			list_[selWave_][selSpawner_].first->Del();
+			if (list_[selWave_][selSpawner_].second.size() != 0)
+			{
+				list_[selWave_][selSpawner_].second.pop_back();
+			}
 			return true;
 			}, VECTOR2()));
 		button_.back()->SetString("戻す", VECTOR2(15, 10));
+		// 保存ボタン
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX - strSize.x , (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
+			auto error=scene->cusMap_->SaveFile(spawners.size(),list_);
+			return error==0;
+			}, VECTOR2()));
+		button_.back()->SetString("Save", VECTOR2(15, 10));
+		// ボタンの自動更新
 		for (auto&& list : button_)
 		{
 			list->SetAuto();
 		}
-		std::vector<RootDir> root;
-		if (mainStay.size() != 0 && spawners.size() != 0)
-		{
-			root = astar_->AstarStart(scene->cusMap_->PosFromIndex(mainStay[0]),
-							   scene->cusMap_->PosFromIndex(spawners[0]));
-		}
-		spawner_= spawners;
+
 		// 入力状態の初期化
 		keyInputHandleForSpawnTime = MakeKeyInput(5, true, true, true,0,1);
 		SetActiveKeyInput(keyInputHandleForSpawnTime);
@@ -99,7 +130,7 @@ struct EnemyCustom :public CustomStateBase
 	{
 		selSpawner_= dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->GetSelData()-1;
 		selWave_= dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->GetSelData()-1;
-		list_[selWave_][selSpawner_]->Update();
+		list_[selWave_][selSpawner_].first->Update();
 		if (lpMouseController.IsHitBoxToMouse(VECTOR2(), VECTOR2(SELECT_UI_POS.first.x, TEXT_UI_POS.first.y)))
 		{
 			lpApplication.GetCamera().ScaleLock(false);
@@ -140,7 +171,7 @@ struct EnemyCustom :public CustomStateBase
 		{
 			DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
 		}
-		list_[selWave_][selSpawner_]->Draw();
+		list_[selWave_][selSpawner_].first->Draw();
 		const int bSize = 64;
 		const int bSpace = 10;
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
@@ -165,6 +196,91 @@ struct EnemyCustom :public CustomStateBase
 		DeleteKeyInput(keyInputHandleForSpawnTime);
 	}
 private:
+	// セーブ用
+	// エラー返す
+	int Save(std::string filename)
+	{
+		//この形で保存
+		// <wave id = "">
+		//	<spawner id = "">
+		//		<enemy type = "" time = "" root = "" / >
+		//		<enemy type = "" time = "" root = "" / >
+		//	</spawner>
+		// </wave>
+		using namespace tinyxml2;
+		tinyxml2::XMLDocument doc;
+		auto error=doc.LoadFile(filename.c_str());
+		if (error != XML_SUCCESS)
+		{
+			// ファイルオープンエラー
+			return 1;
+		}
+		tinyxml2::XMLElement* elm = doc.FirstChildElement("spawn");
+		// 指定したエレメントの"id"アトリビュートが指定されたものになるまで兄弟を探しに行く
+		// 探し出せればtrue　
+		// 見つからなかったらfalse
+		std::function<bool(tinyxml2::XMLElement*, int)> check = [&](tinyxml2::XMLElement* elm, int num) {
+			if (elm->IntAttribute("id") != num)
+			{
+				elm = elm->NextSiblingElement();
+				if (!elm)
+				{
+					return false;
+				}
+				check(elm, num);
+			}
+			return true;
+		};
+		std::map<int, EnemyType>enemyID = {
+			{IMAGE_ID(L"./data/image/circle.png"),EnemyType::Circle},
+			{IMAGE_ID(L"./data/image/square.png"),EnemyType::Square},
+			{IMAGE_ID(L"./data/image/pentagon.png"),EnemyType::Pentagon},
+			{IMAGE_ID(L"./data/image/triangle.png"),EnemyType::Triangle},
+
+		};
+		/////
+		// ウェーブの数回す
+		for (int w = 0; w < 3; w++)
+		{
+			// ドキュメントからwaveのエレメントを取得する
+			tinyxml2::XMLElement* wave = doc.FirstChildElement("wave");
+			if (!wave)
+			{
+				return 1;
+			}
+			// 取得したエレメントが指定したIDを持つものになるまで再帰する
+			if (check(wave, w))
+			{
+				// スポナーの数だけ回す
+				for (int s=0;s< spawner_.size();s++)
+				{
+					// リストの取得
+					auto enemyList = list_[w][s].first->GetList();
+					// スポナーのエレメント作成
+					tinyxml2::XMLElement* spawner = wave->InsertNewChildElement("spawner");
+					// スポナーのIDを設定
+					spawner->SetAttribute("id", s);
+					int cnt = 0;
+					// リストのでーたをもとにスポナーエレメントに追加していく
+					for (auto list : enemyList)
+					{
+						// 新しいenemyというエレメントを作成する
+						tinyxml2::XMLElement* element = doc.NewElement("enemy");
+						// スポナーの子供の後ろに作成したenemyエレメントを追加する
+						spawner->InsertEndChild(element);
+						// エネミーにtype,time,rootのアトリビュートを追加する
+						element->SetAttribute("type", static_cast<int>(enemyID[list.handle]));
+						element->SetAttribute("time", list.str.c_str());
+						element->SetAttribute("root", list_[w][s].second[cnt++]);
+					}
+				}
+			}
+
+		}
+		doc.SaveFile(filename.c_str());
+		return true;
+	}
+
 	// Astarクラスのポインター
 	std::unique_ptr<Astar>astar_;
 	std::vector<int>spawner_;
@@ -179,7 +295,8 @@ private:
 	// 最大列数（日本語全角で16文字）
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
-	std::vector<std::vector<std::unique_ptr<ImgeAndStringList>>>list_;
+
+	std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>,std::vector<int>>>>list_;
 	int selSpawner_;
 	int selWave_;
 	

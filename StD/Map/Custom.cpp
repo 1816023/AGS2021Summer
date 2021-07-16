@@ -8,7 +8,9 @@
 #include "../StringUtil.h"
 #include "../Application.h"
 #include "../MapEnum.h"
-
+#include "../GUI/ScrollList/ImgeAndStringList.h"
+#include "../Unit/Enemy/Enemy.h"
+#include "../Mng/ImageMng.h"
 Custom::Custom(VECTOR2 offset) :offset_(offset)
 {
 	mapIdx = 0;
@@ -280,6 +282,90 @@ bool Custom::SaveFile()
 	{
 		return false;
 	}
+	return true;
+}
+
+bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>, std::vector<int>>>> &list)
+{
+	//この形で保存
+	// <wave id = "">
+	//	<spawner id = "">
+	//		<enemy type = "" time = "" root = "" / >
+	//		<enemy type = "" time = "" root = "" / >
+	//	</spawner>
+	// </wave>
+	using namespace tinyxml2;
+	std::string filePath = "data/mapData/" + _WtS(state_.name_) + (state_.name_.find(L".xml") != state_.name_.npos ? "" : ".xml");
+
+	auto error = document_.LoadFile(filePath.c_str());
+	if (error != XML_SUCCESS)
+	{
+		// ファイルオープンエラー
+		return 1;
+	}
+	tinyxml2::XMLElement* elm = document_.FirstChildElement("spawn");
+	// 指定したエレメントの"id"アトリビュートが指定されたものになるまで兄弟を探しに行く
+	// 探し出せればtrue　
+	// 見つからなかったらfalse
+	std::function<bool(tinyxml2::XMLElement*, int)> check = [&](tinyxml2::XMLElement* elm, int num) {
+		if (elm->IntAttribute("id") != num)
+		{
+			elm = elm->NextSiblingElement();
+			if (!elm)
+			{
+				return false;
+			}
+			check(elm, num);
+		}
+		return true;
+	};
+	std::map<int, EnemyType>enemyID = {
+		{IMAGE_ID(L"./data/image/circle.png"),EnemyType::Circle},
+		{IMAGE_ID(L"./data/image/square.png"),EnemyType::Square},
+		{IMAGE_ID(L"./data/image/pentagon.png"),EnemyType::Pentagon},
+		{IMAGE_ID(L"./data/image/triangle.png"),EnemyType::Triangle},
+
+	};
+	/////
+	// ウェーブの数回す
+	for (int w = 0; w < 3; w++)
+	{
+		// ドキュメントからwaveのエレメントを取得する
+		tinyxml2::XMLElement* wave = document_.FirstChildElement("wave");
+		if (!wave)
+		{
+			return 1;
+		}
+		// 取得したエレメントが指定したIDを持つものになるまで再帰する
+		if (check(wave, w))
+		{
+			// スポナーの数だけ回す
+			for (int s = 0; s < spawnerNum; s++)
+			{
+				// リストの取得
+				auto enemyList = list[w][s].first->GetList();
+				// スポナーのエレメント作成
+				tinyxml2::XMLElement* spawner = wave->InsertNewChildElement("spawner");
+				// スポナーのIDを設定
+				spawner->SetAttribute("id", s);
+				int cnt = 0;
+				// リストのでーたをもとにスポナーエレメントに追加していく
+				for (auto elist : enemyList)
+				{
+					// 新しいenemyというエレメントを作成する
+					tinyxml2::XMLElement* element = document_.NewElement("enemy");
+					// スポナーの子供の後ろに作成したenemyエレメントを追加する
+					spawner->InsertEndChild(element);
+					// エネミーにtype,time,rootのアトリビュートを追加する
+					element->SetAttribute("type", static_cast<int>(enemyID[elist.handle]));
+					element->SetAttribute("time", elist.str.c_str());
+					element->SetAttribute("root", list[w][s].second[cnt++]);
+				}
+			}
+		}
+
+	}
+	document_.SaveFile(filePath.c_str());
 	return true;
 }
 
