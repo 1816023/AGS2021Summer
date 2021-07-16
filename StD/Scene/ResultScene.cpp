@@ -7,7 +7,7 @@
 #include "../VECTOR2.h"
 #include "TitleScene.h"
 
-ResultScene::ResultScene()
+ResultScene::ResultScene(bool _flag)
 {
 	winImage = LoadGraph(L"data/image/win.png");
 	loseImage = LoadGraph(L"data/image/lose.png");
@@ -18,6 +18,7 @@ ResultScene::ResultScene()
 	time = 0;
 	second = 0;
 	minute = 0;
+	resultFlag = _flag;
 }
 
 ResultScene::~ResultScene()
@@ -51,7 +52,10 @@ void ResultScene::Draw()
 		second = 0;
 		minute++;
 	}
+}
 
+void ResultScene::DrawUI()
+{
 	if (flag)
 	{
 		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 100, 1, 0, winImage, false);
@@ -70,9 +74,4 @@ void ResultScene::Draw()
 	}
 
 	DrawFormatString(0, 200, 0xffffff, L"minute %d, second %d, time %d", minute, second, time);
-}
-
-void ResultScene::DrawUI()
-{
-	//DrawString(100, 100, L"ResultScene", 0xffffff);
 }

@@ -48,9 +48,6 @@ unique_Base TitleScene::Update(unique_Base own)
 
 void TitleScene::Draw()
 {
-	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[0], true);
-
-	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, true);
 	if (flag)
 	{
 		cnt -= 2;
@@ -75,7 +72,6 @@ void TitleScene::Draw()
 			flag = true;
 		}
 	}
-	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	if (DEF_SCREEN_SIZE_X <= pos.x + 32 || 0 >= pos.x - 32)
 	{
@@ -93,5 +89,7 @@ void TitleScene::Draw()
 
 void TitleScene::DrawUI()
 {
-	// DrawString(0, 48, L"TitleScene", 0xffffff);
+	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage[0], true);
+	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, true);
+	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
 }

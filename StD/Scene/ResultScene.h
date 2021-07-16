@@ -6,7 +6,7 @@ class ResultScene :
 	public BaseScene
 {
 public:
-	ResultScene();
+	ResultScene(bool _flag);
 	~ResultScene();
 
 	unique_Base Update(unique_Base own) override;
@@ -23,6 +23,7 @@ private:
 	int number[11];
 
 	bool flag;
+	bool resultFlag;
 	int time;
 	int second;
 	int minute;
