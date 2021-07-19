@@ -16,6 +16,8 @@ public:
 	bool Add(int handle,std::string str);
 	// リストの最後の要素を削除する
 	bool Del();
+	// リストの取得
+	const std::list<IandSState>&GetList()const { return list_; }
 
 	void Update()override;
 	void Draw()override;

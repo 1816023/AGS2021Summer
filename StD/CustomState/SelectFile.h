@@ -102,6 +102,7 @@ private:
 		auto error = doc.LoadFile(path.c_str());
 		if (error != tinyxml2::XML_SUCCESS)
 		{
+			assert(false);
 			return DataState{ "",{-1,-1} };
 		}
 		DataState state;
@@ -112,6 +113,7 @@ private:
 		error = doc.SaveFile(path.c_str());
 		if (error != tinyxml2::XML_SUCCESS)
 		{
+			assert(false);
 			return DataState{ "",{-1,-1} };
 		}
 		return state;

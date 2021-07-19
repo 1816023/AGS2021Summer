@@ -4,7 +4,7 @@
 
 ESquare::ESquare() : Enemy()
 {
-
+	updater_ = &ESquare::StartUpdate;
 }
 
 ESquare::ESquare(MapInfo& mapInfo) : Enemy(mapInfo)

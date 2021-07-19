@@ -94,7 +94,7 @@ void CustomMapScene::DrawUI()
 	for (auto& sp : spawners)
 	{
 		auto y = sp / mapSize;
-		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - mainStay.size(), sp - y * mapSize, y);
+		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - static_cast<int>(mainStay.size()), sp - y * mapSize, y);
 		cnt++;
 	}
 }

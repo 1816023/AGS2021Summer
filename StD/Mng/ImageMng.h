@@ -12,13 +12,14 @@
 #include <vector>
 //#include <mutex>
 #include <string>
+#include <Windows.h>
 #include "../VECTOR2.h"
 
 
 //using namespace std;
 using VEC_INT = std::vector<int>;
 #define lpImageMng ImageMng::GetInstance()
-#define IMAGE_ID(X) (ImageMng::GetInstance().GetID(X))
+#define IMAGE_ID(fmt, ...) (ImageMng::GetInstance().GetID(fmt, __VA_ARGS__))
 class ImageMng
 {
 public:

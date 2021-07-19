@@ -6,11 +6,11 @@
 struct UnitStat
 {
 	Vec2Float pos;			// À•W
-	float atkSpeed;			// UŒ‚ŠÔŠu
-	float atkRange;			// Ë’ö
-	unsigned int power;		// UŒ‚—Í
-	int life;		// ‘Ì—Í
-	bool isDead;			// €‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
+	float atkSpeed = 0.0f;			// UŒ‚ŠÔŠu
+	float atkRange = 0.0f;			// Ë’ö
+	unsigned int power = 0;		// UŒ‚—Í
+	int life = 0;		// ‘Ì—Í
+	bool isDead = false;			// €‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
 };
 
 // UnitŠî’êƒNƒ‰ƒX

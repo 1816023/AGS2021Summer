@@ -14,11 +14,13 @@ SpinBoxForImage::~SpinBoxForImage()
 void SpinBoxForImage::Draw()
 {
 	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0x000000, true);
-	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xffffff, false);
+
 	if (vec_.size() != 0)
 	{
 		DrawGraph(pos_.x, pos_.y, vec_[selKey_], true);
 	}
+	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xffffff, false);
+
 	button_.first->Draw();
 	button_.second->Draw();
 }

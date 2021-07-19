@@ -20,6 +20,7 @@ GameScene::GameScene()
 	map->SetUp("defalt_map");
 	cnt = 0;
 	waitFlag = false;
+	resultFlag = true;
 	accessData = nullptr;
 
 	IMAGE_ID(L"data/image/circle.png");
@@ -88,11 +89,13 @@ unique_Base GameScene::Update(unique_Base own)
 	if ((now[KEY_INPUT_SPACE]) & (~old[KEY_INPUT_SPACE])
 		|| spawnRemain == 0 && enemyMng_->GetEnemies().size() == 0)
 	{
-		return std::make_unique<ResultScene>();
+		resultFlag = true;
+		return std::make_unique<ResultScene>(resultFlag);
 	}
 	if (enemyMng_->IsGoal() == true)
 	{
-		return std::make_unique<GameOverScene>();
+		resultFlag = false;
+		return std::make_unique<ResultScene>(resultFlag);
 	}
 	return std::move(own);
 }
@@ -102,7 +105,7 @@ void GameScene::UnitCreateFunc()
 	Vec2Int gSize;
 	GetGraphSize(playerMng_->GetPlayerData()[PlayerUnit::YELLOW].imageId, &gSize.x, &gSize.y);
 
-	auto mPos = Vec2Float(lpMouseController.GetOffsetPos().x, lpMouseController.GetOffsetPos().y);
+	auto mPos = VecFCast(lpMouseController.GetOffsetPos());
 
 	if (lpMouseController.GetClickTrg(MOUSE_INPUT_LEFT))
 	{

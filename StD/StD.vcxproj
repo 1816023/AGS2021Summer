@@ -170,6 +170,7 @@
     <ClCompile Include="GUI\SpinBox\SpinBoxForInt.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBoxForString.cpp" />
     <ClCompile Include="GUI\ScrollList\ImgeAndStringList.cpp" />
+    <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
     <ClCompile Include="GUI\UI.cpp" />
@@ -241,6 +242,7 @@
     <ClInclude Include="GUI\ScrollList\ImgeAndStringList.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="GUI\PullDown\PullDown.h" />
+    <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="GUI\ScrollList\StringList.h" />
     <ClInclude Include="GUI\UI.h" />

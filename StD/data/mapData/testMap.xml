@@ -21,6 +21,10 @@
 
 <spawn>
     <spawner id="">
-        <root/>
     </spawner>
 </spawn>
+
+<root>
+	<id>
+	</id>
+<root/>

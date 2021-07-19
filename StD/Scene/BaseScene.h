@@ -26,7 +26,7 @@ public:
 	virtual SCENE_ID GetScnID(void) = 0;
 
 protected:
-	KEY_ARRAY now;
-	KEY_ARRAY old;
+	keyArray now = {};
+	keyArray old = {};
 };
 

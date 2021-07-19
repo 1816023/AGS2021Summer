@@ -41,7 +41,7 @@ void MouseController::Update(Vec2Float offset, float scale)
 	scale_ = scale;
 }
 
-const VECTOR2& MouseController::GetOffsetPos()
+const VECTOR2 MouseController::GetOffsetPos()
 {
 	Vec2Float screenS = { DEF_SCREEN_SIZE_X / 2, DEF_SCREEN_SIZE_Y / 2 };
 	auto fPos = VecFCast(pos);
@@ -69,6 +69,7 @@ const bool MouseController::IsHitBoxToMouse(VECTOR2 lu, VECTOR2 rd)
 
 MouseController::MouseController()
 {
+	scale_ = 1.0f;
 	data = 0;
 	dataOld = 0;
 	wheel = 0;

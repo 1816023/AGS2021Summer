@@ -4,7 +4,17 @@
 <map hight="" width=""/>
 
 <spawn>
-    <spawner id="">
-        <root/>
-    </spawner>
+	<wave id="1">
+	</wave>
+	<wave id="2">
+	</wave>
+	<wave id="3">
+	</wave>
 </spawn>
+<root>
+	<id="">
+	</id>
+	<id="">
+	</id>
+	
+</root>

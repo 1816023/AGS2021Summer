@@ -14,18 +14,13 @@ MainScene::MainScene()
 	updater_ = &MainScene::GameModeSelectUpdate;
 	drawer_ = &MainScene::GameModeSelectDraw;
 
-	gameModeCanvas_ = std::make_unique<Canvas>(VECTOR2(0, 0), VECTOR2(856, 480));
+	gameModeCanvas_ = std::make_unique<Canvas>(VECTOR2(0, 0), VECTOR2(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y));
 	gameModeCanvas_->SetColor(0xff0055);
-	difSelectCanvas_ = std::make_unique<Canvas>(VECTOR2(0, 0), VECTOR2(856, 480));
+	difSelectCanvas_ = std::make_unique<Canvas>(VECTOR2(0, 0), VECTOR2(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y));
 	difSelectCanvas_->SetColor(0xffff00);
 	auto bSize = VECTOR2(150, 80);
 	auto bPos = VECTOR2(DEF_SCREEN_SIZE_X / 2 - bSize.x / 2, DEF_SCREEN_SIZE_Y / 4);
 	std::wstring dir = L"data/image/";
-
-	auto b = new ImageRectButton(bSize,
-		dir + L"Custom_Botton1.png", dir + L"Custom_Botton2.png", [&]() {customTransition_ = true; return true; }, VECTOR2());
-	b->SetAuto();
-	gameModeCanvas_->AddUIByID(b, Justified::RIGHT_UP);
 
 	struct MainButton
 	{
