@@ -8,7 +8,9 @@
 #include "../StringUtil.h"
 #include "../Application.h"
 #include "../MapEnum.h"
-
+#include "../GUI/ScrollList/ImgeAndStringList.h"
+#include "../Unit/Enemy/Enemy.h"
+#include "../Mng/ImageMng.h"
 Custom::Custom(VECTOR2 offset) :offset_(offset)
 {
 	mapIdx = 0;
@@ -60,24 +62,25 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 
 bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 {
-	if (0 > pos.x || pos.x > state_.mapSize_.x * state_.chipSize_.x)
+	VECTOR2 mapPos = pos / state_.chipSize_;
+	return SetChipByIdx(mapPos, chip);
+}
+
+bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
+{
+	if (0 > idx.x || idx.x > state_.mapSize_.x)
 	{
 		return false;
 	}
-	if (0 > pos.y || pos.y > state_.mapSize_.y * state_.chipSize_.y)
+	if (0 > idx.y || idx.y > state_.mapSize_.y)
 	{
 		return false;
 	}
-	VECTOR2 mapPos = pos / VECTOR2(state_.chipSize_.x, state_.chipSize_.y);
-	if (mapPos.x > GetMapSize().x || mapPos.y > GetMapSize().y)
+	if (idx.x > state_.mapSize_.x || idx.y > state_.mapSize_.y)
 	{
 		return false;
 	}
-	int id = mapPos.x + mapPos.y * state_.mapSize_.x;
-	if (mapData_.size() <= mapPos.y && mapData_[mapPos.y].size() <= mapPos.x)
-	{
-		return false;
-	}
+	int id = idx.x + idx.y * state_.mapSize_.x;
 	auto msFind = std::find(mainStay_.begin(), mainStay_.end(), id);
 	auto spFind = std::find(spawners_.begin(), spawners_.end(), id);
 	if (chip == MapChipName::MAINSTAY)
@@ -85,7 +88,7 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		if (mainStay_.size() < 2 && msFind == mainStay_.end())
 		{
 			mainStay_.emplace_back(id);
-			mapData_[mapPos.y][mapPos.x] = chip;
+			mapData_[idx.y][idx.x] = chip;
 		}
 	}
 	else if (chip == MapChipName::SPAWNER)
@@ -93,7 +96,7 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		if (spFind == spawners_.end() && spawners_.size() < 2)
 		{
 			spawners_.emplace_back(id);
-			mapData_[mapPos.y][mapPos.x] = chip;
+			mapData_[idx.y][idx.x] = chip;
 			return true;
 		}
 	}
@@ -107,7 +110,7 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 		{
 			spawners_.erase(spFind);
 		}
-		mapData_[mapPos.y][mapPos.x] = chip != MapChipName::MAX ? chip : mapData_[mapPos.y][mapPos.x];
+		mapData_[idx.y][idx.x] = chip != MapChipName::MAX ? chip : mapData_[idx.y][idx.x];
 	}
 	return true;
 }
@@ -272,11 +275,97 @@ bool Custom::SaveFile()
 	elm->SetText(mapData.c_str());
 	elm->SetAttribute("hight", mapData_.size());
 	elm->SetAttribute("width", mapData_[0].size());
+	// スポナー登録
+	//auto sElm = document_.FirstChildElement("spawn");
 	error = document_.SaveFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{
 		return false;
 	}
+	return true;
+}
+
+bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>, std::vector<int>>>> &list)
+{
+	//この形で保存
+	// <wave id = "">
+	//	<spawner id = "">
+	//		<enemy type = "" time = "" root = "" / >
+	//		<enemy type = "" time = "" root = "" / >
+	//	</spawner>
+	// </wave>
+	using namespace tinyxml2;
+	std::string filePath = "data/mapData/" + _WtS(state_.name_) + (state_.name_.find(L".xml") != state_.name_.npos ? "" : ".xml");
+
+	auto error = document_.LoadFile(filePath.c_str());
+	if (error != XML_SUCCESS)
+	{
+		// ファイルオープンエラー
+		return 1;
+	}
+	tinyxml2::XMLElement* elm = document_.FirstChildElement("spawn");
+	// 指定したエレメントの"id"アトリビュートが指定されたものになるまで兄弟を探しに行く
+	// 探し出せればtrue　
+	// 見つからなかったらfalse
+	std::function<bool(tinyxml2::XMLElement*, int)> check = [&](tinyxml2::XMLElement* elm, int num) {
+		if (elm->IntAttribute("id") != num)
+		{
+			elm = elm->NextSiblingElement();
+			if (!elm)
+			{
+				return false;
+			}
+			check(elm, num);
+		}
+		return true;
+	};
+	std::map<int, EnemyType>enemyID = {
+		{IMAGE_ID(L"./data/image/circle.png"),EnemyType::Circle},
+		{IMAGE_ID(L"./data/image/square.png"),EnemyType::Square},
+		{IMAGE_ID(L"./data/image/pentagon.png"),EnemyType::Pentagon},
+		{IMAGE_ID(L"./data/image/triangle.png"),EnemyType::Triangle},
+
+	};
+	/////
+	// ウェーブの数回す
+	for (int w = 0; w < 3; w++)
+	{
+		// ドキュメントからwaveのエレメントを取得する
+		tinyxml2::XMLElement* wave = document_.FirstChildElement("wave");
+		if (!wave)
+		{
+			return 1;
+		}
+		// 取得したエレメントが指定したIDを持つものになるまで再帰する
+		if (check(wave, w))
+		{
+			// スポナーの数だけ回す
+			for (int s = 0; s < spawnerNum; s++)
+			{
+				// リストの取得
+				auto enemyList = list[w][s].first->GetList();
+				// スポナーのエレメント作成
+				tinyxml2::XMLElement* spawner = wave->InsertNewChildElement("spawner");
+				// スポナーのIDを設定
+				spawner->SetAttribute("id", s);
+				int cnt = 0;
+				// リストのでーたをもとにスポナーエレメントに追加していく
+				for (auto elist : enemyList)
+				{
+					// 新しいenemyというエレメントを作成する
+					tinyxml2::XMLElement* element = document_.NewElement("enemy");
+					// スポナーの子供の後ろに作成したenemyエレメントを追加する
+					spawner->InsertEndChild(element);
+					// エネミーにtype,time,rootのアトリビュートを追加する
+					element->SetAttribute("type", static_cast<int>(enemyID[elist.handle]));
+					element->SetAttribute("time", elist.str.c_str());
+					element->SetAttribute("root", list[w][s].second[cnt++]);
+				}
+			}
+		}
+
+	}
+	document_.SaveFile(filePath.c_str());
 	return true;
 }
 
@@ -291,7 +380,7 @@ void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fSta
 	{
 		if (*find == MapChipName::MAINSTAY)
 		{
-			// 拠点限界以上のデータだった場合
+			// 拠点数限界以上のデータだった場合
 			// ※マップデータ外部でいじる時注意
 			if (mainStay_.size() > 2)
 			{
@@ -304,7 +393,7 @@ void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fSta
 		}
 		if (*find == MapChipName::SPAWNER)
 		{
-			// 拠点限界以上のデータだった場合
+			// スポナー数限界以上のデータだった場合
 			// ※スポナーデータ外部でいじる時注意
 			if (spawners_.size() > 2)
 			{

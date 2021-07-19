@@ -11,7 +11,7 @@ public:
 	const float GetSelData()const;
 	// ƒf[ƒ^‚ğ‘}“ü‚·‚é
 	void AddData(float data);
-	bool DeleteData();
+	void DeleteData();
 	bool DeleteData(float data);
 private:
 	std::vector<float>vec_;

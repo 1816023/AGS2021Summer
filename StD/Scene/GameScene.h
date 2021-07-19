@@ -45,4 +45,6 @@ private:
 	int cnt;	
 	std::shared_ptr<Player> accessData;	//クリック時に取得したユニットのデータ
 	bool waitFlag;	
+
+	bool resultFlag;
 };

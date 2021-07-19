@@ -47,6 +47,10 @@ public:
 	// 押したときのサウンドハンドル設定
 	// -2,指定なしでデフォルトのSEを設定
 	void SetSound(int handle=-2);
+	// strの取得
+	const std::string GetStr()const { return str_; }
+	// 拡大縮小スケールの設定
+	void SetScale(float scale);
 protected:
 	// 座標補正
 	const VECTOR2 offset_;
@@ -73,6 +77,10 @@ protected:
 	int tag_;
 	// ボタンを押したときのサウンドハンドル格納用
 	int soundHandle_;
+	// 拡大縮小スケール値
+	float scale_;
+
+
 	/*--引数を保管用--*/
 	// 押されたときに呼び出される関数格納用
 	std::function<bool()> func_;

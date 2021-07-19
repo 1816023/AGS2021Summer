@@ -21,11 +21,14 @@ public:
 	void Init();
 	virtual void Update(float deltaTime);
 	virtual int GetSpawnCost(void) = 0;		//召喚時に必要となるcostの取得
+
+	virtual void StatusDraw(Vec2Float pos);
 	void Draw();
 	virtual void Skill(void)=0;
 
 	virtual void LevelShift(int num);
 	void SetExecutable(bool flag);
+	void SetStatusOpen(bool flag);
 
 	virtual void SetPosition(Vec2Float pos);
 	virtual void SetHP(int power);
@@ -66,6 +69,10 @@ public:
 	{
 		return executable;
 	}
+	bool isStatusOpen()
+	{
+		return statusOpen;
+	}
 	int GetCoolTime()
 	{
 		return coolTime_;
@@ -77,6 +84,7 @@ protected:
 	float coolTime_;	//skill再使用までの時間
 	bool isSkill_;	//skillが発動可能か
 	bool executable; //実行可能か
+	bool statusOpen = false;	//status画面を開くか
 	UnitData unitData;
 	PlayerUnit UnitID;
 private:

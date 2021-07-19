@@ -41,11 +41,11 @@ private:
 	// 描画
 	void Draw();	
 
-	int gameScreen_;
+	int gameScreen_ = 0;
 	std::unique_ptr<BaseScene>sceneController_;	// シーンコントローラー
 	std::unique_ptr<Camera>camera_;	// カメラ
 
 	std::chrono::system_clock::time_point oldTime_;	// 1フレーム前の時間
-	float delta_;
+	float delta_ = 0.0f;
 };
 

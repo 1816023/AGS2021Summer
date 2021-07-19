@@ -23,6 +23,8 @@ void SpinBoxForBool::Draw()
 		DrawString(pos_.x, pos_.y, array_[selKey_] ? L"TRUE" : L"FALSE", 0xffffff);
 
 	}
+	button_.first->Draw();
+	button_.second->Draw();
 }
 
 const int SpinBoxForBool::GetSelData() const

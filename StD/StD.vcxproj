@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CustomDraw.cpp" />
     <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
     <ClCompile Include="GUI\Canvas.cpp" />
     <ClCompile Include="GUI\ScrollList\BoxList.cpp" />
@@ -163,9 +164,17 @@
     <ClCompile Include="CustumErrorText.cpp" />
     <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
     <ClCompile Include="GUI\PullDown\PullDown.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBox.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForBool.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForFloat.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForInt.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForString.cpp" />
+    <ClCompile Include="GUI\ScrollList\ImgeAndStringList.cpp" />
+    <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
     <ClCompile Include="GUI\UI.cpp" />
+    <ClCompile Include="GUI\SpinBox\SpinBoxForImage.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
@@ -211,6 +220,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CustomDraw.h" />
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />
     <ClInclude Include="GUI\ScrollList\BoxList.h" />
@@ -224,11 +234,19 @@
     <ClInclude Include="GUI\Button\RoundRectButton.h" />
     <ClInclude Include="CustumErrorText.h" />
     <ClInclude Include="GUI\ScrollList\ImageList.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBox.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForBool.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForFloat.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForInt.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForString.h" />
+    <ClInclude Include="GUI\ScrollList\ImgeAndStringList.h" />
     <ClInclude Include="MapEnum.h" />
     <ClInclude Include="GUI\PullDown\PullDown.h" />
+    <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="GUI\ScrollList\StringList.h" />
     <ClInclude Include="GUI\UI.h" />
+    <ClInclude Include="GUI\SpinBox\SpinBoxForImage.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />

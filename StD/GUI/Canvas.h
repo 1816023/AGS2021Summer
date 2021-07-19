@@ -2,8 +2,9 @@
 #include "../VECTOR2.h"
 #include <string>
 #include <vector>
+#include <functional>
 
-// UI位置enum
+// UI整列位置enum
 enum class Justified
 {
 	CENTER,
@@ -21,17 +22,33 @@ struct UIStat;
 class Canvas
 {
 public:
-	Canvas(VECTOR2 pos, VECTOR2 size);
+	Canvas(VECTOR2 pos, VECTOR2 size, int color = 0xffffff);
+	Canvas(VECTOR2 pos, VECTOR2 size, std::wstring path);
+	Canvas(VECTOR2 pos, VECTOR2 size, std::function<void(VECTOR2)> drawFunc);
 	~Canvas();
+	// ------- UIをキャンバスに追加する -------
+	// IDから整列機能を使う
 	void AddUIByID(UI* ui, Justified just, int id = -1);
+	// IDから自分で座標設定をする
 	void AddUIByID(UI* ui, VECTOR2& pos, int id = -1);
+	// 名前から整列機能を使う
 	void AddUIByName(UI* ui, Justified just, std::wstring name = L"");
+	// 名前から自分で座標設定をする
 	void AddUIByName(UI* ui, VECTOR2& pos, std::wstring name = L"");
-
+	// ----------------------------------------
+	// 名前からUIを取得
 	UI* GetUIByName(std::wstring name);
+	// IDからUIを取得
 	UI* GetUIByName(int id);
-
+	// キャンバスの色を設定
+	void SetColor(int color);
+	// 初期化
+	void Init();
+	// 描画
 	void Draw();
+	// キャンバス背景描画
+	void BackDraw();
+	// 更新
 	void Update();
 private:
 	// UI位置の座標を返す
@@ -47,6 +64,9 @@ private:
 
 	VECTOR2 pos_;	// 左上座標
 	VECTOR2 size_;	// 大きさ
-	std::vector<UIStat>UIList_;
+	std::vector<UIStat>UIList_;	// UIのリスト
+	int color_;		// 色
+	int gHandle_;	// 画像ハンドル
+	std::function<void(VECTOR2)> drawFunc_;	// 描画function #VECTOR2はoffset
 };
 

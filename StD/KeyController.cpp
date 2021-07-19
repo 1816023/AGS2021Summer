@@ -3,7 +3,7 @@
 
 std::unique_ptr<KeyController, KeyController::KeyDelete> KeyController::s_Instans(new KeyController);
 
-const KEY_ARRAY& KeyController::GetCtl(KEY_TYPE type) const
+const keyArray& KeyController::GetCtl(KEY_TYPE type) const
 {
 	if (type == KEY_TYPE::OLD)
 	{

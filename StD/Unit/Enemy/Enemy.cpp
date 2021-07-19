@@ -64,7 +64,8 @@ void Enemy::Move(float deltaTime)
 	{
 		// ˆÚ“®•â³
 		state_.pos = (state_.pos - enemyInfo_.nowMove).Round();
-		state_.pos = state_.pos + (Vec2Float(enemyInfo_.mapChipSize.x, enemyInfo_.mapChipSize.y) * enemyInfo_.dirVec).Round();
+		auto mcSize = VecFCast(enemyInfo_.mapChipSize);
+		state_.pos = state_.pos + (mcSize * enemyInfo_.dirVec).Round();
 		// ˆÚ“®’l‰Šú‰»
 		enemyInfo_.nowMove = { 0,0 };
 		move = { 0,0 };

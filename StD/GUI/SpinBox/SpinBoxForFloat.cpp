@@ -15,14 +15,19 @@ void SpinBoxForFloat::Draw()
 	std::wstring str = L"%" + std::to_wstring(NumOfDigits_) + L"." + std::to_wstring(NumOfDigitsOfDecmal_) + L"f";
 	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0x000000, true);
 	DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0xffffff, false);
-	if (fontHandle_ == -1)
+	if (vec_.size() != 0)
 	{
-		DrawFormatString(pos_.x, pos_.y, 0xffffff, str.c_str(), vec_[selKey_]);
+		if (fontHandle_ == -1)
+		{
+			DrawFormatString(pos_.x, pos_.y, 0xffffff, str.c_str(), vec_[selKey_]);
+		}
+		else
+		{
+			DrawFormatStringToHandle(pos_.x, pos_.y, 0xffffff, fontHandle_, str.c_str(), vec_[selKey_]);
+		}
 	}
-	else
-	{
-		DrawFormatStringToHandle(pos_.x, pos_.y, 0xffffff,fontHandle_, str.c_str(), vec_[selKey_]);
-	}
+	button_.first->Draw();
+	button_.second->Draw();
 }
 
 const float SpinBoxForFloat::GetSelData() const
@@ -36,11 +41,10 @@ void SpinBoxForFloat::AddData(float data)
 	vec_.push_back(data);
 }
 
-bool SpinBoxForFloat::DeleteData()
+void SpinBoxForFloat::DeleteData()
 {
-	auto itr=vec_.erase(--vec_.end());
+	vec_.pop_back();
 	nowSize_ = vec_.size();
-	return itr!=vec_.end();
 }
 
 bool SpinBoxForFloat::DeleteData(float data)
