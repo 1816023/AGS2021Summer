@@ -5,6 +5,7 @@
 #include "../CustomDraw.h"
 #include "../Application.h"
 #include "../MouseController.h"
+#include "../GUI/Button/RoundRectButton.h"
 #include "../Object/Shot/ShotMng.h"
 #include "../Unit/Player/Player.h"
 #include "../Unit/Player/PlayerMng.h"
@@ -155,11 +156,15 @@ void GameScene::UnitAccessFunc(void)
 
 	accessData->LevelShift(1);
 	waitFlag = false;
-	//if (accessData->GetCoolTime() <= 0)
-	//{
-	//	//accessData->SetExecutable(true);
-	//	waitFlag = false;
-	//}
+	if (accessData->GetCoolTime() <= 0)
+	{
+		if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
+		{
+			//if()
+			//accessData->SetExecutable(true);
+		}
+		waitFlag = false;
+	}
 }
 
 void GameScene::BulletControler(float deltaTime)
@@ -263,7 +268,7 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 	for (int data =1;data <=size_t(PlayerUnit::MAX);data++)
 	{
 		DrawGraph(DEF_SCREEN_SIZE_X + menuSize.x, (data-1)*64+10,playerMng_->GetPlayerData()[PlayerUnit(data)].imageId, true);
-		if (data != size_t(PlayerUnit::MAX))
+		if (data < size_t(PlayerUnit::MAX))
 		{
 			DrawFormatString(DEF_SCREEN_SIZE_X + menuSize.x + 64, (data - 1) * 64 + 10, 0xffffff, playerMng_->GetPlayerData()[PlayerUnit(data)].name);
 		}
@@ -274,27 +279,19 @@ void GameScene::MenuDraw(VECTOR2& m_pos)
 		Vec2Float localPos = data->GetPos();
 		if (data->isStatusOpen())
 		{
-			lpCustomDraw.MakeRoundRect(localPos, Vec2Int(192,-128), Vec2Float(-32,-32), 0x555555, 200, true);
-			/*DrawRoundRect(localPos.x - 32, localPos.y-128-32, localPos.x + 192 - 32, localPos.y-32, 10, 10, 0x333333, true);
-			DrawRoundRect(localPos.x - 32, localPos.y-128-32, localPos.x + 192 - 32, localPos.y-32, 10, 10, 0xffffff, false);*/
+			lpCustomDraw.MakeRoundRect(localPos, Vec2Int(250, -128), Vec2Float(-32, -32), 0x555555, 200, true);
+			lpCustomDraw.MakeRoundButton(localPos,Vec2Int(100,24),Vec2Float(-27,-64),0xffffff,0x000000,L"スキル発動");
+			lpCustomDraw.MakeRoundButton(localPos,Vec2Int(100,24),Vec2Float(100,-64),0xffffff,0x000000,L"レベルアップ");
 
 			data->StatusDraw(Vec2Float(localPos.x-32, localPos.y-128-32));
 		}
 	}
-	lpCustomDraw.MakeRoundButton(Vec2Float(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y),Vec2Int(100,-16),Vec2Float(-DEF_SCREEN_SIZE_X / 4,-30),0xffffff,0x000000,L"ユニット");
-	//
-	////ボタン
-	//DrawRoundRect(DEF_SCREEN_SIZE_X +menuSize.x + 110, menuSize.y - 18, DEF_SCREEN_SIZE_X +menuSize.x + 200, menuSize.y - 48, 10, 10, 0x000000, true);
-	////ボタン縁
-	//DrawRoundRect(DEF_SCREEN_SIZE_X +menuSize.x + 105, menuSize.y - 20, DEF_SCREEN_SIZE_X +menuSize.x + 195, menuSize.y - 50, 10, 10, 0xffffff, true);
-	////ボタン影
-	//DrawRoundRect(DEF_SCREEN_SIZE_X +menuSize.x + 105, menuSize.y - 20, DEF_SCREEN_SIZE_X +menuSize.x + 195, menuSize.y - 50, 10, 10, 0x000000, false);
-	////ボタンテキスト
-	//DrawFormatString(DEF_SCREEN_SIZE_X +menuSize.x + 115, menuSize.y-45, 0x000000, L"トラップ");
+	lpCustomDraw.MakeRoundButton(Vec2Float(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y),Vec2Int(80,16),Vec2Float(-DEF_SCREEN_SIZE_X / 4+15,-30),0xffffff,0x000000,L"ユニット");
+	lpCustomDraw.MakeRoundButton(Vec2Float(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y),Vec2Int(80,16),Vec2Float(-DEF_SCREEN_SIZE_X / 4+115,-30),0xffffff,0x000000,L"トラップ");
 
 	PlayerUnit id = PlayerUnit(((m_pos.y-10) / 64)+1);
 	//詳細表示
-	if (m_pos.x >= DEF_SCREEN_SIZE_X +menuSize.x && id != PlayerUnit::MAX)
+	if (m_pos.x >= DEF_SCREEN_SIZE_X +menuSize.x && id < PlayerUnit::MAX)
 	{
 		lpCustomDraw.MakeRoundRect(VecFCast(m_pos), Vec2Int(-200,100), Vec2Float(0,0), 0x555555, 200, true);
 
