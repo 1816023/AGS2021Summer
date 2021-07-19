@@ -5,7 +5,6 @@
 #include "../CustomDraw.h"
 #include "../Application.h"
 #include "../MouseController.h"
-#include "../GUI/Button/RoundRectButton.h"
 #include "../Object/Shot/ShotMng.h"
 #include "../Unit/Player/Player.h"
 #include "../Unit/Player/PlayerMng.h"
@@ -163,8 +162,10 @@ void GameScene::UnitAccessFunc(void)
 	{
 		if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 		{
-			//if()
-			//accessData->SetExecutable(true);
+			if (lpMouseController.IsHitBoxToMouse(VecICast(lpCustomDraw.GetDrawData(L"スキル発動").first), VecICast(lpCustomDraw.GetDrawData(L"スキル発動").second)))
+			{
+				accessData->SetExecutable(true);
+			}
 		}
 		waitFlag = false;
 	}
