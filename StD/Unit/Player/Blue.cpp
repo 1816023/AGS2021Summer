@@ -8,7 +8,7 @@ Blue::Blue()
 Blue::Blue(Vec2Float pos, AttackType type)
 {
 	unitData = 
-		UnitData{L"Blue",LoadGraph(L"data/image/Hexagon_Blue.png"),1,
+		UnitData{L"Blue",LoadGraph(L"data/image/Hexagon_Blue.png"),1,1,
 		UnitStat{ pos,2,0.8f,20,20,false } };
 	isSkill_ = false;
 	this->type = type;

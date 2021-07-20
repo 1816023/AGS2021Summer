@@ -56,7 +56,7 @@ unique_Base GameScene::Update(unique_Base own)
 	//待機状態なら以後の処理を行わず戻す
 	if (waitFlag)
 	{
-		//UnitAccessFunc();
+		UnitAccessFunc();
 		return std::move(own);
 	}
 
@@ -156,8 +156,18 @@ void GameScene::UnitAccessFunc(void)
 		return;
 	}
 
-	accessData->LevelShift(1);
-	waitFlag = false;
+	//waitFlag = false;
+	
+	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
+	{
+		if (lpMouseController.IsHitBoxToMouse(VecICast(lpCustomDraw.GetDrawData(L"レベルアップ").first), VecICast(lpCustomDraw.GetDrawData(L"レベルアップ").second)))
+		{
+			playerMng_->SetCost(playerMng_->GetCost()-accessData->GetLevelUpCost());
+			accessData->LevelShift(1);
+			waitFlag = false;
+		}
+	}
+
 	if (accessData->GetCoolTime() <= 0)
 	{
 		if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
@@ -165,9 +175,9 @@ void GameScene::UnitAccessFunc(void)
 			if (lpMouseController.IsHitBoxToMouse(VecICast(lpCustomDraw.GetDrawData(L"スキル発動").first), VecICast(lpCustomDraw.GetDrawData(L"スキル発動").second)))
 			{
 				accessData->SetExecutable(true);
+				waitFlag = false;
 			}
 		}
-		waitFlag = false;
 	}
 }
 

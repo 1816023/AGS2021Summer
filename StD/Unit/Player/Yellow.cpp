@@ -8,7 +8,7 @@ Yellow::Yellow()
 Yellow::Yellow(Vec2Float pos, AttackType type)
 {
 	unitData =
-		UnitData{ L"Yellow",LoadGraph(L"data/image/Hexagon_Yellow.png"),1,
+		UnitData{ L"Yellow",LoadGraph(L"data/image/Hexagon_Yellow.png"),1,1,
 		UnitStat{ pos,2,0.8f,10,20,false }};
 	isSkill_ = false;
 	this->type = type;
