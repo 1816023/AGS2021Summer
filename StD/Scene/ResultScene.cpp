@@ -12,13 +12,13 @@ ResultScene::ResultScene(bool flag)
 {
 	winImage = LoadGraph(L"data/image/win.png");
 	loseImage = LoadGraph(L"data/image/lose.png");
-	timeImage = LoadGraph(L"data/image/time.png");
-	bestImage = LoadGraph(L"data/image/best.png");
-	LoadDivGraph(L"data/image/number.png", 11, 11, 1, 15, 21, number);
+	pushImage = LoadGraph(L"data/image/Result.png");
 	resultFlag = flag;
 	time = 0;
 	second = 0;
 	minute = 0;
+	cnt = 255;
+	flag = true;
 }
 
 ResultScene::~ResultScene()
@@ -54,22 +54,37 @@ void ResultScene::DrawUI()
 {
 	if (resultFlag)
 	{
-		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 100, 1, 0, winImage, false);
-		/*DrawRotaGraph(DEF_SCREEN_SIZE_X / 3, 180, 1, 0, timeImage, false);
-		DrawRotaGraph(DEF_SCREEN_SIZE_X / 3, 260, 1, 0, bestImage, false);
-
-		VECTOR2 pos = { DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 , 180 };
-		NumberUI::TimeDraw(pos, { 20, 1}, minute, second);
-		/*DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 0, 180, 1, 0, number[minute / 10], false);
-		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 1, 180, 1, 0, number[minute % 10], false);
-		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 2, 180, 1, 0, number[10], false);
-		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 3, 180, 1, 0, number[second / 10], false);
-		DrawRotaGraph(DEF_SCREEN_SIZE_X - DEF_SCREEN_SIZE_X / 2 + 20 * 4, 180, 1, 0, number[second % 10], false);*/
+		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, winImage, true);
 	}
 	else
 	{
-		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 100, 1, 0, loseImage, false);
+		DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, loseImage, true);
 	}
-
-	// DrawFormatString(0, 200, 0xffffff, L"minute %d, second %d, time %d", minute, second, time);
+	// PUSHƒƒS“_–Å
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
+	if (flag)
+	{
+		cnt -= 2;
+		if (cnt > 100)
+		{
+			DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
+		}
+		else
+		{
+			flag = false;
+		}
+	}
+	if (!flag)
+	{
+		cnt += 2;
+		if (cnt < 255)
+		{
+			DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
+		}
+		else
+		{
+			flag = true;
+		}
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

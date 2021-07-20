@@ -9,6 +9,7 @@ struct UnitData
 	const TCHAR* name;
 	int imageId;
 	int lv;
+	int cost;
 	UnitStat stat;
 };
 
@@ -52,6 +53,10 @@ public:
 	virtual unsigned int GetAttackPower(void) 
 	{
 		return unitData.stat.power;
+	};
+	const int& GetLevelUpCost()
+	{
+		return unitData.cost;
 	};
 	const PlayerUnit& GetID()
 	{

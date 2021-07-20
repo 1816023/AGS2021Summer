@@ -9,7 +9,7 @@ Pink::Pink()
 Pink::Pink(Vec2Float pos, AttackType type,PlayerMng* mng_)
 {
 	unitData =
-		UnitData{ L"Pink",LoadGraph(L"data/image/Hexagon_Pink.png"),1,
+		UnitData{ L"Pink",LoadGraph(L"data/image/Hexagon_Pink.png"),1,1,
 		UnitStat{ pos,1.0f,2.0f,6,10,false } };
 	isSkill_ = false;
 	UnitID = PlayerUnit::PINK;

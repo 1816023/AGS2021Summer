@@ -18,13 +18,13 @@ private:
 
 	int winImage;
 	int loseImage;
-	int timeImage;
-	int bestImage;
-	int number[11];
+	int pushImage;
 
 	bool resultFlag;
 	int time;
 	int second;
 	int minute;
+	int cnt;
+	bool flag;
 };
 

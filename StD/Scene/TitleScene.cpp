@@ -36,33 +36,6 @@ unique_Base TitleScene::Update(unique_Base own)
 
 void TitleScene::Draw()
 {
-	// PUSHƒƒS“_–Å
-	if (flag)
-	{
-		cnt -= 2;
-		if (cnt >= 100)
-		{
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
-		}
-		else
-		{
-			flag = false;
-		}
-	}
-	if (!flag)
-	{
-		cnt += 2;
-		if (cnt <= 255)
-		{
-			SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
-		}
-		else
-		{
-			flag = true;
-		}
-	}
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
 	// mobˆÚ“®(”pŽ~—\’è
 	if (DEF_SCREEN_SIZE_X <= pos.x + 32 || 0 >= pos.x - 32)
 	{
@@ -80,5 +53,31 @@ void TitleScene::DrawUI()
 {
 	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage, true);
 	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, true);
-	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
+	// PUSHƒƒS“_–Å
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
+	if (flag)
+	{
+		cnt -= 2;
+		if (cnt > 100)
+		{
+			DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
+		}
+		else
+		{
+			flag = false;
+		}
+	}
+	if (!flag)
+	{
+		cnt += 2;
+		if (cnt < 255)
+		{
+			DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 370, 1, 0, pushImage, true);
+		}
+		else
+		{
+			flag = true;
+		}
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

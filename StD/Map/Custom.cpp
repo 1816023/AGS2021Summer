@@ -307,17 +307,19 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 	// 指定したエレメントの"id"アトリビュートが指定されたものになるまで兄弟を探しに行く
 	// 探し出せればtrue　
 	// 見つからなかったらfalse
-	std::function<bool(tinyxml2::XMLElement*, int)> check = [&](tinyxml2::XMLElement* elm, int num) {
+	std::function<tinyxml2::XMLElement*(tinyxml2::XMLElement*, int)> check = [&](tinyxml2::XMLElement* elm, int num) {
 		if (elm->IntAttribute("id") != num)
 		{
-			elm = elm->NextSiblingElement();
-			if (!elm)
+			auto tmp = elm->NextSiblingElement(elm->Name());
+			if (!tmp)
 			{
-				return false;
+				return tmp;
 			}
-			check(elm, num);
+			
+			return check(tmp, num);
 		}
-		return true;
+
+		return elm;
 	};
 	std::map<int, EnemyType>enemyID = {
 		{IMAGE_ID(L"./data/image/circle.png"),EnemyType::Circle},
@@ -331,14 +333,18 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 	for (int w = 0; w < 3; w++)
 	{
 		// ドキュメントからwaveのエレメントを取得する
-		tinyxml2::XMLElement* wave = document_.FirstChildElement("wave");
+		tinyxml2::XMLElement* wave = elm->FirstChildElement("wave");
 		if (!wave)
 		{
+			document_.SaveFile(filePath.c_str());
 			return 1;
 		}
 		// 取得したエレメントが指定したIDを持つものになるまで再帰する
-		if (check(wave, w))
+		wave = check(wave, w + 1);
+		if (wave)
 		{
+			// もともとあるデータを全部消す
+			wave->DeleteChildren();
 			// スポナーの数だけ回す
 			for (int s = 0; s < spawnerNum; s++)
 			{
@@ -346,6 +352,11 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 				auto enemyList = list[w][s].first->GetList();
 				// スポナーのエレメント作成
 				tinyxml2::XMLElement* spawner = wave->InsertNewChildElement("spawner");
+				if (!spawner)
+				{
+					// 新規エレメントエラー
+					return 2;
+				}
 				// スポナーのIDを設定
 				spawner->SetAttribute("id", s);
 				int cnt = 0;
