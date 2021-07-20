@@ -8,7 +8,7 @@ Green::Green()
 Green::Green(Vec2Float pos, AttackType type)
 {
 	unitData =
-		UnitData{ L"Blue",LoadGraph(L"data/image/Hexagon_Green.png"),1,
+		UnitData{ L"Blue",LoadGraph(L"data/image/Hexagon_Green.png"),1,1,
 		UnitStat{ pos,15.0f,2.0f,6,10,false } };
 	defaultPower_ = state_.power;
 	isSkill_ = false;

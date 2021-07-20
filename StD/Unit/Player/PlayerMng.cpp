@@ -131,8 +131,8 @@ PlayerMng::~PlayerMng()
 void PlayerMng::Init()
 {
     cost = MAX_COST;
-    playerData.try_emplace(PlayerUnit::BLUE, UnitData{ L"Blue", LoadGraph(L"data/image/Hexagon_Blue.png") ,1,UnitStat{ Vec2Float(0.0f,0.0f),2,0.8f,20,20,false }});
-    playerData.try_emplace(PlayerUnit::GREEN, UnitData{ L"Green", LoadGraph(L"data/image/Hexagon_Green.png"),1,UnitStat{ Vec2Float(0.0f,0.0f),15.0f,2.0f,6,10,false } });
-    playerData.try_emplace(PlayerUnit::PINK, UnitData{ L"Pink", LoadGraph(L"data/image/Hexagon_Pink.png") ,1,UnitStat{ Vec2Float(0.0f,0.0f),1.0f,2.0f,6,10,false }});
-    playerData.try_emplace(PlayerUnit::YELLOW, UnitData{ L"Yellow", LoadGraph(L"data/image/Hexagon_Yellow.png") ,1,UnitStat{ Vec2Float(0.0f,0.0f),2,0.8f,10,20,false }});
+    playerData.try_emplace(PlayerUnit::BLUE, UnitData{ L"Blue", LoadGraph(L"data/image/Hexagon_Blue.png") ,1,12,UnitStat{ Vec2Float(0.0f,0.0f),2,0.8f,20,20,false } });
+    playerData.try_emplace(PlayerUnit::GREEN, UnitData{ L"Green", LoadGraph(L"data/image/Hexagon_Green.png"),1,8,UnitStat{ Vec2Float(0.0f,0.0f),15.0f,2.0f,6,10,false } });
+    playerData.try_emplace(PlayerUnit::PINK, UnitData{ L"Pink", LoadGraph(L"data/image/Hexagon_Pink.png") ,1,10,UnitStat{ Vec2Float(0.0f,0.0f),1.0f,2.0f,6,10,false }});
+    playerData.try_emplace(PlayerUnit::YELLOW, UnitData{ L"Yellow", LoadGraph(L"data/image/Hexagon_Yellow.png") ,1,5,UnitStat{ Vec2Float(0.0f,0.0f),2,0.8f,10,20,false }});
 }

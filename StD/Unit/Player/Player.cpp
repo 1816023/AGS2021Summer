@@ -34,6 +34,8 @@ void Player::LevelShift(int num)
 {
 	unitData.lv += num;
 	auto mag = 1.0 + (0.1 * num);
+	unitData.cost = (unitData.cost * mag) + 0.5;
+	unitData.stat.life = (unitData.stat.life * mag) + 0.5;
 	unitData.stat.power = (unitData.stat.power * mag) + 0.5;
 }
 
