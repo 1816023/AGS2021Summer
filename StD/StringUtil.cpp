@@ -37,3 +37,14 @@ std::string StringUtil::SpritExtention(std::string string)
 	}
 	return string.substr(0, idx);
 }
+
+//void StringUtil::AddStrFont(int fontSize, std::wstring name, int thick)
+//{
+//	int handle = CreateFontToHandle(name.c_str(), fontSize, thick);
+//	strFonts_.try_emplace(name, handle);
+//}
+//
+//int StringUtil::GetStrFont(std::wstring name)
+//{
+//	return strFonts_[name];
+//}

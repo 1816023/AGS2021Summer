@@ -43,6 +43,7 @@ class SetState;
 class MapCustom;
 class EnemyCustom;
 class EndCustom;
+class Canvas;
 enum class ErrorCode : int;
 class CustomMapScene :
 	public BaseScene
@@ -62,7 +63,8 @@ private:
 	void DrawUI()override;
 	// customクラスのポインター
 	std::unique_ptr<Custom>cusMap_;
-
+	// キャンバス
+	std::unique_ptr<Canvas>canvas_;
 	//
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス

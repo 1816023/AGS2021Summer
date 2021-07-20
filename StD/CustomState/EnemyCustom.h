@@ -17,6 +17,7 @@ struct EnemyCustom :public CustomStateBase
 	~EnemyCustom() {};
 	bool Init(CustomMapScene* scene)
 	{
+		scene->canvas_->ClearUI();
 		const int bSize = 64;
 		const int bSpace = 10;
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;

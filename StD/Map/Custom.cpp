@@ -275,8 +275,6 @@ bool Custom::SaveFile()
 	elm->SetText(mapData.c_str());
 	elm->SetAttribute("hight", mapData_.size());
 	elm->SetAttribute("width", mapData_[0].size());
-	// スポナー登録
-	//auto sElm = document_.FirstChildElement("spawn");
 	error = document_.SaveFile(filePath.c_str());
 	if (error != tinyxml2::XML_SUCCESS)
 	{

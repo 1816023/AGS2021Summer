@@ -4,6 +4,7 @@
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
 #include "../File/FileSystem.h"
+#include "../GUI/Canvas.h"
 
 
 struct DataState
@@ -19,6 +20,7 @@ struct SelectFile:public CustomStateBase
 
 	bool Init(CustomMapScene* scene)override
 	{
+		scene->canvas_->SetActive(false);
 		scene->fileName_[0] = TCHAR();
 		FileSystem::serch("data/mapData", fileList_);
 		int a = 0;
@@ -106,7 +108,7 @@ private:
 		auto error = doc.LoadFile(path.c_str());
 		if (error != tinyxml2::XML_SUCCESS)
 		{
-			assert(false);
+			//assert(false);
 			return DataState{ "",{-1,-1} };
 		}
 		DataState state;
@@ -117,7 +119,7 @@ private:
 		error = doc.SaveFile(path.c_str());
 		if (error != tinyxml2::XML_SUCCESS)
 		{
-			assert(false);
+			//assert(false);
 			return DataState{ "",{-1,-1} };
 		}
 		return state;

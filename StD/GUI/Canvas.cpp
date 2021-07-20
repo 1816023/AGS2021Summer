@@ -36,8 +36,17 @@ Canvas::Canvas(VECTOR2 pos, VECTOR2 size, std::function<void(VECTOR2)> drawFunc)
 	drawFunc_ = drawFunc;
 }
 
+Canvas::Canvas(VECTOR2 pos, VECTOR2 size, BackType back)
+{
+	Init();
+	pos_ = pos;
+	size_ = size;
+	backT_ = back;
+}
+
 Canvas::~Canvas()
 {
+	ClearUI();
 }
 
 void Canvas::AddUIByID(UI* ui, Justified just, int id)
@@ -50,11 +59,11 @@ void Canvas::AddUIByID(UI* ui, Justified just, int id)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByID(UI* ui, VECTOR2& pos, int id)
+void Canvas::AddUIByID(UI* ui, VECTOR2 pos, int id)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
-	uiStat.ui->SetPos(pos);
+	uiStat.ui->SetPos(pos + pos_);
 	uiStat.id = id;
 	uiStat.name = L"";
 	UIList_.emplace_back(uiStat);
@@ -70,11 +79,11 @@ void Canvas::AddUIByName(UI* ui, Justified just, std::wstring name)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByName(UI* ui, VECTOR2& pos, std::wstring name)
+void Canvas::AddUIByName(UI* ui, VECTOR2 pos, std::wstring name)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
-	uiStat.ui->SetPos(pos);
+	uiStat.ui->SetPos(pos + pos_);
 	uiStat.id = -1;
 	uiStat.name = name;
 	UIList_.emplace_back(uiStat);
@@ -112,10 +121,17 @@ void Canvas::Init()
 	color_ = 0x000000;
 	gHandle_ = -1;
 	drawFunc_ = nullptr;
+	backT_ = BackType::Non;
+	isActive_ = true;
 }
 
 void Canvas::Draw()
 {
+	if (!isActive_)
+	{
+		return;
+	}
+	BackDraw();
 	for (auto ui : UIList_)
 	{
 		ui.ui->Draw();
@@ -124,11 +140,21 @@ void Canvas::Draw()
 
 void Canvas::BackDraw()
 {
+	if (backT_ != BackType::Non)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		DrawRoundRect(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 20, 20, 0x555555, true);
+		DrawRoundRect(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 20, 20, 0xffffff, false);
+		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+		return;
+	}
+
 	if (drawFunc_ != nullptr)
 	{
 		drawFunc_(pos_);
 		return;
 	}
+	
 	if (gHandle_ == -1)
 	{
 		DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, color_, true);
@@ -141,9 +167,17 @@ void Canvas::BackDraw()
 
 void Canvas::Update()
 {
-	for (auto ui : UIList_)
+	if (!isActive_)
 	{
-		ui.ui->Update();
+		return;
+	}
+
+	for (auto& ui : UIList_)
+	{
+		if (ui.ui->Update())
+		{
+			break;
+		}
 	}
 }
 
@@ -186,6 +220,21 @@ VECTOR2 Canvas::PosToJustified(const Justified& just, const VECTOR2& size)
 		break;
 	}
 	return tmp;
+}
+
+void Canvas::ClearUI()
+{
+	for (auto& ui : UIList_)
+	{
+		delete(ui.ui);
+	}
+	UIList_.erase(UIList_.begin(), UIList_.end());
+	UIList_.shrink_to_fit();
+}
+
+void Canvas::SetActive(bool active)
+{
+	isActive_ = active;
 }
 
 VECTOR2 Canvas::Center(const VECTOR2& size)

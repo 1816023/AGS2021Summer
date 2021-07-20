@@ -3,7 +3,7 @@
 #include "Mob/ECircle.h"
 #include "../../Map/Map.h"
 
-EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng)
+EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map)
 {
 	for (int i = 0; i < 10; i++)
 	{

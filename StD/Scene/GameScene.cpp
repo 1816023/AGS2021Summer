@@ -29,7 +29,7 @@ GameScene::GameScene()
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
 	enemyMng_ = std::make_unique<EnemyManager>(*map);
-	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_));
+	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_, *map));
 
 	selectUnitId = PlayerUnit::NON;
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));

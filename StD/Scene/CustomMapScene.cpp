@@ -13,7 +13,8 @@
 #include "../StringUtil.h"
 #include "../Map/Astar.h"
 #include "../MapEnum.h"
-#define CUSTOM dynamic_cast<Custom*>(cusMap_.get())
+#include "../GUI/Canvas.h"
+
 CustomMapScene::CustomMapScene()
 {
 	Init();
@@ -32,13 +33,15 @@ unique_Base CustomMapScene::Update(unique_Base own)
 	{
 		return std::make_unique<TitleScene>();
 	}
-
+	canvas_->Update();
 	custom_[nowState_]->Update(this);
 	return std::move(own);
 }
 
 bool CustomMapScene::Init()
 {
+	auto defSize = VECTOR2(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y);
+	canvas_ = std::make_unique<Canvas>(SELECT_UI_POS.first, defSize - SELECT_UI_POS.first, BackType::RoundRect);
 	cusMap_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SELECT_FILE;
 	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
@@ -54,8 +57,6 @@ bool CustomMapScene::Init()
 void CustomMapScene::Draw()
 {
 	Vec2Float cPos = Application::Instance().GetCamera().GetPos();
-	//cPos *= 2.0f;
-	//DrawString(100, 100, L"CustomMapScene", 0xffffff);
 	VECTOR2 mPos = lpMouseController.GetPos();
 
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
@@ -72,7 +73,6 @@ void CustomMapScene::Draw()
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, std::abs(128 - blendAlpha_ % 256));
 				DrawBox(mPos.x, mPos.y, (mPos.x) + cusMap_->GetChipSize().x, (mPos.y) + cusMap_->GetChipSize().y, 0xcccc00, true);
 				SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
-
 			}
 		}
 	}
@@ -81,6 +81,7 @@ void CustomMapScene::Draw()
 void CustomMapScene::DrawUI()
 {
 	custom_[nowState_]->Draw(this);
+	canvas_->Draw();
 	const auto& mainStay = cusMap_->GetMainStay();
 	int cnt = 0;
 	auto mapSize = cusMap_->GetMapSize().x;
@@ -97,6 +98,7 @@ void CustomMapScene::DrawUI()
 		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - static_cast<int>(mainStay.size()), sp - y * mapSize, y);
 		cnt++;
 	}
+
 }
 
 ErrorCode CustomMapScene::SaveCheck()
