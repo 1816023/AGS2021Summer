@@ -1,13 +1,16 @@
 #include "PullDown.h"
 #include "../../MouseController.h"
 #include <DxLib.h>
-PullDown::PullDown(VECTOR2 pos, int xSize)
+PullDown::PullDown(VECTOR2 pos, int xSize,int fontHandle)
 {
+	fontHandle_ = fontHandle!=0?fontHandle: GetDefaultFontHandle();
+	const int fontSize = GetFontSizeToHandle(fontHandle_);
 	pos_=pos;
 	screen_ = MakeScreen(xSize, 2560);
 	GetGraphSize(screen_, &size_.x, &size_.y);
 	selKey_ = 0;
-	list_.emplace_back(std::make_unique<RectButton>( pos_+VECTOR2(size_.x-20, 0), pos_+VECTOR2(size_.x,20), 0xfffffff, [&]() {return openFlag_ = ~openFlag_; }, VECTOR2()));
+	list_.emplace_back(std::make_unique<RectButton>( pos_+VECTOR2(size_.x-fontSize, 0), pos_+VECTOR2(size_.x,fontSize), 0xfffffff, [&]() {return openFlag_ = ~openFlag_; }, VECTOR2()));
+	list_.back()->SetFont(fontHandle_);
 	list_.back()->SetString("Бе", VECTOR2(2,2));
 	list_.back()->SetTag(1);
 	list_.back()->SetSound();
@@ -21,9 +24,11 @@ PullDown::~PullDown()
 bool PullDown::Add(std::string str)
 {
 	auto listSize = list_.size()-1;
-	list_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, listSize * 20), VECTOR2(size_.x , 20 + listSize * 20), 0xffffff, [&, listSize]() {selKey_ = listSize; openFlag_ = false; return true; }, VECTOR2()));
+	const int fontSize = GetFontSizeToHandle(fontHandle_);
+	list_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, listSize * fontSize), VECTOR2(size_.x , fontSize + listSize * fontSize), 0xffffff, [&, listSize]() {selKey_ = listSize; openFlag_ = false; return true; }, VECTOR2()));
 	list_.back()->SetString(str, VECTOR2(2,2));
 	list_.back()->SetSound();
+	list_.back()->SetFont(fontHandle_);
 	return true;
 }
 
@@ -85,7 +90,8 @@ void PullDown::Draw()
 	}
 
 	SetDrawScreen(defScreen);
-	DrawRectGraph(pos_.x, pos_.y, 0, 20*selKey_, size_.x, 20, screen_, true);
+	const int fontSize = GetFontSizeToHandle(fontHandle_);
+	DrawRectGraph(pos_.x, pos_.y, 0, fontSize*selKey_, size_.x, fontSize, screen_, true);
 	list_.front()->Draw();
 	if (openFlag_)
 	{
@@ -96,7 +102,7 @@ void PullDown::Draw()
 	}
 	else
 	{
-		DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + 20, 0xffffff, false);
+		DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + fontSize, 0xffffff, false);
 		
 	}
 }

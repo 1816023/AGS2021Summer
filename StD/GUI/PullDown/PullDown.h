@@ -8,7 +8,7 @@ class PullDown
 public:
 	// pos:ï`âÊà íu
 	// xSize:ï`âÊÇ∑ÇÈâ°ïù
-	PullDown(VECTOR2 pos,int xSize);
+	PullDown(VECTOR2 pos,int xSize,int fontHandle=0);
 	~PullDown();
 	// í«â¡Ç∑ÇÈï∂éö
 	bool Add(std::string str);
@@ -25,6 +25,6 @@ private:
 	int selKey_;
 	std::vector<std::unique_ptr<RectButton>>list_;
 	bool openFlag_;
-
+	int fontHandle_;
 };
 

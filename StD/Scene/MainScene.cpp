@@ -1,5 +1,6 @@
 #include "MainScene.h"
 #include <DxLib.h>
+#include "GameMapSellectScene.h"
 #include "GameScene.h"
 #include "CustomMapScene.h"
 #include "../GUI/Button/ImageRectButton.h"
@@ -107,7 +108,7 @@ unique_Base MainScene::Update(unique_Base own)
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 	if (gameTransition_)
 	{
-		return std::make_unique<GameScene>();
+		return std::make_unique<GameMapSellectScene>();
 	}
 	if (customTransition_)
 	{
@@ -153,8 +154,9 @@ void MainScene::DrawUI()
 	int bit;
 	GetScreenState(&sSize.x, &sSize.y, &bit);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, 64);
-	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0xffffff, true);
-	DrawRoundRect(0, 0, sSize.x, sSize.y, 30, 30, 0x000000, false);
+	DrawRoundRect(10, 10, sSize.x-10, sSize.y-10, 30, 30, 0xffffff, true);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+	DrawRoundRect(10, 10, sSize.x-10, sSize.y-10, 30, 30, 0xffffff, false);
+
 	(this->*drawer_)();
 }

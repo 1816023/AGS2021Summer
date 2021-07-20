@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="CustomDraw.cpp" />
+    <ClCompile Include="Scene\GameMapSellectScene.cpp" />
     <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
     <ClCompile Include="GUI\Canvas.cpp" />
     <ClCompile Include="GUI\ScrollList\BoxList.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="GUI\ScrollList\StringList.cpp" />
     <ClCompile Include="GUI\UI.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBoxForImage.cpp" />
+    <ClCompile Include="Map\Simple.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\ETriangle.cpp" />
@@ -221,6 +223,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CustomDraw.h" />
+    <ClInclude Include="Scene\GameMapSellectScene.h" />
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />
     <ClInclude Include="GUI\ScrollList\BoxList.h" />
@@ -247,6 +250,7 @@
     <ClInclude Include="GUI\ScrollList\StringList.h" />
     <ClInclude Include="GUI\UI.h" />
     <ClInclude Include="GUI\SpinBox\SpinBoxForImage.h" />
+    <ClInclude Include="Map\Simple.h" />
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Unit\Enemy\Mob\ESquare.h" />
     <ClInclude Include="Unit\Enemy\Mob\ETriangle.h" />

@@ -10,7 +10,6 @@ struct MenuState
 	int imageId;
 	Vec2Float pos;
 };
-
 class ShotMng;
 class Player;
 class PlayerMng;

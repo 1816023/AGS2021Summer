@@ -7,6 +7,7 @@ enum class SCENE_ID
 	TITLE,
 	MAIN,
 	CUSTOM,
+	SELECT,
 	GAME,
 	RESULT,
 	MAX

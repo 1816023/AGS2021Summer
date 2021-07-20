@@ -70,6 +70,8 @@
     <ClCompile Include="GUI\ScrollList\ImgeAndStringList.cpp" />
     <ClCompile Include="CustomDraw.cpp" />
     <ClCompile Include="NumberUI.cpp" />
+    <ClCompile Include="Scene\GameMapSellectScene.cpp" />
+    <ClCompile Include="Map\Simple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -154,5 +156,7 @@
     <ClInclude Include="GUI\ScrollList\ImgeAndStringList.h" />
     <ClInclude Include="CustomDraw.h" />
     <ClInclude Include="NumberUI.h" />
+    <ClInclude Include="Scene\GameMapSellectScene.h" />
+    <ClInclude Include="Map\Simple.h" />
   </ItemGroup>
 </Project>

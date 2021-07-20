@@ -13,7 +13,7 @@ Button::Button(VECTOR2 offset) :offset_(offset)
 	autoFlag_ = false;
 	reverseFlag_ = false;
 	soundHandle_ = -1;
-	fontHandle_ = -1;
+	fontHandle_ = GetDefaultFontHandle();
 	clickType_ = MOUSE_INPUT_LEFT;
 	tag_ = -1;
 	scale_ = 1.0f;
@@ -124,5 +124,10 @@ void Button::SetSound(int handle)
 void Button::SetScale(float scale)
 {
 	scale_ = scale;
+}
+
+void Button::SetFont(int handle)
+{
+	fontHandle_=handle;
 }
 

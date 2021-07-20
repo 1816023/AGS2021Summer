@@ -51,6 +51,8 @@ public:
 	const std::string GetStr()const { return str_; }
 	// 拡大縮小スケールの設定
 	void SetScale(float scale);
+	// フォントを設定する
+	void SetFont(int handle);
 protected:
 	// 座標補正
 	const VECTOR2 offset_;
