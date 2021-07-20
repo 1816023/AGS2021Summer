@@ -98,6 +98,10 @@ struct SelectFile:public CustomStateBase
 	}
 private:
 	DataState GetData(std::string path) {
+		if (path.find("testMap") != path.npos||path.find("sample_data")!=path.npos)
+		{
+			return DataState{ "",{-1,-1} };
+		}
 		tinyxml2::XMLDocument doc;
 		auto error = doc.LoadFile(path.c_str());
 		if (error != tinyxml2::XML_SUCCESS)
