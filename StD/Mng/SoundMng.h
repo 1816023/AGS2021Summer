@@ -33,8 +33,8 @@ public:
 private:
 	SoundMng();
 	~SoundMng();
-	SoundMng(SoundMng&);
-	void operator = (SoundMng&) {};
+	SoundMng(SoundMng&) = delete;
+	void operator=(SoundMng&)= delete;
 	std::map<std::string, int> sndMap;
 
 };

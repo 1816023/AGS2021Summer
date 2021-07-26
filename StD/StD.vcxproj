@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="CustomDraw.cpp" />
+    <ClCompile Include="Mng\FontMng.cpp" />
     <ClCompile Include="Scene\GameMapSellectScene.cpp" />
     <ClCompile Include="GUI\ScrollList\ButtonList.cpp" />
     <ClCompile Include="GUI\Canvas.cpp" />
@@ -224,6 +225,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CustomDraw.h" />
+    <ClInclude Include="Mng\FontMng.h" />
     <ClInclude Include="Scene\GameMapSellectScene.h" />
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />

@@ -1,9 +1,6 @@
 #include "StringUtil.h"
 #include <DxLib.h>
 
-std::map<std::wstring, int> StringUtil::strFonts_ = {};
-
-
 std::string StringUtil::WStringToString(std::wstring oWString)
 {
 	// wstring Å® SJIS
@@ -39,15 +36,4 @@ std::string StringUtil::SpritExtention(std::string string)
 		return string;
 	}
 	return string.substr(0, idx);
-}
-
-void StringUtil::AddStrFont(int fontSize, std::wstring name, int thick)
-{
-	int handle = CreateFontToHandle(name.c_str(), fontSize, thick);
-	strFonts_.try_emplace(name, handle);
-}
-
-int StringUtil::GetStrFont(std::wstring name)
-{
-	return strFonts_[name];
 }

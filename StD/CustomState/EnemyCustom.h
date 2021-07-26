@@ -256,14 +256,14 @@ private:
 				for (int s=0;s< spawner_.size();s++)
 				{
 					// リストの取得
-					auto enemyList = list_[w][s].first->GetList();
+					auto& enemyList = list_[w][s].first->GetList();
 					// スポナーのエレメント作成
 					tinyxml2::XMLElement* spawner = wave->InsertNewChildElement("spawner");
 					// スポナーのIDを設定
 					spawner->SetAttribute("id", s);
 					int cnt = 0;
 					// リストのでーたをもとにスポナーエレメントに追加していく
-					for (auto list : enemyList)
+					for (auto& list : enemyList)
 					{
 						// 新しいenemyというエレメントを作成する
 						tinyxml2::XMLElement* element = doc.NewElement("enemy");

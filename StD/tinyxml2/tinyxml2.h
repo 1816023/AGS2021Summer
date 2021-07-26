@@ -1702,7 +1702,8 @@ private:
 };
 
 
-enum Whitespace {
+enum class  Whitespace
+{
     PRESERVE_WHITESPACE,
     COLLAPSE_WHITESPACE
 };
@@ -1725,7 +1726,7 @@ class TINYXML2_LIB XMLDocument : public XMLNode
     friend class XMLUnknown;
 public:
     /// constructor
-    XMLDocument( bool processEntities = true, Whitespace whitespaceMode = PRESERVE_WHITESPACE );
+    XMLDocument( bool processEntities = true, Whitespace whitespaceMode = Whitespace::PRESERVE_WHITESPACE );
     ~XMLDocument();
 
     virtual XMLDocument* ToDocument()				{

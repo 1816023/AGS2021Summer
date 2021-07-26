@@ -12,11 +12,5 @@ public:
 	static std::wstring StringToWString(std::string oString);
 	// 拡張子削除
 	static std::string SpritExtention(std::string string);
-	// フォント追加
-	static void AddStrFont(int fontSize, std::wstring name, int thick = -1);
-	// フォント取得
-	static int GetStrFont(std::wstring name);
-	private:
-	static std::map<std::wstring, int>strFonts_;
 };
 
