@@ -1,14 +1,22 @@
 #pragma once
 #include "Map.h"
+
+struct SimpleMapState {
+	std::string path;
+	VECTOR2 size;
+	std::vector<std::vector<int>>mapData;
+};
+
 class Simple :
 	public Map
 {
 public:
-	Simple();
+	// •`‰æ‚Ì’†SÀ•W
+	Simple(VECTOR2 pos);
 	~Simple();
 	int Update();
 	void Draw();
-	void SetMap(std::string path);
+	bool SetUp(std::string path)override;
 	void SetSize(VECTOR2 size);
 private:
 	int screen_;

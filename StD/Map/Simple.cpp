@@ -1,8 +1,9 @@
 #include "Simple.h"
 #include<DxLib.h>
-Simple::Simple()
+Simple::Simple(VECTOR2 pos)
 {
-	MakeScreen(DEFAULT_SCREEN_SIZE_X, DEFAULT_SCREEN_SIZE_Y, 1);
+	pos_ = pos;
+	screen_=MakeScreen(DEFAULT_SCREEN_SIZE_X, DEFAULT_SCREEN_SIZE_Y, 1);
 }
 
 Simple::~Simple()
@@ -23,10 +24,9 @@ void Simple::Draw()
 	DrawRectExtendGraph(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, 0, 0, rectSize.x, rectSize.y, screen_, true);
 }
 
-void Simple::SetMap(std::string path)
+bool Simple::SetUp(std::string path)
 {
-	LoadMap(path);
-	
+	return false;
 }
 
 void Simple::SetSize(VECTOR2 size)

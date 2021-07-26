@@ -18,7 +18,7 @@ GameMapSellectScene::GameMapSellectScene()
 			pullDown_.back()->Add(list);
 		}
 	}
-	
+	map_ = std::make_unique<Simple>(VECTOR2());
 }
 
 GameMapSellectScene::~GameMapSellectScene()
