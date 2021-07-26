@@ -22,6 +22,10 @@ Custom::~Custom()
 
 void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 {
+	mainStay_.clear();
+	mainStay_.shrink_to_fit();
+	spawners_.clear();
+	spawners_.shrink_to_fit();
 	state_.name_ = fileName;
 	if (fileName.find(L".xml") == fileName.npos)
 	{
@@ -49,7 +53,7 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 		// マップが存在した時
 		int y = 0;
 		// 自拠点を検索して格納する
-		for (auto map : mapData_)
+		for (auto& map : mapData_)
 		{
 			// 再起
 			FindMapObj(map, y, map.begin());
@@ -347,7 +351,7 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 			for (int s = 0; s < spawnerNum; s++)
 			{
 				// リストの取得
-				auto enemyList = list[w][s].first->GetList();
+				auto& enemyList = list[w][s].first->GetList();
 				// スポナーのエレメント作成
 				tinyxml2::XMLElement* spawner = wave->InsertNewChildElement("spawner");
 				if (!spawner)
@@ -359,7 +363,7 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 				spawner->SetAttribute("id", s);
 				int cnt = 0;
 				// リストのでーたをもとにスポナーエレメントに追加していく
-				for (auto elist : enemyList)
+				for (auto& elist : enemyList)
 				{
 					// 新しいenemyというエレメントを作成する
 					tinyxml2::XMLElement* element = document_.NewElement("enemy");

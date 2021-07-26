@@ -35,6 +35,8 @@ public:
 private:
 	ImageMng();
 	~ImageMng();
+	ImageMng(ImageMng&) = delete;
+	ImageMng operator=(ImageMng&) = delete;
 	//std::map<·°‚ÌŒ^,˜A‘zŒ^”z—ñ‚ÌŒ^> ˜A‘z”z—ñ–¼;
 	//std::map<std::string, std::vector<int>> imgMap;
 	std::map<std::wstring, VEC_INT> imgMap;

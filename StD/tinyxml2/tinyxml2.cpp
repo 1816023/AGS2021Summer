@@ -1209,7 +1209,7 @@ char* XMLText::ParseDeep( char* p, StrPair*, int* curLineNumPtr )
     }
     else {
         int flags = _document->ProcessEntities() ? StrPair::TEXT_ELEMENT : StrPair::TEXT_ELEMENT_LEAVE_ENTITIES;
-        if ( _document->WhitespaceMode() == COLLAPSE_WHITESPACE ) {
+        if ( _document->WhitespaceMode() == Whitespace::COLLAPSE_WHITESPACE ) {
             flags |= StrPair::NEEDS_WHITESPACE_COLLAPSING;
         }
 

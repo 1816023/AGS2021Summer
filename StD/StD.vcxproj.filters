@@ -73,6 +73,7 @@
     <ClCompile Include="GUI\UIText.cpp" />
     <ClCompile Include="Scene\GameMapSellectScene.cpp" />
     <ClCompile Include="Map\Simple.cpp" />
+    <ClCompile Include="Mng\FontMng.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -160,5 +161,6 @@
     <ClInclude Include="GUI\UIText.h" />
     <ClInclude Include="Scene\GameMapSellectScene.h" />
     <ClInclude Include="Map\Simple.h" />
+    <ClInclude Include="Mng\FontMng.h" />
   </ItemGroup>
 </Project>
