@@ -24,6 +24,7 @@ public:
 	unique_Base Update(unique_Base own) override;
 	SCENE_ID GetScnID(void) override { return SCENE_ID::MAIN; }
 private:
+	void Init();
 	// 更新関数ポインタ
 	using UpdateFunc_t = void(MainScene::*)();
 	void GameModeSelectUpdate();
