@@ -1,8 +1,11 @@
 #include "GameMapSellectScene.h"
 #include "../File/FileSystem.h"
 #include "../tinyxml2/tinyxml2.h"
+#include "../GUI/Button/ImageRectButton.h"
+#include "../Scene/MainScene.h"
 #include <cassert>
 #include <DxLib.h>
+
 GameMapSellectScene::GameMapSellectScene()
 {
 	std::list<std::string>fileList;
@@ -18,7 +21,19 @@ GameMapSellectScene::GameMapSellectScene()
 			pullDown_.back()->Add(list);
 		}
 	}
-	map_ = std::make_unique<Simple>(VECTOR2());
+	transitionFlag_ = 0;
+	map_ = std::make_unique<Simple>(VECTOR2(300,250));
+	map_->SetSize({ 300,300 });
+	map_->SetUp(fileList);
+	map_->SetMap(pullDown_.back()->GetSelStr());
+	button_.emplace_back(new ImageRectButton(VECTOR2(540,350), VECTOR2(100,70), L"./data/image/Back_Button1.png", L"./data/image/Back_Button1.png", [&]() {
+		transitionFlag_ = 1;
+		return true; }));
+	button_.back()->SetAuto();
+	button_.back()->SetScale(1.0f);
+	button_.back()->SetString("back",VECTOR2(30,25));
+
+	button_.emplace_back(new ImageRectButton(VECTOR2(640,350), VECTOR2(), L"./data/image/Back_Button2.png", L"./data/image/Back_Button2.png", [&]() {return true; }));
 }
 
 GameMapSellectScene::~GameMapSellectScene()
@@ -43,7 +58,19 @@ unique_Base GameMapSellectScene::Update(unique_Base own)
 	{
 		list->Update();
 	}
-
+	map_->SetMap(pullDown_.back()->GetSelStr());
+	switch (transitionFlag_)
+	{
+	case 0:
+		break;
+	case 1:
+		return std::make_unique<MainScene>();
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
 	return std::move(own);
 }
 
@@ -57,11 +84,27 @@ void GameMapSellectScene::DrawUI()
 	{
 		list->Draw();
 	}
+	map_->Draw();
+
 	for (auto list : pullDown_)
 	{
 		list->Draw();
 	}
-	
+
+	std::vector<std::pair<int, std::string>>text =
+	{
+		{0xff0f0f,"敵出現"},
+		{0x007fff,"自拠点"},
+		{0xfff00,"敵侵攻"},
+		{0xe3e3e3,"自機配置"},
+		{0x333333,"設置不可"}
+	};
+	for (int y = 0; y < text.size(); y++)
+	{
+		DrawBox(600, 100+y*30, 600 + 20, 100 + 20+y*30, text[y].first, true);
+		DrawBox(600, 100 + y * 30, 600 + 20, 100 + 20 + y * 30, 0xffffff, false);
+		DrawString(600+30, 100 +y*30, _StW(text[y].second).c_str(), 0xffffff0);
+	}
 }
 
 SCENE_ID GameMapSellectScene::GetScnID(void)

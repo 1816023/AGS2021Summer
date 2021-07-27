@@ -21,8 +21,8 @@ enum class MapChipName:unsigned int
 // 
 struct MapState
 {
-	VECTOR2 mapSize_;
-	VECTOR2 chipSize_;
+	VECTOR2 mapSize;
+	VECTOR2 chipSize;
 	std::wstring name_;
 
 };

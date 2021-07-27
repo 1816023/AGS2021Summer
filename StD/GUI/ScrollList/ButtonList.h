@@ -11,6 +11,7 @@ public:
 	bool Del();
 	void Update();
 	void Draw();
+	int GetSize() { return list_.size(); }
 private:
 	std::list<std::unique_ptr<RectButton>>list_;
 };

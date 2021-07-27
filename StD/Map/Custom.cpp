@@ -31,8 +31,8 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 	{
 		state_.name_ += L".xml";
 	}
-	state_.mapSize_ = mapSize;
-	state_.chipSize_ = { 64,64 };
+	state_.mapSize = mapSize;
+	state_.chipSize = { 64,64 };
 	mapData_.clear();
 	mapData_.resize(mapSize.y);
 
@@ -42,7 +42,7 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 		mapData_.resize(mapSize.y);
 		for (auto& map : mapData_)
 		{
-			while (map.size() < state_.mapSize_.x)
+			while (map.size() < state_.mapSize.x)
 			{
 				map.push_back(MapChipName::WALL);
 			}
@@ -66,7 +66,7 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 
 bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 {
-	VECTOR2 mapPos = pos / state_.chipSize_;
+	VECTOR2 mapPos = pos / state_.chipSize;
 	return SetChipByIdx(mapPos, chip);
 }
 
@@ -80,11 +80,11 @@ bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 	{
 		return false;
 	}
-	if (0 > idx.y || idx.y > state_.mapSize_.y)
+	if (0 > idx.y || idx.y > state_.mapSize.y)
 	{
 		return false;
 	}
-	if (idx.x > state_.mapSize_.x || idx.y > state_.mapSize_.y)
+	if (idx.x > state_.mapSize.x || idx.y > state_.mapSize.y)
 	{
 		return false;
 	}
@@ -202,7 +202,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 			return false;
 		}
 		tinyxml2::XMLElement* mapElm = document_.FirstChildElement("map");
-		if (mapElm->IntAttribute("width") == state_.mapSize_.x && mapElm->IntAttribute("hight") == state_.mapSize_.y)
+		if (mapElm->IntAttribute("width") == state_.mapSize.x && mapElm->IntAttribute("hight") == state_.mapSize.y)
 		{
 			std::string mapStr = mapElm->GetText();
 			std::stringstream ss{ mapStr };
@@ -213,12 +213,12 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 			{
 
 				mapData_[y][x++] = (static_cast<MapChipName>(std::atoi(buf.c_str())));
-				if (x >= state_.mapSize_.x)
+				if (x >= state_.mapSize.x)
 				{
 					y++;
 					x = 0;
 				}
-				if (y >= state_.mapSize_.y)
+				if (y >= state_.mapSize.y)
 				{
 					break;
 				}
@@ -404,7 +404,7 @@ void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fSta
 				assert(false);
 			}
 			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-			mainStay_.emplace_back(point.x + point.y * state_.mapSize_.x);
+			mainStay_.emplace_back(point.x + point.y * state_.mapSize.x);
 
 			
 		}
@@ -417,7 +417,7 @@ void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fSta
 				assert(false);
 			}
 			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-			spawners_.emplace_back(point.x + point.y * state_.mapSize_.x);
+			spawners_.emplace_back(point.x + point.y * state_.mapSize.x);
 		}
 		// çƒãAìIÇ…éüÇï‘Ç∑
 		FindMapObj(map, y, find + 1);
@@ -436,6 +436,6 @@ const std::vector<int>& Custom::GetSpawner()
 
 VECTOR2 Custom::PosFromIndex(int index)
 {
-	auto y = index / state_.mapSize_.x;
-	return VECTOR2(index - y * state_.mapSize_.x, y);
+	auto y = index / state_.mapSize.x;
+	return VECTOR2(index - y * state_.mapSize.x, y);
 }
