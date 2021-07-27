@@ -15,7 +15,7 @@ TitleScene::TitleScene()
 	flag = true;
 	pos = { 50,50 };
 	speed = { 2,2 };
-	lpSoundMng.StartLoopSound("data/Sound/SE/BGM2.mp3");
+	lpSoundMng.StartSound("data/Sound/SE/BGM2.mp3", PlayType::LOOP);
 	lpApplication.GetCamera().SetScale(1.0f);
 	lpApplication.GetCamera().ScaleLock(true);
 }
