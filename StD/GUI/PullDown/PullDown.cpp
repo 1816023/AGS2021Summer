@@ -9,7 +9,7 @@ PullDown::PullDown(VECTOR2 pos, int xSize,int fontHandle)
 	screen_ = MakeScreen(xSize, 2560);
 	GetGraphSize(screen_, &size_.x, &size_.y);
 	selKey_ = 0;
-	list_.emplace_back(std::make_unique<RectButton>( pos_+VECTOR2(size_.x-fontSize, 0), pos_+VECTOR2(size_.x,fontSize), 0xfffffff, [&]() {return openFlag_ = ~openFlag_; }, VECTOR2()));
+	list_.emplace_back(std::make_unique<RectButton>( pos_+VECTOR2(size_.x-fontSize, 0), pos_+VECTOR2(size_.x,fontSize), 0xfffffff, [&]() {return openFlag_ = ~openFlag_; }));
 	list_.back()->SetFont(fontHandle_);
 	list_.back()->SetString("Бе", VECTOR2(2,2));
 	list_.back()->SetTag(1);
@@ -25,7 +25,7 @@ bool PullDown::Add(std::string str)
 {
 	auto listSize = list_.size()-1;
 	const int fontSize = GetFontSizeToHandle(fontHandle_);
-	list_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, listSize * fontSize), VECTOR2(size_.x , fontSize + listSize * fontSize), 0xffffff, [&, listSize]() {selKey_ = listSize; openFlag_ = false; return true; }, VECTOR2()));
+	list_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, listSize * fontSize), VECTOR2(size_.x , fontSize + listSize * fontSize), 0xffffff, [&, listSize]() {selKey_ = listSize; openFlag_ = false; return true; }));
 	list_.back()->SetString(str, VECTOR2(2,2));
 	list_.back()->SetSound();
 	list_.back()->SetFont(fontHandle_);

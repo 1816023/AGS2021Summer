@@ -44,7 +44,6 @@
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
-    <ClCompile Include="CustumErrorText.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
     <ClCompile Include="GUI\Button\Button.cpp" />
@@ -74,6 +73,7 @@
     <ClCompile Include="Scene\GameMapSellectScene.cpp" />
     <ClCompile Include="Map\Simple.cpp" />
     <ClCompile Include="Mng\FontMng.cpp" />
+    <ClCompile Include="GUI\CustumErrorText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -132,7 +132,6 @@
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="MapEnum.h" />
-    <ClInclude Include="CustumErrorText.h" />
     <ClInclude Include="_debug\_DebugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />
     <ClInclude Include="GUI\Button\Button.h" />
@@ -162,5 +161,6 @@
     <ClInclude Include="Scene\GameMapSellectScene.h" />
     <ClInclude Include="Map\Simple.h" />
     <ClInclude Include="Mng\FontMng.h" />
+    <ClInclude Include="GUI\CustumErrorText.h" />
   </ItemGroup>
 </Project>

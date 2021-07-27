@@ -34,6 +34,7 @@ unique_Base CustomMapScene::Update(unique_Base own)
 		return std::make_unique<TitleScene>();
 	}
 	canvas_->Update();
+	textCanvas_->Update();
 	custom_[nowState_]->Update(this);
 	return std::move(own);
 }
@@ -42,6 +43,7 @@ bool CustomMapScene::Init()
 {
 	auto defSize = VECTOR2(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y);
 	canvas_ = std::make_unique<Canvas>(SELECT_UI_POS.first, defSize - SELECT_UI_POS.first, BackType::RoundRect);
+	textCanvas_ = std::make_unique<Canvas>(TEXT_UI_POS.first, VECTOR2(SELECT_UI_POS.first.x,defSize.y- TEXT_UI_POS.first.y), BackType::RoundRect);
 	cusMap_ = std::make_unique<Custom>(VECTOR2());
 	nowState_ = CustomState::SELECT_FILE;
 	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
@@ -63,7 +65,7 @@ void CustomMapScene::Draw()
 	{
 		cusMap_->Draw();
 #ifdef _DEBUG
-		DrawFormatString(mPos.x + cPos.x, mPos.y + cPos.y - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
+		DrawFormatString(mPos.x + static_cast<int>(cPos.x), mPos.y + static_cast<int>(cPos.y) - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
 #endif // DEBUG
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
@@ -82,6 +84,7 @@ void CustomMapScene::DrawUI()
 {
 	custom_[nowState_]->Draw(this);
 	canvas_->Draw();
+	textCanvas_->Draw();
 	const auto& mainStay = cusMap_->GetMainStay();
 	int cnt = 0;
 	auto mapSize = cusMap_->GetMapSize().x;

@@ -1,6 +1,6 @@
 #include "CustumErrorText.h"
 #include <DxLib.h>
-#include "StringUtil.h"
+#include "../StringUtil.h"
 
 CustumErrorText::CustumErrorText()
 {
@@ -28,4 +28,9 @@ void CustumErrorText::AddErrorText(std::wstring text)
 void CustumErrorText::DrawErrorText(int x, int y, int errorCode, int color)
 {
 	DrawString(x, y, errorText_[errorCode].c_str(), color);
+}
+
+const std::vector<std::wstring>& CustumErrorText::GetErrorText()
+{
+	return errorText_;
 }

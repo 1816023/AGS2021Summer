@@ -18,6 +18,7 @@ class MainScene :
 {
 public:
 	MainScene();
+	MainScene(bool flag);
 	~MainScene();
 
 	unique_Base Update(unique_Base own) override;

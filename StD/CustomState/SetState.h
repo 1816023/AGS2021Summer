@@ -22,14 +22,14 @@ struct SetState:public CustomStateBase
 					{
 						inputNum_[inputcnt_] = std::to_string(10 + a); 
 					} 
-			return true; }, VECTOR2()));
+			return true; }));
 			buttonList_.back()->SetString(std::to_string(10+a), VECTOR2(5, 5), CreateFontToHandle(NULL, 40, 9, DX_FONTTYPE_ANTIALIASING));
 			buttonList_.back()->SetAuto();
 			buttonList_.back()->SetTag(1);
 		}
 		buttonList_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(defPos.x + (buttonSize + 5) * (11 % 5), defPos.y + (buttonSize + 5) * (11 / 5)),
 			VECTOR2( buttonSize * 2 + 5, buttonSize ),
-			VECTOR2(10, 10), 0xffffff, [&]() {inputcnt_ -= (inputcnt_ <=0 ? 0 : 1); return true; }, VECTOR2()));
+			VECTOR2(10, 10), 0xffffff, [&]() {inputcnt_ -= (inputcnt_ <=0 ? 0 : 1); return true; }));
 		buttonList_.back()->SetString("back", VECTOR2(5, 5), CreateFontToHandle(NULL, 40, 9, DX_FONTTYPE_ANTIALIASING));
 		buttonList_.back()->SetAuto();
 		buttonList_.back()->SetTag(1);
@@ -43,7 +43,7 @@ struct SetState:public CustomStateBase
 					SetActiveKeyInput(keyhandle_);
 				}
 				return true;
-			}, VECTOR2()));
+			}));
 		buttonList_.back()->SetString("next", VECTOR2(5,5),CreateFontToHandle(NULL,40,9,DX_FONTTYPE_ANTIALIASING));
 		buttonList_.back()->SetAuto();
 		buttonList_.back()->SetTag(1);

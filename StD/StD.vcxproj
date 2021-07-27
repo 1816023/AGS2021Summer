@@ -163,7 +163,7 @@
     <ClCompile Include="GUI\Button\ImageRectButton.cpp" />
     <ClCompile Include="GUI\Button\RectButton.cpp" />
     <ClCompile Include="GUI\Button\RoundRectButton.cpp" />
-    <ClCompile Include="CustumErrorText.cpp" />
+    <ClCompile Include="GUI\CustumErrorText.cpp" />
     <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
     <ClCompile Include="GUI\PullDown\PullDown.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBox.cpp" />
@@ -238,7 +238,7 @@
     <ClInclude Include="GUI\Button\ImageRectButton.h" />
     <ClInclude Include="GUI\Button\RectButton.h" />
     <ClInclude Include="GUI\Button\RoundRectButton.h" />
-    <ClInclude Include="CustumErrorText.h" />
+    <ClInclude Include="GUI\CustumErrorText.h" />
     <ClInclude Include="GUI\ScrollList\ImageList.h" />
     <ClInclude Include="GUI\SpinBox\SpinBox.h" />
     <ClInclude Include="GUI\SpinBox\SpinBoxForBool.h" />

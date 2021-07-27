@@ -36,5 +36,7 @@ private:
 	std::map<std::shared_ptr<Unit>, std::list<std::pair<Vec2Float, std::shared_ptr<Unit>>>> shotList_;	//弾管理用 (リストのfirstには射出点secondには目標対象が入る)
 	std::map<std::shared_ptr<Unit>, int> shotSpan_;	//発射間隔管理用
 	std::shared_ptr<Unit> shooterPtr_;
+
+	std::string s_soundID;
 };
 

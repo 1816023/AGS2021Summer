@@ -72,7 +72,11 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 
 bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 {
-	if (0 > idx.x || idx.x > state_.mapSize.x)
+	if (chip == MapChipName::MAX)
+	{
+		return false;
+	}
+	if (0 > idx.x || idx.x > state_.mapSize_.x)
 	{
 		return false;
 	}
@@ -84,7 +88,7 @@ bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 	{
 		return false;
 	}
-	int id = idx.x + idx.y * state_.mapSize.x;
+	int id = idx.x + idx.y * state_.mapSize_.x;
 	auto msFind = std::find(mainStay_.begin(), mainStay_.end(), id);
 	auto spFind = std::find(spawners_.begin(), spawners_.end(), id);
 	if (chip == MapChipName::MAINSTAY)
