@@ -25,8 +25,10 @@ public:
 		static SoundMng s_Instance;
 		return (s_Instance);
 	}
-	const int& GetID(std::string f_name);		// SEÊÝÄÞÙ‚Ì“üŽè
-	const int& StartSound(std::string f_name, int soundType);
+	// SEÊÝÄÞÙ‚Ì“üŽè
+	const int& GetID(std::string f_name);	
+	const int& StartSound(std::string f_name);
+	const int& StartLoopSound(std::string f_name);
 	const int& StopSound(std::string f_name);
 	const int& ChangeVol(int vol, std::string f_name);
 	const int& CheckSound(std::string f_name);

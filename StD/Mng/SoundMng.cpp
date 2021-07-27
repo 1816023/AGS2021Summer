@@ -17,9 +17,14 @@ const int& SoundMng::GetID(std::string f_name)
 	return sndMap[f_name];
 }
 
-const int& SoundMng::StartSound(std::string f_name, int soundType)
+const int& SoundMng::StartSound(std::string f_name)
 {
-	return PlaySoundMem(GetID(f_name), soundType);
+	return PlaySoundMem(GetID(f_name), DX_PLAYTYPE_BACK);
+}
+
+const int& SoundMng::StartLoopSound(std::string f_name)
+{
+	return PlaySoundMem(GetID(f_name), DX_PLAYTYPE_LOOP);
 }
 
 const int& SoundMng::StopSound(std::string f_name)
