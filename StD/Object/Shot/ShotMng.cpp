@@ -3,6 +3,7 @@
 #include <DxLib.h>
 #include "../../Collision.h"
 #include "../../Unit/Unit.h"
+#include "../../Mng/SoundMng.h"
 
 ShotMng::~ShotMng()
 {
@@ -59,6 +60,7 @@ std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared
 
 			if (isHitBvE(itr->first, BASE_SIZE, target->GetPos(), Vec2Float(60, 60)))
 			{
+				lpSoundMng.StartSound("data/Sound/SE/pokopoko1.mp3", PlayType::BACK);
 				shooterPtr_ = ptr;
 				//ñΩíÜÇµÇΩÇÃÇ≈çÌèú
 				itr = shotList_[ptr].erase(itr);
