@@ -98,6 +98,11 @@ MainScene::MainScene()
 
 }
 
+MainScene::MainScene(bool flag)
+{
+	MainScene();
+}
+
 MainScene::~MainScene()
 {
 }
