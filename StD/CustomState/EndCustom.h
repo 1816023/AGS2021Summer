@@ -1,7 +1,6 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
-#define CUSTOM dynamic_cast<Custom*>(scene->cusMap_.get())
 
 struct EndCustom :CustomStateBase
 {
@@ -21,7 +20,7 @@ struct EndCustom :CustomStateBase
 		}
 		if ((scene->now[KEY_INPUT_RETURN]) & (~scene->old[KEY_INPUT_RETURN]))
 		{
-			CUSTOM->SaveFile();
+			scene->cusMap_->SaveFile();
 		}
 
 	}

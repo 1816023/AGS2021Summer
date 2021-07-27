@@ -72,6 +72,10 @@ bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 
 bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 {
+	if (chip == MapChipName::MAX)
+	{
+		return false;
+	}
 	if (0 > idx.x || idx.x > state_.mapSize_.x)
 	{
 		return false;

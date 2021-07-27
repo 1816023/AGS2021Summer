@@ -49,7 +49,7 @@ Canvas::~Canvas()
 	ClearUI();
 }
 
-void Canvas::AddUIByID(UI* ui, Justified just, int id)
+void Canvas::AddUIByID(UI* ui, int id, Justified just)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
@@ -59,7 +59,7 @@ void Canvas::AddUIByID(UI* ui, Justified just, int id)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByID(UI* ui, VECTOR2 pos, int id)
+void Canvas::AddUIByID(UI* ui, int id, VECTOR2 pos)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
@@ -69,7 +69,7 @@ void Canvas::AddUIByID(UI* ui, VECTOR2 pos, int id)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByName(UI* ui, Justified just, std::wstring name)
+void Canvas::AddUIByName(UI* ui, std::wstring name, Justified just)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
@@ -79,7 +79,7 @@ void Canvas::AddUIByName(UI* ui, Justified just, std::wstring name)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByName(UI* ui, VECTOR2 pos, std::wstring name)
+void Canvas::AddUIByName(UI* ui, std::wstring name, VECTOR2 pos)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;

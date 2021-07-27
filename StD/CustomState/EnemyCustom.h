@@ -11,7 +11,7 @@
 
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
-struct EnemyCustom :public CustomStateBase
+struct EnemyCustom : public CustomStateBase
 {
 	EnemyCustom(){};
 	~EnemyCustom() {};
@@ -96,7 +96,7 @@ struct EnemyCustom :public CustomStateBase
 				->Add(dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->GetSelData(),std::to_string(GetKeyInputNumberToFloat(keyInputHandleForSpawnTime)));
 			list_[selWave_][selSpawner_].second.push_back(dynamic_cast<SpinBoxForInt*>(spinBoxS_["ルート"].get())->GetSelData());
 				spawnTime = GetKeyInputNumberToFloat(keyInputHandleForSpawnTime);
-			return true; }, VECTOR2()));
+			return true; }));
 		button_.back()->SetString("登録",VECTOR2(15,10));
 		// 戻すボタン
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX-strSize.x/2, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&]() {
@@ -106,13 +106,13 @@ struct EnemyCustom :public CustomStateBase
 				list_[selWave_][selSpawner_].second.pop_back();
 			}
 			return true;
-			}, VECTOR2()));
+			}));
 		button_.back()->SetString("戻す", VECTOR2(15, 10));
 		// 保存ボタン
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX - strSize.x , (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
 			auto error=scene->cusMap_->SaveFile(spawners.size(),list_);
 			return error==0;
-			}, VECTOR2()));
+			}));
 		button_.back()->SetString("Save", VECTOR2(15, 10));
 		// ボタンの自動更新
 		for (auto&& list : button_)

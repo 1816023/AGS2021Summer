@@ -3,8 +3,7 @@
 #include "ImageRectButton.h"
 #include "../../StringUtil.h"
 
-ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func,VECTOR2 offset)
-	:Button(offset)
+ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func)
 {
 	pos_ = pos;
 	size_ = size;
@@ -14,7 +13,7 @@ ImageRectButton::ImageRectButton(VECTOR2 pos, VECTOR2 size, std::wstring imagePa
 	type_ = ButtonType::BoxImage;
 }
 
-ImageRectButton::ImageRectButton(VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset): Button(offset)
+ImageRectButton::ImageRectButton(VECTOR2 size, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func)
 {
 	size_ = size;
 	imagePath_ = imagePath;
@@ -52,11 +51,11 @@ void ImageRectButton::Draw()
 		DrawRotaGraph(pos_.x + (size_.x*scale_) / 2, pos_.y + (size_.y*scale_)/2, scale_, 0, IMAGE_ID(pushImagePath_.c_str()), true);
 		if (fontHandle_ != -1)
 		{
-			DrawStringToHandle(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y + push, _StW(str_).c_str(), ~color_, fontHandle_);
+			DrawStringToHandle(pos_.x + sPos_.x, pos_.y + sPos_.y + push, _StW(str_).c_str(), ~color_, fontHandle_);
 		}
 		else
 		{
-			DrawString(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y + push, _StW(str_).c_str(), ~color_);
+			DrawString(pos_.x + sPos_.x, pos_.y + sPos_.y + push, _StW(str_).c_str(), ~color_);
 		}
 	}
 	else
@@ -66,11 +65,11 @@ void ImageRectButton::Draw()
 
 		if (fontHandle_ != -1)
 		{
-			DrawStringToHandle(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y, _StW(str_).c_str(), ~color_, fontHandle_);
+			DrawStringToHandle(pos_.x + sPos_.x, pos_.y + sPos_.y , _StW(str_).c_str(), ~color_, fontHandle_);
 		}
 		else 
 		{
-			DrawString(pos_.x + sPos_.x + offset_.x, pos_.y + sPos_.y + offset_.y, _StW(str_).c_str(), ~color_);
+			DrawString(pos_.x + sPos_.x, pos_.y + sPos_.y, _StW(str_).c_str(), ~color_);
 		}
 	}
 }

@@ -63,9 +63,11 @@ private:
 	void DrawUI()override;
 	// customクラスのポインター
 	std::unique_ptr<Custom>cusMap_;
-	// キャンバス
+	// --- キャンバス
+	// メインのUIキャンバス
 	std::unique_ptr<Canvas>canvas_;
-	//
+	// テキスト表示用キャンバス
+	std::unique_ptr<Canvas>textCanvas_;
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
 	CustomState nowState_;

@@ -2,8 +2,7 @@
 #include "../../Mng/ImageMng.h"
 #include "ImageCircleButton.h"
 
-ImageCircleButton::ImageCircleButton(VECTOR2 pos, int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset)
-	:Button(offset)
+ImageCircleButton::ImageCircleButton(VECTOR2 pos, int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func)
 {
 	pos_ = pos;
 	radius_ = radius;
@@ -13,7 +12,7 @@ ImageCircleButton::ImageCircleButton(VECTOR2 pos, int radius, std::wstring image
 	type_ = ButtonType::CircleImage;
 }
 
-ImageCircleButton::ImageCircleButton(int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func, VECTOR2 offset) : Button(offset)
+ImageCircleButton::ImageCircleButton(int radius, std::wstring imagePath, std::wstring pushImagePath, std::function<bool()> func)
 {
 	radius_ = radius;
 	imagePath_ = imagePath;
@@ -48,11 +47,11 @@ void ImageCircleButton::Draw()
 	
 	if (isPush_)
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.x + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);
+		DrawGraph(pos_.x, pos_.x, IMAGE_ID(pushImagePath_.c_str()), true);
 	}
 	else
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.x + offset_.y, IMAGE_ID(imagePath_.c_str()), true);
+		DrawGraph(pos_.x, pos_.x, IMAGE_ID(imagePath_.c_str()), true);
 	}
 
 }

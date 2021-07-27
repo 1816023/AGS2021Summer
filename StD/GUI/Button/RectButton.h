@@ -4,7 +4,7 @@ class RectButton :
     public Button
 {
 public:
-    RectButton(VECTOR2 lu, VECTOR2 rd, int color, std::function<bool()> func, VECTOR2 offset);
+    RectButton(VECTOR2 pos, VECTOR2 size, int color, std::function<bool()> func);
     ~RectButton()override;
 	// カーソルがある位置との当たり判定(マウスポジション指定)
 	bool IsHit(VECTOR2 mPos)override;

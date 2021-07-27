@@ -15,7 +15,7 @@ enum class ButtonType
 class Button : public UI
 {
 public:
-	Button(VECTOR2 offset);
+	Button();
 	virtual ~Button();
 	virtual bool Update();
 	// カーソルがある位置との当たり判定(マウスポジション指定)
@@ -54,8 +54,6 @@ public:
 	// フォントを設定する
 	void SetFont(int handle);
 protected:
-	// 座標補正
-	const VECTOR2 offset_;
 	//現在押されているかのフラグ
 	bool isPush_;
 	// 当たり判定用の関数格納用

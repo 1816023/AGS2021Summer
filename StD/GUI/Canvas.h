@@ -36,13 +36,13 @@ public:
 	~Canvas();
 	// ------- UIをキャンバスに追加する -------
 	// IDから整列機能を使う
-	void AddUIByID(UI* ui, Justified just, int id);
+	void AddUIByID(UI* ui, int id, Justified just);
 	// IDから自分で座標設定をする
-	void AddUIByID(UI* ui, VECTOR2 pos, int id);
+	void AddUIByID(UI* ui, int id, VECTOR2 pos = VECTOR2());
 	// 名前から整列機能を使う
-	void AddUIByName(UI* ui, Justified just, std::wstring name);
+	void AddUIByName(UI* ui, std::wstring name, Justified just);
 	// 名前から自分で座標設定をする
-	void AddUIByName(UI* ui, VECTOR2 pos, std::wstring name);
+	void AddUIByName(UI* ui, std::wstring name, VECTOR2 pos = VECTOR2());
 	// ----------------------------------------
 	// 名前からUIを取得
 	UI* GetUIByName(std::wstring name);
