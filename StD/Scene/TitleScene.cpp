@@ -1,7 +1,6 @@
 #include "TitleScene.h"
 #include <DxLib.h>
 #include "MainScene.h"
-#include "GameScene.h"
 #include "../Mng/SoundMng.h"
 #include "../Application.h"
 #include "../MouseController.h"
@@ -32,7 +31,7 @@ unique_Base TitleScene::Update(unique_Base own)
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
 		lpSoundMng.StopSound("data/Sound/SE/BGM2.mp3");
-		return std::make_unique<GameScene>();
+		return std::make_unique<MainScene>();
 	}
 
 	return std::move(own);
