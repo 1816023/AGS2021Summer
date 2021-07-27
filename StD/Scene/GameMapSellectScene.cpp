@@ -34,6 +34,7 @@ GameMapSellectScene::GameMapSellectScene()
 	button_.back()->SetString("back",VECTOR2(30,25));
 
 	button_.emplace_back(new ImageRectButton(VECTOR2(640,350), VECTOR2(), L"./data/image/Back_Button2.png", L"./data/image/Back_Button2.png", [&]() {return true; }));
+
 }
 
 GameMapSellectScene::~GameMapSellectScene()
@@ -64,7 +65,7 @@ unique_Base GameMapSellectScene::Update(unique_Base own)
 	case 0:
 		break;
 	case 1:
-		return std::make_unique<MainScene>();
+		return std::make_unique<MainScene>(true);
 		break;
 	case 2:
 		break;

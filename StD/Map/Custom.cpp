@@ -76,7 +76,7 @@ bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 	{
 		return false;
 	}
-	if (0 > idx.x || idx.x > state_.mapSize_.x)
+	if (0 > idx.x || idx.x > state_.mapSize.x)
 	{
 		return false;
 	}
@@ -88,7 +88,7 @@ bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 	{
 		return false;
 	}
-	int id = idx.x + idx.y * state_.mapSize_.x;
+	int id = idx.x + idx.y * state_.mapSize.x;
 	auto msFind = std::find(mainStay_.begin(), mainStay_.end(), id);
 	auto spFind = std::find(spawners_.begin(), spawners_.end(), id);
 	if (chip == MapChipName::MAINSTAY)

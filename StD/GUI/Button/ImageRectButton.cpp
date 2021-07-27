@@ -47,7 +47,7 @@ void ImageRectButton::Draw()
 	const int push = size_.y / 5;
 	if (isPush_)
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(pushImagePath_.c_str()), true);
+		DrawGraph(pos_.x , pos_.y , IMAGE_ID(pushImagePath_.c_str()), true);
 		//DrawRotaGraph(pos_.x + (size_.x*scale_) / 2, pos_.y + (size_.y*scale_)/2, scale_, 0, IMAGE_ID(pushImagePath_.c_str()), true);
 		if (fontHandle_ != -1)
 		{
@@ -60,7 +60,7 @@ void ImageRectButton::Draw()
 	}
 	else
 	{
-		DrawGraph(pos_.x + offset_.x, pos_.y + offset_.y, IMAGE_ID(imagePath_.c_str()), true);
+		DrawGraph(pos_.x, pos_.y , IMAGE_ID(imagePath_.c_str()), true);
 		//DrawRotaGraph(pos_.x + (size_.x*scale_) / 2, pos_.y + (size_.y*scale_)/2, scale_, 0, IMAGE_ID(imagePath_.c_str()), true);
 
 		if (fontHandle_ != -1)
