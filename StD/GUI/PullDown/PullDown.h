@@ -26,5 +26,6 @@ private:
 	std::vector<std::unique_ptr<RectButton>>list_;
 	bool openFlag_;
 	int fontHandle_;
+	int scroll_;
 };
 

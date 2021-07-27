@@ -31,5 +31,6 @@ private:
 	std::list<PullDown*>pullDown_;
 	std::unique_ptr<Simple>map_;
 	bool CheckData(std::string);
+	unsigned int transitionFlag_;
 };
 
