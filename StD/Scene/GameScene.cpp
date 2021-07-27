@@ -35,6 +35,28 @@ GameScene::GameScene()
 	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
 }
 
+GameScene::GameScene(std::string mapName)
+{
+	map = std::make_unique<Map>();
+	map->SetUp(mapName);
+	cnt = 0;
+	waitFlag = false;
+	resultFlag = true;
+	accessData = nullptr;
+
+	IMAGE_ID(L"data/image/circle.png");
+	IMAGE_ID(L"data/image/triangle.png");
+	IMAGE_ID(L"data/image/pentagon.png");
+	IMAGE_ID(L"data/image/square.png");
+	shotMng_ = std::make_unique<ShotMng>();
+	playerMng_ = std::make_unique<PlayerMng>();
+	enemyMng_ = std::make_unique<EnemyManager>(*map);
+	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_, *map));
+
+	selectUnitId = PlayerUnit::NON;
+
+}
+
 GameScene::~GameScene()
 {
 }

@@ -20,6 +20,7 @@ class GameScene :
 {
 public:
 	GameScene();
+	GameScene(std::string mapName);
 	~GameScene();
 
 	unique_Base Update(unique_Base own) override;
