@@ -3,11 +3,12 @@
 #include "../Scene/CustomMapScene.h"
 #include "../GUI/ScrollList/ImgeAndStringList.h"
 #include "../GUI/Button/ImageRectButton.h"
-#include "../Mng/ImageMng.h"
-#include "../Mng/ImageMng.h"
 #include "../GUI/SpinBox/SpinBoxForString.h"
 #include "../GUI/SpinBox/SpinBoxForInt.h"
 #include "../GUI/SpinBox/SpinBoxForImage.h"
+#include "../GUI/Canvas.h"
+#include "../Mng/FontMng.h"
+#include "../Mng/ImageMng.h"
 
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
@@ -45,7 +46,7 @@ struct EnemyCustom : public CustomStateBase
 		}
 		spawner_ = spawners;
 
-		fontHandle_ = CreateFontToHandle(NULL, 30, 1);
+		fontHandle_ = lpFontMng.AddStrFont(30, L"enemyUI");
 		// UIの初期化
 		auto strSize=VECTOR2(GetDrawStringWidthToHandle(L"スポナー ",GetStringLength(L"スポナー "), fontHandle_),GetFontSizeToHandle(fontHandle_));
 		// スポナースピンボックスの設定
