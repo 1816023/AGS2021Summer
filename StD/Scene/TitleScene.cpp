@@ -1,6 +1,8 @@
 #include "TitleScene.h"
 #include <DxLib.h>
 #include "MainScene.h"
+#include "GameScene.h"
+#include "../Mng/SoundMng.h"
 #include "../Application.h"
 #include "../MouseController.h"
 
@@ -13,6 +15,7 @@ TitleScene::TitleScene()
 	flag = true;
 	pos = { 50,50 };
 	speed = { 2,2 };
+	lpSoundMng.StartLoopSound("data/Sound/SE/BGM2.mp3");
 	lpApplication.GetCamera().SetScale(1.0f);
 	lpApplication.GetCamera().ScaleLock(true);
 }
@@ -28,7 +31,8 @@ unique_Base TitleScene::Update(unique_Base own)
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		return std::make_unique<MainScene>();
+		lpSoundMng.StopSound("data/Sound/SE/BGM2.mp3");
+		return std::make_unique<GameScene>();
 	}
 
 	return std::move(own);
