@@ -34,7 +34,7 @@ GameMapSellectScene::GameMapSellectScene()
 	button_.back()->SetScale(1.0f);
 	button_.back()->SetString("back",VECTOR2(30,25));
 
-	button_.emplace_back(new ImageRectButton(VECTOR2(640,350), VECTOR2(), L"./data/image/Back_Button2.png", L"./data/image/Back_Button2.png", [&]() {
+	button_.emplace_back(new ImageRectButton(VECTOR2(640,350), VECTOR2(100,70), L"./data/image/Back_Button2.png", L"./data/image/Back_Button2.png", [&]() {
 		transitionFlag_ = 2;
 		return true; }));
 	button_.back()->SetAuto();
