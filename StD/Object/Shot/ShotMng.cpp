@@ -3,6 +3,9 @@
 #include <DxLib.h>
 #include "../../Collision.h"
 #include "../../Unit/Unit.h"
+#include "../../Unit/Enemy/Enemy.h"
+#include "../../Unit/Player/PlayerMng.h"
+#include "../../Unit/Enemy/EnemyManager.h"
 #include "../../Mng/SoundMng.h"
 
 ShotMng::~ShotMng()
@@ -74,6 +77,66 @@ std::shared_ptr<Unit> ShotMng::BulletMove(std::shared_ptr<Unit> ptr, std::shared
 		}
 	}
 	return nullptr;
+}
+
+void ShotMng::BulletControler(float deltaTime, std::shared_ptr<PlayerMng> playerMng, std::shared_ptr<EnemyManager> enemyMng)
+{
+
+	auto unitList = playerMng->GetUnitList();
+	auto enemyList = enemyMng->GetEnemies();
+
+	//Playerのユニットが発射した攻撃の管理
+	for (auto& unit : unitList)
+	{
+		auto type = unit->GetType();
+
+		if (type == AttackType::NON)
+		{
+			//攻撃しないユニットだったら次へ
+			continue;
+		}
+
+		if (type == AttackType::SHOT)
+		{
+			for (auto enemy : enemyList)
+			{
+				if (this->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
+				{
+					this->AddBullet(unit, enemy, deltaTime);
+					auto shooter = this->BulletMove(unit, enemy, deltaTime);
+					if (shooter != nullptr)
+					{
+						enemy->SetHP(shooter->GetAttackPower());
+					}
+					break;
+				}
+			}
+		}
+
+		if (type == AttackType::AREA)
+		{
+			//クールタイムを設定することで解決？
+			if (this->isCoolTime(unit, deltaTime))
+			{
+				for (auto enemy : enemyList)
+				{
+					if (this->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
+					{
+						enemy->SetHP(unit->GetAttackPower());
+					}
+				}
+			}
+		}
+	}
+
+	//Enemy側のユニットが発射した攻撃の管理
+	for (auto enemy : enemyList)
+	{
+		for (auto& unit : unitList)
+		{
+
+		}
+	}
 }
 
 void ShotMng::AreaAttackCtl(std::vector<std::shared_ptr<Unit>> unitList)

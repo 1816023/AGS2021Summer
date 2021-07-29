@@ -49,8 +49,8 @@ GameScene::GameScene(std::string mapName)
 	IMAGE_ID(L"data/image/pentagon.png");
 	IMAGE_ID(L"data/image/square.png");
 	shotMng_ = std::make_unique<ShotMng>();
-	playerMng_ = std::make_unique<PlayerMng>();
-	enemyMng_ = std::make_unique<EnemyManager>(*map);
+	playerMng_ = std::make_shared<PlayerMng>();
+	enemyMng_ = std::make_shared<EnemyManager>(*map);
 	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_, *map));
 
 	selectUnitId = PlayerUnit::NON;
@@ -72,7 +72,6 @@ unique_Base GameScene::Update(unique_Base own)
 
 	float delta = Application::Instance().GetDelta(); 
 
-
 	UnitCreateFunc();
 
 	//待機状態なら以後の処理を行わず戻す
@@ -84,7 +83,7 @@ unique_Base GameScene::Update(unique_Base own)
 
 	playerMng_->Update(delta, shotMng_->GetShooterPtr());
 
-	BulletControler(delta);
+	shotMng_->BulletControler(delta,playerMng_,enemyMng_);
 
 	int spawnRemain = 0;
 	for (auto& spawners : enemySpawner_)
@@ -93,7 +92,6 @@ unique_Base GameScene::Update(unique_Base own)
 		spawnRemain += spawners->GetRemainSpawnCnt();
 	}
 	enemyMng_->Update(delta);
-
 
 	for (auto enemy : enemyMng_->GetEnemies())
 	{
@@ -177,22 +175,17 @@ void GameScene::UnitAccessFunc(void)
 	{
 		return;
 	}
-
-	//waitFlag = false;
 	
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
 		if (lpMouseController.IsHitBoxToMouse(VecICast(lpCustomDraw.GetDrawData(L"レベルアップ").first), VecICast(lpCustomDraw.GetDrawData(L"レベルアップ").second)))
 		{
-			playerMng_->SetCost(playerMng_->GetCost()-accessData->GetLevelUpCost());
+			playerMng_->SetCost(playerMng_->GetCost() - accessData->GetLevelUpCost());
 			accessData->LevelShift(1);
 			waitFlag = false;
 		}
-	}
 
-	if (accessData->GetCoolTime() <= 0)
-	{
-		if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
+		if (accessData->GetCoolTime() <= 0)
 		{
 			if (lpMouseController.IsHitBoxToMouse(VecICast(lpCustomDraw.GetDrawData(L"スキル発動").first), VecICast(lpCustomDraw.GetDrawData(L"スキル発動").second)))
 			{
@@ -201,65 +194,7 @@ void GameScene::UnitAccessFunc(void)
 			}
 		}
 	}
-}
 
-void GameScene::BulletControler(float deltaTime)
-{
-	auto unitList = playerMng_->GetUnitList();
-	auto enemyList = enemyMng_->GetEnemies();
-
-	//Playerのユニットが発射した攻撃の管理
-	for (auto& unit : unitList)
-	{
-		auto type = unit->GetType();
-
-		if (type == AttackType::NON)
-		{
-			//攻撃しないユニットだったら次へ
-			continue;
-		}
-
-		if (type == AttackType::SHOT)
-		{
-			for (auto enemy : enemyList)
-			{
-				if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
-				{
-					shotMng_->AddBullet(unit, enemy,deltaTime);
-					auto shooter = shotMng_->BulletMove(unit, enemy,deltaTime);
-					if (shooter != nullptr)
-					{
-						enemy->SetHP(shooter->GetAttackPower());
-					}
-					break;
-				}
-			}
-		}
-
-		if (type == AttackType::AREA)
-		{
-			//クールタイムを設定することで解決？
-			if (shotMng_->isCoolTime(unit,deltaTime))
-			{
-				for (auto enemy : enemyList)
-				{
-					if (shotMng_->isRange(enemy->GetPos(), unit->GetPos(), 64, 100 * unit->GetAtkRange()))
-					{
-						enemy->SetHP(unit->GetAttackPower());
-					}
-				}
-			}
-		}
-	}
-
-	//Enemy側のユニットが発射した攻撃の管理
-	for (auto enemy : enemyList)
-	{
-		for (auto& unit : unitList)
-		{
-
-		}
-	}
 }
 
 void GameScene::Draw()

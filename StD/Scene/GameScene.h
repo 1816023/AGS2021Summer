@@ -31,11 +31,10 @@ private:
 	void MenuDraw(VECTOR2& m_pos);
 	void UnitCreateFunc(void);
 	void UnitAccessFunc(void);
-	void BulletControler(float deltaTime);
 	//デバッグ
 	std::unique_ptr<Map> map;
-	std::unique_ptr<PlayerMng> playerMng_;
-	std::unique_ptr<EnemyManager> enemyMng_;
+	std::shared_ptr<PlayerMng> playerMng_;
+	std::shared_ptr<EnemyManager> enemyMng_;
 	// 現在はここにMapに移す予定
 	std::vector<std::shared_ptr<EnemySpawner>>enemySpawner_;	// 敵生成クラス
 
