@@ -79,15 +79,15 @@ struct MapCustom : public CustomStateBase
 		for (auto& b : button)
 		{
 			b->SetAuto();
-			scene->canvas_->AddUIByID(b, cnt++, b->GetPos());
+			scene->canvas_->AddUIByID(b, cnt++);
 		}
 		// キャンバスにテキストをセット
 		for (auto& t : mainText)
 		{
-			scene->canvas_->AddUIByID(t, cnt++, t->GetPos());
+			scene->canvas_->AddUIByID(t, cnt++);
 		}
-		scene->textCanvas_->AddUIByName(explanation, L"説明文", explanation->GetPos());
-		scene->canvas_->AddUIByName(errorT, L"エラー", errorT->GetPos());
+		scene->textCanvas_->AddUIByName(explanation, L"説明文");
+		scene->canvas_->AddUIByName(errorT, L"エラー");
 		scene->blendAlpha_ = 256;
 		selChip_ = MapChipName::MAX;
 		scene->LoadText("map");
@@ -95,6 +95,7 @@ struct MapCustom : public CustomStateBase
 		return false;
 
 	}
+
 	void Update(CustomMapScene* scene)override
 	{
 		VECTOR2 mPos = lpMouseController.GetPos();
@@ -135,6 +136,7 @@ struct MapCustom : public CustomStateBase
 		scene_->custom_[scene_->nowState_]->Init(scene_);
 		return true;
 	}
+
 	// 次のシーンへ移行するコールバック用関数
 	bool Next()
 	{
@@ -143,11 +145,13 @@ struct MapCustom : public CustomStateBase
 			errorNum_ = static_cast<int>(ErrorCode::NonMsSpError);
 			return false;
 		}
+
 		if (scene_->cusMap_->GetSpawner().size() == 0)
 		{
 			errorNum_ = static_cast<int>(ErrorCode::NonSpError);
 			return false;
 		}
+
 		if (scene_->cusMap_->GetMainStay().size() == 0)
 		{
 			errorNum_ = static_cast<int>(ErrorCode::NonMsError);

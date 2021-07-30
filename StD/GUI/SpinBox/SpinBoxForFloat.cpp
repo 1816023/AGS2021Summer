@@ -1,6 +1,6 @@
 #include "SpinBoxForFloat.h"
 #include <DxLib.h>
-SpinBoxForFloat::SpinBoxForFloat(VECTOR2 pos, int xSize, int NumOfDigits, int NumOfDigitsOfDecmal, int fontHandle) :SpinBox(pos, xSize, BoxType::FLOAT, fontHandle)
+SpinBoxForFloat::SpinBoxForFloat(VECTOR2 pos, int xSize, int NumOfDigits, int NumOfDigitsOfDecmal, VECTOR2 cOffset, int fontHandle):SpinBox(pos, xSize, BoxType::FLOAT, cOffset, fontHandle)
 {
 	NumOfDigits_ = NumOfDigits;
 	NumOfDigitsOfDecmal_ = NumOfDigitsOfDecmal;

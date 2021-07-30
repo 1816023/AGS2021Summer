@@ -60,11 +60,11 @@ void Canvas::AddUIByID(UI* ui, int id, Justified just)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByID(UI* ui, int id, VECTOR2 pos)
+void Canvas::AddUIByID(UI* ui, int id)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
-	uiStat.ui->SetPos(pos + pos_);
+	uiStat.ui->SetPos(ui->GetPos() + pos_);
 	uiStat.id = id;
 	uiStat.name = L"";
 	UIList_.emplace_back(uiStat);
@@ -80,11 +80,11 @@ void Canvas::AddUIByName(UI* ui, std::wstring name, Justified just)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByName(UI* ui, std::wstring name, VECTOR2 pos)
+void Canvas::AddUIByName(UI* ui, std::wstring name)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
-	uiStat.ui->SetPos(pos + pos_);
+	uiStat.ui->SetPos(ui->GetPos() + pos_);
 	uiStat.id = -1;
 	uiStat.name = name;
 	UIList_.emplace_back(uiStat);
@@ -244,6 +244,11 @@ void Canvas::ClearUI()
 void Canvas::SetActive(bool active)
 {
 	isActive_ = active;
+}
+
+const VECTOR2& Canvas::GetPos()
+{
+	return pos_;
 }
 
 VECTOR2 Canvas::Center(const VECTOR2& size)

@@ -38,11 +38,11 @@ public:
 	// IDから整列機能を使う
 	void AddUIByID(UI* ui, int id, Justified just);
 	// IDから自分で座標設定をする
-	void AddUIByID(UI* ui, int id, VECTOR2 pos = VECTOR2());
+	void AddUIByID(UI* ui, int id);
 	// 名前から整列機能を使う
 	void AddUIByName(UI* ui, std::wstring name, Justified just);
 	// 名前から自分で座標設定をする
-	void AddUIByName(UI* ui, std::wstring name, VECTOR2 pos = VECTOR2());
+	void AddUIByName(UI* ui, std::wstring name);
 	// ----------------------------------------
 	// 名前からUIを取得
 	UI* GetUIByName(std::wstring name);
@@ -58,6 +58,8 @@ public:
 	void ClearUI();
 	// アクティブにするかどうか
 	void SetActive(bool active);
+	// 座標取得
+	const VECTOR2& GetPos();
 private:
 	// 初期化
 	void Init();

@@ -4,7 +4,7 @@ class SpinBoxForImage :
 	public SpinBox
 {
 public:
-	SpinBoxForImage(VECTOR2 pos, VECTOR2 size);
+	SpinBoxForImage(VECTOR2 pos, VECTOR2 size, VECTOR2 cOffset);
 	~SpinBoxForImage()override;
 	void Draw()override;
 	// 選択中のデータを取得する

@@ -1,6 +1,6 @@
 #include "SpinBoxForInt.h"
 #include <DxLib.h>
-SpinBoxForInt::SpinBoxForInt(VECTOR2 pos, int xSize, int fontHandle) :SpinBox(pos,xSize, BoxType::INT, fontHandle)
+SpinBoxForInt::SpinBoxForInt(VECTOR2 pos, int xSize, VECTOR2 cOffset, int fontHandle) :SpinBox(pos,xSize, BoxType::INT, cOffset, fontHandle)
 {
 
 }

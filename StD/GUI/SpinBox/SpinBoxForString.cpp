@@ -1,7 +1,7 @@
 #include "SpinBoxForString.h"
 #include <DxLib.h>
 #include "../../StringUtil.h"
-SpinBoxForString::SpinBoxForString(VECTOR2 pos, int xSize, int fontHandle) :SpinBox(pos, xSize, BoxType::STRING, fontHandle)
+SpinBoxForString::SpinBoxForString(VECTOR2 pos, int xSize, VECTOR2 cOffset, int fontHandle) :SpinBox(pos, xSize, BoxType::STRING, cOffset, fontHandle)
 {
 }
 SpinBoxForString::~SpinBoxForString()

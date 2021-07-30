@@ -1,6 +1,6 @@
 #include "SpinBoxForBool.h"
 #include <DxLib.h>
-SpinBoxForBool::SpinBoxForBool(VECTOR2 pos, int xSize, int fontHandle):SpinBox(pos,xSize,BoxType::BOOL,fontHandle)
+SpinBoxForBool::SpinBoxForBool(VECTOR2 pos, int xSize, VECTOR2 cOffset, int fontHandle):SpinBox(pos,xSize,BoxType::BOOL, cOffset, fontHandle)
 {
 	array_[0] = true;
 	array_[1] = false;
