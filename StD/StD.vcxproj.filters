@@ -162,5 +162,6 @@
     <ClInclude Include="Map\Simple.h" />
     <ClInclude Include="Mng\FontMng.h" />
     <ClInclude Include="GUI\CustumErrorText.h" />
+    <ClInclude Include="CustomState\RootCustom.h" />
   </ItemGroup>
 </Project>

@@ -59,7 +59,7 @@ protected:
 	// マップデータの格納2次元配列
 	dataVec mapData_;								
 	// マップデータのXMLファイルをロードしたデータ
-	tinyxml2::XMLDocument document_;	
+	tinyxml2::XMLDocument document_;
 };
 
 

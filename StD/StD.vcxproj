@@ -226,6 +226,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="CustomDraw.h" />
     <ClInclude Include="Mng\FontMng.h" />
+    <ClInclude Include="CustomState\RootCustom.h" />
     <ClInclude Include="Scene\GameMapSellectScene.h" />
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />

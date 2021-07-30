@@ -25,6 +25,7 @@ enum class CustomState {
 	SELECT_FILE,		// 既存のファイルから選択する
 	SET_STATE,			// マップの幅や高さを設定する状態
 	MAP_CUSTOM,			// マップを作成している状態
+	ROOT_CUSTOM,		// ルートを作成する状態
 	ENEMY_CUSTOM,		// 敵の配置と敵の侵攻ルート設定
 	END_CUSTOM,			// 作成終了後の保存時の状態
 	MAX
@@ -43,6 +44,7 @@ class SetState;
 class MapCustom;
 class EnemyCustom;
 class EndCustom;
+class RootCustom;
 class Canvas;
 enum class ErrorCode : int;
 class CustomMapScene :
@@ -68,6 +70,9 @@ private:
 	std::unique_ptr<Canvas>canvas_;
 	// テキスト表示用キャンバス
 	std::unique_ptr<Canvas>textCanvas_;
+	// 常時表示用のキャンバス
+	std::unique_ptr<Canvas>alwaysCanvas_;
+
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
 	CustomState nowState_;
@@ -77,6 +82,8 @@ private:
 	int blendAlpha_;
 	// ファイルからロードした説明文
 	std::map<MapChipName,std::string> textData_;
+	// タイトル遷移する用のフラグ
+	bool isTitleTransition_;
 	// 保存するときに最低限の状態になっているかの
 	// return 0 エラーなし
 	// return 1 自拠点敵拠点の数異常
@@ -93,5 +100,6 @@ private:
 	friend MapCustom;
 	friend EnemyCustom;
 	friend EndCustom;
+	friend RootCustom;
 };
 

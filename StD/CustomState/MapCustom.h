@@ -156,7 +156,7 @@ struct MapCustom : public CustomStateBase
 		
 		scene_->canvas_->ClearUI();
 		scene_->textCanvas_->ClearUI();
-		scene_->nowState_ = CustomState::ENEMY_CUSTOM;
+		scene_->nowState_ = CustomState::ROOT_CUSTOM;
 		scene_->custom_[scene_->nowState_]->Init(scene_);	
 		return true;
 	}
