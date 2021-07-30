@@ -20,8 +20,8 @@ enum class Justified
 
 enum class BackType
 {
-	Non,
-	RoundRect
+	Non,		// 描画なし
+	RoundRect	// 角丸
 };
 
 class UI;
@@ -29,7 +29,7 @@ struct UIStat;
 class Canvas
 {
 public:
-	Canvas(VECTOR2 pos, VECTOR2 size, int color = 0xffffff);
+	Canvas(VECTOR2 pos, VECTOR2 size, int color = 0xffffff, unsigned int alpha = 256);
 	Canvas(VECTOR2 pos, VECTOR2 size, std::wstring path);
 	Canvas(VECTOR2 pos, VECTOR2 size, std::function<void(VECTOR2)> drawFunc);
 	Canvas(VECTOR2 pos, VECTOR2 size, BackType back);
@@ -81,7 +81,8 @@ private:
 	int color_;		// 色
 	int gHandle_;	// 画像ハンドル
 	BackType backT_;	// 背景のタイプ
-	bool isActive_;
+	bool isActive_;		// 表示するかどうか
+	unsigned int alpha_;		// 透過値
 	std::function<void(VECTOR2)> drawFunc_;	// 描画function #VECTOR2はoffset
 };
 
