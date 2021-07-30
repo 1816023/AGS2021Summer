@@ -16,17 +16,16 @@ void Support::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float Support::Efficacy(float num, bool flag)
+float Support::Update(float num)
 {
-	if (flag)
+	
+	cnt++;
+	if (cnt >= 60)
 	{
-		cnt++;
-		if (cnt >= 60)
-		{
-			num++;
-			cnt = 0;
-		}
+		num++;
+		cnt = 0;
 	}
+	
 
 	return num;
 }

@@ -27,7 +27,7 @@ public:
 		return s_Instance;
 	}
 	bool Spawner(TRAP_ID id, Vec2Float pos);
-	float Efficacy(float num, bool flag);
+	float Update(float num);
 	void Draw();
 	void Delete();
 	int TrapCost(int cost);

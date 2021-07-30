@@ -15,12 +15,9 @@ void PowerDown::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float PowerDown::Efficacy(float num, bool flag)
+float PowerDown::Update(float num)
 {
-	if (flag)
-	{
-		num = num - (num / 3);
-	}
+	num = num - (num / 3);
 	return num;
 }
 
