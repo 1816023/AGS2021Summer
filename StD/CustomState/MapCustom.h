@@ -112,7 +112,7 @@ struct MapCustom : public CustomStateBase
 		dynamic_cast<UIText*>(scene->canvas_->GetUIByName(L"ƒGƒ‰["))->SetText(errorText_->GetErrorText()[errorNum_]);
 	}
 
-	void Draw(CustomMapScene* scene)override
+	void DrawUI(CustomMapScene* scene)override
 	{
 		VECTOR2 mPos = lpMouseController.GetPos();
 		errorText_->DrawErrorText(SELECT_UI_POS.first.x + 10, SELECT_UI_POS.first.y + (SELECT_UI_POS.second.y - SELECT_UI_POS.first.y) / 1.5f, errorNum_, 0xff0000);

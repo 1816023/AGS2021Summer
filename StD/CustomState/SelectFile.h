@@ -79,7 +79,7 @@ struct SelectFile:public CustomStateBase
 			Delete();
 		}
 	}
-	void Draw(CustomMapScene* scene)override
+	void DrawUI(CustomMapScene* scene)override
 	{
 		VECTOR2 sSize;
 		int bit;

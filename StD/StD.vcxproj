@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GUI\Gauge\BarGauge.cpp" />
     <ClCompile Include="CustomDraw.cpp" />
     <ClCompile Include="Mng\FontMng.cpp" />
     <ClCompile Include="Scene\GameMapSellectScene.cpp" />
@@ -224,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="GUI\Gauge\BarGauge.h" />
     <ClInclude Include="CustomDraw.h" />
     <ClInclude Include="Mng\FontMng.h" />
     <ClInclude Include="CustomState\RootCustom.h" />

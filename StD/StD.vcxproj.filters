@@ -74,6 +74,7 @@
     <ClCompile Include="Map\Simple.cpp" />
     <ClCompile Include="Mng\FontMng.cpp" />
     <ClCompile Include="GUI\CustumErrorText.cpp" />
+    <ClCompile Include="GUI\Gauge\BarGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -163,5 +164,6 @@
     <ClInclude Include="Mng\FontMng.h" />
     <ClInclude Include="GUI\CustumErrorText.h" />
     <ClInclude Include="CustomState\RootCustom.h" />
+    <ClInclude Include="GUI\Gauge\BarGauge.h" />
   </ItemGroup>
 </Project>

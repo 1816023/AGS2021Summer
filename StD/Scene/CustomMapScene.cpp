@@ -73,8 +73,8 @@ void CustomMapScene::Draw()
 {
 	Vec2Float cPos = Application::Instance().GetCamera().GetPos();
 	VECTOR2 mPos = lpMouseController.GetPos();
-
-	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM)
+	custom_[nowState_]->Draw(this);
+	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM ||nowState_==CustomState::ROOT_CUSTOM)
 	{
 		cusMap_->Draw();
 #ifdef _DEBUG
@@ -97,7 +97,7 @@ void CustomMapScene::DrawUI()
 {
 	alwaysCanvas_->Draw();
 
-	custom_[nowState_]->Draw(this);
+	custom_[nowState_]->DrawUI(this);
 	canvas_->Draw();
 	textCanvas_->Draw();
 

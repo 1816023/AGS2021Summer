@@ -64,7 +64,7 @@ private:
 	std::unique_ptr<Canvas>textCanvas_;
 	// 常時表示用のキャンバス
 	std::unique_ptr<Canvas>alwaysCanvas_;
-
+	// マップ
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
 	CustomState nowState_;

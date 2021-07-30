@@ -84,7 +84,7 @@ struct SetState:public CustomStateBase
 
 		}
 	}
-	void Draw(CustomMapScene* scene)override
+	void DrawUI(CustomMapScene* scene)override
 	{
 		VECTOR2 sSize;
 		int bit;

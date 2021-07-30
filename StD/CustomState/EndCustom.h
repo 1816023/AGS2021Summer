@@ -25,7 +25,7 @@ struct EndCustom :CustomStateBase
 
 	}
 
-	void Draw(CustomMapScene* scene)override
+	void DrawUI(CustomMapScene* scene)override
 	{
 
 	}

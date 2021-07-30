@@ -164,7 +164,7 @@ struct EnemyCustom : public CustomStateBase
 		}*/
 	};
 
-	void Draw(CustomMapScene* scene)
+	void DrawUI(CustomMapScene* scene)
 	{
 		// ˜g•\Ž¦
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
