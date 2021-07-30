@@ -12,6 +12,7 @@
 #include "../Unit/Enemy/EnemySpawner.h"
 #include "../Mng/ImageMng.h"
 #include "../Unit/Enemy/Enemy.h"
+#include "../Mng/SoundMng.h"
 
 GameScene::GameScene()
 {
@@ -54,7 +55,7 @@ GameScene::GameScene(std::string mapName)
 	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_, *map));
 
 	selectUnitId = PlayerUnit::NON;
-
+	lpSoundMng.StartSound("data/Sound/SE/BGM3.mp3", PlayType::LOOP);
 }
 
 GameScene::~GameScene()
@@ -109,11 +110,13 @@ unique_Base GameScene::Update(unique_Base own)
 		|| spawnRemain == 0 && enemyMng_->GetEnemies().size() == 0)
 	{
 		resultFlag = true;
+		lpSoundMng.StopSound("data/Sound/SE/BGM3.mp3");
 		return std::make_unique<ResultScene>(resultFlag);
 	}
 	if (enemyMng_->IsGoal() == true)
 	{
 		resultFlag = false;
+		lpSoundMng.StopSound("data/Sound/SE/BGM3.mp3");
 		return std::make_unique<ResultScene>(resultFlag);
 	}
 	return std::move(own);

@@ -39,11 +39,11 @@ bool TrapManager::Spawner(TRAP_ID id, Vec2Float pos)
 	return false;
 }
 
-float TrapManager::Efficacy(float num, bool flag)
+float TrapManager::Update(float num)
 {
     for (auto& trap : trapList)
     {
-        return trap->Efficacy(num, flag);
+        return trap->Update(num);
     }
 }
 

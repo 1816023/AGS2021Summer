@@ -8,7 +8,7 @@ public:
 	~Explosion();
 
 	void Draw() override;
-	float Efficacy(float num, bool flag) override;
+	float Update(float num) override;
 	int TrapCost(int cost) override;
 };
 

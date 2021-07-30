@@ -35,6 +35,7 @@ bool Button::Update()
 	{
 		if (lpMouseController.GetClicking(clickType_))
 		{
+			SetSound();
 			IsHit();
 		}
 		if (reverseFlag_)
