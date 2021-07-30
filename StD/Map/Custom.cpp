@@ -84,7 +84,7 @@ bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 	{
 		return false;
 	}
-	if (idx.x > state_.mapSize.x || idx.y > state_.mapSize.y)
+	if (idx.x >= state_.mapSize.x || idx.y >= state_.mapSize.y)
 	{
 		return false;
 	}
