@@ -3,7 +3,7 @@
 #include <array>
 #include "Map.h"
 #include "../StringUtil.h"
-
+#include <cassert>
 Map::Map()
 {
 }
@@ -63,10 +63,6 @@ bool Map::SetUp(std::string mapName)
 	state_.chipSize = { chipElm->IntAttribute("hight"), chipElm->IntAttribute("width") };
 	dataVec mapData;
 	mapData.resize(state_.mapSize.y);
-	//for (int y = 0; y < mapSize_.y; y++)
-	//{
-	//	mapData_[y].resize(mapSize_.y);
-	//}
 	std::string mapStr = mapElm->GetText();
 	std::stringstream ss{ mapStr };
 	std::string buf;
@@ -80,6 +76,14 @@ bool Map::SetUp(std::string mapName)
 		}
 	}
 	mapData_ = mapData;
+	y = 0;
+	// 自拠点を検索して格納する
+	for (auto& map : mapData_)
+	{
+		// 再起
+		FindMapObj(map, y, map.begin());
+		y++;
+	}
 	return true;
 }
 
@@ -128,6 +132,44 @@ VECTOR2 Map::GetChipSize()
 	return state_.chipSize;
 }
 
+void Map::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
+{
+	auto find = std::find_if(fStart, map.end(), [](const MapChipName& data)
+		{
+			return data == MapChipName::MAINSTAY || data == MapChipName::SPAWNER;
+		});
+
+	if (find != map.end())
+	{
+		if (*find == MapChipName::MAINSTAY)
+		{
+			// 拠点数限界以上のデータだった場合
+			// ※マップデータ外部でいじる時注意
+			if (mainStay_.size() > 2)
+			{
+				assert(false);
+			}
+			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
+			mainStay_.emplace_back(point.x + point.y * state_.mapSize.x);
+
+
+		}
+		if (*find == MapChipName::SPAWNER)
+		{
+			// スポナー数限界以上のデータだった場合
+			// ※スポナーデータ外部でいじる時注意
+			if (spawners_.size() > 2)
+			{
+				assert(false);
+			}
+			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
+			spawners_.emplace_back(point.x + point.y * state_.mapSize.x);
+		}
+		// 再帰的に次を返す
+		FindMapObj(map, y, find + 1);
+	}
+}
+
 bool Map::LoadMap(std::string mapName)
 {
 	auto path = StringUtil::SpritExtention(mapName);
@@ -138,4 +180,24 @@ bool Map::LoadMap(std::string mapName)
 		return true;
 	}
 	return false;
+}
+
+const std::vector<int>& Map::GetMainStay()
+{
+	return mainStay_;
+}
+
+const std::vector<int>& Map::GetSpawner()
+{
+	return spawners_;
+}
+
+const std::vector<rootVec>& Map::GetRoot()
+{
+	return root_;
+}
+
+void Map::SetRoot(const std::vector<rootVec>& root)
+{
+	root_ = root;
 }

@@ -12,12 +12,13 @@ struct UIStat
 };
 
 
-Canvas::Canvas(VECTOR2 pos, VECTOR2 size, int color)
+Canvas::Canvas(VECTOR2 pos, VECTOR2 size, int color, unsigned int alpha)
 {
 	Init();
 	pos_ = pos;
 	size_ = size;
 	color_ = color;
+	alpha_ = alpha;
 }
 
 Canvas::Canvas(VECTOR2 pos, VECTOR2 size, std::wstring path)
@@ -59,11 +60,11 @@ void Canvas::AddUIByID(UI* ui, int id, Justified just)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByID(UI* ui, int id, VECTOR2 pos)
+void Canvas::AddUIByID(UI* ui, int id)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
-	uiStat.ui->SetPos(pos + pos_);
+	uiStat.ui->SetPos(ui->GetPos() + pos_);
 	uiStat.id = id;
 	uiStat.name = L"";
 	UIList_.emplace_back(uiStat);
@@ -79,11 +80,11 @@ void Canvas::AddUIByName(UI* ui, std::wstring name, Justified just)
 	UIList_.emplace_back(uiStat);
 }
 
-void Canvas::AddUIByName(UI* ui, std::wstring name, VECTOR2 pos)
+void Canvas::AddUIByName(UI* ui, std::wstring name)
 {
 	UIStat uiStat;
 	uiStat.ui = ui;
-	uiStat.ui->SetPos(pos + pos_);
+	uiStat.ui->SetPos(ui->GetPos() + pos_);
 	uiStat.id = -1;
 	uiStat.name = name;
 	UIList_.emplace_back(uiStat);
@@ -123,6 +124,7 @@ void Canvas::Init()
 	drawFunc_ = nullptr;
 	backT_ = BackType::Non;
 	isActive_ = true;
+	alpha_ = 0;
 }
 
 void Canvas::Draw()
@@ -140,6 +142,11 @@ void Canvas::Draw()
 
 void Canvas::BackDraw()
 {
+	if (backT_ == BackType::Non)
+	{
+		return;
+	}
+
 	if (backT_ != BackType::Non)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
@@ -157,7 +164,9 @@ void Canvas::BackDraw()
 	
 	if (gHandle_ == -1)
 	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha_);
 		DrawBox(pos_.x, pos_.y, pos_.x + size_.x, pos_.y + size_.y, color_, true);
+		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 	}
 	else
 	{
@@ -172,9 +181,9 @@ void Canvas::Update()
 		return;
 	}
 
-	for (auto& ui : UIList_)
+	for (auto& uiStat : UIList_)
 	{
-		if (ui.ui->Update())
+		if (uiStat.ui->Update())
 		{
 			break;
 		}
@@ -235,6 +244,11 @@ void Canvas::ClearUI()
 void Canvas::SetActive(bool active)
 {
 	isActive_ = active;
+}
+
+const VECTOR2& Canvas::GetPos()
+{
+	return pos_;
 }
 
 VECTOR2 Canvas::Center(const VECTOR2& size)

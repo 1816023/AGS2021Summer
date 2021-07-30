@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include "../tinyxml2/tinyxml2.h"
+#include "../Unit/Enemy/EnemyType.h"
+
 
 // チップ情報の名前
 enum class MapChipName:unsigned int
@@ -16,7 +18,7 @@ enum class MapChipName:unsigned int
 	MAX
 
 };
-
+using mapChipVec = std::vector<MapChipName>;
 
 // 
 struct MapState
@@ -27,6 +29,7 @@ struct MapState
 
 };
 using dataVec = std::vector<std::vector<MapChipName>> ;
+using rootVec = std::vector<RootDir> ;
 // マップ情報の表示取得用クラス
 class Map
 {
@@ -46,20 +49,29 @@ public:
 	// マップサイズ取得
 	VECTOR2 GetMapSize();							
 	// チップサイズ取得	
-	VECTOR2 GetChipSize();							
+	VECTOR2 GetChipSize();		
+	void FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart);
+	const std::vector<int>& GetMainStay();
+	const std::vector<int>& GetSpawner();
+	const std::vector<rootVec>& GetRoot();
+	void SetRoot(const std::vector<rootVec>& root);
 protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定
 	bool LoadMap(std::string mapName);	
 	// マップのステータス
-	MapState state_;
-	//// マップのchip数
-	//VECTOR2 mapSize_;								
-	//// 1chipのサイズ
-	//VECTOR2 chipSize_;								
+	MapState state_;						
 	// マップデータの格納2次元配列
 	dataVec mapData_;								
 	// マップデータのXMLファイルをロードしたデータ
 	tinyxml2::XMLDocument document_;
+	// インデックスを格納
+	// ※インデックスはx+y*xの最大
+	// 拠点座標
+	std::vector<int> mainStay_;
+	// 敵出現位置の座標
+	std::vector<int>spawners_;
+	// ルート
+	std::vector<rootVec>root_;
 };
 
 

@@ -2,7 +2,7 @@
 #include "../../Mng/ImageMng.h"
 #include "../../StringUtil.h"
 #include <DxLib.h>
-SpinBoxForImage::SpinBoxForImage(VECTOR2 pos, VECTOR2 size):SpinBox(pos,size,BoxType::IMAGE)
+SpinBoxForImage::SpinBoxForImage(VECTOR2 pos, VECTOR2 size, VECTOR2 cOffset):SpinBox(pos,size,BoxType::IMAGE, cOffset)
 {
 
 }
