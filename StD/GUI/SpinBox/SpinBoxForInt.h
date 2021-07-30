@@ -4,7 +4,7 @@ class SpinBoxForInt :
 	public SpinBox
 {
 public:
-	SpinBoxForInt(VECTOR2 pos, int xSize, int fontHandle = -1);
+	SpinBoxForInt(VECTOR2 pos, int xSize,  VECTOR2 cOffset, int fontHandle = -1);
 	~SpinBoxForInt()override;
 	void Draw()override;
 	// 選択中のデータを取得する

@@ -86,13 +86,13 @@ void MainScene::Init()
 	{
 		for (auto& gmb : mbList)
 		{
-			auto b = new ImageRectButton(bSize,
+			auto b = new ImageRectButton(gmb.pos, bSize,
 				dir + gmb.path + L"1.png", dir + gmb.path + L"2.png", gmb.func);
 			auto wordWidth = GetDrawStringWidth(gmb.text.c_str(), GetStringLength(gmb.text.c_str()));
 			b->SetString(_WtS(gmb.text), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 4));
 			b->SetReversePush();
 			b->SetAuto();
-			canvas->AddUIByID(b, gmb.id, gmb.pos);
+			canvas->AddUIByID(b, gmb.id);
 		}
 	};
 
@@ -121,7 +121,7 @@ void MainScene::Init()
 
 	// –ß‚éƒ{ƒ^ƒ“
 	bSize = { 100, 67 };
-	auto backButton = new ImageRectButton(bSize,
+	auto backButton = new ImageRectButton(bPos, bSize,
 		dir + L"Back_Button1.png", dir + L"Back_Button1.png",
 		[&]() {
 			updater_ = &MainScene::GameModeSelectUpdate;
@@ -130,7 +130,7 @@ void MainScene::Init()
 	auto wordWidth = GetDrawStringWidth(L"BACK", GetStringLength(L"BACK"));
 	backButton->SetString(_WtS(L"BACK"), VECTOR2(bSize.x / 2 - wordWidth / 2, bSize.y / 2 - GetFontSize() / 2));
 	backButton->SetAuto();
-	difSelectCanvas_->AddUIByID(backButton, ++id, bPos);
+	difSelectCanvas_->AddUIByID(backButton, ++id);
 
 }
 

@@ -9,6 +9,7 @@
 #include "../GUI/Canvas.h"
 #include "../Mng/FontMng.h"
 #include "../Mng/ImageMng.h"
+#include "../StringUtil.h"
 
 #define CUSTOM dynamic_cast<Custom*>(scene->map_.get())
 
@@ -40,39 +41,46 @@ struct EnemyCustom : public CustomStateBase
 				{
 					root.push_back(astar_->AstarStart(scene->cusMap_->PosFromIndex(spawners[s]),
 						scene->cusMap_->PosFromIndex(mainStay[m])));
-
 				}
 			}
 		}
+		scene->cusMap_->SetRoot(root);
+		
 		spawner_ = spawners;
 
 		fontHandle_ = lpFontMng.AddStrFont(30, L"enemyUI");
 		// UIの初期化
 		auto strSize=VECTOR2(GetDrawStringWidthToHandle(L"スポナー ",GetStringLength(L"スポナー "), fontHandle_),GetFontSizeToHandle(fontHandle_));
 		// スポナースピンボックスの設定
-		spinBoxS_.try_emplace("スポナー", std::make_unique<SpinBoxForInt>(VECTOR2(basePosX,0 )+strSize, 100, fontHandle_));
+		std::map<std::string, SpinBox*>spinBoxS;
+		spinBoxS.try_emplace("スポナー", new SpinBoxForInt(VECTOR2(bSpace,0 )+strSize, 100, scene->canvas_->GetPos(), fontHandle_));
 		for (int s = spawners.size(); s > 0; s--)
 		{
-			dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->AddData(s);
+			dynamic_cast<SpinBoxForInt*>(spinBoxS["スポナー"])->AddData(s);
 		}
 		// ウェーブのスピンボックスの設定
-		spinBoxS_.try_emplace("Wave", std::make_unique<SpinBoxForInt>(VECTOR2(basePosX, strSize.y+bSpace) + strSize, 100, fontHandle_));
-		dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->AddData(3);
-		dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->AddData(2);
-		dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->AddData(1);
+		spinBoxS.try_emplace("Wave", new SpinBoxForInt(VECTOR2(bSpace, strSize.y+bSpace) + strSize, 100, scene->canvas_->GetPos(), fontHandle_));
+		dynamic_cast<SpinBoxForInt*>(spinBoxS["Wave"])->AddData(3);
+		dynamic_cast<SpinBoxForInt*>(spinBoxS["Wave"])->AddData(2);
+		dynamic_cast<SpinBoxForInt*>(spinBoxS["Wave"])->AddData(1);
 		// ルートのスピンボックスの設定
-		spinBoxS_.try_emplace("ルート", std::make_unique<SpinBoxForInt>(VECTOR2(basePosX, (strSize.y + bSpace)*2) + strSize, 100, fontHandle_));
+		spinBoxS.try_emplace("ルート",new SpinBoxForInt(VECTOR2(bSpace, (strSize.y + bSpace)*2) + strSize, 100, scene->canvas_->GetPos(), fontHandle_));
 		for (int r = root.size()-1; r > -1; r--)
 		{
-			dynamic_cast<SpinBoxForInt*>(spinBoxS_["ルート"].get())->AddData(r);
+			dynamic_cast<SpinBoxForInt*>(spinBoxS["ルート"])->AddData(r);
 		}
 		// 敵種類のスピンボックスの設定
-		spinBoxS_.try_emplace("敵種類", std::make_unique<SpinBoxForImage>(VECTOR2(basePosX, (strSize.y + bSpace) * 3) + strSize, VECTOR2(100, 64)));
-		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Circle]);
-		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Pentagon]);
-		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Square]);
-		dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->AddData(enemyH_[EnemyType::Triangle]);
+		spinBoxS.try_emplace("敵種類", new SpinBoxForImage(VECTOR2(bSpace, (strSize.y + bSpace) * 3) + strSize, VECTOR2(100, 64), scene->canvas_->GetPos()));
+		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Circle]);
+		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Pentagon]);
+		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Square]);
+		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Triangle]);
 		
+		for (auto& box : spinBoxS)
+		{
+			scene->canvas_->AddUIByName(box.second,_StW(box.first));
+		}
+
 
 		list_.resize(3);
 		// スポナーの数表示用リストを作成
@@ -93,9 +101,11 @@ struct EnemyCustom : public CustomStateBase
 		// ボタンの作成
 		// 登録ボタン
 		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&]() {
+			auto typeBox = dynamic_cast<SpinBoxForImage*>(scene->canvas_->GetUIByName(L"敵種類"))->GetSelData();
+			auto rootBox = dynamic_cast<SpinBoxForImage*>(scene->canvas_->GetUIByName(L"ルート"))->GetSelData();
 			list_[selWave_][selSpawner_].first
-				->Add(dynamic_cast<SpinBoxForImage*>(spinBoxS_["敵種類"].get())->GetSelData(),std::to_string(GetKeyInputNumberToFloat(keyInputHandleForSpawnTime)));
-			list_[selWave_][selSpawner_].second.push_back(dynamic_cast<SpinBoxForInt*>(spinBoxS_["ルート"].get())->GetSelData());
+				->Add(typeBox,std::to_string(GetKeyInputNumberToFloat(keyInputHandleForSpawnTime)));
+			list_[selWave_][selSpawner_].second.push_back(rootBox);
 				spawnTime = GetKeyInputNumberToFloat(keyInputHandleForSpawnTime);
 			return true; }));
 		button_.back()->SetString("登録",VECTOR2(15,10));
@@ -130,8 +140,8 @@ struct EnemyCustom : public CustomStateBase
 	}
 	void Update(CustomMapScene* scene)
 	{
-		selSpawner_= dynamic_cast<SpinBoxForInt*>(spinBoxS_["スポナー"].get())->GetSelData()-1;
-		selWave_= dynamic_cast<SpinBoxForInt*>(spinBoxS_["Wave"].get())->GetSelData()-1;
+		selSpawner_= dynamic_cast<SpinBoxForInt*>(scene->canvas_->GetUIByName(L"スポナー"))->GetSelData()-1;
+		selWave_= dynamic_cast<SpinBoxForInt*>(scene->canvas_->GetUIByName(L"Wave"))->GetSelData()-1;
 		list_[selWave_][selSpawner_].first->Update();
 		if (lpMouseController.IsHitBoxToMouse(VECTOR2(), VECTOR2(SELECT_UI_POS.first.x, TEXT_UI_POS.first.y)))
 		{
@@ -148,10 +158,10 @@ struct EnemyCustom : public CustomStateBase
 				break;
 			}
 		}
-		for (auto&& map : spinBoxS_)
+	/*	for (auto&& map : spinBoxS_)
 		{
 			map.second->Update();
-		}
+		}*/
 	};
 
 	void Draw(CustomMapScene* scene)
@@ -179,11 +189,11 @@ struct EnemyCustom : public CustomStateBase
 		const int basePosX = SELECT_UI_POS.first.x + bSpace;
 		const int basePosY = SELECT_UI_POS.first.x + bSize + bSpace;
 
-		for (auto&& map : spinBoxS_)
+		/*for (auto&& map : spinBoxS_)
 		{
 			DrawStringToHandle(basePosX, map.second->GetPos().y+(map.second->GetSize().y/2-GetFontSizeToHandle(fontHandle_)/2), _StW(map.first).c_str(), 0xffffff, fontHandle_);
 			map.second->Draw();
-		}
+		}*/
 		DrawStringToHandle(basePosX, (bSize + bSpace) * 3 - 5, L"出現時間", 0xffffff, fontHandle_);
 		DrawBox(basePosX-2+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3-5, basePosX + 100+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 + GetFontSizeToHandle(fontHandle_)+5, 0x000000, true);
 		DrawBox(basePosX-2+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3-5, basePosX + 100+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 + GetFontSizeToHandle(fontHandle_)+5, 0xffffff, false);
@@ -303,7 +313,7 @@ private:
 	int selWave_;
 	
 	std::map<EnemyType, int>enemyH_;
-	std::map<std::string,std::unique_ptr<SpinBox>>spinBoxS_;
+//	std::map<std::string,SpinBox*>spinBoxS_;
 	int fontHandle_;
 
 	// 数値入力用

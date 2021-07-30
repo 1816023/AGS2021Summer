@@ -43,8 +43,8 @@ bool CustomMapScene::Init()
 {
 	auto defSize = VECTOR2(DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y);
 	canvas_ = std::make_unique<Canvas>(SELECT_UI_POS.first, defSize - SELECT_UI_POS.first, BackType::RoundRect);
-	textCanvas_ = std::make_unique<Canvas>(TEXT_UI_POS.first, VECTOR2(SELECT_UI_POS.first.x,defSize.y- TEXT_UI_POS.first.y), BackType::RoundRect);
-	cusMap_ = std::make_unique<Custom>(VECTOR2());
+	textCanvas_ = std::make_unique<Canvas>(TEXT_UI_POS.first, VECTOR2(SELECT_UI_POS.first.x,defSize.y - TEXT_UI_POS.first.y), BackType::RoundRect);
+	cusMap_ = std::make_unique<Custom>();
 	nowState_ = CustomState::SELECT_FILE;
 	custom_.try_emplace(CustomState::SELECT_FILE, std::make_unique<SelectFile>());
 	custom_.try_emplace(CustomState::SET_STATE, std::make_unique<SetState>());

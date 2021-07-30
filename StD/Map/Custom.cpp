@@ -11,7 +11,8 @@
 #include "../GUI/ScrollList/ImgeAndStringList.h"
 #include "../Unit/Enemy/Enemy.h"
 #include "../Mng/ImageMng.h"
-Custom::Custom(VECTOR2 offset) :offset_(offset)
+
+Custom::Custom() 
 {
 	mapIdx = 0;
 }
@@ -47,19 +48,6 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 				map.push_back(MapChipName::WALL);
 			}
 		}
-	}
-	else
-	{
-		// マップが存在した時
-		int y = 0;
-		// 自拠点を検索して格納する
-		for (auto& map : mapData_)
-		{
-			// 再起
-			FindMapObj(map, y, map.begin());
-			y++;
-		}
-		// セーブされたスポナーを読み込み
 	}
 	CreateMapFile(mapSize, fileName);
 }
@@ -384,54 +372,6 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 	}
 	document_.SaveFile(filePath.c_str());
 	return true;
-}
-
-void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
-{
-	auto find = std::find_if(fStart, map.end(), [](const MapChipName& data)
-		{
-			return data == MapChipName::MAINSTAY || data == MapChipName::SPAWNER;
-		});
-
-	if (find != map.end())
-	{
-		if (*find == MapChipName::MAINSTAY)
-		{
-			// 拠点数限界以上のデータだった場合
-			// ※マップデータ外部でいじる時注意
-			if (mainStay_.size() > 2)
-			{
-				assert(false);
-			}
-			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-			mainStay_.emplace_back(point.x + point.y * state_.mapSize.x);
-
-			
-		}
-		if (*find == MapChipName::SPAWNER)
-		{
-			// スポナー数限界以上のデータだった場合
-			// ※スポナーデータ外部でいじる時注意
-			if (spawners_.size() > 2)
-			{
-				assert(false);
-			}
-			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-			spawners_.emplace_back(point.x + point.y * state_.mapSize.x);
-		}
-		// 再帰的に次を返す
-		FindMapObj(map, y, find + 1);
-	}
-}
-
-const std::vector<int>& Custom::GetMainStay()
-{
-	return mainStay_;
-}
-
-const std::vector<int>& Custom::GetSpawner()
-{
-	return spawners_;
 }
 
 VECTOR2 Custom::PosFromIndex(int index)

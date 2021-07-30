@@ -136,7 +136,8 @@ void Astar::OpenNode(VECTOR2 pos, const Node& node)
 		return;
 	}
 	// ’Ê‚ê‚é‚©‚Ç‚¤‚©
-	if (cusMap_.GetMapChipByIndex(pos) == MapChipName::FIELD)
+	auto chip = cusMap_.GetMapChipByIndex(pos);
+	if (chip != MapChipName::ROOT && chip != MapChipName::SPAWNER && chip != MapChipName::MAINSTAY)
 	{
 		return;
 	}
@@ -184,11 +185,11 @@ void Astar::CloseNode(VECTOR2 pos)
 
 void Astar::RecursiveCreateRoot(Node& node)
 {	
-	auto chip = cusMap_.GetMapChipByIndex(node.pos);
+	/*auto chip = cusMap_.GetMapChipByIndex(node.pos);
 	if (chip != MapChipName::MAINSTAY && chip != MapChipName::SPAWNER)
 	{
 		cusMap_.SetChipByIdx(node.pos, MapChipName::ROOT);
-	}
+	}*/
 	if (node.parent != nullptr)
 	{
 		RootDir root;

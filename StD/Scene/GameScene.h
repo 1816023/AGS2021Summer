@@ -35,7 +35,6 @@ private:
 	std::unique_ptr<Map> map;
 	std::shared_ptr<PlayerMng> playerMng_;
 	std::shared_ptr<EnemyManager> enemyMng_;
-	// Œ»İ‚Í‚±‚±‚ÉMap‚ÉˆÚ‚·—\’è
 	std::vector<std::shared_ptr<EnemySpawner>>enemySpawner_;	// “G¶¬ƒNƒ‰ƒX
 
 	std::unique_ptr<ShotMng> shotMng_;	//’eŠÇ—ƒNƒ‰ƒX
