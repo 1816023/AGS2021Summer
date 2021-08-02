@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GUI\Gauge\BarGauge.cpp" />
     <ClCompile Include="CustomDraw.cpp" />
     <ClCompile Include="Mng\FontMng.cpp" />
     <ClCompile Include="Scene\GameMapSellectScene.cpp" />
@@ -163,7 +164,7 @@
     <ClCompile Include="GUI\Button\ImageRectButton.cpp" />
     <ClCompile Include="GUI\Button\RectButton.cpp" />
     <ClCompile Include="GUI\Button\RoundRectButton.cpp" />
-    <ClCompile Include="CustumErrorText.cpp" />
+    <ClCompile Include="GUI\CustumErrorText.cpp" />
     <ClCompile Include="GUI\ScrollList\ImageList.cpp" />
     <ClCompile Include="GUI\PullDown\PullDown.cpp" />
     <ClCompile Include="GUI\SpinBox\SpinBox.cpp" />
@@ -224,8 +225,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="GUI\Gauge\BarGauge.h" />
     <ClInclude Include="CustomDraw.h" />
     <ClInclude Include="Mng\FontMng.h" />
+    <ClInclude Include="CustomState\RootCustom.h" />
     <ClInclude Include="Scene\GameMapSellectScene.h" />
     <ClInclude Include="GUI\ScrollList\ButtonList.h" />
     <ClInclude Include="GUI\Canvas.h" />
@@ -238,7 +241,7 @@
     <ClInclude Include="GUI\Button\ImageRectButton.h" />
     <ClInclude Include="GUI\Button\RectButton.h" />
     <ClInclude Include="GUI\Button\RoundRectButton.h" />
-    <ClInclude Include="CustumErrorText.h" />
+    <ClInclude Include="GUI\CustumErrorText.h" />
     <ClInclude Include="GUI\ScrollList\ImageList.h" />
     <ClInclude Include="GUI\SpinBox\SpinBox.h" />
     <ClInclude Include="GUI\SpinBox\SpinBoxForBool.h" />

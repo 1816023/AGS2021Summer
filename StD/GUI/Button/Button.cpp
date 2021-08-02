@@ -7,7 +7,7 @@
 #include "Button.h"
 
 
-Button::Button(VECTOR2 offset) :offset_(offset)
+Button::Button() 
 {
 	isPush_ = false;
 	autoFlag_ = false;
@@ -35,6 +35,7 @@ bool Button::Update()
 	{
 		if (lpMouseController.GetClicking(clickType_))
 		{
+			SetSound();
 			IsHit();
 		}
 		if (reverseFlag_)

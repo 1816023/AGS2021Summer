@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include "../Application.h"
 #include "../MouseController.h"
+#include "../Mng/SoundMng.h"
 #include "../Unit/Player/PlayerMng.h"
 #include "../VECTOR2.h"
 #include "../NumberUI.h"
@@ -19,6 +20,7 @@ ResultScene::ResultScene(bool flag)
 	minute = 0;
 	cnt = 255;
 	flag = true;
+	lpSoundMng.StartSound("data/Sound/SE/BGM4.mp3", PlayType::LOOP);
 }
 
 ResultScene::~ResultScene()
@@ -32,6 +34,7 @@ unique_Base ResultScene::Update(unique_Base own)
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
+		lpSoundMng.StopSound("data/Sound/SE/BGM4.mp3");
 		return std::make_unique<TitleScene>();
 	}
 

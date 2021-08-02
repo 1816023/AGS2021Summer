@@ -4,7 +4,7 @@ class SpinBoxForString :
 	public SpinBox
 {
 public:
-	SpinBoxForString(VECTOR2 pos, int xSize, int fontHandle = -1);
+	SpinBoxForString(VECTOR2 pos, int xSize, VECTOR2 cOffset, int fontHandle = -1);
 	~SpinBoxForString()override;
 	bool Update()override;
 	void Draw()override;

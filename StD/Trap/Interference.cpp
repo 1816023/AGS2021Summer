@@ -16,16 +16,9 @@ void Interference::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float Interference::Efficacy(float num, bool flag)
+float Interference::Update(float num)
 {
-	if (flag)
-	{
-		return num * 0.3;
-	}
-	else
-	{
-		return num;
-	}
+	return num * 0.3;
 }
 
 int Interference::TrapCost(int cost)

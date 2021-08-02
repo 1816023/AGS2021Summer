@@ -20,8 +20,8 @@ enum class Justified
 
 enum class BackType
 {
-	Non,
-	RoundRect
+	Non,		// 描画なし
+	RoundRect	// 角丸
 };
 
 class UI;
@@ -29,20 +29,20 @@ struct UIStat;
 class Canvas
 {
 public:
-	Canvas(VECTOR2 pos, VECTOR2 size, int color = 0xffffff);
+	Canvas(VECTOR2 pos, VECTOR2 size, int color = 0xffffff, unsigned int alpha = 256);
 	Canvas(VECTOR2 pos, VECTOR2 size, std::wstring path);
 	Canvas(VECTOR2 pos, VECTOR2 size, std::function<void(VECTOR2)> drawFunc);
 	Canvas(VECTOR2 pos, VECTOR2 size, BackType back);
 	~Canvas();
 	// ------- UIをキャンバスに追加する -------
 	// IDから整列機能を使う
-	void AddUIByID(UI* ui, Justified just, int id);
+	void AddUIByID(UI* ui, int id, Justified just);
 	// IDから自分で座標設定をする
-	void AddUIByID(UI* ui, VECTOR2 pos, int id);
+	void AddUIByID(UI* ui, int id);
 	// 名前から整列機能を使う
-	void AddUIByName(UI* ui, Justified just, std::wstring name);
+	void AddUIByName(UI* ui, std::wstring name, Justified just);
 	// 名前から自分で座標設定をする
-	void AddUIByName(UI* ui, VECTOR2 pos, std::wstring name);
+	void AddUIByName(UI* ui, std::wstring name);
 	// ----------------------------------------
 	// 名前からUIを取得
 	UI* GetUIByName(std::wstring name);
@@ -58,6 +58,8 @@ public:
 	void ClearUI();
 	// アクティブにするかどうか
 	void SetActive(bool active);
+	// 座標取得
+	const VECTOR2& GetPos();
 private:
 	// 初期化
 	void Init();
@@ -81,7 +83,8 @@ private:
 	int color_;		// 色
 	int gHandle_;	// 画像ハンドル
 	BackType backT_;	// 背景のタイプ
-	bool isActive_;
+	bool isActive_;		// 表示するかどうか
+	unsigned int alpha_;		// 透過値
 	std::function<void(VECTOR2)> drawFunc_;	// 描画function #VECTOR2はoffset
 };
 

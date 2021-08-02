@@ -5,6 +5,7 @@
 #include "../GUI/Button/Button.h"
 #include "../Unit/Enemy/EnemyType.h"
 #include "../GUI/PullDown/PullDown.h"
+#include "../Map/Simple.h"
 struct EnemyListState {
 	EnemyType type;
 	double time;
@@ -27,7 +28,9 @@ private:
 	std::list<EnemyListState>LoadEnemyData(std::string path);
 	std::list<EnemyListState>enemyList_;
 	std::list<Button*>button_;
-	std::list<PullDown*>pullDown_;
+	PullDown*pullDown_;
+	std::unique_ptr<Simple>map_;
 	bool CheckData(std::string);
+	unsigned int transitionFlag_;
 };
 

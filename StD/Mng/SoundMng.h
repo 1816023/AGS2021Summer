@@ -16,7 +16,12 @@
 using VEC_INT = std::vector<int>;
 #define lpSoundMng SoundMng::GetInstance()
 #define Sound_ID(X) (SoundMng::GetInstance().GetID(X))
-
+enum class PlayType
+{
+	NORMAL = DX_PLAYTYPE_NORMAL,
+	BACK = DX_PLAYTYPE_BACK,
+	LOOP = DX_PLAYTYPE_LOOP
+};
 class SoundMng
 {
 public:
@@ -25,8 +30,9 @@ public:
 		static SoundMng s_Instance;
 		return (s_Instance);
 	}
-	const int& GetID(std::string f_name);		// SEÊÝÄÞÙ‚Ì“üŽè
-	const int& StartSound(std::string f_name, int soundType);
+	// SEÊÝÄÞÙ‚Ì“üŽè
+	const int& GetID(std::string f_name);	
+	const int& StartSound(std::string f_name,PlayType type=PlayType::BACK);
 	const int& StopSound(std::string f_name);
 	const int& ChangeVol(int vol, std::string f_name);
 	const int& CheckSound(std::string f_name);

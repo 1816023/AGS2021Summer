@@ -7,6 +7,7 @@
 #include "../GUI/Canvas.h"
 
 
+
 struct DataState
 {
 	std::string fileName;
@@ -21,6 +22,7 @@ struct SelectFile:public CustomStateBase
 	bool Init(CustomMapScene* scene)override
 	{
 		scene->canvas_->SetActive(false);
+		scene->textCanvas_->SetActive(false);
 		scene->fileName_[0] = TCHAR();
 		FileSystem::serch("data/mapData", fileList_);
 		int a = 0;
@@ -37,15 +39,14 @@ struct SelectFile:public CustomStateBase
 			{
 				continue;
 			}
-			buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, 50), VECTOR2(300, 70), 0xffffff, 
+			buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(10 + a / 14 * 310, a % 14 * 30 + 50), VECTOR2(300, 20), 0xffffff,
 				[&,scene,list,data]() {
 					scene->nowState_ = CustomState::MAP_CUSTOM;
 					scene->cusMap_->SetUp(_StW(list), data.mapSize);
 					scene->custom_[scene->nowState_]->Init(scene);
 					Delete();
-					return true; }, VECTOR2(10 + a / 14 * 310, a % 14 * 30)));
+					return true; }));
 			buttonList_.back()->SetAuto();
-			//buttomList_.back()->SetReversePush();
 			buttonList_.back()->SetString(list + "F" + std::to_string(data.mapSize.x) + "F" + std::to_string(data.mapSize.y), VECTOR2(5,2));
 			buttonList_.back()->SetReversePush();
 			a++;
@@ -54,7 +55,7 @@ struct SelectFile:public CustomStateBase
 		int bit;
 		GetScreenState(&sSize.x, &sSize.y, &bit);
 		isNewCreate_ = false;
-		buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(sSize.x / 1.25, 10), VECTOR2(sSize.x / 1.25 + 100, 30), 0xffffff, [&]() {isNewCreate_ = true; return true; }, VECTOR2(0, 0)));
+		buttonList_.emplace_back(std::make_unique<RectButton>(VECTOR2(sSize.x / 1.25, 10), VECTOR2(100, 20), 0xffffff, [&]() {isNewCreate_ = true; return true; }));
 		buttonList_.back()->SetString("V‹Kì¬", VECTOR2(12, 2));
 		buttonList_.back()->SetAuto();
 		buttonList_.back()->SetReversePush();
@@ -78,7 +79,7 @@ struct SelectFile:public CustomStateBase
 			Delete();
 		}
 	}
-	void Draw(CustomMapScene* scene)override
+	void DrawUI(CustomMapScene* scene)override
 	{
 		VECTOR2 sSize;
 		int bit;

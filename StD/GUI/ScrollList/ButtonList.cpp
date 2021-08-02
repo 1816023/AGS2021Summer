@@ -18,7 +18,7 @@ bool ButtonList::Add(int color, std::function<bool()> func)
 		return false;
 	}
 	const int size = GetFontSize();
-	list_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, list_.size() * size), VECTOR2(size_.x, size + size * list_.size()), color, func, VECTOR2()));
+	list_.emplace_back(std::make_unique<RectButton>(VECTOR2(0, list_.size() * size), VECTOR2(size_.x, size + size * list_.size()), color, func));
 
 	return true;
 }

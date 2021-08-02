@@ -17,10 +17,11 @@ const int& SoundMng::GetID(std::string f_name)
 	return sndMap[f_name];
 }
 
-const int& SoundMng::StartSound(std::string f_name, int soundType)
+const int& SoundMng::StartSound(std::string f_name, PlayType type)
 {
-	return PlaySoundMem(GetID(f_name), soundType);
+	return PlaySoundMem(GetID(f_name),static_cast<int>(type));
 }
+
 
 const int& SoundMng::StopSound(std::string f_name)
 {

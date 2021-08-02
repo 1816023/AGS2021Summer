@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="Shift_JIS"?>
 <chip hight="64" width="64"/>
 
-<map hight="" width=""/>
+<map hight="" width="">
+
+</map>
 
 <spawn>
-	<wave id="1">
-	</wave>
-	<wave id="2">
-	</wave>
-	<wave id="3">
-	</wave>
+    <wave id="1">
+     </wave>
+    <wave id="2">
+    </wave>
+    <wave id="3">
+    </wave>
 </spawn>
+
 <root>
-	<id="">
-	</id>
-	<id="">
-	</id>
-	
+    <root id=""/>
+    <root id=""/>
 </root>

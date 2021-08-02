@@ -5,7 +5,7 @@ class UI
 {
 public:
 	UI() = default;
-	~UI() = default;
+	virtual ~UI() = default;
 	virtual bool Update() = 0;
 	// ƒ{ƒ^ƒ“‚Ì•`‰æ
 	virtual void Draw() = 0;

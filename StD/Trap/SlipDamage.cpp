@@ -17,16 +17,14 @@ void SlipDamage::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float SlipDamage::Efficacy(float num, bool flag)
+float SlipDamage::Update(float num)
 {
-	if (flag)
+	// num = HP
+	cnt++;
+	if (cnt >= 60)
 	{
-		cnt++;
-		if (cnt >= 60)
-		{
-			num--;
-			cnt = 0;
-		}
+		num--;
+		cnt = 0;
 	}
 
 	return num;

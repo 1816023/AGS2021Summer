@@ -15,12 +15,9 @@ void DefenseDown::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float DefenseDown::Efficacy(float num, bool flag)
+float DefenseDown::Update(float num)
 {
-	if (flag)
-	{
-		num = num - (num / 3);
-	}
+	num = num - (num / 3);
 	return num;
 }
 

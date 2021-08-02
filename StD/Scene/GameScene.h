@@ -20,6 +20,7 @@ class GameScene :
 {
 public:
 	GameScene();
+	GameScene(std::string mapName);
 	~GameScene();
 
 	unique_Base Update(unique_Base own) override;
@@ -30,12 +31,10 @@ private:
 	void MenuDraw(VECTOR2& m_pos);
 	void UnitCreateFunc(void);
 	void UnitAccessFunc(void);
-	void BulletControler(float deltaTime);
 	//デバッグ
 	std::unique_ptr<Map> map;
-	std::unique_ptr<PlayerMng> playerMng_;
-	std::unique_ptr<EnemyManager> enemyMng_;
-	// 現在はここにMapに移す予定
+	std::shared_ptr<PlayerMng> playerMng_;
+	std::shared_ptr<EnemyManager> enemyMng_;
 	std::vector<std::shared_ptr<EnemySpawner>>enemySpawner_;	// 敵生成クラス
 
 	std::unique_ptr<ShotMng> shotMng_;	//弾管理クラス

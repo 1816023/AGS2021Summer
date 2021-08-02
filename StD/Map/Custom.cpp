@@ -11,7 +11,8 @@
 #include "../GUI/ScrollList/ImgeAndStringList.h"
 #include "../Unit/Enemy/Enemy.h"
 #include "../Mng/ImageMng.h"
-Custom::Custom(VECTOR2 offset) :offset_(offset)
+
+Custom::Custom() 
 {
 	mapIdx = 0;
 }
@@ -31,8 +32,8 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 	{
 		state_.name_ += L".xml";
 	}
-	state_.mapSize_ = mapSize;
-	state_.chipSize_ = { 64,64 };
+	state_.mapSize = mapSize;
+	state_.chipSize = { 64,64 };
 	mapData_.clear();
 	mapData_.resize(mapSize.y);
 
@@ -42,49 +43,40 @@ void Custom::SetUp(std::wstring fileName, VECTOR2 mapSize)
 		mapData_.resize(mapSize.y);
 		for (auto& map : mapData_)
 		{
-			while (map.size() < state_.mapSize_.x)
+			while (map.size() < state_.mapSize.x)
 			{
 				map.push_back(MapChipName::WALL);
 			}
 		}
-	}
-	else
-	{
-		// マップが存在した時
-		int y = 0;
-		// 自拠点を検索して格納する
-		for (auto& map : mapData_)
-		{
-			// 再起
-			FindMapObj(map, y, map.begin());
-			y++;
-		}
-		// セーブされたスポナーを読み込み
 	}
 	CreateMapFile(mapSize, fileName);
 }
 
 bool Custom::SetChip(VECTOR2 pos, MapChipName chip)
 {
-	VECTOR2 mapPos = pos / state_.chipSize_;
+	VECTOR2 mapPos = pos / state_.chipSize;
 	return SetChipByIdx(mapPos, chip);
 }
 
 bool Custom::SetChipByIdx(VECTOR2 idx, MapChipName chip)
 {
-	if (0 > idx.x || idx.x > state_.mapSize_.x)
+	if (chip == MapChipName::MAX)
 	{
 		return false;
 	}
-	if (0 > idx.y || idx.y > state_.mapSize_.y)
+	if (0 > idx.x || idx.x > state_.mapSize.x)
 	{
 		return false;
 	}
-	if (idx.x > state_.mapSize_.x || idx.y > state_.mapSize_.y)
+	if (0 > idx.y || idx.y > state_.mapSize.y)
 	{
 		return false;
 	}
-	int id = idx.x + idx.y * state_.mapSize_.x;
+	if (idx.x >= state_.mapSize.x || idx.y >= state_.mapSize.y)
+	{
+		return false;
+	}
+	int id = idx.x + idx.y * state_.mapSize.x;
 	auto msFind = std::find(mainStay_.begin(), mainStay_.end(), id);
 	auto spFind = std::find(spawners_.begin(), spawners_.end(), id);
 	if (chip == MapChipName::MAINSTAY)
@@ -198,7 +190,7 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 			return false;
 		}
 		tinyxml2::XMLElement* mapElm = document_.FirstChildElement("map");
-		if (mapElm->IntAttribute("width") == state_.mapSize_.x && mapElm->IntAttribute("hight") == state_.mapSize_.y)
+		if (mapElm->IntAttribute("width") == state_.mapSize.x && mapElm->IntAttribute("hight") == state_.mapSize.y)
 		{
 			std::string mapStr = mapElm->GetText();
 			std::stringstream ss{ mapStr };
@@ -209,12 +201,12 @@ bool Custom::CreateMapFile(VECTOR2 mapSize, std::wstring name)
 			{
 
 				mapData_[y][x++] = (static_cast<MapChipName>(std::atoi(buf.c_str())));
-				if (x >= state_.mapSize_.x)
+				if (x >= state_.mapSize.x)
 				{
 					y++;
 					x = 0;
 				}
-				if (y >= state_.mapSize_.y)
+				if (y >= state_.mapSize.y)
 				{
 					break;
 				}
@@ -382,56 +374,8 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 	return true;
 }
 
-void Custom::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
-{
-	auto find = std::find_if(fStart, map.end(), [](const MapChipName& data)
-		{
-			return data == MapChipName::MAINSTAY || data == MapChipName::SPAWNER;
-		});
-
-	if (find != map.end())
-	{
-		if (*find == MapChipName::MAINSTAY)
-		{
-			// 拠点数限界以上のデータだった場合
-			// ※マップデータ外部でいじる時注意
-			if (mainStay_.size() > 2)
-			{
-				assert(false);
-			}
-			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-			mainStay_.emplace_back(point.x + point.y * state_.mapSize_.x);
-
-			
-		}
-		if (*find == MapChipName::SPAWNER)
-		{
-			// スポナー数限界以上のデータだった場合
-			// ※スポナーデータ外部でいじる時注意
-			if (spawners_.size() > 2)
-			{
-				assert(false);
-			}
-			auto point = VECTOR2(static_cast<int>(std::distance(map.begin(), find)), y);
-			spawners_.emplace_back(point.x + point.y * state_.mapSize_.x);
-		}
-		// 再帰的に次を返す
-		FindMapObj(map, y, find + 1);
-	}
-}
-
-const std::vector<int>& Custom::GetMainStay()
-{
-	return mainStay_;
-}
-
-const std::vector<int>& Custom::GetSpawner()
-{
-	return spawners_;
-}
-
 VECTOR2 Custom::PosFromIndex(int index)
 {
-	auto y = index / state_.mapSize_.x;
-	return VECTOR2(index - y * state_.mapSize_.x, y);
+	auto y = index / state_.mapSize.x;
+	return VECTOR2(index - y * state_.mapSize.x, y);
 }

@@ -12,19 +12,12 @@
 #define LINE_SPACING 30		// 行間
 #define SELECT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(static_cast<int>(DEF_SCREEN_SIZE_X/1.5f),0),VECTOR2(DEF_SCREEN_SIZE_X,DEF_SCREEN_SIZE_Y))
 #define TEXT_UI_POS std::pair<VECTOR2,VECTOR2>(VECTOR2(0,static_cast<int>(DEF_SCREEN_SIZE_Y/1.25f)),VECTOR2(SELECT_UI_POS.first.x-10,DEF_SCREEN_SIZE_Y))
-//struct ButtomState {
-//	VECTOR2 luPos;		// 左上座標
-//	VECTOR2 rdPos;		// 右上座標
-//	bool pushFlag;		// 押下フラグ
-//	std::wstring name;	// ボタンの名前
-//	int CorH;			// ボタンの色または画像ハンドル
-//	std::function<void(ButtomState&)> func;	// ボタンが押されたときに呼ばれる関数
-//};
 
 enum class CustomState {
 	SELECT_FILE,		// 既存のファイルから選択する
 	SET_STATE,			// マップの幅や高さを設定する状態
 	MAP_CUSTOM,			// マップを作成している状態
+	ROOT_CUSTOM,		// ルートを作成する状態
 	ENEMY_CUSTOM,		// 敵の配置と敵の侵攻ルート設定
 	END_CUSTOM,			// 作成終了後の保存時の状態
 	MAX
@@ -43,6 +36,7 @@ class SetState;
 class MapCustom;
 class EnemyCustom;
 class EndCustom;
+class RootCustom;
 class Canvas;
 enum class ErrorCode : int;
 class CustomMapScene :
@@ -63,9 +57,14 @@ private:
 	void DrawUI()override;
 	// customクラスのポインター
 	std::unique_ptr<Custom>cusMap_;
-	// キャンバス
+	// --- キャンバス
+	// メインのUIキャンバス
 	std::unique_ptr<Canvas>canvas_;
-	//
+	// テキスト表示用キャンバス
+	std::unique_ptr<Canvas>textCanvas_;
+	// 常時表示用のキャンバス
+	std::unique_ptr<Canvas>alwaysCanvas_;
+	// マップ
 	std::map<CustomState, std::unique_ptr<CustomStateBase>>custom_;
 	// 現在のステータス
 	CustomState nowState_;
@@ -75,6 +74,8 @@ private:
 	int blendAlpha_;
 	// ファイルからロードした説明文
 	std::map<MapChipName,std::string> textData_;
+	// タイトル遷移する用のフラグ
+	bool isTitleTransition_;
 	// 保存するときに最低限の状態になっているかの
 	// return 0 エラーなし
 	// return 1 自拠点敵拠点の数異常
@@ -91,5 +92,6 @@ private:
 	friend MapCustom;
 	friend EnemyCustom;
 	friend EndCustom;
+	friend RootCustom;
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "MapEnum.h"
+#include "../MapEnum.h"
 #include <string>
 #include <vector>
 class CustumErrorText
@@ -11,6 +11,7 @@ public:
 	void AddErrorText(std::string text);
 	void AddErrorText(std::wstring text);
 	void DrawErrorText(int x, int y, int errorCode, int color = 0xffffff);
+	const std::vector<std::wstring>& GetErrorText();
 private:
 	// エラー内容
 	// 最大列数（日本語全角で16文字）

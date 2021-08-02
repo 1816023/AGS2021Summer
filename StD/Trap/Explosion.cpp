@@ -16,16 +16,13 @@ void Explosion::Draw()
 	DrawRotaGraph(pos.x, pos.y, 1, 0, image, false);
 }
 
-float Explosion::Efficacy(float num, bool flag)
+float Explosion::Update(float num)
 {
-	if (flag)
+	cnt++;
+	if (cnt >= 60)
 	{
-		cnt++;
-		if (cnt >= 60)
-		{
-			num -= 20;
-			cnt = 0;
-		}
+		num -= 20;
+		cnt = 0;
 	}
 
 	return num;
