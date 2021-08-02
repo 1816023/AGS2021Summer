@@ -7,7 +7,7 @@
 #include "../GUI/CustumErrorText.h"
 #include "../GUI/Canvas.h"
 #include "../GUI/UIText.h"
-
+#include "../GUI/Gauge/BarGauge.h"
 struct MapCustom : public CustomStateBase
 {
 
@@ -91,7 +91,6 @@ struct MapCustom : public CustomStateBase
 		scene->blendAlpha_ = 256;
 		selChip_ = MapChipName::MAX;
 		scene->LoadText("map");
-		
 		return false;
 
 	}
@@ -121,7 +120,6 @@ struct MapCustom : public CustomStateBase
 		DrawFormatString(mPos.x, mPos.y + 10, 0x00ff00, L"%d:%d", lpMouseController.GetOffsetPos().x,lpMouseController.GetOffsetPos().y );
 		DrawFormatString(mPos.x, mPos.y + 30, 0x0000ff, L"%d:%d", mPos.x + static_cast<int>(lpApplication.GetCamera().GetPos().x), mPos.y + static_cast<int>(lpApplication.GetCamera().GetPos().y));
 #endif // _DEBUG
-
 	}
 	void Delete()
 	{
@@ -170,5 +168,4 @@ private:
 	// エラーナンバー
 	int errorNum_;
 	std::unique_ptr<CustumErrorText>errorText_;
-	
 };
