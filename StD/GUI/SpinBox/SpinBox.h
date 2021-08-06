@@ -24,13 +24,13 @@ public:
 	//const VECTOR2 GetPos()const { return pos_; }
 	const int GetFontHandle()const { return fontHandle_; }
 	const BoxType GetType()const { return type_; }
-	//const VECTOR2 GetSize()const { return size_; }
-	
+	//const VECTOR2 GetSize()const { return size_; }	
 	// ç≈èâÇ©ç≈å„Ç…ÉLÅ[ÇïœçXÇ∑ÇÈ
 	// true:ç≈èâ
 	// false:ç≈å„
 	virtual void StartEnd(bool key)=0;
 protected:
+	void Init();
 	//VECTOR2 pos_;
 	//VECTOR2 size_;
 	BoxType type_;

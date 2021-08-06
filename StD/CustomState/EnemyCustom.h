@@ -7,6 +7,7 @@
 #include "../GUI/SpinBox/SpinBoxForInt.h"
 #include "../GUI/SpinBox/SpinBoxForImage.h"
 #include "../GUI/Canvas.h"
+#include "../GUI/Box.h"
 #include "../Mng/FontMng.h"
 #include "../Mng/ImageMng.h"
 #include "../StringUtil.h"
@@ -75,14 +76,27 @@ struct EnemyCustom : public CustomStateBase
 		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Pentagon]);
 		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Square]);
 		dynamic_cast<SpinBoxForImage*>(spinBoxS["敵種類"])->AddData(enemyH_[EnemyType::Triangle]);
-		
+
+		std::vector<UIText*> text;
 		for (auto& box : spinBoxS)
 		{
 			scene->canvas_->AddUIByName(box.second,_StW(box.first));
+			text.emplace_back(new UIText(VECTOR2(bSpace, box.second->GetPos().y + (box.second->GetSize().y / 2 - GetFontSizeToHandle(fontHandle_) / 2)),
+				_StW(box.first), fontHandle_, 0xffffff));
+			scene->canvas_->AddUIByName(text.back(), _StW(box.first) + L"Text");
 		}
-
+		text.emplace_back(new UIText(VECTOR2(bSpace, (bSize + bSpace) * 3 - 5), L"出現時間", fontHandle_, 0xffffff));
+		scene->canvas_->AddUIByName(text.back(),L"出現時間Text");
+		//DrawBox(basePosX - 2 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), 
+		//fontHandle_), (bSize + bSpace) * 3 - 5, basePosX + 100 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 + GetFontSizeToHandle(fontHandle_) + 5, 0x000000, true);
+		//DrawBox(basePosX - 2 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 - 5, basePosX + 100 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 + GetFontSizeToHandle(fontHandle_) + 5, 0xffffff, false);
+		auto box = new Box(VECTOR2(bSpace - 2 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 - 5),
+			VECTOR2( 100 /*+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_)*/, GetFontSizeToHandle(fontHandle_)),
+			0xffffff, 0x000000);
+		scene->canvas_->AddUIByName(box, L"出現時間Box");
 
 		list_.resize(3);
+
 		// スポナーの数表示用リストを作成
 		for (int w = 0; w < 3; w++)
 		{
@@ -90,9 +104,8 @@ struct EnemyCustom : public CustomStateBase
 			{
 				list_[w].emplace_back(
 					std::make_pair(
-						std::make_unique<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2))
-						, std::vector<int>(0)
-					)
+						std::make_shared<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2))
+						, std::vector<int>(0))
 				);
 			}
 		}
@@ -100,7 +113,8 @@ struct EnemyCustom : public CustomStateBase
 		selWave_ = 0;
 		// ボタンの作成
 		// 登録ボタン
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&,scene]() {
+		std::list<Button*>button;
+		button.emplace_back(new RoundRectButton(VECTOR2(bSpace, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&,scene]() {
 			auto typeBox = dynamic_cast<SpinBoxForImage*>(scene->canvas_->GetUIByName(L"敵種類"))->GetSelData();
 			auto rootBox = dynamic_cast<SpinBoxForImage*>(scene->canvas_->GetUIByName(L"ルート"))->GetSelData();
 			list_[selWave_][selSpawner_].first
@@ -108,9 +122,9 @@ struct EnemyCustom : public CustomStateBase
 			list_[selWave_][selSpawner_].second.push_back(rootBox);
 				spawnTime = GetKeyInputNumberToFloat(keyInputHandleForSpawnTime);
 			return true; }));
-		button_.back()->SetString("登録",VECTOR2(15,10));
+		button.back()->SetString("登録",VECTOR2(15,10));
 		// 戻すボタン
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX-strSize.x/2, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&]() {
+		button.emplace_back(new RoundRectButton(VECTOR2(bSpace -strSize.x/2, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&]() {
 			list_[selWave_][selSpawner_].first->Del();
 			if (list_[selWave_][selSpawner_].second.size() != 0)
 			{
@@ -118,17 +132,19 @@ struct EnemyCustom : public CustomStateBase
 			}
 			return true;
 			}));
-		button_.back()->SetString("戻す", VECTOR2(15, 10));
+		button.back()->SetString("戻す", VECTOR2(15, 10));
 		// 保存ボタン
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX - strSize.x , (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
+		button.emplace_back(new RoundRectButton(VECTOR2(bSpace - strSize.x , (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
 			auto error=scene->cusMap_->SaveFile(spawners.size(),list_);
 			return error==0;
 			}));
-		button_.back()->SetString("Save", VECTOR2(15, 10));
+		button.back()->SetString("Save", VECTOR2(15, 10));
+		int id = 0;
 		// ボタンの自動更新
-		for (auto&& list : button_)
+		for (auto& list : button)
 		{
 			list->SetAuto();
+			scene->canvas_->AddUIByID(list, id++);
 		}
 
 		// 入力状態の初期化
@@ -151,17 +167,6 @@ struct EnemyCustom : public CustomStateBase
 		{
 			lpApplication.GetCamera().ScaleLock(true);
 		}
-		for (auto&& list : button_)
-		{
-			if (list->Update())
-			{
-				break;
-			}
-		}
-	/*	for (auto&& map : spinBoxS_)
-		{
-			map.second->Update();
-		}*/
 	};
 
 	void DrawUI(CustomMapScene* scene)
@@ -174,15 +179,10 @@ struct EnemyCustom : public CustomStateBase
 		DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0xffffff, false);
 		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 		// 説明文の表示
-
-		for (auto&& list : button_)
-		{
-			list->Draw();
-		}
-		for (auto&& list : buttonText_)
+	/*	for (auto&& list : buttonText_)
 		{
 			DrawString(list.pos_.x, list.pos_.y, _StW(list.str_).c_str(), list.color_);
-		}
+		}*/
 		list_[selWave_][selSpawner_].first->Draw();
 		const int bSize = 64;
 		const int bSpace = 10;
@@ -194,7 +194,7 @@ struct EnemyCustom : public CustomStateBase
 			DrawStringToHandle(basePosX, map.second->GetPos().y+(map.second->GetSize().y/2-GetFontSizeToHandle(fontHandle_)/2), _StW(map.first).c_str(), 0xffffff, fontHandle_);
 			map.second->Draw();
 		}*/
-		DrawStringToHandle(basePosX, (bSize + bSpace) * 3 - 5, L"出現時間", 0xffffff, fontHandle_);
+		//DrawStringToHandle(basePosX, (bSize + bSpace) * 3 - 5, L"出現時間", 0xffffff, fontHandle_);
 		DrawBox(basePosX-2+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3-5, basePosX + 100+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 + GetFontSizeToHandle(fontHandle_)+5, 0x000000, true);
 		DrawBox(basePosX-2+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3-5, basePosX + 100+ GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3 + GetFontSizeToHandle(fontHandle_)+5, 0xffffff, false);
 		if (DrawKeyInputString(basePosX + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3, keyInputHandleForSpawnTime)==-1)
@@ -299,8 +299,8 @@ private:
 
 	//EnemyType selEnemy_;
 
-	std::list<std::unique_ptr<Button>>button_;
-	std::list<ButtonText>buttonText_;
+	//std::list<std::unique_ptr<Button>>button_;
+	//std::list<ButtonText>buttonText_;
 	// エラーナンバー
 	int errorNum_;
 	// エラー内容
@@ -308,7 +308,7 @@ private:
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
 
-	std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>,std::vector<int>>>>list_;
+	std::vector<std::vector<std::pair<std::shared_ptr<ImgeAndStringList>,std::vector<int>>>>list_;
 	int selSpawner_;
 	int selWave_;
 	

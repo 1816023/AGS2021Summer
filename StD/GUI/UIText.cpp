@@ -10,12 +10,20 @@ UIText::UIText(VECTOR2 pos, std::wstring str, int color)
 	fontHandle_ = -1;
 }
 
-UIText::UIText(VECTOR2 pos, std::wstring str, int fontSize, int color)
+UIText::UIText(VECTOR2 pos, std::wstring str, int fontSize, std::wstring name, int color)
 {
 	pos_ = pos;
 	str_ = str;
 	color_ = color;
-	fontHandle_ = lpFontMng.AddStrFont(fontSize, std::to_wstring(fontSize));
+	fontHandle_ = lpFontMng.AddStrFont(fontSize, name);
+}
+
+UIText::UIText(VECTOR2 pos, std::wstring str, int fontHandle, int color)
+{
+	pos_ = pos;
+	str_ = str;
+	color_ = color;
+	fontHandle_ = fontHandle;
 }
 
 bool UIText::Update()

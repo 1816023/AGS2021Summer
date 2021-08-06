@@ -75,6 +75,7 @@
     <ClCompile Include="Mng\FontMng.cpp" />
     <ClCompile Include="GUI\CustumErrorText.cpp" />
     <ClCompile Include="GUI\Gauge\BarGauge.cpp" />
+    <ClCompile Include="GUI\Box.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -165,5 +166,6 @@
     <ClInclude Include="GUI\CustumErrorText.h" />
     <ClInclude Include="CustomState\RootCustom.h" />
     <ClInclude Include="GUI\Gauge\BarGauge.h" />
+    <ClInclude Include="GUI\Box.h" />
   </ItemGroup>
 </Project>

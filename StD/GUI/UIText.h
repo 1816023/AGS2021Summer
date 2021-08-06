@@ -5,7 +5,8 @@ class UIText : public UI
 {
 public:
 	UIText(VECTOR2 pos, std::wstring str, int color = 0xffffff);
-	UIText(VECTOR2 pos, std::wstring str, int fontSize, int color);
+	UIText(VECTOR2 pos, std::wstring str, int fontSize, std::wstring name, int color);
+	UIText(VECTOR2 pos, std::wstring str, int fontHandle, int color);
 	~UIText() = default;
 	bool Update();
 	// Text‚Ì•`‰æ
