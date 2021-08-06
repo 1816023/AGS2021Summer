@@ -201,3 +201,9 @@ void Map::SetRoot(const std::vector<rootVec>& root)
 {
 	root_ = root;
 }
+
+const tinyxml2::XMLDocument Map::GetDocument() const
+{
+	return &document_;
+}
+

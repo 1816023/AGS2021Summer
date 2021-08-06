@@ -143,7 +143,6 @@ struct SetState:public CustomStateBase
 		buttonList_.clear();
 		isNewCreate_ = false;
 		inputcnt_ = 0;
-		DeleteFontToHandle(fontHandle_);
 		DeleteLightHandle(keyhandle_);
 	}
 private:

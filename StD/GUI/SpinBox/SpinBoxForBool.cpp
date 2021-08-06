@@ -31,3 +31,8 @@ const int SpinBoxForBool::GetSelData() const
 {
 	return array_[selKey_];
 }
+
+void SpinBoxForBool::StartEnd(bool key)
+{
+	selKey_ =key ? 0 : array_.size() - 1;
+}

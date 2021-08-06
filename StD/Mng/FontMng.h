@@ -15,6 +15,7 @@ public:
 	int AddStrFont(int fontSize, std::wstring name, int thick = -1);
 	// ƒtƒHƒ“ƒgŽæ“¾
 	int GetStrFont(std::wstring name);
+	void DeleteHandle();
 private:
 	FontMng() = default;
 	FontMng(FontMng&) = delete;

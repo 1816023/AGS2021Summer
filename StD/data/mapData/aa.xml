@@ -16,27 +16,16 @@
 
 <spawn>
     <wave id="1">
-        <spawner id="0">
-            <enemy type="2" time="0.000000" root="3"/>
-        </spawner>
-        <spawner id="1">
-            <enemy type="2" time="0.000000" root="3"/>
-        </spawner>
+        <spawner id="0"/>
+        <spawner id="1"/>
     </wave>
     <wave id="2">
         <spawner id="0"/>
-        <spawner id="1">
-            <enemy type="0" time="0.000000" root="3"/>
-            <enemy type="1" time="0.000000" root="3"/>
-        </spawner>
+        <spawner id="1"/>
     </wave>
     <wave id="3">
-        <spawner id="0">
-            <enemy type="3" time="0.000000" root="3"/>
-        </spawner>
-        <spawner id="1">
-            <enemy type="0" time="0.000000" root="3"/>
-        </spawner>
+        <spawner id="0"/>
+        <spawner id="1"/>
     </wave>
 </spawn>
 

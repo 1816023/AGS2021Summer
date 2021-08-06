@@ -63,3 +63,8 @@ bool SpinBoxForImage::DeleteData(int data)
 	nowSize_ = vec_.size();
 	return itr != vec_.end();
 }
+
+void SpinBoxForImage::StartEnd(bool key)
+{
+	selKey_ = key ? 0 : vec_.size()-1;
+}

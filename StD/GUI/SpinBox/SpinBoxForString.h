@@ -16,6 +16,7 @@ public:
 	void DeleteData();
 	// 指定したデータを削除する
 	bool DeleteData(std::string data);
+	void StartEnd(bool key)override;
 private:
 	std::vector<std::string>vec_;
 

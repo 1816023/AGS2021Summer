@@ -4,6 +4,9 @@
 #include "MouseController.h"
 #include "Camera.h"
 #include <cassert>
+#include "./Mng/FontMng.h"
+#include "./Mng/ImageMng.h"
+#include "./Mng/SoundMng.h"
 #define MAP_MAX_SIZE 30
 
 using namespace std::chrono;
@@ -66,6 +69,9 @@ void Application::Run()
 		oldTime_ = now;
 		Draw();
 	}
+	lpFontMng.DeleteHandle();
+	lpImageMng.DeleteHandle();
+	lpSoundMng.DeleteHandle();
 }
 
 void Application::Draw()

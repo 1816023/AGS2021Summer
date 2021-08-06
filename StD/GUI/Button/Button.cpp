@@ -21,10 +21,6 @@ Button::Button()
 
 Button::~Button()
 {
-	if (fontHandle_ != -1)
-	{
-		DeleteFontToHandle(fontHandle_);
-	}
 }
 
 bool Button::Update()

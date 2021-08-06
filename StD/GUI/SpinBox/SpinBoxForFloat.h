@@ -13,6 +13,7 @@ public:
 	void AddData(float data);
 	void DeleteData();
 	bool DeleteData(float data);
+	void StartEnd(bool key)override;
 private:
 	std::vector<float>vec_;
 	// •\¦Œ…”

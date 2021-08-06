@@ -10,6 +10,7 @@ public:
 	void Draw()override;
 	// 選択中のデータを取得する
 	const int GetSelData()const;
+	void StartEnd(bool key)override;
 private:
 	std::array<bool,2>array_;
 

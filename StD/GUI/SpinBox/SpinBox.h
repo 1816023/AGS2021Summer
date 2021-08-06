@@ -25,7 +25,11 @@ public:
 	const int GetFontHandle()const { return fontHandle_; }
 	const BoxType GetType()const { return type_; }
 	//const VECTOR2 GetSize()const { return size_; }
-
+	
+	// Å‰‚©ÅŒã‚ÉƒL[‚ğ•ÏX‚·‚é
+	// true:Å‰
+	// false:ÅŒã
+	virtual void StartEnd(bool key)=0;
 protected:
 	//VECTOR2 pos_;
 	//VECTOR2 size_;

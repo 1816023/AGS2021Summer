@@ -100,7 +100,7 @@ struct EnemyCustom : public CustomStateBase
 		selWave_ = 0;
 		// ボタンの作成
 		// 登録ボタン
-		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&]() {
+		button_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(basePosX, (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize,bSize/2), VECTOR2(10,10), 0xffffff, [&,scene]() {
 			auto typeBox = dynamic_cast<SpinBoxForImage*>(scene->canvas_->GetUIByName(L"敵種類"))->GetSelData();
 			auto rootBox = dynamic_cast<SpinBoxForImage*>(scene->canvas_->GetUIByName(L"ルート"))->GetSelData();
 			list_[selWave_][selSpawner_].first

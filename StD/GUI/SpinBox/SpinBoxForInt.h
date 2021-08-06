@@ -13,6 +13,7 @@ public:
 	void AddData(int data);
 	void DeleteData();
 	bool DeleteData(int data);
+	void StartEnd(bool key)override;
 private:
 	std::vector<int>vec_;
 };

@@ -31,7 +31,7 @@ public:
 
 	const int& GetID(std::wstring f_name);			//ÒÓØ‚Ìæ“¾
 	const VEC_INT& GetID(std::wstring f_name, VECTOR2 divSize, VECTOR2 divCnt);			//‰æ‘œ‚Ì•ªŠ„“Ç‚İ‚İ
-
+	void DeleteHandle();
 private:
 	ImageMng();
 	~ImageMng();

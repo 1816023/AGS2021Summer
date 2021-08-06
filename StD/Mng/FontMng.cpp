@@ -15,3 +15,12 @@ int FontMng::GetStrFont(std::wstring name)
 {
 	return strFonts_[name];
 }
+
+void FontMng::DeleteHandle()
+{
+	for (auto& handle : strFonts_)
+	{
+		DeleteFontToHandle(handle.second);
+	}
+	strFonts_.clear();
+}

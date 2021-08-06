@@ -43,7 +43,6 @@ SpinBox::SpinBox(VECTOR2 pos, VECTOR2 size, BoxType type, VECTOR2 cOffset)
 
 SpinBox::~SpinBox()
 {
-	DeleteFontToHandle(fontHandle_);
 }
 
 bool SpinBox::Update()

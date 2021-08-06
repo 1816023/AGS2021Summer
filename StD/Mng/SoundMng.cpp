@@ -38,6 +38,15 @@ const int& SoundMng::CheckSound(std::string f_name)
 	return CheckSoundMem(GetID(f_name));
 }
 
+void SoundMng::DeleteHandle()
+{
+	for (auto&& handle : sndMap)
+	{
+		DeleteSoundMem(handle.second);
+	}
+	sndMap.clear();
+}
+
 SoundMng::SoundMng()
 {
 }

@@ -24,7 +24,7 @@ public:
 	// 指定したデータを削除する
 	// 画像ハンドルを指定する
 	bool DeleteData(int data);
-
+	void StartEnd(bool key)override;
 private:
 	std::vector<int>vec_;
 

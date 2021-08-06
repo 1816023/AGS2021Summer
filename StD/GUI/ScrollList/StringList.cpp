@@ -11,7 +11,6 @@ StringList::StringList(VECTOR2 pos, VECTOR2 size, int fonthande):ScrollList(pos,
 
 StringList::~StringList()
 {
-    DeleteFontToHandle(fontH_);
 }
 
 bool StringList::Add(StringState state)

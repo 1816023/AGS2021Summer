@@ -36,6 +36,7 @@ public:
 	const int& StopSound(std::string f_name);
 	const int& ChangeVol(int vol, std::string f_name);
 	const int& CheckSound(std::string f_name);
+	void DeleteHandle();
 private:
 	SoundMng();
 	~SoundMng();

@@ -30,6 +30,15 @@ const VEC_INT& ImageMng::GetID(std::wstring f_name, VECTOR2 divSize, VECTOR2 div
 	return imgMap[f_name];
 }
 
+void ImageMng::DeleteHandle()
+{
+	for (auto&& handle : imgMap)
+	{
+		DxLib::DeleteGraph(handle.second[0]);
+	}
+	imgMap.clear();
+}
+
 ImageMng::ImageMng()
 {
 }
