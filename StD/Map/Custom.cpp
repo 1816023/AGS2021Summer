@@ -14,7 +14,7 @@
 
 Custom::Custom() 
 {
-	mapIdx = 0;
+	mapIdx_ = 0;
 }
 
 Custom::~Custom()
@@ -374,8 +374,3 @@ bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std
 	return true;
 }
 
-VECTOR2 Custom::PosFromIndex(int index)
-{
-	auto y = index / state_.mapSize.x;
-	return VECTOR2(index - y * state_.mapSize.x, y);
-}
