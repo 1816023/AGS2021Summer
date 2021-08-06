@@ -20,9 +20,7 @@ public:
 	bool CreateMapFile(VECTOR2 mapSize, std::wstring name);
 	bool SaveFile();
 	bool SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>, std::vector<int>>>>&list);
-
-	VECTOR2 PosFromIndex(int index);
 private:
-	int mapIdx;
+	int mapIdx_;
 };
 

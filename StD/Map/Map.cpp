@@ -201,3 +201,9 @@ void Map::SetRoot(const std::vector<rootVec>& root)
 {
 	root_ = root;
 }
+
+VECTOR2 Map::PosFromIndex(int index)
+{
+	auto y = index / state_.mapSize.x;
+	return VECTOR2(index - y * state_.mapSize.x, y);
+}

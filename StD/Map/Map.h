@@ -55,6 +55,7 @@ public:
 	const std::vector<int>& GetSpawner();
 	const std::vector<rootVec>& GetRoot();
 	void SetRoot(const std::vector<rootVec>& root);
+	VECTOR2 PosFromIndex(int index);
 protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定
 	bool LoadMap(std::string mapName);	
