@@ -161,7 +161,7 @@ void MainScene::Draw()
 
 void MainScene::DrawUI()
 {
-	DrawString(100, 100, L"MainScene", 0xffffff);
+	//DrawString(100, 100, L"MainScene", 0xffffff);
 	VECTOR2 sSize;
 	int bit;
 	GetScreenState(&sSize.x, &sSize.y, &bit);

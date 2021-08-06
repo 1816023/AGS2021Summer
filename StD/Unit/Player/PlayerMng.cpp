@@ -21,7 +21,7 @@ void PlayerMng::Draw(void)
     {
         unit->Draw();
     }
-    DrawFormatString(100, 0, 0xffffff, L"cost:%d", cost);
+    DrawFormatString(100, 0, 0xff00ff, L"cost:%d", cost);
 }
 
 bool PlayerMng::Spawner(PlayerUnit id,Vec2Float pos)

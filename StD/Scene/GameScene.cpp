@@ -215,7 +215,7 @@ void GameScene::Draw()
 
 void GameScene::DrawUI()
 {
-	DrawString(100, 100, L"GameScene", 0xffffff);
+	//DrawString(100, 100, L"GameScene", 0xffffff);
 	// マウス座標
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
@@ -227,7 +227,7 @@ void GameScene::DrawUI()
 		enemyRemain += spawners->GetRemainSpawnCnt();
 	}
 	enemyRemain += enemyMng_->GetEnemies().size();
-	DrawFormatString(0, 32, 0xffffff, L"敵残存数 %d", enemyRemain);
+	DrawFormatString(0, 32, 0xff00ff, L"敵残存数 %d", enemyRemain);
 
 	MenuDraw(m_pos);
 }

@@ -89,7 +89,7 @@ void Application::Draw()
 	// ui•`‰æ
 	sceneController_->DrawUI();
 	//DrawFormatString(0, 32, 0xffffff, L"%f", delta_);
-	DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", -pos.x, pos.y, scale);
+	//DrawFormatString(0, 16, 0xffffff, L"pos %f, %f,scale %f", -pos.x, pos.y, scale);
 	camera_->DebugDraw();
 	//_dbgAddDraw();
 	ScreenFlip();
