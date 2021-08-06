@@ -16,8 +16,20 @@
 
 GameScene::GameScene()
 {
-	map = std::make_unique<Map>();
-	map->SetUp("defalt_map");
+	map_ = std::make_unique<Map>();
+	map_->SetUp("defalt_map");
+	Init();
+	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
+}
+
+GameScene::GameScene(std::string mapName)
+{
+	map_ = std::make_unique<Map>();
+	map_->SetUp(mapName);
+	Init();
+}
+void GameScene::Init()
+{
 	cnt = 0;
 	waitFlag = false;
 	resultFlag = true;
@@ -29,34 +41,17 @@ GameScene::GameScene()
 	IMAGE_ID(L"data/image/square.png");
 	shotMng_ = std::make_unique<ShotMng>();
 	playerMng_ = std::make_unique<PlayerMng>();
-	enemyMng_ = std::make_unique<EnemyManager>(*map);
-	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_, *map));
-
-	selectUnitId = PlayerUnit::NON;
-	//enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(0, 100), enemyList));
-}
-
-GameScene::GameScene(std::string mapName)
-{
-	map = std::make_unique<Map>();
-	map->SetUp(mapName);
-	cnt = 0;
-	waitFlag = false;
-	resultFlag = true;
-	accessData = nullptr;
-
-	IMAGE_ID(L"data/image/circle.png");
-	IMAGE_ID(L"data/image/triangle.png");
-	IMAGE_ID(L"data/image/pentagon.png");
-	IMAGE_ID(L"data/image/square.png");
-	shotMng_ = std::make_unique<ShotMng>();
-	playerMng_ = std::make_shared<PlayerMng>();
-	enemyMng_ = std::make_shared<EnemyManager>(*map);
-	enemySpawner_.push_back(std::make_shared<EnemySpawner>(Vec2Float(64 * 10 - 32, 288), *enemyMng_, *map));
-
+	enemyMng_ = std::make_unique<EnemyManager>(*map_);
+	auto chipS = map_->GetChipSize();
+	for (auto& sp : map_->GetSpawner())
+	{
+		auto pos = VecFCast(map_->PosFromIndex(sp)) * chipS + chipS / 2;
+		enemySpawner_.push_back(std::make_shared<EnemySpawner>(pos, *enemyMng_, *map_));
+	}
 	selectUnitId = PlayerUnit::NON;
 	lpSoundMng.StartSound("data/Sound/SE/BGM3.mp3", PlayType::LOOP);
 }
+
 
 GameScene::~GameScene()
 {
@@ -138,8 +133,8 @@ void GameScene::UnitCreateFunc()
 		}
 	}
 
-	Vec2Int chipPos = VecICast(mPos / map->GetChipSize());
-	auto offSet = map->GetChipSize() / 2;
+	Vec2Int chipPos = VecICast(mPos / map_->GetChipSize());
+	auto offSet = map_->GetChipSize() / 2;
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_RIGHT))
 	{
@@ -149,7 +144,7 @@ void GameScene::UnitCreateFunc()
 		}
 
 		//右クリックしたマスに配置されているユニットの取得
-		accessData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
+		accessData = playerMng_->GetUnitData(VecFCast(chipPos * map_->GetChipSize() + offSet));
 		if (accessData != nullptr)
 		{
 			waitFlag = true;
@@ -164,10 +159,10 @@ void GameScene::UnitCreateFunc()
 			data->SetStatusOpen(false);
 		}
 
-		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map->GetChipSize() + offSet));
-		if (map->GetMapChip(mPos) == MapChipName::FIELD && unitData == nullptr)
+		auto unitData = playerMng_->GetUnitData(VecFCast(chipPos * map_->GetChipSize() + offSet));
+		if (map_->GetMapChip(mPos) == MapChipName::FIELD && unitData == nullptr)
 		{
-			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map->GetChipSize() + offSet));
+			playerMng_->Spawner(selectUnitId, VecFCast(chipPos * map_->GetChipSize() + offSet));
 		}
 	}
 }
@@ -200,13 +195,14 @@ void GameScene::UnitAccessFunc(void)
 
 }
 
+
 void GameScene::Draw()
 {
 	if (cnt < 60)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA,cnt*4 );
 	}
-	map->Draw();
+	map_->Draw();
 	shotMng_->Draw();
 	playerMng_->Draw();
 	enemyMng_->Draw();
@@ -219,7 +215,7 @@ void GameScene::DrawUI()
 	// マウス座標
 	VECTOR2 m_pos;
 	GetMousePoint(&m_pos.x, &m_pos.y);
-	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map->GetMapChip(m_pos)));
+	DrawFormatString(m_pos.x - 5, m_pos.y - 5, 0x00ff00, L"%d", static_cast<int>(map_->GetMapChip(m_pos)));
 	DrawRotaGraph(m_pos.x, m_pos.y, 1, 0, playerMng_->GetPlayerData()[selectUnitId].imageId, true);
 	int enemyRemain = 0;
 	for (auto& spawners : enemySpawner_)
