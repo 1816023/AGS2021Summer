@@ -19,7 +19,7 @@ public:
 	bool SetChipByIdx(VECTOR2 idx, MapChipName chip);
 	bool CreateMapFile(VECTOR2 mapSize, std::wstring name);
 	bool SaveFile();
-	bool SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>, std::vector<int>>>>&list);
+	bool SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::shared_ptr<ImgeAndStringList>, std::vector<int>>>>&list);
 private:
 	int mapIdx_;
 };

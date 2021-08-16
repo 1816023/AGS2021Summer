@@ -279,7 +279,7 @@ bool Custom::SaveFile()
 	return true;
 }
 
-bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>, std::vector<int>>>> &list)
+bool Custom::SaveFile(int spawnerNum,const std::vector<std::vector<std::pair<std::shared_ptr<ImgeAndStringList>, std::vector<int>>>> &list)
 {
 	//‚±‚ÌŒ`‚Å•Û‘¶
 	// <wave id = "">

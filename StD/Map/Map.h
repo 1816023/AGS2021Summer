@@ -55,7 +55,7 @@ public:
 	const std::vector<int>& GetSpawner();
 	const std::vector<rootVec>& GetRoot();
 	void SetRoot(const std::vector<rootVec>& root);
-	const tinyxml2::XMLDocument GetDocument()const;
+	const tinyxml2::XMLDocument GetDoc(tinyxml2::XMLDocument* doc);
 	VECTOR2 PosFromIndex(int index);
 protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定

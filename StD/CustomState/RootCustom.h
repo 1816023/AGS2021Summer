@@ -139,14 +139,15 @@ struct RootCustom :
 private:
 	bool Save(CustomMapScene* scene)
 	{
-		/*auto doc = scene->cusMap_->GetDocument();
+		tinyxml2::XMLDocument doc;
+		scene->cusMap_->GetDoc(&doc);
 		auto* rootElm = doc.FirstChildElement("root");
 		for (int a = 0; a < rootMap_.size(); a++)
 		{
 			auto* newElm = rootElm->InsertNewChildElement("root");
 			rootElm->SetAttribute("id", 1);
 
-		}*/
+		}
 		return true;
 	}
 	bool Next(CustomMapScene* scene)

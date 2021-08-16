@@ -208,8 +208,9 @@ VECTOR2 Map::PosFromIndex(int index)
 	return VECTOR2(index - y * state_.mapSize.x, y);
 }
 
-const tinyxml2::XMLDocument Map::GetDocument() const
+const tinyxml2::XMLDocument Map::GetDoc(tinyxml2::XMLDocument* doc)
 {
-	return &document_;
+	doc = &document_;
+	return doc;
 }
 
