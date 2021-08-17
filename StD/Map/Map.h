@@ -51,11 +51,19 @@ public:
 	// チップサイズ取得	
 	VECTOR2 GetChipSize();		
 	void FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart);
+	// 自拠点の位置を取得する
 	const std::vector<int>& GetMainStay();
+	// スポナーの位置を取得する
 	const std::vector<int>& GetSpawner();
+	// ルートを取得する
 	const std::vector<rootVec>& GetRoot();
+	// ルートをセットする
 	void SetRoot(const std::vector<rootVec>& root);
-	const tinyxml2::XMLDocument GetDoc(tinyxml2::XMLDocument* doc);
+	// ドキュメントの取得
+	const tinyxml2::XMLDocument GetDoc(tinyxml2::XMLDocument& doc);
+	// ドキュメントの保存
+	tinyxml2::XMLError SaveXMLFile(tinyxml2::XMLDocument& doc);
+
 	VECTOR2 PosFromIndex(int index);
 protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定
@@ -74,6 +82,9 @@ protected:
 	std::vector<int>spawners_;
 	// ルート
 	std::vector<rootVec>root_;
+	// 開いてるファイルのパス
+	std::string filePath;
+
 };
 
 

@@ -94,7 +94,7 @@ struct RootCustom :
 		{
 			if (mPos.x < SELECT_UI_POS.first.x)
 			{
-				if (scene->cusMap_->GetMapChip(mcPos) == MapChipName::ROOT)
+				if (scene->cusMap_->GetMapChip(mcPos) == MapChipName::ROOT||scene->cusMap_->GetMapChip(mcPos)==MapChipName::SPAWNER)
 				{
 					VECTOR2 key=mcPos/scene->cusMap_->GetChipSize();
 					rootMap_[spin][key.y][key.x] = dirChip_;
@@ -140,14 +140,29 @@ private:
 	bool Save(CustomMapScene* scene)
 	{
 		tinyxml2::XMLDocument doc;
-		scene->cusMap_->GetDoc(&doc);
-		auto* rootElm = doc.FirstChildElement("root");
+		scene->cusMap_->GetDoc(doc);
+		tinyxml2::XMLElement* rootElm = doc.FirstChildElement("root");
+		rootElm->DeleteChildren();
 		for (int a = 0; a < rootMap_.size(); a++)
 		{
+			bool check=false;
+			for (auto y : rootMap_[a])
+			{
+				for (auto x : y)
+				{
+					check = (x != RootDir::MAX ? true : check);
+				}
+			}
+			if (!check)
+			{
+				continue;
+			}
 			auto* newElm = rootElm->InsertNewChildElement("root");
-			rootElm->SetAttribute("id", 1);
+			newElm->SetAttribute("id", a);
 
+			
 		}
+		scene->cusMap_->SaveXMLFile(doc);
 		return true;
 	}
 	bool Next(CustomMapScene* scene)
@@ -173,7 +188,37 @@ private:
 		Delete();
 		return true;
 	}
+	bool CheckRoot(CustomMapScene* scene)
+	{
+		auto mainStay=scene->cusMap_->GetMainStay();
+		auto spawners = scene->cusMap_->GetSpawner();
+		std::function<bool(RootDir,VECTOR2)>check = [&](RootDir root,VECTOR2 dir) {
+			switch (root)
+			{
+			case RootDir::UP:
+				
+				break;
+			case RootDir::DOWN:
 
+				break;
+			case RootDir::RIGHT:
+
+				break;
+			case RootDir::LEFT:
+
+				break;
+			case RootDir::MAX:
+				break;
+			default:
+				break;
+			}
+			return true;
+		};
+		for (int s = 0; s < spawners.size(); s++)
+		{
+			
+		}
+	}
 	RootDir dirChip_;
 	std::array<std::vector<rootVec>,100>rootMap_;
 };

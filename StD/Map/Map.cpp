@@ -173,8 +173,8 @@ void Map::FindMapObj(mapChipVec& map, const int& y, mapChipVec::iterator fStart)
 bool Map::LoadMap(std::string mapName)
 {
 	auto path = StringUtil::SpritExtention(mapName);
-	path = "./data/mapData/" + path +".xml";
-	auto error = document_.LoadFile(path.c_str());
+	filePath = "./data/mapData/" + path +".xml";
+	auto error = document_.LoadFile(filePath.c_str());
 	if (error != tinyxml2::XML_ERROR_FILE_NOT_FOUND)
 	{
 		return true;
@@ -208,9 +208,14 @@ VECTOR2 Map::PosFromIndex(int index)
 	return VECTOR2(index - y * state_.mapSize.x, y);
 }
 
-const tinyxml2::XMLDocument Map::GetDoc(tinyxml2::XMLDocument* doc)
+const tinyxml2::XMLDocument Map::GetDoc(tinyxml2::XMLDocument& doc)
 {
-	doc = &document_;
-	return doc;
+	document_.DeepCopy(&doc);
+	return &doc;
+}
+
+tinyxml2::XMLError Map::SaveXMLFile(tinyxml2::XMLDocument& doc)
+{
+	return doc.SaveFile(filePath.c_str());
 }
 
