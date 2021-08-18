@@ -65,6 +65,8 @@ public:
 	tinyxml2::XMLError SaveXMLFile(tinyxml2::XMLDocument& doc);
 
 	VECTOR2 PosFromIndex(int index);
+	// ルートがいくつあるのかを取得
+	int GetRootNum();
 protected:
 	// マップをロードする、マップデータの名前(拡張子なし)を指定
 	bool LoadMap(std::string mapName);	

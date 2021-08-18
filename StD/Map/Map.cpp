@@ -208,6 +208,13 @@ VECTOR2 Map::PosFromIndex(int index)
 	return VECTOR2(index - y * state_.mapSize.x, y);
 }
 
+int Map::GetRootNum()
+{
+	tinyxml2::XMLElement* elm = document_.FirstChildElement("root");
+	int num = elm->IntAttribute("num");
+	return num;
+}
+
 const tinyxml2::XMLDocument Map::GetDoc(tinyxml2::XMLDocument& doc)
 {
 	document_.DeepCopy(&doc);

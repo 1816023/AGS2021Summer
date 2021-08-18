@@ -97,27 +97,27 @@ void CustomMapScene::Draw()
 void CustomMapScene::DrawUI()
 {
 	alwaysCanvas_->Draw();
-
-	custom_[nowState_]->DrawUI(this);
 	canvas_->Draw();
 	textCanvas_->Draw();
+	custom_[nowState_]->DrawUI(this);
+	
 
 	const auto& mainStay = cusMap_->GetMainStay();
 	int cnt = 0;
 	auto mapSize = cusMap_->GetMapSize().x;
-	for (auto& ms : mainStay)
-	{
-		auto y = ms / mapSize;
-		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"mainStay%d = x %d, y %d", cnt + 1, ms - y * mapSize, y);
-		cnt++;
-	}
-	const auto& spawners = cusMap_->GetSpawner();
-	for (auto& sp : spawners)
-	{
-		auto y = sp / mapSize;
-		DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - static_cast<int>(mainStay.size()), sp - y * mapSize, y);
-		cnt++;
-	}
+	//for (auto& ms : mainStay)
+	//{
+	//	auto y = ms / mapSize;
+	//	DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"mainStay%d = x %d, y %d", cnt + 1, ms - y * mapSize, y);
+	//	cnt++;
+	//}
+	//const auto& spawners = cusMap_->GetSpawner();
+	//for (auto& sp : spawners)
+	//{
+	//	auto y = sp / mapSize;
+	//	DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - static_cast<int>(mainStay.size()), sp - y * mapSize, y);
+	//	cnt++;
+	//}
 
 }
 

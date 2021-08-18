@@ -157,12 +157,29 @@ private:
 			{
 				continue;
 			}
-			auto* newElm = rootElm->InsertNewChildElement("root");
-			newElm->SetAttribute("id", a);
-
-			
+			if (!CheckRoot(scene, a))
+			{
+				continue;
+			}			
 		}
+		for (int v=0;v<rootVec_.size();v++)
+		{
+			auto* newElm = rootElm->InsertNewChildElement("root");
+			newElm->SetAttribute("id", v);
+			std::string str;
+			for (auto vec : rootVec_[v])
+			{
+				str += std::to_string(static_cast<int>(vec));
+				str += ",";
+			}
+			newElm->SetText(str.c_str());
+		}
+		rootElm->SetAttribute("num", rootVec_.size());
 		scene->cusMap_->SaveXMLFile(doc);
+		if (rootVec_.size() <= 0)
+		{
+			return false;
+		}
 		return true;
 	}
 	bool Next(CustomMapScene* scene)
@@ -188,38 +205,72 @@ private:
 		Delete();
 		return true;
 	}
-	bool CheckRoot(CustomMapScene* scene)
+	bool CheckRoot(CustomMapScene* scene,int rootID)
 	{
 		auto mainStay=scene->cusMap_->GetMainStay();
 		auto spawners = scene->cusMap_->GetSpawner();
-		std::function<bool(RootDir,VECTOR2)>check = [&](RootDir root,VECTOR2 dir) {
+		std::function<bool(RootDir,VECTOR2,std::vector<RootDir>&)>check = [&](RootDir root,VECTOR2 dir,std::vector<RootDir>&vec) {
 			switch (root)
 			{
 			case RootDir::UP:
-				
+				dir.y -= 1;
 				break;
 			case RootDir::DOWN:
-
+				dir.y += 1;
 				break;
 			case RootDir::RIGHT:
-
+				dir.x += 1;
 				break;
 			case RootDir::LEFT:
-
+				dir.x -= 1;
 				break;
 			case RootDir::MAX:
+				return false;
 				break;
 			default:
 				break;
 			}
-			return true;
+
+			if (dir.x < 0 || dir.y < 0)
+			{
+				return false;
+			}
+			if (dir.x > rootMap_[rootID][0].size() || dir.y > rootMap_[rootID].size())
+			{
+				return false;
+			}
+			auto chip=scene->cusMap_->GetMapChipByIndex(dir);
+			if (chip == MapChipName::MAINSTAY)
+			{
+				return true;
+			}
+			if (chip != MapChipName::ROOT)
+			{
+				return false;
+			}
+			vec.push_back(root);
+			
+			return check(rootMap_[rootID][dir.y][dir.x], dir,vec);
 		};
 		for (int s = 0; s < spawners.size(); s++)
 		{
-			
+			VECTOR2 spPos = { static_cast<int>(spawners[s]/rootMap_[rootID][0].size()),static_cast<int>(spawners[s]%rootMap_[rootID].size())};
+			if (rootMap_[rootID][spPos.y][spPos.x] == RootDir::MAX)
+			{
+				continue;
+			}
+			rootVec_.push_back({});
+			if (check(rootMap_[rootID][spPos.y][spPos.x], spPos, rootVec_.back()))
+			{
+				return true;
+			}
+			rootVec_.erase(rootVec_.end()-1);
+			return false;
 		}
+
 	}
 	RootDir dirChip_;
 	std::array<std::vector<rootVec>,100>rootMap_;
+	std::vector<std::vector<RootDir>>rootVec_;
 };
 

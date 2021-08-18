@@ -66,7 +66,7 @@ struct EnemyCustom : public CustomStateBase
 		dynamic_cast<SpinBoxForInt*>(spinBoxS["Wave"])->AddData(1);
 		// ルートのスピンボックスの設定
 		spinBoxS.try_emplace("ルート",new SpinBoxForInt(VECTOR2(bSpace, (strSize.y + bSpace)*2) + strSize, 100, scene->canvas_->GetPos(), fontHandle_));
-		for (int r = root.size()-1; r > -1; r--)
+		for (int r = scene->cusMap_->GetRootNum(); r > 0; r--)
 		{
 			dynamic_cast<SpinBoxForInt*>(spinBoxS["ルート"])->AddData(r);
 		}
@@ -172,12 +172,12 @@ struct EnemyCustom : public CustomStateBase
 	void DrawUI(CustomMapScene* scene)
 	{
 		// 枠表示
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-		DrawRoundRect(SELECT_UI_POS.first.x, SELECT_UI_POS.first.y, SELECT_UI_POS.second.x, SELECT_UI_POS.second.y, 20, 20, 0x555555, true);
-		DrawRoundRect(SELECT_UI_POS.first.x, SELECT_UI_POS.first.y, SELECT_UI_POS.second.x, SELECT_UI_POS.second.y, 20, 20, 0xffffff, false);
-		DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0x555555, true);
-		DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0xffffff, false);
-		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
+		//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		//DrawRoundRect(SELECT_UI_POS.first.x, SELECT_UI_POS.first.y, SELECT_UI_POS.second.x, SELECT_UI_POS.second.y, 20, 20, 0x555555, true);
+		//DrawRoundRect(SELECT_UI_POS.first.x, SELECT_UI_POS.first.y, SELECT_UI_POS.second.x, SELECT_UI_POS.second.y, 20, 20, 0xffffff, false);
+		//DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0x555555, true);
+		//DrawRoundRect(TEXT_UI_POS.first.x, TEXT_UI_POS.first.y, TEXT_UI_POS.second.x, TEXT_UI_POS.second.y, 20, 20, 0xffffff, false);
+		//SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 		// 説明文の表示
 	/*	for (auto&& list : buttonText_)
 		{

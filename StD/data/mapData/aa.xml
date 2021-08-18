@@ -29,6 +29,6 @@
     </wave>
 </spawn>
 
-<root>
-    <root id="1"/>
+<root num="1">
+    <root id="0">3,3,3,3,3,3,3,3,</root>
 </root>
