@@ -44,8 +44,6 @@
     <ClCompile Include="Unit\Enemy\Mob\ESquare.cpp" />
     <ClCompile Include="Unit\Enemy\Mob\EPentagon.cpp" />
     <ClCompile Include="Scene\GameOverScene.cpp" />
-    <ClCompile Include="_debug\_DebugConOut.cpp" />
-    <ClCompile Include="_debug\_DebugDispOut.cpp" />
     <ClCompile Include="GUI\Button\Button.cpp" />
     <ClCompile Include="GUI\Button\CircleButton.cpp" />
     <ClCompile Include="GUI\Button\ImageCircleButton.cpp" />
@@ -134,8 +132,6 @@
     <ClInclude Include="Unit\Enemy\Mob\EPentagon.h" />
     <ClInclude Include="Scene\GameOverScene.h" />
     <ClInclude Include="MapEnum.h" />
-    <ClInclude Include="_debug\_DebugConOut.h" />
-    <ClInclude Include="_debug\_DebugDispOut.h" />
     <ClInclude Include="GUI\Button\Button.h" />
     <ClInclude Include="GUI\Button\CircleButton.h" />
     <ClInclude Include="GUI\Button\ImageCircleButton.h" />

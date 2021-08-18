@@ -35,7 +35,7 @@ struct SelectFile:public CustomStateBase
 				continue;
 			}
 			// 開いちゃダメなファイル
-			if (list == "defalt_map.xml" || list == "sample_data.xml")
+			if (list == "defalt_map.xml" || list == "sample_data.xml"||list=="EasyMAP.xml"|| list=="HardMAP.xml"||list=="NormalMAP.xml")
 			{
 				continue;
 			}

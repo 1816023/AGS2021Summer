@@ -5,8 +5,6 @@
 #include "Camera.h"
 #include <chrono>
 #if _DEBUG
-#include "./_debug/_DebugConOut.h"
-#include "./_debug/_DebugDispOut.h"
 #endif // _DEBUG
 
 #define DEF_SCREEN_SIZE_X 854

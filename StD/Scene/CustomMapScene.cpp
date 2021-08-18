@@ -96,15 +96,15 @@ void CustomMapScene::Draw()
 
 void CustomMapScene::DrawUI()
 {
-	alwaysCanvas_->Draw();
+	
 	canvas_->Draw();
 	textCanvas_->Draw();
 	custom_[nowState_]->DrawUI(this);
-	
+	alwaysCanvas_->Draw();
 
-	const auto& mainStay = cusMap_->GetMainStay();
-	int cnt = 0;
-	auto mapSize = cusMap_->GetMapSize().x;
+	//const auto& mainStay = cusMap_->GetMainStay();
+	//int cnt = 0;
+	//auto mapSize = cusMap_->GetMapSize().x;
 	//for (auto& ms : mainStay)
 	//{
 	//	auto y = ms / mapSize;
