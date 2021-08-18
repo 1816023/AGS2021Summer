@@ -202,6 +202,10 @@ struct EnemyCustom : public CustomStateBase
 			DrawString(basePosX - 2 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 3, std::to_wstring(spawnTime).c_str(), 0xffffff);
 		}
 		DrawString(basePosX - 2 + GetDrawStringWidthToHandle(L"スポナー ", GetStringLength(L"スポナー "), fontHandle_), (bSize + bSpace) * 4, std::to_wstring(spawnTime).c_str(), 0xffffff);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		DrawBox(0, 0, DEF_SCREEN_SIZE_X, DEF_SCREEN_SIZE_Y, 0x000000, true);
+		DrawString(DEF_SCREEN_SIZE_X/2, DEF_SCREEN_SIZE_Y/2, L"未", 0xffffff);
+		SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 0);
 
 	}
 	void Delete() {
