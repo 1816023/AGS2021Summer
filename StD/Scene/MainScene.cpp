@@ -3,6 +3,7 @@
 #include "GameMapSellectScene.h"
 #include "GameScene.h"
 #include "CustomMapScene.h"
+#include "../Mng/SoundMng.h"
 #include "../GUI/Button/ImageRectButton.h"
 #include "../Application.h"
 #include "../StringUtil.h"
@@ -11,7 +12,7 @@
 MainScene::MainScene()
 {
 	Init();
-
+	ChangeVolumeSoundMem(150, lpSoundMng.GetID("data/Sound/SE/BGM1.mp3"));
 }
 
 MainScene::MainScene(bool flag)
@@ -31,6 +32,7 @@ unique_Base MainScene::Update(unique_Base own)
 	old = lpKeyController.GetCtl(KEY_TYPE::OLD);
 	if (gameTransition_)
 	{
+		lpSoundMng.StopSound("data/Sound/SE/BGM1.mp3");
 		return std::make_unique<GameMapSellectScene>();
 	}
 	if (customTransition_)

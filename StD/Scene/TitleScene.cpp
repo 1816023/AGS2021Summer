@@ -15,6 +15,7 @@ TitleScene::TitleScene()
 	pos = { 50,50 };
 	speed = { 2,2 };
 	lpSoundMng.StartSound("data/Sound/SE/BGM1.mp3", PlayType::LOOP);
+	ChangeVolumeSoundMem(255, lpSoundMng.GetID("data/Sound/SE/BGM1.mp3"));
 	lpApplication.GetCamera().SetScale(1.0f);
 	lpApplication.GetCamera().ScaleLock(true);
 }
@@ -30,7 +31,6 @@ unique_Base TitleScene::Update(unique_Base own)
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		lpSoundMng.StopSound("data/Sound/SE/BGM1.mp3");
 		return std::make_unique<MainScene>();
 	}
 
@@ -54,7 +54,7 @@ void TitleScene::Draw()
 
 void TitleScene::DrawUI()
 {
-	DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage, true);
+	//DrawRotaGraph(pos.x, pos.y, 1, 0, mobImage, true);
 	DrawRotaGraph(DEF_SCREEN_SIZE_X / 2, 150, 1, 0, logoImage, true);
 	// PUSHÉçÉSì_ñ≈
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt);
