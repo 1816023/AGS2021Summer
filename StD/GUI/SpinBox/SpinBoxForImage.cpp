@@ -4,7 +4,7 @@
 #include <DxLib.h>
 SpinBoxForImage::SpinBoxForImage(VECTOR2 pos, VECTOR2 size, VECTOR2 cOffset):SpinBox(pos,size,BoxType::IMAGE, cOffset)
 {
-
+	Init();
 }
 
 SpinBoxForImage::~SpinBoxForImage()

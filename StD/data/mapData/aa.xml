@@ -16,7 +16,12 @@
 
 <spawn>
     <wave id="1">
-        <spawner id="0"/>
+        <spawner id="0">
+            <enemy type="3" time="0.000000" root="1"/>
+            <enemy type="3" time="0.000000" root="1"/>
+            <enemy type="3" time="0.000000" root="1"/>
+            <enemy type="3" time="0.000000" root="1"/>
+        </spawner>
         <spawner id="1"/>
     </wave>
     <wave id="2">

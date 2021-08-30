@@ -14,7 +14,8 @@
 #include "../StringUtil.h"
 #include "../Map/Astar.h"
 #include "../MapEnum.h"
-#include "../GUI/Canvas.h"
+//#include "../GUI/Canvas.h"
+#include "../Mng/SoundMng.h"
 
 CustomMapScene::CustomMapScene()
 {
@@ -59,7 +60,10 @@ bool CustomMapScene::Init()
 	custom_.try_emplace(CustomState::ROOT_CUSTOM, std::make_unique<RootCustom>());
 	custom_.try_emplace(CustomState::ENEMY_CUSTOM, std::make_unique<EnemyCustom>());
 	custom_.try_emplace(CustomState::END_CUSTOM, std::make_unique<EndCustom>());
-	auto* button = new RoundRectButton(VECTOR2(0, 0), VECTOR2(34, 34), VECTOR2(5, 5), 0xff00ff, [&]() {isTitleTransition_ = true; return true; });
+	auto* button = new RoundRectButton(VECTOR2(0, 0), VECTOR2(34, 34), VECTOR2(5, 5), 0xff00ff, [&]() {
+		lpSoundMng.StopSound("data/Sound/SE/BGM1.mp3");
+		isTitleTransition_ = true; 
+		return true; });
 	button->SetAuto();
 	button->SetReversePush();
 	alwaysCanvas_->AddUIByID(button, 10);
@@ -76,9 +80,6 @@ void CustomMapScene::Draw()
 	if (nowState_ == CustomState::MAP_CUSTOM || nowState_ == CustomState::ENEMY_CUSTOM ||nowState_==CustomState::ROOT_CUSTOM)
 	{
 		cusMap_->Draw();
-#ifdef _DEBUG
-		DrawFormatString(mPos.x + static_cast<int>(cPos.x), mPos.y + static_cast<int>(cPos.y) - 10, 0xffffff, L"%d", static_cast<int>(cusMap_->GetMapChip((mPos + cPos))));
-#endif // DEBUG
 		if (!lpMouseController.IsHitBoxToMouse(SELECT_UI_POS.first, SELECT_UI_POS.second) && !lpMouseController.IsHitBoxToMouse(TEXT_UI_POS.first, TEXT_UI_POS.second))
 		{
 			if (lpMouseController.IsHitBoxToMouse(VecICast((VECTOR2(0, 0)) - cPos), VecICast(cusMap_->GetMapSize() - cPos * cusMap_->GetChipSize())))
@@ -96,29 +97,10 @@ void CustomMapScene::Draw()
 
 void CustomMapScene::DrawUI()
 {
-	
 	canvas_->Draw();
 	textCanvas_->Draw();
 	custom_[nowState_]->DrawUI(this);
 	alwaysCanvas_->Draw();
-
-	//const auto& mainStay = cusMap_->GetMainStay();
-	//int cnt = 0;
-	//auto mapSize = cusMap_->GetMapSize().x;
-	//for (auto& ms : mainStay)
-	//{
-	//	auto y = ms / mapSize;
-	//	DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"mainStay%d = x %d, y %d", cnt + 1, ms - y * mapSize, y);
-	//	cnt++;
-	//}
-	//const auto& spawners = cusMap_->GetSpawner();
-	//for (auto& sp : spawners)
-	//{
-	//	auto y = sp / mapSize;
-	//	DrawFormatString(0, 48 + 16 * cnt, 0xffffff, L"spawner%d = x %d, y %d", cnt + 1 - static_cast<int>(mainStay.size()), sp - y * mapSize, y);
-	//	cnt++;
-	//}
-
 }
 
 ErrorCode CustomMapScene::SaveCheck()
