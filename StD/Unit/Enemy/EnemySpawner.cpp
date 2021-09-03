@@ -3,18 +3,26 @@
 #include "Mob/ECircle.h"
 #include "../../Map/Map.h"
 #include <cassert>
+#include <algorithm>
 
-EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map, int id)
+EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map, int spawnerId)
 {
-	for (int i = 0; i < 10; i++)
+	/*for (int i = 0; i < 10; i++)
 	{
-		spawnList_.emplace_back(EnemyType::Circle);
-	}
+		spawnEList_.emplace_back(EnemyType::Circle);
+	}*/
+	wave_ = 1;
+	spawnEDatas_ = map.GetEnemyDatas()[wave_][spawnerId];
+	std::sort(spawnEDatas_.begin(), spawnEDatas_.end(),
+		[](EnemyData& lData, EnemyData& rData)
+		{
+			return lData.spawnTime > rData.spawnTime;
+		});
 	if (map.GetRoot().size() == 0)
 	{
 		assert(false);
 	}
-	root_ = map.GetRoot()[id];
+	root_ = map.GetRoot();
 	/*for (int i = 0; i < 9; i++)
 	{
 		root_.emplace_back(RootDir::LEFT);
@@ -48,25 +56,30 @@ EnemySpawner::~EnemySpawner()
 {
 }
 
-void EnemySpawner::Spawn(EnemyType type)
+void EnemySpawner::Spawn(EnemyData data)
 {
-	auto& enemy = enemyMng_->CreateEnemy(type);
+	auto& enemy = enemyMng_->CreateEnemy(data.type);
 	enemy.SetPosition(pos_);
-	enemy.SetRoot(root_);
+	enemy.SetRoot(root_[data.rootID]);
 }
 
 void EnemySpawner::Update(float deltaTime)
 {
-	cnt_++;
-	if (cnt_ > 60.0f && spawnList_.size() > 0)
+	// “G‚ª‘¶Ý‚µ‚È‚¢ê‡
+	if (spawnEDatas_.size() == 0)
+	{
+		return;
+	}
+	cnt_+= deltaTime;
+	if (cnt_ > spawnEDatas_.back().spawnTime  && spawnEDatas_.size() > 0)
 	{
 		cnt_ = 0.0f;
-		Spawn(spawnList_.back());
-		spawnList_.pop_back();
+		Spawn(spawnEDatas_.back());
+		spawnEDatas_.pop_back();
 	}
 }
 
 int EnemySpawner::GetRemainSpawnCnt()
 {
-	return static_cast<int>(spawnList_.size());
+	return static_cast<int>(spawnEDatas_.size());
 }

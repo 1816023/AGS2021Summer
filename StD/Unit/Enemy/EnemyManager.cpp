@@ -1,5 +1,8 @@
 #include "EnemyManager.h"
 #include "Mob/ECircle.h"
+#include "Mob/EPentagon.h"
+#include "Mob/ESquare.h"
+#include "Mob/ETriangle.h"
 #include "../../Map/Map.h"
 #include <algorithm>
 #include "../../Object/Shot/ShotMng.h"
@@ -12,6 +15,9 @@ EnemyManager::EnemyManager(Map& map)
 	mapInfo.chipSize = map.GetChipSize();
 	mapInfo.mapSize = map.GetMapSize();
 	prototype_.emplace(EnemyType::Circle, new ECircle(mapInfo));
+	prototype_.emplace(EnemyType::Pentagon, new EPentagon(mapInfo));
+	prototype_.emplace(EnemyType::Square, new ESquare(mapInfo));
+	prototype_.emplace(EnemyType::Triangle, new ETriangle(mapInfo));
 	shotMng_ = std::make_unique<ShotMng>();
 	isGoal_ = false;
 }

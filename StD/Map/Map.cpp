@@ -84,24 +84,54 @@ bool Map::SetUp(std::string mapName)
 		FindMapObj(map, y, map.begin());
 		y++;
 	}
+	auto spawnElm = document_.FirstChildElement("spawn");
+	auto waveElm = spawnElm->FirstChildElement("wave");
+	int waveNum = 3;	// Œ»Ý‚Í3WAVEŒÅ’è
+	EnemyData eData;
+	do 
+	{
+		auto waveID = waveElm->IntAttribute("id");
+		enemyDatas_[waveID].resize(spawners_.size());
+		auto spElm = waveElm->FirstChildElement("spawner");
+		auto spID = spElm->IntAttribute("id");
+		while (spElm != nullptr)
+		{
+			auto enemyElm = spElm->FirstChildElement("enemy");
+			while (enemyElm != nullptr)
+			{
+				eData.type = static_cast<EnemyType>(enemyElm->IntAttribute("type"));
+				eData.spawnTime = enemyElm->IntAttribute("time");
+				eData.rootID = enemyElm->IntAttribute("root");
+				enemyDatas_[waveID][spID].emplace_back(eData);
+				enemyElm = enemyElm->NextSiblingElement("enemy");
+			} 
+			spElm = spElm->NextSiblingElement("spawner");
+		} 
+		waveElm = waveElm->NextSiblingElement("wave");
+	} while (waveElm!= nullptr);
+
 	// ƒ‹[ƒg‚Ì“Ç‚Ýo‚µ
+	LoadRoot();
+	return true;
+}
+
+void Map::LoadRoot()
+{
 	const tinyxml2::XMLElement* spaElm = document_.FirstChildElement("root");
 	int rootNum = spaElm->IntAttribute("num");
 	root_.resize(rootNum);
 	auto rElm = spaElm->FirstChildElement("root");
 	for (int i = 0; i < rootNum; i++)
-	{		
+	{
 		auto rStr = rElm->GetText();
-		std::stringstream ss2{ rStr };
-		std::string buf2;
-		while (std::getline(ss2, buf2, ','))
+		std::stringstream ss{ rStr };
+		std::string buf;
+		while (std::getline(ss, buf, ','))
 		{
-			root_[i].emplace_back(static_cast<RootDir>(std::atoi(buf2.c_str())));
+			root_[i].emplace_back(static_cast<RootDir>(std::atoi(buf.c_str())));
 		}
 		rElm = rElm->NextSiblingElement("root");
 	}
-	//spaElm->FirstAttribute(wave)
-	return true;
 }
 
 MapChipName Map::GetMapChip(Vec2Float pos)
@@ -223,6 +253,11 @@ VECTOR2 Map::PosFromIndex(int index)
 {
 	auto y = index / state_.mapSize.x;
 	return VECTOR2(index - y * state_.mapSize.x, y);
+}
+
+std::unordered_map<int, spawnEList>& Map::GetEnemyDatas()
+{
+	return enemyDatas_;
 }
 
 int Map::GetRootNum()

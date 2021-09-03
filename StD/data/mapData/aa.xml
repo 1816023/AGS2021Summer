@@ -17,10 +17,10 @@
 <spawn>
     <wave id="1">
         <spawner id="0">
-            <enemy type="3" time="0.000000" root="1"/>
-            <enemy type="3" time="0.000000" root="1"/>
-            <enemy type="3" time="0.000000" root="1"/>
-            <enemy type="3" time="0.000000" root="1"/>
+            <enemy type="3" time="0.000000" root="3"/>
+            <enemy type="3" time="1.000000" root="3"/>
+            <enemy type="3" time="2.000000" root="3"/>
+            <enemy type="3" time="3.000000" root="3"/>
         </spawner>
         <spawner id="1"/>
     </wave>
@@ -37,8 +37,8 @@
 <root num="6">
     <root id="0">0,0,0,0,0,0,0,0,</root>
     <root id="1">1,1,1,1,1,1,1,1,</root>
-    <root id="2">0,0,0,0,0,0,0,0,</root>
-    <root id="3">0,0,0,0,0,0,0,0,</root>
+    <root id="2">2,2,2,2,2,2,2,2,</root>
+    <root id="3">3,3,3,3,3,3,3,3,</root>
     <root id="4">0,0,0,0,0,0,0,0,</root>
     <root id="5">0,0,0,0,0,0,0,0,</root>
 </root>
