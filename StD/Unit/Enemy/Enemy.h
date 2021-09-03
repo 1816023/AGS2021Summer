@@ -6,9 +6,9 @@
 
 // ƒpƒ‰ƒ[ƒ^’è”
 // HP
-#define LOW_HP 60		
-#define MID_HP 60
-#define HIGH_HP 180
+#define LOW_HP 30		
+#define MID_HP 50
+#define HIGH_HP 120
 // UŒ‚—Í
 #define LOW_ATK 1
 #define MID_ATK 2

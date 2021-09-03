@@ -10,7 +10,7 @@ class EnemySpawner
 {
 friend class EnemyManager;
 public:
-	EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map);
+	EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map, int id);
 	~EnemySpawner();
 	// “G‚ğƒXƒ|[ƒ“
 	void Spawn(EnemyType type);

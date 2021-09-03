@@ -42,6 +42,7 @@ unique_Base MainScene::Update(unique_Base own)
 	if (mapSelectTransition_)
 	{
 		// マップセレクトへ遷移予定
+		return std::make_unique<GameMapSellectScene>();
 	}
 	(this->*updater_)();
 	return std::move(own);
@@ -107,7 +108,7 @@ void MainScene::Init()
 		, [&]() {gameTransition_ = true; return true; }, bPos, id));
 
 	difBList.emplace_back(MainButton(L"Custom_Botton", L"CUSTOM"
-		, [&]() {gameTransition_ = true; return true; }, { bPos.x, bPos.y + bSize.y * 2 }, ++id));
+		, [&]() {mapSelectTransition_ = true; return true; }, { bPos.x, bPos.y + bSize.y * 2 }, ++id));
 
 	bPos.x += DEF_SCREEN_SIZE_X / 4;
 	difBList.emplace_back(MainButton(L"Easy_Button", L"EASY"

@@ -46,7 +46,7 @@ void GameScene::Init()
 	for (auto& sp : map_->GetSpawner())
 	{
 		auto pos = VecFCast(map_->PosFromIndex(sp)) * chipS + chipS / 2;
-		enemySpawner_.push_back(std::make_shared<EnemySpawner>(pos, *enemyMng_, *map_));
+		enemySpawner_.push_back(std::make_shared<EnemySpawner>(pos, *enemyMng_, *map_, 1));
 	}
 	selectUnitId = PlayerUnit::NON;
 	lpSoundMng.StartSound("data/Sound/SE/BGM3.mp3", PlayType::LOOP);

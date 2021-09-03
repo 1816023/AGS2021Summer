@@ -34,6 +34,11 @@
     </wave>
 </spawn>
 
-<root num="1">
-    <root id="0">3,3,3,3,3,3,3,3,</root>
+<root num="6">
+    <root id="0">0,0,0,0,0,0,0,0,</root>
+    <root id="1">1,1,1,1,1,1,1,1,</root>
+    <root id="2">0,0,0,0,0,0,0,0,</root>
+    <root id="3">0,0,0,0,0,0,0,0,</root>
+    <root id="4">0,0,0,0,0,0,0,0,</root>
+    <root id="5">0,0,0,0,0,0,0,0,</root>
 </root>

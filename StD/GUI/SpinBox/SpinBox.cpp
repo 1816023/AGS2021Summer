@@ -9,6 +9,7 @@ SpinBox::SpinBox(VECTOR2 pos,int xSize,BoxType type, VECTOR2 cOffset, int fontHa
 	size_ = VECTOR2(xSize, (fontHandle != -1 ? GetFontSizeToHandle(fontHandle) : GetFontSize()));
 	button_.first = std::make_unique<ImageRectButton>(pos + cOffset + size_ - VECTOR2(24 + 2, size_.y - 2), VECTOR2(24, 12), L"./data/image/allow_up.png", L"./data/image/allow_up_push.png", [&]() {selKey_ -= (selKey_ - 1 < 0 ? 0 : 1);  return true; });
 	button_.second = std::make_unique<ImageRectButton>(pos + cOffset + size_ - VECTOR2(24 + 2, 12 + 2), VECTOR2(24, 12), L"./data/image/allow_down.png", L"./data/image/allow_down_push.png", [&]() {selKey_ += (selKey_ + 1 >= nowSize_ ? 0 : 1);  return true; });
+	Init();
 }
 
 SpinBox::SpinBox(VECTOR2 pos, VECTOR2 size, BoxType type, VECTOR2 cOffset)
@@ -19,6 +20,7 @@ SpinBox::SpinBox(VECTOR2 pos, VECTOR2 size, BoxType type, VECTOR2 cOffset)
 	fontHandle_ = CreateFontToHandle(NULL, size_.y, 1);
 	button_.first = std::make_unique<ImageRectButton>(pos + cOffset + size_ - VECTOR2(24 + 2, size_.y - 2), VECTOR2(24, 12), L"./data/image/allow_up.png", L"./data/image/allow_up_push.png", [&]() {selKey_ -= (selKey_ - 1 < 0 ? 0 : 1);  return true; });
 	button_.second = std::make_unique<ImageRectButton>(pos + cOffset + size_ - VECTOR2(24 + 2, 12 + 2), VECTOR2(24, 12), L"./data/image/allow_down.png", L"./data/image/allow_down_push.png", [&]() {selKey_ += (selKey_ + 1 >= nowSize_ ? 0 : 1);  return true; });
+	Init();
 }
 
 void SpinBox::Init()

@@ -2,17 +2,23 @@
 #include "EnemyManager.h"
 #include "Mob/ECircle.h"
 #include "../../Map/Map.h"
+#include <cassert>
 
-EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map)
+EnemySpawner::EnemySpawner(Vec2Float pos, EnemyManager& enemyMng, Map& map, int id)
 {
 	for (int i = 0; i < 10; i++)
 	{
 		spawnList_.emplace_back(EnemyType::Circle);
 	}
-	for (int i = 0; i < 9; i++)
+	if (map.GetRoot().size() == 0)
+	{
+		assert(false);
+	}
+	root_ = map.GetRoot()[id];
+	/*for (int i = 0; i < 9; i++)
 	{
 		root_.emplace_back(RootDir::LEFT);
-	}
+	}*/
 	/*for (int i = 0; i < 6; i++)
 	{
 		root_.emplace_back(RootDir::DOWN);

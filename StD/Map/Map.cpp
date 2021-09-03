@@ -77,13 +77,30 @@ bool Map::SetUp(std::string mapName)
 	}
 	mapData_ = mapData;
 	y = 0;
-	// 自拠点を検索して格納する
+	// 自拠点とスポナーを検索して格納する
 	for (auto& map : mapData_)
 	{
 		// 再起
 		FindMapObj(map, y, map.begin());
 		y++;
 	}
+	// ルートの読み出し
+	const tinyxml2::XMLElement* spaElm = document_.FirstChildElement("root");
+	int rootNum = spaElm->IntAttribute("num");
+	root_.resize(rootNum);
+	auto rElm = spaElm->FirstChildElement("root");
+	for (int i = 0; i < rootNum; i++)
+	{		
+		auto rStr = rElm->GetText();
+		std::stringstream ss2{ rStr };
+		std::string buf2;
+		while (std::getline(ss2, buf2, ','))
+		{
+			root_[i].emplace_back(static_cast<RootDir>(std::atoi(buf2.c_str())));
+		}
+		rElm = rElm->NextSiblingElement("root");
+	}
+	//spaElm->FirstAttribute(wave)
 	return true;
 }
 
