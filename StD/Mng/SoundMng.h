@@ -34,6 +34,7 @@ public:
 	const int& GetID(std::string f_name);	
 	const int& StartSound(std::string f_name,PlayType type=PlayType::BACK);
 	const int& StopSound(std::string f_name);
+	const int& StopSoundAll();
 	const int& ChangeVol(int vol, std::string f_name);
 	const int& CheckSound(std::string f_name);
 	void DeleteHandle();
@@ -42,6 +43,6 @@ private:
 	~SoundMng();
 	SoundMng(SoundMng&) = delete;
 	void operator=(SoundMng&)= delete;
-	std::map<std::string, int> sndMap;
+	std::map<std::string, int> sndMap_;
 
 };

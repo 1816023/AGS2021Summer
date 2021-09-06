@@ -61,7 +61,7 @@ struct RootCustom :
 
 		// スピンボックスの作成
 		auto spinBox = new SpinBoxForInt(VECTOR2(bSize + bSpace * 2, bSize + bSpace * 3), bSize * 2, SELECT_UI_POS.first, lpFontMng.GetStrFont(fontName));
-		for (int a = 99; a > 0; a--)
+		for (int a = 99; a >= 0; a--)
 		{
 			spinBox->AddData(a);
 		}
@@ -254,7 +254,7 @@ private:
 		};
 		for (int s = 0; s < spawners.size(); s++)
 		{
-			VECTOR2 spPos = { static_cast<int>(spawners[s]/rootMap_[rootID][0].size()),static_cast<int>(spawners[s]%rootMap_[rootID].size())};
+			VECTOR2 spPos = { static_cast<int>(spawners[s]%rootMap_[rootID].size()),static_cast<int>(spawners[s] / rootMap_[rootID][0].size()) };
 			if (rootMap_[rootID][spPos.y][spPos.x] == RootDir::MAX)
 			{
 				continue;

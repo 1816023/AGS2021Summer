@@ -105,7 +105,7 @@ struct EnemyCustom : public CustomStateBase
 			{
 				list_[w].emplace_back(
 					std::make_pair(
-						std::make_unique<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2))
+						std::make_shared<ImgeAndStringList>(VECTOR2(SELECT_UI_POS.first.x + 5, SELECT_UI_POS.second.y / 1.5), VECTOR2((SELECT_UI_POS.second.x - SELECT_UI_POS.first.x - 10), (SELECT_UI_POS.second.y - SELECT_UI_POS.second.y / 3 - 50) / 2))
 						, std::vector<int>(0))
 				);
 			}
@@ -136,8 +136,8 @@ struct EnemyCustom : public CustomStateBase
 		button.back()->SetString("戻す", VECTOR2(15, 10));
 		// 保存ボタン
 		button.emplace_back(new RoundRectButton(VECTOR2(bSpace - strSize.x , (strSize.y + bSpace) * 6) + strSize, VECTOR2(bSize, bSize / 2), VECTOR2(10, 10), 0xffffff, [&,scene]() {
-			//auto error=scene->cusMap_->SaveFile(spawners.size(),list_);
-			int error = 0;
+			auto error=scene->cusMap_->SaveFile(spawners.size(),list_);
+			
 			return error==0;
 			}));
 		button.back()->SetString("Save", VECTOR2(15, 10));
@@ -287,7 +287,7 @@ private:
 	// 最大行数（6行）
 	std::vector<std::string> errorText_;
 
-	std::vector<std::vector<std::pair<std::unique_ptr<ImgeAndStringList>,std::vector<int>>>>list_;
+	std::vector<std::vector<std::pair<std::shared_ptr<ImgeAndStringList>,std::vector<int>>>>list_;
 	int selSpawner_;
 	int selWave_;
 	

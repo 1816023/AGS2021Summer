@@ -101,7 +101,7 @@ bool Map::SetUp(std::string mapName)
 			{
 				eData.type = static_cast<EnemyType>(enemyElm->IntAttribute("type"));
 				eData.spawnTime = enemyElm->IntAttribute("time");
-				eData.rootID = enemyElm->IntAttribute("root");
+				eData.rootID = enemyElm->IntAttribute("root")-1;
 				enemyDatas_[waveID][spID].emplace_back(eData);
 				enemyElm = enemyElm->NextSiblingElement("enemy");
 			} 

@@ -2,19 +2,23 @@
 <chip hight="64" width="64"/>
 
 <map hight="" width="">
-
 </map>
 
 <spawn>
     <wave id="1">
-     </wave>
+        <spawner id="0">
+        </spawner>
+        <spawner id="1"/>
+    </wave>
     <wave id="2">
+        <spawner id="0"/>
+        <spawner id="1"/>
     </wave>
     <wave id="3">
+        <spawner id="0"/>
+        <spawner id="1"/>
     </wave>
 </spawn>
 
-<root>
-    <root id=""/>
-    <root id=""/>
+<root num="">
 </root>

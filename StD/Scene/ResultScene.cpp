@@ -34,7 +34,8 @@ unique_Base ResultScene::Update(unique_Base own)
 
 	if (lpMouseController.GetClickUp(MOUSE_INPUT_LEFT))
 	{
-		lpSoundMng.StopSound("data/Sound/SE/BGM4.mp3");
+		lpSoundMng.StopSoundAll();
+		//lpSoundMng.StopSound("data/Sound/SE/BGM4.mp3");
 		return std::make_unique<TitleScene>();
 	}
 

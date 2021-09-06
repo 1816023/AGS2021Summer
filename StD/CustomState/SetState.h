@@ -1,6 +1,7 @@
 #pragma once
 #include "CustomState.h"
 #include "../Scene/CustomMapScene.h"
+#include "../Mng/FontMng.h"
 struct SetState:public CustomStateBase
 {
 	SetState() {};
@@ -13,6 +14,8 @@ struct SetState:public CustomStateBase
 		inputNum_.resize(4);
 		inputNum_[0] = "10";
 		inputNum_[1] = "10";
+		int fontH = lpFontMng.AddStrFont(40, L"creFile", 9, DX_FONTTYPE_ANTIALIASING);
+
 		for (int a = 0; a <= 10; a++)
 		{
 			buttonList_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(defPos.x + (buttonSize + 5) * (a % 5),defPos.y + (buttonSize + 5) * (a / 5)),
@@ -23,14 +26,14 @@ struct SetState:public CustomStateBase
 						inputNum_[inputcnt_] = std::to_string(10 + a); 
 					} 
 			return true; }));
-			buttonList_.back()->SetString(std::to_string(10+a), VECTOR2(5, 5), CreateFontToHandle(NULL, 40, 9, DX_FONTTYPE_ANTIALIASING));
+			buttonList_.back()->SetString(std::to_string(10+a), VECTOR2(5, 5), fontH);
 			buttonList_.back()->SetAuto();
 			buttonList_.back()->SetTag(1);
 		}
 		buttonList_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(defPos.x + (buttonSize + 5) * (11 % 5), defPos.y + (buttonSize + 5) * (11 / 5)),
 			VECTOR2( buttonSize * 2 + 5, buttonSize ),
 			VECTOR2(10, 10), 0xffffff, [&]() {inputcnt_ -= (inputcnt_ <=0 ? 0 : 1); return true; }));
-		buttonList_.back()->SetString("back", VECTOR2(5, 5), CreateFontToHandle(NULL, 40, 9, DX_FONTTYPE_ANTIALIASING));
+		buttonList_.back()->SetString("back", VECTOR2(5, 5), fontH);
 		buttonList_.back()->SetAuto();
 		buttonList_.back()->SetTag(1);
 		buttonList_.emplace_back(std::make_unique<RoundRectButton>(VECTOR2(defPos.x + (buttonSize + 5) * (13 % 5), defPos.y + (buttonSize + 5) * (13 / 5)),
@@ -44,7 +47,7 @@ struct SetState:public CustomStateBase
 				}
 				return true;
 			}));
-		buttonList_.back()->SetString("next", VECTOR2(5,5),CreateFontToHandle(NULL,40,9,DX_FONTTYPE_ANTIALIASING));
+		buttonList_.back()->SetString("next", VECTOR2(5,5),fontH);
 		buttonList_.back()->SetAuto();
 		buttonList_.back()->SetTag(1);
 		fontHandle_ = CreateFontToHandle(NULL, 30, 9);

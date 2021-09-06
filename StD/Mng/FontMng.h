@@ -12,7 +12,7 @@ public:
 		return font;
 	}
 	// フォント追加※現在はサイズ指定のみ
-	int AddStrFont(int fontSize, std::wstring name, int thick = -1);
+	int AddStrFont(int fontSize, std::wstring name, int thick = -1, int fontType = 0);
 	// フォント取得
 	int GetStrFont(std::wstring name);
 	void DeleteHandle();
